@@ -16,7 +16,9 @@
 <p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
 </details>
 <aside class="chapter-bridge"><strong>Running a program → reasoning before execution</strong><p>Walk the same kind of syntax tree, but carry types and equations instead of concrete values and mutable memory. An accepted type has a precise, limited safety claim.</p><a href="textbook-04.html#4-1-syntactic-structure">Before this chapter: Procedures and calls →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+<details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
+<p><span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary></p>
 <p><strong>The main idea:</strong> Predict permitted operations without running the program by generating and solving <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> constraints.</p>
 <table>
 <thead>
@@ -63,6 +65,7 @@
 </ol>
 <p><strong>Common trap:</strong> A type checker checks both IF branches. Successful typing does not prove termination or that HEAD NIL and division by zero are safe.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=225">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
+</details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
 <p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#constraints">Constraint generation V</a> · <a href="syntax.html#substitution">Type substitution versus term substitution</a> · <a href="syntax.html#type">Type constructors and unknowns</a></p>

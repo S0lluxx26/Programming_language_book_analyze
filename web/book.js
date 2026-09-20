@@ -1,4 +1,19 @@
 const dialog=document.querySelector('#search-dialog'),input=document.querySelector('#search-input'),results=document.querySelector('#search-results'),status=document.querySelector('.search-status');
+// Keep optional revision compact; an explicit cheat-sheet link reveals it.
+const cheatSheet=document.querySelector('.chapter-cheatsheet');
+if(cheatSheet){
+  const revealCheatSheet=()=>{if(location.hash==='#chapter-cheat-sheet')cheatSheet.open=true;};
+  revealCheatSheet();
+  addEventListener('hashchange',revealCheatSheet);
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href]');
+    if(!link||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    if(link.origin===location.origin&&link.pathname===location.pathname&&link.hash==='#chapter-cheat-sheet')cheatSheet.open=true;
+  });
+  let openBeforePrint=false;
+  addEventListener('beforeprint',()=>{openBeforePrint=cheatSheet.open;cheatSheet.open=true;});
+  addEventListener('afterprint',()=>{cheatSheet.open=openBeforePrint;});
+}
 const openSearch=()=>{dialog.showModal();input.focus();};
 document.querySelector('.search-trigger').addEventListener('click',openSearch);
 document.querySelector('.search-close').addEventListener('click',()=>dialog.close());

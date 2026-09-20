@@ -92,3 +92,9 @@ Source snapshot: 20 September 2026.
 - Added chapter reading routes, collapsible lecture indexes, and the complete lecture-to-chapter map. Relabeled supporting guides as Extra explanations and the workbench as OCaml setup. Decisions are documented in LECTURE_MERGE_REVIEW.md.
 - Checked the Lecture 2 redirect, nested answer, and keyboard disclosure. Checked Chapter 8 index-to-extension navigation and retained homework-scope caveats. Reviewed dark desktop and light mobile layouts; at 390 × 844, content width and scroll width both measured 375 px.
 - Static validation covers 36 canonical pages, 21 integrated destinations, 22 redirects, 106 diagrams, 9 cheat sheets, and 48 checkpoints. Existing OCaml checks remain in the deployment workflow.
+
+## Collapsible chapter cheat sheets
+
+- All nine chapter cheat sheets are native details disclosures, closed on ordinary chapter visits. The entire labeled heading is clickable and keyboard operable.
+- Direct cheat-sheet links reveal the content, including initial fragment navigation and repeated clicks. The syntax panel continues to recognize the cheat-sheet section. Printing temporarily opens the sheet and restores its previous state afterward; print-dialog output was not visually reviewed in this change.
+- Verified closed default, mouse expansion, Enter-key collapse, link activation, fragment reload, and dark mobile presentation. At 390 × 844, document and scroll widths both measured 375 px.

@@ -10,7 +10,9 @@
 <p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
 </details>
 <aside class="chapter-bridge"><strong>Cells → a reachable heap graph</strong><p>Records, pointers, and closures create paths between cells. Trace those paths to distinguish sharing, assignment, and safe reclamation.</p><a href="textbook-06.html#6-2-2-semantic-structure">Before this chapter: Implicit-reference semantics →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+<details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
+<p><span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary></p>
 <p><strong>The main idea:</strong> Treat the heap as a graph: sharing explains updates, and <a href="glossary.html#reachability" class="definition-link" title="Whether a location can be reached by following references from the current roots. Tracing garbage collection retains reachable cells conservatively. — English textbook, PDF p. 217">reachability</a> explains safe <a href="glossary.html#garbage-collection" class="definition-link" title="Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots. — English textbook, PDF p. 218">garbage collection</a>.</p>
 <table>
 <thead>
@@ -53,6 +55,7 @@
 </ol>
 <p><strong>Common trap:</strong> Leaving scope does not imply garbage. Reachability conservatively retains cells; it does not predict whether each cell will actually be used again.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=194">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
+</details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
 <p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#record">Records and field locations</a> · <a href="syntax.html#store">Locations and memory</a> · <a href="syntax.html#reach">Reachability and fixed points</a></p>

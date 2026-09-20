@@ -9,7 +9,9 @@
 <p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
 </details>
 <aside class="chapter-bridge"><strong>Environment-based meaning → substitution and encoding</strong><p>Reduce a smaller core language by preserving binding during substitution. Fix the reduction strategy and data representation before comparing results.</p><a href="textbook-04.html#4-2-semantic-structure">Before this chapter: Free and bound variables →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+<details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
+<p><span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary></p>
 <p><strong>The main idea:</strong> Understand computation through function abstraction, application, and <a href="glossary.html#capture-avoiding-substitution" class="definition-link" title="Replacing free occurrences of a name while renaming conflicting binders so that free variables in the replacement do not accidentally become bound. — English textbook, PDF p. 282">capture-avoiding substitution</a>.</p>
 <table>
 <thead>
@@ -56,6 +58,7 @@
 </ol>
 <p><strong>Common trap:</strong> The textbook’s Church numerals represent naturals. A normal-order evaluator and a <a href="glossary.html#call-by-value" class="definition-link" title="Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value. — English textbook, PDF p. 183">call-by-value</a> evaluator need not terminate on the same terms.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
+</details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
 <p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#lambda">Lambda binding and beta reduction</a> · <a href="syntax.html#grammar">Grammar and AST constructors</a> · <a href="syntax.html#match">Patterns and recursive cases</a></p>

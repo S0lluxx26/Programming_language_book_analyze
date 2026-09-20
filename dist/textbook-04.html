@@ -10,7 +10,9 @@
 <p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
 </details>
 <aside class="chapter-bridge"><strong>Environments → closures</strong><p>The new question is which environment survives when a function is passed or returned. Keep the caller context and the saved definition context separate.</p><a href="textbook-03.html#3-2-1-environment">Before this chapter: Environment lookup →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+<details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
+<p><span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary></p>
 <p><strong>The main idea:</strong> A function’s meaning depends on which <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> supplies its <a href="glossary.html#free-variable" class="definition-link" title="A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context. — English textbook, PDF p. 124">free variables</a> when it is called.</p>
 <table>
 <thead>
@@ -53,6 +55,7 @@
 </ol>
 <p><strong>Common trap:</strong> Function creation does not run the body. Later <a href="glossary.html#shadowing" class="definition-link" title="A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding. — English textbook, PDF p. 105">shadowing</a> in the caller does not rewrite the closure’s saved bindings.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
+</details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
 <p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#closure">Closure and saved environment</a> · <a href="syntax.html#let">Binding: let x = e1 in e2</a> · <a href="syntax.html#function">Functions and application</a></p>

@@ -26,7 +26,8 @@
   const patterns=new Map(entries.map(e=>[e.id,e.terms.map(term=>new RegExp((/^[a-zA-Z]/.test(term)?'\\b':'')+escape(term)+(/[a-zA-Z]$/.test(term)?'\\b':''),/^[A-Z]$/.test(term)?'':'i'))]));
   const chunks=[];let current={heading:null,title:document.querySelector('h1').textContent,text:''};chunks.push(current);
   for(const node of article.children){
-    if(/^H[234]$/.test(node.tagName)){current={heading:node,title:node.textContent,text:node.textContent};chunks.push(current);}
+    if(node.matches('.chapter-cheatsheet')){const heading=node.querySelector('h2');current={heading,title:heading.textContent,text:node.textContent};chunks.push(current);}
+    else if(/^H[234]$/.test(node.tagName)){current={heading:node,title:node.textContent,text:node.textContent};chunks.push(current);}
     else {const copy=node.cloneNode(true);copy.querySelectorAll('.mermaid-figure,.diagram-source').forEach(n=>n.remove());if(!copy.matches('.mermaid-figure,.diagram-source'))current.text+=' '+copy.textContent;}
   }
   for(const chunk of chunks)chunk.entries=entries.filter(e=>patterns.get(e.id).some(re=>re.test(chunk.text)));

@@ -9,7 +9,9 @@
 <p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
 </details>
 <aside class="chapter-bridge"><strong>OCaml programs → an interpreter</strong><p>Now OCaml processes a separate language’s syntax tree. Carry an environment to give variable names meaning; do not confuse constructing an AST with running it.</p><a href="textbook-02.html#2-2-recursive-functions">Before this chapter: Recursive functions →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+<details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
+<p><span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary></p>
 <p><strong>The main idea:</strong> An interpreter gives meaning to an expression by recursively reading its syntax tree in an <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a>.</p>
 <table>
 <thead>
@@ -52,6 +54,7 @@
 </ol>
 <p><strong>Common trap:</strong> Building an AST does not execute it. Extending an environment should not overwrite the saved outer context.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
+</details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
 <p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#let">Binding: let x = e1 in e2</a> · <a href="syntax.html#evaluation">Runtime evaluation judgment</a> · <a href="syntax.html#extension">Lookup and map extension</a></p>

@@ -36,6 +36,12 @@
 @media(max-width:1200px){.on-this-page.notation-rail{display:block;position:fixed;top:auto;bottom:16px;right:16px;width:300px;max-width:calc(100vw - 32px);z-index:9}.notation-rail #notation-body{max-height:min(65vh,540px)}.notation-panel{box-shadow:0 5px 30px #142b4830}main{padding-bottom:55px}}
 @media print{.on-this-page.notation-rail{display:none!important}}
 /* Section-level active recall without expanding every answer at once. */
+.chapter-cheatsheet{background:var(--soft);padding:18px 22px;margin:24px 0 30px}
+.chapter-cheatsheet>summary{color:var(--blue)}
+.chapter-cheatsheet>summary h2{display:inline;font-size:25px;margin:0;letter-spacing:-.3px}
+.cheatsheet-hint{display:block;color:var(--muted);font-size:12px;font-weight:400;margin:5px 0 0 18px}
+.chapter-cheatsheet[open]>summary{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+@media(max-width:800px){.chapter-cheatsheet{padding:15px}.chapter-cheatsheet>summary h2{font-size:23px}}
 .chapter-route{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;border:1px solid var(--line);padding:14px 18px;border-radius:6px;margin-bottom:18px;font-size:13px;background:var(--soft)}
 .chapter-route strong{flex-basis:100%;color:var(--ink)}
 .lecture-heading{scroll-margin-top:85px;border-top:1px solid var(--line);padding-top:22px;margin-top:34px}

@@ -10,11 +10,11 @@ export function chapterCheatSheet(chapter) {
     const definition = definitions.find(d => d.term.toLowerCase() === term.toLowerCase());
     return '| ' + (definition ? '[' + term + '](glossary.html#' + definition.id + ')' : term) + ' | ' + meaning + ' |';
   }).join('\n');
-  return '\n## Chapter cheat sheet\n\n**The main idea:** ' + sheet.meaning + '\n\n' +
+  return '\n<details class="chapter-cheatsheet"><summary>\n\n## Chapter cheat sheet\n\n<span class="cheatsheet-hint">Main idea, definitions, and solving steps</span></summary>\n\n**The main idea:** ' + sheet.meaning + '\n\n' +
     '| Key term | Concise meaning |\n|---|---|\n' + terms + '\n\n' +
     '**Rule to remember:** ' + sheet.formula + '\n\n' +
     '**Small example:** ' + sheet.example + '\n\n' +
     '**How to solve problems:**\n\n' + sheet.steps.map((s, i) => (i + 1) + '. ' + s).join('\n') + '\n\n' +
     '**Common trap:** ' + sheet.trap + '\n\n' +
-    '[Read the chapter in the original PDF](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=' + page + ') · [Continue to the detailed sections](#before-you-begin)\n\n';
+    '[Read the chapter in the original PDF](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=' + page + ') · [Continue to the detailed sections](#before-you-begin)\n\n</details>\n\n';
 }
