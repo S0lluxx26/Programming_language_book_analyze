@@ -30,6 +30,8 @@ jobs:
         run: opam exec -- ocaml examples/notebook_examples.ml
       - name: Run complete annotated chapter examples
         run: opam exec -- ocaml examples/reading_aids.ml
+      - name: Run supporting reading examples
+        run: opam exec -- ocaml examples/supporting_examples.ml
       - name: Run all textbook worked solutions
         run: |
           for solution in examples/textbook_*.ml; do

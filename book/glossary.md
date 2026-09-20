@@ -19,13 +19,21 @@ Highlighted terms throughout the notebook link here. Every entry gives an origin
 
 The course uses different letters for environments and memory in different documents. In HW3, σ is the environment and M is memory. A symbol’s domain and codomain identify its role.
 
+## Choose the kind of question
+
+- **What does this symbol mean?** Start with the [syntax reference](syntax.html#same-symbol-different-job).
+- **How does the definition work in a program?** Each entry below links to its numbered textbook context and a focused explanation.
+- **Which assignment uses it?** Follow the [homework map](homework-map.html), where textbook and assignment numbers stay separate.
+
+The evaluator names in the notation table are conceptual. Actual signatures differ: HW2 uses `eval expression environment`; HW3 uses `eval environment memory expression`. Read the template before copying a call.
+
 ## Inductive definition
 
 A specification of the smallest set containing its base elements and closed under its construction rules.
 
 **Use it in:** HW1 P9–P13; every AST in HW2–HW4.
 
-[See the explanation](01-induction.html) · [English textbook, PDF p. 12](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=12)
+[Textbook §1.1](textbook-01.html#1-1-inductive-definition-of-sets) · [Focused explanation](01-induction.html) · [English textbook, PDF p. 12](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=12)
 
 ## Inference rule
 
@@ -33,7 +41,7 @@ A rule that derives a conclusion when all its premises and side conditions hold.
 
 **Use it in:** HW2 and HW3 semantic rules; HW4 typing rules.
 
-[See the explanation](01-induction.html) · [English textbook, PDF p. 13](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=13)
+[Textbook §1.1](textbook-01.html#1-1-inductive-definition-of-sets) · [Focused explanation](01-induction.html) · [English textbook, PDF p. 13](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=13)
 
 ## Abstract syntax tree
 
@@ -41,7 +49,7 @@ A tree representing a program's constructors and children rather than its surfac
 
 **Use it in:** HW1 P12–P15; HW2–HW4 exp datatypes.
 
-[See the explanation](04-expressions.html) · [English textbook, PDF p. 23](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=23)
+[Textbook §1.2](textbook-01.html#1-2-inductive-definition-of-programming-languages) · [Focused explanation](04-expressions.html) · [English textbook, PDF p. 23](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=23)
 
 ## Semantics
 
@@ -49,7 +57,7 @@ The rules defining a program's meaning, such as how an expression evaluates to a
 
 **Use it in:** HW2 runml; HW3 runb.
 
-[See the explanation](04-expressions.html) · [English textbook, PDF p. 25](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=25)
+[Textbook §1.2](textbook-01.html#1-2-inductive-definition-of-programming-languages) · [Focused explanation](04-expressions.html) · [English textbook, PDF p. 25](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=25)
 
 ## Structural induction
 
@@ -57,7 +65,7 @@ A proof method with a base case for each base constructor and an inductive case 
 
 **Use it in:** HW1 P9–P13 correctness reasoning.
 
-[See the explanation](01-induction.html) · [English textbook, PDF p. 28](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=28)
+[Textbook §1.3](textbook-01.html#1-3-inductive-proof) · [Focused explanation](01-induction.html) · [English textbook, PDF p. 28](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=28)
 
 ## Pattern matching
 
@@ -65,7 +73,7 @@ Selecting a case by the constructor and components of a value, binding names to 
 
 **Use it in:** All HW1 recursive datatypes; interpreter and checker branches.
 
-[See the explanation](02-ocaml.html) · [English textbook, PDF p. 54](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=54)
+[Textbook §2.1](textbook-02.html#2-1-ocaml-basics) · [Focused explanation](02-ocaml.html) · [English textbook, PDF p. 54](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=54)
 
 ## Structural recursion
 
@@ -73,7 +81,7 @@ Computing over an inductively built value by recursively processing its smaller 
 
 **Use it in:** HW1 lists, trees, formulas, and symbolic differentiation.
 
-[See the explanation](03-recursion.html) · [English textbook, PDF p. 70](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=70)
+[Textbook §2.2](textbook-02.html#2-2-recursive-functions) · [Focused explanation](03-recursion.html) · [English textbook, PDF p. 70](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=70)
 
 ## Tail recursion
 
@@ -81,7 +89,7 @@ Recursion in which the recursive call is the final computation in its branch. An
 
 **Use it in:** HW1 long list and interval traversals.
 
-[See the explanation](03-recursion.html) · [English textbook, PDF p. 79](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=79)
+[Textbook §2.2](textbook-02.html#2-2-recursive-functions) · [Focused explanation](03-recursion.html) · [English textbook, PDF p. 79](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=79)
 
 ## Higher-order function
 
@@ -89,7 +97,7 @@ A function that accepts a function as an argument or returns one as its result.
 
 **Use it in:** HW1 P6 sigma, P7 forall, P8 double.
 
-[See the explanation](03-recursion.html) · [English textbook, PDF p. 81](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81)
+[Textbook §2.3](textbook-02.html#2-3-higher-order-functions) · [Focused explanation](03-recursion.html) · [English textbook, PDF p. 81](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81)
 
 ## Environment
 
@@ -97,7 +105,7 @@ A mapping that gives identifiers their current interpretation. It maps names to 
 
 **Use it in:** HW1 P15 context; HW2 values; HW3 locations and procedures.
 
-[See the explanation](04-expressions.html) · [English textbook, PDF p. 102](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=102)
+[Textbook §3.2.1](textbook-03.html#3-2-1-environment) · [Focused explanation](04-expressions.html) · [English textbook, PDF p. 102](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=102)
 
 ## Syntactic sugar
 
@@ -105,7 +113,7 @@ A convenient language form expressible by a translation into more basic forms wh
 
 **Use it in:** HW2 fixed-point examples; let and multiargument encodings.
 
-[See the explanation](15-lambda.html) · [English textbook, PDF p. 123](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=123)
+[Textbook §4.1](textbook-04.html#4-1-syntactic-structure) · [Focused explanation](15-lambda.html) · [English textbook, PDF p. 123](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=123)
 
 ## Free variable
 
@@ -113,7 +121,7 @@ A variable occurrence without a corresponding binder inside the expression being
 
 **Use it in:** HW1 P15; HW2 closures.
 
-[See the explanation](06-scope-recursion.html) · [English textbook, PDF p. 124](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=124)
+[Textbook §4.2](textbook-04.html#4-2-semantic-structure) · [Focused explanation](06-scope-recursion.html) · [English textbook, PDF p. 124](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=124)
 
 ## Lexical scope
 
@@ -121,7 +129,7 @@ A reference is associated with an enclosing declaration according to program str
 
 **Use it in:** HW1 P15; HW2 and HW3 procedure bodies.
 
-[See the explanation](05-closures.html) · [English textbook, PDF p. 128](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=128)
+[Textbook §4.2.1](textbook-04.html#4-2-1-static-scope) · [Focused explanation](05-closures.html) · [English textbook, PDF p. 128](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=128)
 
 ## Closure
 
@@ -129,7 +137,7 @@ A procedure's parameter and body packaged with its definition environment, which
 
 **Use it in:** HW2 Procedure, RecProcedure, and MRecProcedure.
 
-[See the explanation](05-closures.html) · [English textbook, PDF p. 129](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=129)
+[Textbook §4.2.1](textbook-04.html#4-2-1-static-scope) · [Focused explanation](05-closures.html) · [English textbook, PDF p. 129](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=129)
 
 ## Dynamic scope
 
@@ -137,7 +145,7 @@ Resolving nonlocal names through runtime calling environments. This differs from
 
 **Use it in:** A useful negative test for HW2 and HW3.
 
-[See the explanation](05-closures.html) · [English textbook, PDF p. 134](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=134)
+[Textbook §4.2.2](textbook-04.html#4-2-2-dynamic-scope) · [Focused explanation](05-closures.html) · [English textbook, PDF p. 134](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=134)
 
 ## Store
 
@@ -145,15 +153,15 @@ A mapping from locations to their current values. Stateful evaluation returns bo
 
 **Use it in:** HW3 every stateful evaluation case.
 
-[See the explanation](07-state.html) · [English textbook, PDF p. 165](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=165)
+[Textbook §6.1.2](textbook-06.html#6-1-2-semantic-structure) · [Focused explanation](07-state.html) · [English textbook, PDF p. 165](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=165)
 
 ## Call by value
 
-Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value.
+Evaluate the argument before entering the function body. A pure interpreter binds the parameter to that value; an implicit-reference interpreter puts it in a fresh parameter cell. Copying a reference or record value can still preserve shared cells.
 
 **Use it in:** HW2 CALL; HW3 CALLV.
 
-[See the explanation](07-state.html) · [English textbook, PDF p. 183](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=183)
+[Textbook §6.2.3](textbook-06.html#6-2-3-function-call-method) · [Focused explanation](07-state.html) · [English textbook, PDF p. 183](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=183)
 
 ## Call by reference
 
@@ -161,7 +169,7 @@ Bind a formal parameter to the caller's existing variable location so assignment
 
 **Use it in:** HW3 CALLR.
 
-[See the explanation](07-state.html) · [English textbook, PDF p. 184](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=184)
+[Textbook §6.2.3](textbook-06.html#6-2-3-function-call-method) · [Focused explanation](07-state.html) · [English textbook, PDF p. 184](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=184)
 
 ## Record
 
@@ -169,7 +177,7 @@ In the imperative course language, a collection mapping field names to locations
 
 **Use it in:** HW3 RECORD, FIELD, ASSIGNF.
 
-[See the explanation](08-records.html) · [English textbook, PDF p. 194](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=194)
+[Textbook §7.1](textbook-07.html#7-1-records) · [Focused explanation](08-records.html) · [English textbook, PDF p. 194](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=194)
 
 ## Reachability
 
@@ -177,15 +185,15 @@ Whether a location can be reached by following references from the current roots
 
 **Use it in:** Reasoning extension to HW3 sharing; no GC implementation requested.
 
-[See the explanation](08-records.html) · [English textbook, PDF p. 217](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=217)
+[Textbook §7.3.2](textbook-07.html#7-3-2-automatic-memory-recycling) · [Focused explanation](08-records.html) · [English textbook, PDF p. 217](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=217)
 
 ## Garbage collection
 
 Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots.
 
-**Use it in:** Lecture extension beyond HW3.
+**Use it in:** Textbook §7.3 and lecture 9; beyond the HW3 implementation contract.
 
-[See the explanation](08-records.html) · [English textbook, PDF p. 218](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=218)
+[Textbook §7.3.2](textbook-07.html#7-3-2-automatic-memory-recycling) · [Focused explanation](08-records.html) · [English textbook, PDF p. 218](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=218)
 
 ## Type
 
@@ -193,7 +201,7 @@ An abstraction classifying values and constraining operations that may safely us
 
 **Use it in:** HW4 typ datatype and typeof.
 
-[See the explanation](11-types.html) · [English textbook, PDF p. 226](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226)
+[Textbook §8.2](textbook-08.html#8-2-type) · [Focused explanation](11-types.html) · [English textbook, PDF p. 226](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226)
 
 ## Type environment
 
@@ -201,7 +209,7 @@ A context mapping identifiers to types, or to type schemes in a polymorphic syst
 
 **Use it in:** HW4 variable lookup, bindings, procedures, recursion.
 
-[See the explanation](11-types.html) · [English textbook, PDF p. 230](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=230)
+[Textbook §8.3](textbook-08.html#8-3-type-environment) · [Focused explanation](11-types.html) · [English textbook, PDF p. 230](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=230)
 
 ## Typing judgment
 
@@ -209,7 +217,7 @@ A statement Γ ⊢ e : T asserting that expression e has type T under the assump
 
 **Use it in:** HW4 all constraint rules.
 
-[See the explanation](11-types.html) · [English textbook, PDF p. 232](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=232)
+[Textbook §8.4](textbook-08.html#8-4-type-inference-rules) · [Focused explanation](11-types.html) · [English textbook, PDF p. 232](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=232)
 
 ## Soundness
 
@@ -217,7 +225,7 @@ The guarantee that accepted programs satisfy the safety property established for
 
 **Use it in:** HW4 checker contract and partial-operation caveat.
 
-[See the explanation](11-types.html) · [English textbook, PDF p. 241](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=241)
+[Textbook §8.4](textbook-08.html#8-4-type-inference-rules) · [Focused explanation](11-types.html) · [English textbook, PDF p. 241](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=241)
 
 ## Type variable
 
@@ -225,7 +233,7 @@ An unknown type used in inference. Constraints restrict what it can become; a fr
 
 **Use it in:** HW4 fresh_tyvar.
 
-[See the explanation](12-inference.html) · [English textbook, PDF p. 254](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=254)
+[Textbook §8.6.1](textbook-08.html#8-6-1-generating-type-equations) · [Focused explanation](12-inference.html) · [English textbook, PDF p. 254](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=254)
 
 ## Unification
 
@@ -233,7 +241,7 @@ Solving type equations by finding a substitution that makes both sides structura
 
 **Use it in:** HW4 constraint solver.
 
-[See the explanation](12-inference.html) · [English textbook, PDF p. 259](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=259)
+[Textbook §8.6.2](textbook-08.html#8-6-2-solving-type-equations) · [Focused explanation](12-inference.html) · [English textbook, PDF p. 259](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=259)
 
 ## Occurs check
 
@@ -241,7 +249,7 @@ Rejecting a proposed variable binding when the variable occurs within its replac
 
 **Use it in:** HW4 self-application and indirect cyclic constraints.
 
-[See the explanation](12-inference.html) · [English textbook, PDF p. 269](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=269)
+[Textbook §8.6.2](textbook-08.html#8-6-2-solving-type-equations) · [Focused explanation](12-inference.html) · [English textbook, PDF p. 269](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=269)
 
 ## Substitution
 
@@ -249,7 +257,7 @@ A mapping from type variables to types, applied throughout a type expression. Te
 
 **Use it in:** HW4 composed substitutions; lambda calculus term substitution.
 
-[See the explanation](12-inference.html) · [English textbook, PDF p. 266](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=266)
+[Textbook §8.6.2](textbook-08.html#8-6-2-solving-type-equations) · [Focused explanation](12-inference.html) · [English textbook, PDF p. 266](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=266)
 
 ## Let-polymorphism
 
@@ -257,7 +265,7 @@ Giving an eligible let-bound value a type scheme whose quantified variables are 
 
 **Use it in:** HW4 extension if required by the instructor.
 
-[See the explanation](13-polymorphism.html) · [English textbook, PDF p. 273](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=273)
+[Textbook §8.7](textbook-08.html#8-7-polymorphic-type-systems) · [Focused explanation](13-polymorphism.html) · [English textbook, PDF p. 273](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=273)
 
 ## Type scheme
 
@@ -265,7 +273,7 @@ A type together with explicitly universally quantified variables, such as ∀α.
 
 **Use it in:** Polymorphic let inference.
 
-[See the explanation](13-polymorphism.html) · [Lecture 18, PDF p. 12](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=12)
+[Textbook §8.7](textbook-08.html#8-7-polymorphic-type-systems) · [Focused explanation](13-polymorphism.html) · [Lecture 18, PDF p. 12](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=12)
 
 ## Continuation
 
@@ -273,7 +281,7 @@ An explicit representation of the work waiting for a computation's result. Excep
 
 **Use it in:** Lecture 10 extension; not a posted interpreter constructor.
 
-[See the explanation](09-exceptions.html) · [Lecture 10, PDF p. 9](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf#page=9)
+[Integrated lecture 10 extension](textbook-06.html#lecture-10) · [Focused explanation](09-exceptions.html) · [Lecture 10, PDF p. 9](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf#page=9)
 
 ## Dynamic dispatch
 
@@ -281,7 +289,7 @@ Choosing a method implementation by searching from the receiver's runtime class 
 
 **Use it in:** Builds on HW3 state and records.
 
-[See the explanation](10-objects.html) · [Lecture 11, PDF p. 25](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf#page=25)
+[Integrated lecture 11 extension](textbook-07.html#lecture-11) · [Focused explanation](10-objects.html) · [Lecture 11, PDF p. 25](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf#page=25)
 
 ## Subtyping
 
@@ -289,7 +297,7 @@ A relation S <: T allowing an S value where a T is expected. Function arguments 
 
 **Use it in:** Typed class extension, not ML− HW4.
 
-[See the explanation](14-subtyping.html) · [Lecture 19, PDF p. 8](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=8)
+[Integrated lecture 19 extension](textbook-08.html#lecture-19) · [Focused explanation](14-subtyping.html) · [Lecture 19, PDF p. 8](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=8)
 
 ## Lambda calculus
 
@@ -297,7 +305,7 @@ A core language of variables, abstractions, and applications, used to study bind
 
 **Use it in:** HW1 P15; HW2 fixed-point examples.
 
-[See the explanation](15-lambda.html) · [English textbook, PDF p. 279](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=279)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](15-lambda.html) · [English textbook, PDF p. 279](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=279)
 
 ## Beta reduction
 
@@ -305,7 +313,7 @@ Reducing an applied abstraction by substituting its argument for the parameter's
 
 **Use it in:** Understanding the fixed-point tests in HW2.
 
-[See the explanation](15-lambda.html) · [English textbook, PDF p. 281](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](15-lambda.html) · [English textbook, PDF p. 281](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281)
 
 ## Alpha-renaming
 
@@ -313,7 +321,7 @@ Consistently changing a binder and the occurrences it binds while preserving the
 
 **Use it in:** HW1 P15 scope reasoning and capture-avoiding substitution.
 
-[See the explanation](15-lambda.html) · [English textbook, PDF p. 283](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=283)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](15-lambda.html) · [English textbook, PDF p. 283](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=283)
 
 ## Normal order
 
@@ -321,7 +329,7 @@ Choosing the leftmost outermost reducible application, continuing under abstract
 
 **Use it in:** Lecture 20 evaluation-strategy comparison.
 
-[See the explanation](15-lambda.html) · [English textbook, PDF p. 284](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=284)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](15-lambda.html) · [English textbook, PDF p. 284](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=284)
 
 ## Capture-avoiding substitution
 
@@ -329,7 +337,7 @@ Replacing free occurrences of a name while renaming conflicting binders so that 
 
 **Use it in:** Textbook §9.3 reduce; HW1 binding analysis.
 
-[See the explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
 
 ## Shadowing
 
@@ -337,7 +345,7 @@ A nearer binding with the same name hides an outer binding within its scope; ext
 
 **Use it in:** Textbook §3.3 and §4.3; HW2 LET.
 
-[See the explanation](textbook-03.html) · [English textbook, PDF p. 105](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=105)
+[Textbook §3.2.1](textbook-03.html#3-2-1-environment) · [Focused explanation](textbook-03.html) · [English textbook, PDF p. 105](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=105)
 
 ## Normal form
 
@@ -345,7 +353,7 @@ A lambda term containing no beta-redex anywhere, including inside abstraction bo
 
 **Use it in:** Textbook §9.3 reduce.
 
-[See the explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
 
 ## Redex
 
@@ -353,5 +361,5 @@ A reducible lambda application whose function is an abstraction, of the form (la
 
 **Use it in:** Textbook §9.3 normal-order reduction.
 
-[See the explanation](textbook-09.html) · [English textbook, PDF p. 281](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281)
+[Textbook §9.1](textbook-09.html#9-1-lambda-calculus) · [Focused explanation](textbook-09.html) · [English textbook, PDF p. 281](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281)
 

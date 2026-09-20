@@ -65,7 +65,7 @@
 <h2 id="7-1-records">7.1 Records</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=194">Read in the PDF: p. 194</a>.</p>
 <p>A record value maps field names to locations. Each field therefore has its own mutable cell. Selecting a field first evaluates the record, finds the field location, and reads the current <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">store</a>. Updating a field changes that cell. Copying the record value preserves its field locations, so copies can share mutable fields.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-1.svg" width="536.76953125" height="405.70001220703125" alt="Chapter 7 - two record values share a field cell"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-07-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-1.svg" width="536.76953125" height="405.70001220703125" alt="Chapter 7 - two record values share a field cell"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 7 - two record values share a field cell
   accDescr: Separate variable cells hold records whose v fields both point to the same location, so a field update is visible through either name.
   A[&quot;Variable a&quot;] --&gt; LA[&quot;Variable cell LA&quot;]
@@ -232,7 +232,7 @@
 <li>Retain reachable cells.</li>
 <li>Test aliases and cycles.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-4.svg" width="418.736328125" height="491" alt="Lecture 9 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-4.svg" width="418.736328125" height="491" alt="Lecture 9 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 9 reasoning route
   accDescr: Numbered stages for applying records, pointers, and garbage collection.
@@ -296,7 +296,7 @@ flowchart TD
 <li>Choose method lookup start class.</li>
 <li>Run method with fields parameters and self.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-6.svg" width="443.12060546875" height="491" alt="Lecture 11 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-6.svg" width="443.12060546875" height="491" alt="Lecture 11 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 11 reasoning route
   accDescr: Numbered stages for applying classes and objects.

@@ -1,7 +1,11 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>From rules to an interpreter · The Programming Languages Notebook</title><meta name="description" content="Read semantic judgments and turn them into a small executable language."><meta name="theme-color" content="#142b48"><meta property="og:title" content="From rules to an interpreter"><meta property="og:description" content="Read semantic judgments and turn them into a small executable language."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" aria-current="page">From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Extra explanations · Interpreters</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">04 · Expressions &amp; environments</p><h1>From rules to an interpreter</h1><p class="dek">Read semantic judgments and turn them into a small executable language.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="syntax-is-shape-semantics-is-behavior">Syntax is shape; semantics is behavior</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Extra explanations · Interpreters</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">04 · Expressions &amp; environments</p><h1>From rules to an interpreter</h1><p class="dek">Read semantic judgments and turn them into a small executable language.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><aside class="study-bridge" aria-label="Textbook connection">
+<p><strong>Focused explanation</strong> · Translate each semantic premise into one explicit evaluator step.</p>
+<p><a href="textbook-03.html#depth-3-2-2">§3.2.2 · Full evaluation derivation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=107">Source PDF, p. 107</a></p>
+</aside>
+<h2 id="syntax-is-shape-semantics-is-behavior">Syntax is shape; semantics is behavior</h2>
 <p>An <strong><a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">abstract syntax tree</a> (AST)</strong> represents the structure of a program independently of surface punctuation. A grammar says which trees exist. A <a href="glossary.html#semantics" class="definition-link" title="The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules. — English textbook, PDF p. 25">semantics</a> says which results those trees produce. A syntactically valid program may still have undefined behavior in the language’s semantics.</p>
 <p>This original tiny language contains only integers, names, addition, and local binding:</p>
 <pre><code class="language-ocaml"><span class="hljs-keyword">type</span> expr =
@@ -31,7 +35,7 @@
 <p>This pedagogical evaluator has only integer values and uses <code>Failure</code> for missing names. The homework language has tagged values and requires <code>UndefinedSemantics</code>; preserve that distinction when adapting the idea.</p>
 <h2 id="derive-the-binding-case">Derive the binding case</h2>
 <p>For <code>let x = e1 in e2</code>, the binding rule has two premises: evaluate the definition in the old environment, then evaluate the body in an extended environment. The new name is not in scope inside its own ordinary <a class="syntax-link" href="syntax.html#let" title="Binding: let x = e1 in e2 — syntax meaning and source"><code>let</code></a> definition.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/04-expressions-1.svg" width="293.33544921875" height="611.4000244140625" alt="A step-by-step reasoning flow"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/04-expressions-1.svg" width="293.33544921875" height="611.4000244140625" alt="A step-by-step reasoning flow"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: A step-by-step reasoning flow
   accDescr: Each arrow passes the result of one reasoning step to the next.
   N0[&quot;Evaluate e1 in ρ&lt;br/&gt;The old scope determines the definition’s&lt;br/&gt;meaning.&quot;]
@@ -47,6 +51,37 @@ let x = x + 3 in
 x + 2
 </code></pre>
 <p>The second definition sees the old <code>x = 4</code>, so it produces <code>7</code>. Its body sees <code>x = 7</code> and returns <code>9</code>. Evaluating the definition in the extended environment would either create an accidental recursive binding or require a value that does not exist yet.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Expression being evaluated</th>
+<th>Environment used</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>First initializer <code>4</code></td>
+<td><a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a></td>
+<td><code>4</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Second initializer <code>x + 3</code></td>
+<td><code>[(&quot;x&quot;, 4)]</code></td>
+<td><code>7</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Inner body <code>x + 2</code></td>
+<td><code>[(&quot;x&quot;, 7); (&quot;x&quot;, 4)]</code></td>
+<td><code>9</code></td>
+</tr>
+</tbody>
+</table>
+<p>The corresponding AST is <code>Bind(&quot;x&quot;, Number 4, Bind(&quot;x&quot;, Plus(Name &quot;x&quot;, Number 3), Plus(Name &quot;x&quot;, Number 2)))</code>. The extra entries model <a href="glossary.html#shadowing" class="definition-link" title="A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding. — English textbook, PDF p. 105">shadowing</a>; they are not assignments to a shared variable. <a href="textbook-03.html#depth-3-2-2">Chapter 3's full derivation</a> shows how the same three steps appear as premises above an inference-rule line.</p>
 <h2 id="premises-become-recursive-calls">Premises become recursive calls</h2>
 <table>
 <thead>

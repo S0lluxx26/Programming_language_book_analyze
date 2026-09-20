@@ -55,6 +55,25 @@ Consider the statement **tips(t) = forks(t) + 1**, where `forks` counts internal
 
 The proof branches exactly where the recursive function branches. This correspondence is more useful than memorizing a proof template independently of the data.
 
+<details class="textbook-depth"><summary>Step by step · Turn the invariant into an executable check</summary>
+
+The proof refers to `forks`; here is its complete definition beside `tips`:
+
+```ocaml
+let rec forks = function
+  | Tip -> 0
+  | Fork (left, right) -> 1 + forks left + forks right
+```
+
+1. For `Tip`, the pair `(tips, forks)` is `(1, 0)`.
+2. For `Fork(Tip, Tip)`, combine the children: `(2, 1)`.
+3. For `Fork(Tip, Fork(Tip, Tip))`, combine `(1, 0)` and `(2, 1)`: `(3, 2)`.
+4. Check `tips t = forks t + 1` on these values. This catches an implementation mistake, while the induction proof above establishes the claim for every finite tree.
+
+The [runnable supporting examples](examples/supporting_examples.ml) include both functions and these checks. For the source proof method, return to [§1.3](textbook-01.html#depth-1-3).
+
+</details>
+
 ## From grammar to OCaml
 
 | Mathematical idea | OCaml representation | What to check |

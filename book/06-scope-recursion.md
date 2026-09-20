@@ -31,6 +31,26 @@ is_even 3 → is_odd 2 → is_even 1 → is_odd 0 → false
 
 At every body entry, both procedure names must be bound correctly. Merely adding the currently executing name is insufficient. The active formal parameter gets the current argument; it is not a permanent binding shared by future calls.
 
+<details class="textbook-depth"><summary>Step by step · What changes at each mutual call?</summary>
+
+Let `E` and `O` be the even and odd closures sharing definition environment `ρ0`. Each closure carries both definitions, with its own definition first.
+
+| Call | Active parameter | Body environment, nearest binding first |
+|---|---|---|
+| `is_even 3` | `n = 3` | `[n ↦ 3, is_even ↦ E, is_odd ↦ O]ρ0` |
+| `is_odd 2` | `n = 2` | `[n ↦ 2, is_odd ↦ O, is_even ↦ E]ρ0` |
+| `is_even 1` | `n = 1` | `[n ↦ 1, is_even ↦ E, is_odd ↦ O]ρ0` |
+| `is_odd 0` | `n = 0` | Base case returns `false` |
+
+1. Obtain the selected closure from the caller.
+2. Evaluate the new argument in the caller.
+3. Restore both definitions over `ρ0`, then bind the selected parameter.
+4. Return the body result to the previous call; do not overwrite `ρ0` with that call's local parameter.
+
+Use [§5.3's seven-part closure diagram](textbook-05.html#depth-5-3) to map this table to `MRecProcedure`. Lexical addresses in the next section are a separate [Lecture 7 extension](textbook-04.html#lecture-07), not a prerequisite for implementing this representation.
+
+</details>
+
 ## Lexical addresses remove spelling from lookup
 
 A name can be replaced with the position of its binder in a stack of surrounding binders. The nearest binder has index `0`, the next one has index `1`, and so on in the simple one-binding-per-frame convention.

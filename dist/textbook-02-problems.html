@@ -45,7 +45,7 @@
 <li><strong>Combine with append.</strong> Append the current inner list to the flattened tail, preserving order.</li>
 </ol>
 </div>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-2.svg" width="533.52685546875" height="609.0406494140625" alt="Problem 2 - flatten a list of lists"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-2.svg" width="533.52685546875" height="609.0406494140625" alt="Problem 2 - flatten a list of lists"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 2 - flatten a list of lists
   accDescr: Flatten the tail, then append the current inner list before that result.
   A[&quot;Outer list&quot;] --&gt; B{&quot;Empty?&quot;}
@@ -70,7 +70,7 @@
 <li><strong>Recurse on both tails.</strong> Keep the same alternating rule until one input ends.</li>
 </ol>
 </div>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-3.svg" width="520.082275390625" height="559.1062622070312" alt="Problem 3 - interleave with asymmetric remainders"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-3.svg" width="520.082275390625" height="559.1062622070312" alt="Problem 3 - interleave with asymmetric remainders"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 3 - interleave with asymmetric remainders
   accDescr: When either list is exhausted, return the other; otherwise emit two heads and recur on two tails.
   A[&quot;Inspect both lists&quot;] --&gt; B{&quot;Either list empty?&quot;}
@@ -178,7 +178,7 @@
 <li><strong>Apply and decrease.</strong> Replace x with f x and decrease the count until zero.</li>
 </ol>
 </div>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-7.svg" width="460.31005859375" height="622.2281494140625" alt="Problem 7 - build an n-fold function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-7.svg" width="460.31005859375" height="622.2281494140625" alt="Problem 7 - build an n-fold function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 7 - build an n-fold function
   accDescr: Return a function whose loop counts applications down to zero while carrying the current value.
   A[&quot;Receive n and f&quot;] --&gt; B[&quot;Return a function waiting for x&quot;]
@@ -206,7 +206,7 @@
 <li><strong>Use the required fold.</strong> Implement that rule with fold_right; strict folding still computes the suffix.</li>
 </ol>
 </div>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-8.svg" width="290.859375" height="443.0999755859375" alt="Problem 8 - fold universal truth"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-8.svg" width="290.859375" height="443.0999755859375" alt="Problem 8 - fold universal truth"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 8 - fold universal truth
   accDescr: The empty list is true; combine each predicate result with the suffix&#39;s result using conjunction.
   A[&quot;Empty-list answer: true&quot;] --&gt; B[&quot;Right fold computes suffix result&quot;]

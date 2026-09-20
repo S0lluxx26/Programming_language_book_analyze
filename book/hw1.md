@@ -2,7 +2,7 @@
 
 The professor's [HW1 starter folder](https://github.com/kupl-courses/COSE212-2026fall/tree/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1) contains one `.ml` file per problem. Each problem below links to its exact file and public function type. These are TODO templates, not official completed solutions. In particular, `mem.ml` and `mirror.ml` define **different** types with the same name `btree`; work in the appropriate file.
 
-Read each numbered **Thinking steps** list first, then follow the matching diagram and use the explanation below it to check your assumptions. In a decision diagram, follow the applicable branch; do not execute mutually exclusive branches in sequence.
+Read the public interface, connect it to the textbook using the table below, then follow the numbered **Thinking steps** and matching diagram. Use the boundary checks before coding. In a decision diagram, follow the applicable branch; do not execute mutually exclusive branches in sequence.
 
 The [official handout](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf) is six PDF pages. Read the supplied type before coding. First decide what information each helper needs, then choose base cases and recursive steps. The examples below are small independent checks and derivation strategies; preserve the provided template interfaces.
 
@@ -19,6 +19,28 @@ flowchart TD
   E --> F
   F --> G["4. Test ordinary, boundary, and adversarial cases"]
 ```
+
+## Match homework to the textbook
+
+<p class="table-scroll-hint">On narrow screens, scroll this table sideways to read all three columns.</p>
+
+| HW1 task | Textbook preparation | Difference to preserve |
+|---|---|---|
+| P1 · prime | [§2.2 recursive design](textbook-02.html#depth-2-2) | This is a divisor search, not a numbered §2.4 problem |
+| P2 · range | [Problem 1](textbook-02-problems.html#problem-1-inclusive-range) | HW1 explicitly requires `[]` for reversed endpoints |
+| P3 · suml | [§2.3 folds](textbook-02.html#depth-2-3) | Returns an integer sum; textbook concat returns a flattened list |
+| P4 · drop | [Problem 5](textbook-02-problems.html#problem-5-drop-a-prefix) | Preserve list-then-count argument order; negative policy is unstated |
+| P5 · max/min | [§2.2 recursive design](textbook-02.html#depth-2-2) | Use a real element as the initial candidate; no empty maximum is specified |
+| P6 · sigma | [Problem 6](textbook-02-problems.html#problem-6-generalized-summation) | Same higher-order inclusive-sum interface |
+| P7 · forall | [Problem 8](textbook-02-problems.html#problem-8-universal-predicate-with-a-right-fold) | The textbook requires fold_right; HW1 allows a direct recursive traversal |
+| P8 · double | [Problem 7](textbook-02-problems.html#problem-7-repeated-function-application) | Textbook iter takes a pair and a count; double is curried and applies exactly twice |
+| P9 · mem | [§1.3 constructors and proof](textbook-01.html#depth-1-3) | The supplied tree has Empty/Node and no ordering invariant |
+| P10 · mirror | [§1.3 constructors and proof](textbook-01.html#depth-1-3) | Its Leaf/Left/Right/LeftRight tree differs from P9 |
+| P11 · natadd/natmul | [Problem 11](textbook-02-problems.html#problem-11-peano-addition-and-multiplication) | Keep the starter's public names and ZERO/SUCC result type |
+| P12 · eval | [§3.2.2 evaluation rules](textbook-03.html#depth-3-2-2) | Formula and arithmetic results differ; no environment is needed here |
+| P13 · diff | [Problem 12](textbook-02-problems.html#problem-12-symbolic-differentiation) | Same aexp shape, different problem number; output need not be uniquely simplified |
+| P14 · calculator | [§3.2.1 environments](textbook-03.html#depth-3-2-1) | A private helper carries X's current binding; bounds/scoping policies need care |
+| P15 · check | [§4.2 free variables](textbook-04.html#depth-4-2) | Check bound names without evaluating the program |
 
 ## P1 · Primality
 
@@ -93,6 +115,8 @@ Choose one operand for structural recursion. Addition satisfies `add ZERO b = b`
 **Connection:** syntax-directed interpretation with two result domains. **Source:** [pp. 4–5](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=4).
 
 Use a Boolean formula evaluator and an integer arithmetic evaluator. `Equal` asks the arithmetic evaluator for two numbers, then compares them. Implication is false only when its premise is true and its conclusion is false, so its truth function is `(not a) || b`. **Checks:** all four implication input pairs, nested negation, and equality between differently structured arithmetic expressions producing the same value.
+
+The helper dependency is one-way: `eval : formula -> bool` uses a private `eval_exp : exp -> int`; `eval_exp` does not call `eval`. Define `eval_exp` first. The source's `type formula = ... and exp = ...` groups the declarations, but does not require a mutually recursive pair of functions.
 
 ## P13 · Symbolic differentiation
 

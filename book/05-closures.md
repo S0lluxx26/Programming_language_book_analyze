@@ -62,6 +62,24 @@ In `proc y (x + y)`, `y` is bound by the procedure and `x` is free relative to t
 
 A correct implementation may save the entire environment for simplicity. An optimized implementation can save only the bindings for the body’s free variables. This is a representation choice; it must preserve the same lexical meaning.
 
+## Capturing a binding does not freeze mutable contents
+
+The integer example above captures an immutable value. When a saved binding identifies a mutable cell, later calls read that cell's current contents:
+
+```ocaml
+let captured_cell () =
+  let cell = ref 10 in
+  let read () = !cell in
+  cell := 90;
+  read ()
+```
+
+1. `read` captures the binding of `cell` to a reference location.
+2. `cell := 90` changes the contents at that location; it does not introduce a shadowing binding.
+3. `captured_cell ()` returns `90`. A new `let cell = ref 90 in ...` would instead create another binding and leave the captured cell untouched.
+
+This connects lexical scope in [§4.2.1](textbook-04.html#depth-4-2-1) to the environment/store distinction in [§6.1.2](textbook-06.html#depth-6-1-2). The runnable supporting examples check both mutation and shadowing.
+
 ## The homework connection
 
 [HW1 P15](hw1.html#p15-free-variable-checker) asks whether every variable occurrence is bound. [HW2](hw2.html#closures-and-recursion) turns that binding structure into runtime behavior. A test with repeated names and a function created before rebinding will expose accidental dynamic scope immediately.

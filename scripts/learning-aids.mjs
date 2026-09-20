@@ -1,5 +1,7 @@
 import {integrateLectures, lectureTarget, lectureMap} from './integrated-lectures.mjs';
 import fs from 'node:fs';
+import {supportingBridge} from './supporting-guides.mjs';
+import {textbookContextLink} from './textbook-context.mjs';
 import {addSectionCheckpoints} from './section-checkpoints.mjs';
 import {addTextbookDepth} from './textbook-depth.mjs';
 export const lectures=JSON.parse(fs.readFileSync('book/lecture-guides.json','utf8'));
@@ -15,7 +17,7 @@ const syntaxLink=id=>{const s=syntax.find(s=>s.id===id);if(!s)throw Error('Unkno
 export function addLearningAids(page,source){
   if(page==='textbook')return source+lectureMap();
   const match=page.match(/^textbook-(\d\d)$/);
-  if(!match)return source;
+  if(!match)return supportingBridge(page)+source;
   const chapter=Number(match[1]),w=walkthroughs.find(w=>w.chapter===chapter);
 
   const links=(chapter===5?lectures.filter(l=>[3,4,6].includes(l.n)):[]).map(l=>'[Lecture '+l.n+']('+lectureTarget(l.n)+')').join(' · ');
@@ -32,6 +34,12 @@ export function generateLearningPages(){
   for(const s of syntax){
     const d=defs.find(d=>d.id===s.definition);if(!d)throw Error('Unknown definition '+s.definition);
     ref+='<a id="'+s.id+'"></a>\n\n## '+s.label+'\n\n**Look for:** '+s.tokens.map(t=>tick+t+tick).join(', ')+'.\n\n'+s.meaning+'\n\n**Example:** '+s.example+'\n\n[Definition: '+d.term+'](glossary.html#'+d.id+') · [Lecture '+s.lecture+', PDF p. '+s.page+']('+base+'slides/lec'+s.lecture+'.pdf#page='+s.page+') · [Practice in the textbook]('+lectureTarget(s.lecture)+') · [Definition source, PDF p. '+d.page+']('+base+(d.source||'pl-book-eng.pdf')+'#page='+d.page+')\n\n';
+  }
+  const distinctions='## Same symbol, different job\n\n| Symbol | Read the surrounding construct | Meaning |\n|---|---|---|\n| `->` | Function type `int -> bool` | Input/output type relationship |\n| `->` | `fun x -> e` or a match branch | Separates a binder/pattern from an expression |\n| `↦` | Environment or memory extension | A map entry; its target can be a value, location, or type |\n| `:=` | OCaml reference assignment | Writes a cell and returns unit |\n| `:=` | B assignment | Writes a cell and returns the assigned value |\n| `=` | OCaml binding `let x = e` | Introduces a binding |\n| `=` | An equality expression | Uses the particular language\'s comparison rules |\n| `::` / `@` | OCaml list expression | Cons adds one element at the front; append joins two lists |\n| `#` | Displayed REPL prompt / `#use` / nameless `#0` | Prompt to omit / directive to type / lexical index in a different language |\n\nFor equality, compare [Fun and ML−](hw2.html#what-transfers-from-textbook-fun) before borrowing a rule. For function types, distinguish [tupled from curried inputs](02-ocaml.html#read-function-types-with-parentheses).\n\n';
+  ref=ref.replace('## Find a symbol',distinctions+'## Find a symbol');
+  for(const id of new Set(syntax.map(s=>s.definition))){
+    const link='[Definition: '+defs.find(d=>d.id===id).term+'](glossary.html#'+id+')';
+    ref=ref.replaceAll(link,textbookContextLink(id)+' · '+link);
   }
   fs.writeFileSync('book/syntax.md',ref);
 }

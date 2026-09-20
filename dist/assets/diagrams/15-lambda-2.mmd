@@ -1,0 +1,6 @@
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: A Church true selects its first branch
+  accDescr: Substitute the first argument into the selector, then discard the unused second argument without reducing it.
+  A["1. ((λt. λf. t) I) Ω"] --> B["2. (λf. I) Ω"]
+  B --> C["3. I = λz.z; Ω is discarded"]

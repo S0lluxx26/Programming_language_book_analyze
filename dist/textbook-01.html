@@ -80,7 +80,7 @@
 <li>Represent its constructors in OCaml.</li>
 <li>Trace a small example before implementing.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-01-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-1.svg" width="443.734375" height="387" alt="Lecture 0 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-01-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-1.svg" width="443.734375" height="387" alt="Lecture 0 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 0 reasoning route
   accDescr: Numbered stages for applying course overview.
@@ -183,7 +183,7 @@ flowchart TD
 <li>Build a derivation for membership.</li>
 <li>Prove both inclusions for a claimed set equality.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-01-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-4.svg" width="469.7529296875" height="387" alt="Lecture 1 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-01-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-4.svg" width="469.7529296875" height="387" alt="Lecture 1 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 1 reasoning route
   accDescr: Numbered stages for applying inductive definitions i.
@@ -205,7 +205,7 @@ flowchart TD
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=22">Read in the PDF: p. 22</a>.</p>
 <p>A grammar uses the same idea to construct expressions. Numeric literals are base expressions. A binary operation constructs an expression from two expressions. This yields a finite abstract syntax tree even when the set of possible programs is infinite.</p>
 <p>Separate three questions: <strong>syntax</strong> asks whether a tree is well formed; <strong>semantics</strong> asks what that tree means; <strong>implementation</strong> asks how to compute that meaning. The syntax constructor for addition does not itself perform addition. Its evaluator must recursively compute both operands and combine their values.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-01-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-5.svg" width="533.3232421875" height="669.0811767578125" alt="From a grammar constructor to an evaluator case"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-01-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-5.svg" width="533.3232421875" height="669.0811767578125" alt="From a grammar constructor to an evaluator case"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: From a grammar constructor to an evaluator case
   accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.
   A[&quot;Expression node&quot;] --&gt; B{&quot;Literal or binary constructor?&quot;}
@@ -337,7 +337,7 @@ flowchart TD
 <li>Assume the property for each recursive child.</li>
 <li>Combine the child facts in the constructor case.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-01-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-7.svg" width="467.8974609375" height="387" alt="Lecture 2 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-01-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-01-7.svg" width="467.8974609375" height="387" alt="Lecture 2 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-01-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 2 reasoning route
   accDescr: Numbered stages for applying inductive definitions ii.

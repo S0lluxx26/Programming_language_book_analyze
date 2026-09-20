@@ -36,6 +36,13 @@ let add_pair (x, y) = x + y
 
 `add` is curried: it takes an integer and returns a function. `add_pair` accepts one argument that is a pair. Their types and calls are different. Partial application works naturally for `add` because a function is a value.
 
+| Definition | Type | Valid call | What is supplied first? |
+|---|---|---|---|
+| `add` | `int -> int -> int` | `add 7 4` | One integer |
+| `add_pair` | `int * int -> int` | `add_pair (7, 4)` | One pair |
+
+`add (7, 4)` is a type error, not another spelling of `add 7 4`. Follow this distinction when comparing textbook `iter : int * (int -> int) -> (int -> int)` with HW1's curried `double`.
+
 ```mermaid
 flowchart TD
   accTitle: A step-by-step reasoning flow
@@ -88,7 +95,9 @@ The `option` return type makes absence explicit. This is a useful teaching desig
 
 ## The homework connection
 
-[HW1](hw1.html) asks you to recognize `int`, polymorphic lists, curried functions, tuples, and mutually defined datatypes. P8 depends on treating functions as values. P12 has two expression categories: formulas return booleans while arithmetic expressions return integers. Two mutually recursive helpers respect those different result types.
+Before moving on, use [§2.1's module/queue trace](textbook-02.html#depth-2-1) for `Module.member`, persistent data, and exception handling. A declaration `type t = int list` inside a plain `struct` does not itself hide the list representation; abstraction requires a restricting signature. These features are useful OCaml, but a specific assignment may restrict modules.
+
+[HW1](hw1.html) asks you to recognize `int`, polymorphic lists, curried functions, tuples, and jointly declared datatypes. P8 depends on treating functions as values. P12 has two expression categories: formulas return booleans while arithmetic expressions return integers. Use separate helpers for those result types. The formula evaluator calls the arithmetic helper for `Equal`; arithmetic expressions never contain formulas, so the helpers do not need mutual recursion merely because the types are declared with `and`.
 
 Do not use OCaml’s convenient built-in equality to silently define your interpreted language’s equality. HW2 only specifies equality on integer pairs and boolean pairs. OCaml’s host capabilities do not expand ML−’s language rules.
 

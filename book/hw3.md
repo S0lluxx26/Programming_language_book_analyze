@@ -8,6 +8,18 @@ Implement `runb : exp -> value` for B, the imperative language in the [official 
 
 B’s environment contains **location bindings or procedure bindings**. Its store contains integers, booleans, Unit, or records. Procedures are not first-class stored values in this assignment. Reusing HW2’s value datatype unchanged would therefore implement a different language.
 
+## What transfers from Chapters 6 and 7
+
+| Textbook idea | B representation or rule | Consequence for implementation |
+|---|---|---|
+| Implicit variable cell | `LocBind(name, location)` plus memory | `VAR` reads through two lookups; `LETV` allocates after its initializer |
+| Lexical procedure context | `ProcBind(name, (formals, body, env))` | `LETF` binds a named procedure; B has no first-class `PROC` expression |
+| Single-argument value/reference calls | `CALLV` expression list / `CALLR` identifier list | Check arity and preserve each actual's order or location |
+| Record field cells | `Record` holds a field-location map | Copying a record value shares fields; the empty record is specially `Unit` |
+| Pointer/GC extension in Chapter 7 | No corresponding B constructors | Do not add address-of, dereference, or collection as homework cases |
+
+The shared textbook download uses its own constructors such as `CONST` and `SET`; B requires `NUM` and `ASSIGN`, plus the other supplied forms. Translate the rule, not just its name. Compare [Chapter 7's implementation scope](textbook-07.html#7-4-implementation) with [HW3's AST, pp.4–5](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf#page=4).
+
 ## Design the helpers first
 
 | Helper responsibility | Invariant |
@@ -80,6 +92,19 @@ A record passed by value can share field cells with its caller, because the copi
 A while loop is conceptually a recursive evaluator branch. First evaluate the condition to `(Bool b, M1)`. If false, return `(Unit, M1)`. If true, evaluate the body with M1, ignore only the body value, and repeat the loop using the body’s resulting memory.
 
 The loop’s condition is re-evaluated on every iteration. Keeping an old Boolean result or old store either gives the wrong answer or creates an artificial infinite loop. Avoid using a host global mutable store solely to hide threading mistakes; a visible `(value, memory)` return makes the semantics inspectable.
+
+<details class="textbook-depth"><summary>Step by step · A false condition can still change memory</summary>
+
+Start with `x = 0`. Consider a B condition represented by `SEQ(ASSIGN("x", ADD(VAR "x", NUM 1)), FALSE)` and a body `ASSIGN("x", NUM 99)`.
+
+1. Evaluate the condition's assignment; the cell for x becomes `1`.
+2. Evaluate `FALSE` in that updated memory. The condition result is `(Bool false, M1)`.
+3. Skip the body completely; `99` is never stored.
+4. Return `(Unit, M1)` from the loop. A following `VAR "x"` returns `Num 1`, not `Num 0`.
+
+This is the `WHILEF` rule on [HW3 p.3](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf#page=3). It distinguishes preserving effects from merely checking the final Boolean value.
+
+</details>
 
 ## Undefined cases and review tests
 

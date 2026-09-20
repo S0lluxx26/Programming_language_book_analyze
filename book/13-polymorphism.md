@@ -41,6 +41,18 @@ Inside `proc c (let f = proc x c in ...)`, suppose `c : β`. The function f has 
 
 The correct scheme is `∀α. α → β`, with β still shared with the environment. If one use requires β to be bool and another requires it to be a function, unification rejects the conflict.
 
+<details class="textbook-depth"><summary>Step by step · Instantiate only the quantified variable</summary>
+
+1. With `Γ = {c : β}` and `T = α → β`, compute `FTV(T) = {α, β}` and `FTV(Γ) = {β}`.
+2. Their difference is `{α}`, so bind `f : ∀α. α → β`.
+3. At `f 7`, instantiate to `δ → β`; the call forces `δ = int`.
+4. At `f true`, instantiate to `ε → β`; the call forces `ε = bool`.
+5. The argument types differ, but both results retain the **same β**, because both calls return `c`.
+
+This is why “freshen every variable at every lookup” is wrong. Freshen only a scheme's quantified variables; keep its free variables shared. [§8.7](textbook-08.html#depth-8-7) connects this distinction to the PDF's polymorphic-call examples.
+
+</details>
+
 ## Let-bound and parameter-bound functions differ
 
 An ordinary procedure parameter receives a monotype in Hindley–Milner-style inference. It is not generalized simply because it happens to be used as a function. For example, `fun f -> (f 7, f true)` is rejected by standard OCaml typing, while separate uses of a let-bound identity function can be accepted.

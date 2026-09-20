@@ -9,6 +9,7 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 - Official course: <https://prl.korea.ac.kr/courses/cose212/2026/>
 - Detailed implementation plan: [PLAN.md](PLAN.md)
 - Verification notes: [VALIDATION.md](VALIDATION.md)
+- Supporting-page comparison: [plan](SUPPORTING_CONTENT_PLAN.md) and [24-page review](reports/SUPPORTING_CONTENT_REVIEW.md)
 
 ## Contents
 
@@ -19,7 +20,8 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 - 37 numbered thinking routes across the homework guides and textbook exercises, with links to all 18 official OCaml starter files.
 - Mermaid flowcharts and relationship graphs, rendered to accessible static SVG; editable source is included beside each diagram.
 - 42 definition entries with highlighted term links, in-place definition dialogs, and verified textbook/slide PDF page references.
-- 36 reading pages and 106 Mermaid diagrams, with source code available under each graph.
+- 36 reading pages and 123 Mermaid diagrams, with source code available under each graph.
+- All 24 supporting pages connect to the main textbook route; every glossary and syntax entry links to its textbook context or clearly labeled lecture extension.
 - Interactive closure, store, exception, and type-inference traces; search; chapter navigation; responsive layout; print styles.
 - A full source inventory with byte sizes, SHA-256 hashes, and PDF page counts.
 
@@ -71,12 +73,15 @@ Author chapters in `book/*.md` and navigation in `book/catalog.json`. Edit `book
 
 Author source-comparison walkthroughs in `book/supplements/textbook-01.md` through `textbook-09.md`. Each `## section-number Title` is inserted into the matching chapter section as a collapsed “Step by step” disclosure. Keep the numbered reasoning and exact PDF-page link. Direct links reveal the target automatically; printing includes the walkthroughs and restores the reader's previous open/closed choices afterward.
 
+Edit `scripts/supporting-guides.mjs` for the supporting pages' textbook connections and `scripts/textbook-context.mjs` for definition-to-section mappings. Keep assignment adaptation tables in the relevant homework page: textbook Fun, homework ML−, B, and host OCaml have different interfaces and operation contracts.
+
 ## OCaml examples
 
 The official environment targets OCaml 4.14.1. Run the independent teaching examples:
 
 ```bash
 ocaml examples/notebook_examples.ml
+ocaml examples/supporting_examples.ml
 ocaml examples/textbook_exercises.ml
 ocaml examples/textbook_functional.ml
 ocaml examples/textbook_state.ml

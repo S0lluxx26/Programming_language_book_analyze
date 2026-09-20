@@ -1,10 +1,14 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Names, scope, and recursive calls · The Programming Languages Notebook</title><meta name="description" content="Connect recursive closures, mutual recursion, free variables, and nameless representations."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Names, scope, and recursive calls"><meta property="og:description" content="Connect recursive closures, mutual recursion, free variables, and nameless representations."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" aria-current="page">Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Extra explanations · Interpreters</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">06 · Recursion &amp; lexical addresses</p><h1>Names, scope, and recursive calls</h1><p class="dek">Connect recursive closures, mutual recursion, free variables, and nameless representations.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-recursive-closure-remembers-its-own-name">A recursive closure remembers its own name</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Extra explanations · Interpreters</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">06 · Recursion &amp; lexical addresses</p><h1>Names, scope, and recursive calls</h1><p class="dek">Connect recursive closures, mutual recursion, free variables, and nameless representations.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><aside class="study-bridge" aria-label="Textbook connection">
+<p><strong>Core topic and lecture extension</strong> · Rebuild recursive bindings; use lexical addresses as the Lecture 7 extension.</p>
+<p><a href="textbook-05.html#depth-5-3">§5.3 · Mutual recursion</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=154">Source PDF, p. 154</a></p>
+</aside>
+<h2 id="a-recursive-closure-remembers-its-own-name">A recursive closure remembers its own name</h2>
 <p>An ordinary <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closure</a> cannot call itself through a name that was not yet in its captured <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a>. The course resolves this with a distinct recursive procedure value containing the function’s name, parameter, body, and definition environment.</p>
 <p>At each recursive call, rebuild the environment the body needs:</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/06-scope-recursion-1.svg" width="291.1953125" height="611.4000244140625" alt="A step-by-step reasoning flow"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/06-scope-recursion-1.svg" width="291.1953125" height="611.4000244140625" alt="A step-by-step reasoning flow"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: A step-by-step reasoning flow
   accDescr: Each arrow passes the result of one reasoning step to the next.
   N0[&quot;Find the recursive closure&lt;br/&gt;Obtain function name f, parameter x, body,&lt;br/&gt;and saved environment.&quot;]
@@ -21,6 +25,47 @@
 <pre><code class="language-text">is_even 3 → is_odd 2 → is_even 1 → is_odd 0 → false
 </code></pre>
 <p>At every body entry, both procedure names must be bound correctly. Merely adding the currently executing name is insufficient. The active formal parameter gets the current argument; it is not a permanent binding shared by future calls.</p>
+<details class="textbook-depth"><summary>Step by step · What changes at each mutual call?</summary>
+<p>Let <code>E</code> and <code>O</code> be the even and odd closures sharing definition environment <code>ρ0</code>. Each closure carries both definitions, with its own definition first.</p>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Active parameter</th>
+<th>Body environment, nearest binding first</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is_even 3</code></td>
+<td><code>n = 3</code></td>
+<td><code>[n ↦ 3, is_even ↦ E, is_odd ↦ O]ρ0</code></td>
+</tr>
+<tr>
+<td><code>is_odd 2</code></td>
+<td><code>n = 2</code></td>
+<td><code>[n ↦ 2, is_odd ↦ O, is_even ↦ E]ρ0</code></td>
+</tr>
+<tr>
+<td><code>is_even 1</code></td>
+<td><code>n = 1</code></td>
+<td><code>[n ↦ 1, is_even ↦ E, is_odd ↦ O]ρ0</code></td>
+</tr>
+<tr>
+<td><code>is_odd 0</code></td>
+<td><code>n = 0</code></td>
+<td>Base case returns <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Obtain the selected closure from the caller.</li>
+<li>Evaluate the new argument in the caller.</li>
+<li>Restore both definitions over <code>ρ0</code>, then bind the selected parameter.</li>
+<li>Return the body result to the previous call; do not overwrite <code>ρ0</code> with that call's local parameter.</li>
+</ol>
+<p>Use <a href="textbook-05.html#depth-5-3">§5.3's seven-part closure diagram</a> to map this table to <code>MRecProcedure</code>. Lexical addresses in the next section are a separate <a href="textbook-04.html#lecture-07">Lecture 7 extension</a>, not a prerequisite for implementing this representation.</p>
+</details>
 <h2 id="lexical-addresses-remove-spelling-from-lookup">Lexical addresses remove spelling from lookup</h2>
 <p>A name can be replaced with the position of its binder in a stack of surrounding binders. The nearest binder has index <code>0</code>, the next one has index <code>1</code>, and so on in the simple one-binding-per-frame convention.</p>
 <p>Consider the object-language term:</p>

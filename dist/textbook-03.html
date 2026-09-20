@@ -139,7 +139,7 @@ lookup x ρ2 = 2
 <h2 id="3-2-2-inference-rules">3.2.2 Inference Rules</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=106">Read in the PDF: p. 106</a>.</p>
 <p>For addition, evaluate both children in the same environment and require integer results. For a conditional, evaluate the condition and then exactly one branch. For <code>let x = e1 in e2</code>, evaluate e1 in the old environment, then e2 in its extension. The name x is not bound by this let inside e1.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-1.svg" width="280.61669921875" height="565.7999877929688" alt="Chapter 3 - derive the LET evaluator from its rule"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-03-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-1.svg" width="280.61669921875" height="565.7999877929688" alt="Chapter 3 - derive the LET evaluator from its rule"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 3 - derive the LET evaluator from its rule
   accDescr: The right-hand side uses the old environment; only the body sees the new binding.
   A[&quot;LET x = e1 IN e2, environment rho&quot;] --&gt; B[&quot;Evaluate e1 in rho to get v1&quot;]
@@ -220,7 +220,7 @@ lookup x ρ2 = 2
 <li>Check required value shapes.</li>
 <li>Return the rule conclusion.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-3.svg" width="335.58740234375" height="387" alt="Lecture 5 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-3.svg" width="335.58740234375" height="387" alt="Lecture 5 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 5 reasoning route
   accDescr: Numbered stages for applying expressions and environments.
@@ -249,7 +249,7 @@ flowchart TD
 </code></pre>
 <h3 id="worked-trace-from-the-chapter">Worked trace from the chapter</h3>
 <p>The nested example on p. 117 first binds x to 1 and y to 2. The right-hand side of the final y binding temporarily shadows x with 2, producing <code>2 + 2 = 4</code>. The final subtraction runs in the outer x scope, with x = 1 and the new y = 4, so it produces <strong>-3</strong>. The temporary x does not leak out of its own expression.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-4.svg" width="278.875" height="669.7999877929688" alt="Chapter 3 - keep an inner binding from leaking out"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-4.svg" width="278.875" height="669.7999877929688" alt="Chapter 3 - keep an inner binding from leaking out"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 3 - keep an inner binding from leaking out
   accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.
   A[&quot;Outer environment: x=1, y=2&quot;] --&gt; B[&quot;Evaluate new y&#39;s right-hand side&quot;]

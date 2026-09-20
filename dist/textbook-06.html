@@ -39,7 +39,7 @@
 <td>Variable bindings denote cells; reading a variable reads its cell automatically.</td>
 </tr>
 <tr>
-<td><a href="glossary.html#call-by-value" class="definition-link" title="Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value. — English textbook, PDF p. 183">Call by value</a> / reference</td>
+<td><a href="glossary.html#call-by-value" class="definition-link" title="Evaluate the argument before entering the function body. A pure interpreter binds the parameter to that value; an implicit-reference interpreter puts it in a fresh parameter cell. Copying a reference or record value can still preserve shared cells. — English textbook, PDF p. 183">Call by value</a> / reference</td>
 <td>Value passing allocates a parameter cell; reference passing shares the actual argument’s cell in this model.</td>
 </tr>
 </tbody>
@@ -74,7 +74,7 @@
 <h2 id="6-1-2-semantic-structure">6.1.2 Semantic Structure</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=165">Read in the PDF: p. 165</a>.</p>
 <p>Evaluation now has the contract <code>eval : exp -&gt; env -&gt; mem -&gt; value * mem</code>. Every premise receives the store produced by the preceding premise. Even an arithmetic expression can change memory when its operands call stateful procedures.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-1.svg" width="279.4775390625" height="565.7999877929688" alt="Chapter 6 - explicit reference assignment threads memory"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-06-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-1.svg" width="279.4775390625" height="565.7999877929688" alt="Chapter 6 - explicit reference assignment threads memory"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 6 - explicit reference assignment threads memory
   accDescr: Evaluate the location expression, then the new value with the updated memory, then update that cell.
   A[&quot;SETREF e1 e2 with memory m0&quot;] --&gt; B[&quot;Evaluate e1 to location l and memory m1&quot;]
@@ -307,7 +307,7 @@
 <li>Update or read the selected cell.</li>
 <li>Return value and final memory.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-5.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-5.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 8 reasoning route
   accDescr: Numbered stages for applying state and parameter passing.
@@ -411,7 +411,7 @@ flowchart TD
 <li>Discard frames to the nearest handler.</li>
 <li>Run the handler in its saved environment.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-7.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-7.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 10 reasoning route
   accDescr: Numbered stages for applying exceptions and continuations.

@@ -67,9 +67,17 @@ By contrast, an overridden method changes lookup behavior: the subclass’s meth
 
 ## Object creation has a sequence
 
-Collect inherited and local fields; reserve distinct locations; evaluate the initializer argument; select the initializer; run it with the new receiver and fields; return the object with the final store. Allocation must remain fresh with respect to all memory changes made before the cells are installed. The initializer’s own result is discarded in this untyped object-creation model.
+The [formal rule on Lecture 11 p.24](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf#page=24) requires freshness against the memory **after argument evaluation**. A direct implementation can follow this order:
 
-The lecture’s presentation contains both a formal allocation condition and a numbered explanation. When implementing, preserve freshness against the updated store rather than letting argument evaluation collide with previously chosen locations.
+1. Collect inherited and local field names.
+2. Evaluate the initializer argument, obtaining its value and updated store `M1`.
+3. Choose pairwise distinct field locations and a parameter location, all fresh relative to `M1`.
+4. Find `initialize` and its host class. Bind fields, the parameter, `self`, and `host`; store the argument in its parameter cell.
+5. Run the initializer with that store. Return the new object and final store, discarding the initializer's result.
+
+The slide's prose lists allocation before argument evaluation. An allocator that reserves globally distinct addresses can support that order, but choosing unused addresses from the old store without reserving them can collide with allocations performed by the argument. The order above directly respects the displayed freshness premise.
+
+The rule does not install default values for every field: the initializer must write a field before reading it. Do not assume an unstated zero-initialization policy. This is a lecture extension built on [Chapter 6 allocation](textbook-06.html#depth-6-3), not OCaml's object syntax.
 
 ## The homework connection
 

@@ -1,9 +1,51 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Course sources &amp; reading list · The Programming Languages Notebook</title><meta name="description" content="All course PDF links, local download status, source discrepancies, and reading references."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Course sources &amp; reading list"><meta property="og:description" content="All course PDF links, local download status, source discrepancies, and reading references."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" aria-current="page">Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Reference</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Verified source inventory</p><h1>Course sources &amp; reading list</h1><p class="dek">All course PDF links, local download status, source discrepancies, and reading references.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="source-snapshot">Source snapshot</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Reference</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Verified source inventory</p><h1>Course sources &amp; reading list</h1><p class="dek">All course PDF links, local download status, source discrepancies, and reading references.</p><p class="reading-meta">7 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><aside class="study-bridge" aria-label="Textbook connection">
+<p><strong>Source library</strong> · Find the authoritative PDF and distinguish textbook content, lecture extensions, and assignment requirements.</p>
+<p><a href="textbook.html">Textbook · Complete contents</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=7">Source PDF, p. 7</a></p>
+</aside>
+<h2 id="source-snapshot">Source snapshot</h2>
 <p>Course: <a href="https://prl.korea.ac.kr/courses/cose212/2026/">COSE212, Programming Languages, Fall 2026</a>, Hakjoo Oh, Korea University. Retrieved <strong>2026-09-20</strong>. The English and Korean books are draft course textbooks by the instructor. This companion’s explanations and practice examples are independently written.</p>
 <p>The course page exposes <strong>29 distinct PDF URLs</strong>. <strong>27 PDFs</strong> downloaded successfully; their local archive preserves the course’s directory structure under <code>sources/pdfs/</code>. The public book links to the official originals. The <a href="assets/source-manifest.json">machine-readable inventory</a> <a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">records</a> sizes, hashes, page counts, URLs, and failed links.</p>
+<h2 id="which-source-answers-this-question">Which source answers this question?</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Read first</th>
+<th>Then use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is the core definition?</td>
+<td><a href="textbook.html">Textbook contents</a> and its linked PDF section</td>
+<td><a href="syntax.html">Syntax</a> and <a href="glossary.html">glossary</a> for individual symbols</td>
+</tr>
+<tr>
+<td>How do I think through a case?</td>
+<td>The chapter's expandable Step by step explanation</td>
+<td>A focused extra explanation for another example</td>
+</tr>
+<tr>
+<td>What must my homework implement?</td>
+<td>Its handout and pinned starter interface</td>
+<td>The <a href="homework-map.html#the-three-larger-assignments">homework comparison map</a></td>
+</tr>
+<tr>
+<td>Where are exceptions, objects, or <a href="glossary.html#subtyping" class="definition-link" title="A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system. — Course slides, PDF p. 8">subtyping</a>?</td>
+<td>Lectures 10, 11, and 19</td>
+<td>The explicitly labeled <a href="textbook.html#lecture-to-chapter-map">integrated lecture extensions</a></td>
+</tr>
+<tr>
+<td>Which commands run the examples?</td>
+<td><a href="setup.html">OCaml workbench</a> and official <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> README</td>
+<td>The matching chapter download</td>
+</tr>
+</tbody>
+</table>
+<p>The archive status below describes the saved snapshot, not a live availability monitor. A starter contains unfinished code; an independent companion implementation is not an official answer or an interchangeable assignment template.</p>
 <h2 id="every-linked-pdf">Every linked PDF</h2>
 <table>
 <thead>
@@ -203,55 +245,63 @@
 <tbody>
 <tr>
 <td>Induction</td>
-<td>Chapter 1</td>
+<td><a href="textbook-01.html">Chapter 1</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=11">11</a></td>
 </tr>
 <tr>
 <td>OCaml and recursion</td>
-<td>Chapter 2</td>
+<td><a href="textbook-02.html">Chapter 2</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=33">33</a></td>
 </tr>
 <tr>
-<td><a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">Environments</a> and evaluation</td>
-<td>Chapter 3</td>
+<td>Environments and evaluation</td>
+<td><a href="textbook-03.html">Chapter 3</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97">97</a></td>
 </tr>
 <tr>
 <td>Functions and <a href="glossary.html#lexical-scope" class="definition-link" title="A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers. — English textbook, PDF p. 128">lexical scope</a></td>
-<td>Chapter 4</td>
+<td><a href="textbook-04.html">Chapter 4</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119">119</a></td>
 </tr>
 <tr>
 <td>Functional language extension</td>
-<td>Chapter 5</td>
+<td><a href="textbook-05.html">Chapter 5</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147">147</a></td>
 </tr>
 <tr>
 <td>State and parameter passing</td>
-<td>Chapter 6</td>
+<td><a href="textbook-06.html">Chapter 6</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161">161</a></td>
 </tr>
 <tr>
 <td>Records and memory</td>
-<td>Chapter 7</td>
+<td><a href="textbook-07.html">Chapter 7</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193">193</a></td>
 </tr>
 <tr>
 <td><a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">Types</a> and inference</td>
-<td>Chapter 8</td>
+<td><a href="textbook-08.html">Chapter 8</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223">223</a></td>
 </tr>
 <tr>
 <td><a href="glossary.html#lambda-calculus" class="definition-link" title="A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings. — English textbook, PDF p. 279">Lambda calculus</a></td>
-<td>Chapter 9</td>
+<td><a href="textbook-09.html">Chapter 9</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277">277</a></td>
 </tr>
 </tbody>
 </table>
 <p>Exceptions, the class interpreter, and typed classes have dedicated material in lectures 10, 11, and 19; they do not have matching standalone chapters in this English textbook snapshot. The <a href="glossary.html">glossary</a> provides more precise definition-level links.</p>
+<h2 id="textbook-and-assignment-differences">Textbook and assignment differences</h2>
+<ul>
+<li><strong>Fun versus ML− equality:</strong> the English book p.152 includes list equality and leaves nested details open. HW2 p.3 explicitly excludes list equality. See the <a href="hw2.html#what-transfers-from-textbook-fun">HW2 comparison</a>.</li>
+<li><strong>Factorial:</strong> the draft loop on p.78 starts multiplication at zero. The <a href="textbook-02.html#check-the-draft-s-factorial-boundaries">Chapter 2 note</a> identifies the error and supplies a zero-safe recursive example.</li>
+<li><strong>State interfaces:</strong> the textbook download shares an engine across Chapters 6–7; its <a class="syntax-link" href="syntax.html#store" title="Locations and memory — syntax meaning and source"><code>SET</code></a> and evaluator mode differ from B's <code>ASSIGN</code> and public starter. See <a href="hw3.html#what-transfers-from-chapters-6-and-7">HW3 adaptations</a>.</li>
+<li><strong>Checker results:</strong> the textbook demo can enumerate scalar equality types, whereas HW4 returns one type. See <a href="hw4.html#what-transfers-from-chapter-8">the declared HW4 policy</a>.</li>
+<li><strong>Object creation:</strong> Lecture 11 p.24's formal freshness premise uses the <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">store</a> after argument evaluation, while its numbered prose lists allocation first. The <a href="10-objects.html#object-creation-has-a-sequence">object guide</a> gives an implementation order that satisfies the premise and does not assume default field values.</li>
+</ul>
 <h2 id="source-discrepancies-to-keep-in-mind">Source discrepancies to keep in mind</h2>
 <ul>
-<li><strong>Unavailable links:</strong> <code>slides/fixpoint.pdf</code>, <code>howtotryml.pdf</code>, and the additional linked <code>code/let.ml</code> return HTTP 404. No substitute is presented as an original 2026 file. Fixed points remain covered in HW2 pp. 7–9 and lecture 20; the official GitHub repository provides local setup instructions.</li>
+<li><strong>Unavailable links:</strong> <code>slides/fixpoint.pdf</code>, <code>howtotryml.pdf</code>, and the additional linked <code>code/let.ml</code> returned HTTP 404 at the recorded snapshot. No substitute is presented as an original 2026 file. Fixed points remain covered in HW2 pp. 7–9 and lecture 20; the official GitHub repository provides local setup instructions.</li>
 <li><strong>Lecture 11:</strong> the course page links it both under classes and under static types. The PDF is titled “Classes and Objects”; static typing starts in lecture 12.</li>
 <li><strong>Lecture 8 numbering:</strong> it has 39 PDF pages; some slide footers retain an older total. All companion links use the PDF page index.</li>
 <li><strong>HW2, p. 3:</strong> the mutual-recursion call rule is visibly missing the result after its final evaluation arrow. Read its intended result as the value from the body premise. The print rule is schematic; the surrounding prose requires evaluating and printing the operand.</li>
@@ -263,5 +313,5 @@
 <p>These observations concern the downloaded snapshot and are companion notes, not instructor-issued errata. The download script can be rerun to check for later source changes.</p>
 <h2 id="attribution-and-further-reading">Attribution and further reading</h2>
 <p>Primary course sources: Hakjoo Oh’s <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf">English textbook</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book.pdf">Korean textbook</a>, lecture PDFs, and homework handouts listed above. Official templates and environment: <a href="https://github.com/kupl-courses/COSE212-2026fall">kupl-courses/COSE212-2026fall</a>. Graphs are authored in <a href="https://mermaid.js.org/config/usage.html">Mermaid</a> and rendered to SVG for reliable reading and printing.</p>
-</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="glossary.html"><small>← Previous</small>Notation &amp; glossary</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#source-snapshot">Source snapshot</a><a href="#every-linked-pdf">Every linked PDF</a><a href="#read-the-english-textbook-by-concept">Read the English textbook by concept</a><a href="#source-discrepancies-to-keep-in-mind">Source discrepancies to keep in mind</a><a href="#attribution-and-further-reading">Attribution and further reading</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="glossary.html"><small>← Previous</small>Notation &amp; glossary</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#source-snapshot">Source snapshot</a><a href="#which-source-answers-this-question">Which source answers this question?</a><a href="#every-linked-pdf">Every linked PDF</a><a href="#read-the-english-textbook-by-concept">Read the English textbook by concept</a><a href="#textbook-and-assignment-differences">Textbook and assignment differences</a><a href="#source-discrepancies-to-keep-in-mind">Source discrepancies to keep in mind</a><a href="#attribution-and-further-reading">Attribution and further reading</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
   <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

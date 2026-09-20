@@ -56,7 +56,7 @@
 <li>Rename conflicting binders, then substitute only free occurrences.</li>
 <li>For encodings, verify representation limits and distinguish <a href="glossary.html#normal-form" class="definition-link" title="A lambda term containing no beta-redex anywhere, including inside abstraction bodies. — English textbook, PDF p. 282">normal form</a> from a step-budget stop.</li>
 </ol>
-<p><strong>Common trap:</strong> The textbook’s Church numerals represent naturals. A normal-order evaluator and a <a href="glossary.html#call-by-value" class="definition-link" title="Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value. — English textbook, PDF p. 183">call-by-value</a> evaluator need not terminate on the same terms.</p>
+<p><strong>Common trap:</strong> The textbook’s Church numerals represent naturals. A normal-order evaluator and a <a href="glossary.html#call-by-value" class="definition-link" title="Evaluate the argument before entering the function body. A pure interpreter binds the parameter to that value; an implicit-reference interpreter puts it in a fresh parameter cell. Copying a reference or record value can still preserve shared cells. — English textbook, PDF p. 183">call-by-value</a> evaluator need not terminate on the same terms.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
 </details>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
@@ -146,7 +146,7 @@
 <li>Substitute only free occurrences.</li>
 <li>Repeat or identify a normal form.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-09-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-2.svg" width="436.7158203125" height="491" alt="Lecture 20 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-09-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-2.svg" width="436.7158203125" height="491" alt="Lecture 20 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 20 reasoning route
   accDescr: Numbered stages for applying lambda calculus.
@@ -215,7 +215,7 @@ flowchart TD
 </tr>
 </tbody>
 </table>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-09-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-3.svg" width="292.59375" height="707.2000122070312" alt="Chapter 9 - translate and normalize a source expression"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-09-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-3.svg" width="292.59375" height="707.2000122070312" alt="Chapter 9 - translate and normalize a source expression"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 9 - translate and normalize a source expression
   accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.
   A[&quot;Inspect source AST constructor&quot;] --&gt; B[&quot;Translate child expressions&quot;]

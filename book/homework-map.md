@@ -19,6 +19,8 @@ flowchart TD
 
 ## Every HW1 problem
 
+Textbook exercise numbers and homework numbers are independent. Use the [15-row HW1 correspondence](hw1.html#match-homework-to-the-textbook) to find the related textbook exercise and its differences. In particular, textbook Problem 12 is differentiation; HW1 P12 evaluates formulas, and **HW1 P13** is differentiation.
+
 | Problem | Definition you need | Companion route | Official specification |
 |---|---|---|---|
 | P1 `prime` | Decreasing numeric search; primality domain | [P1 guide](hw1.html#p1-primality), [recursion](03-recursion.html) | [HW1 p. 1](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1) |
@@ -38,6 +40,14 @@ flowchart TD
 | P15 `check` | Free variables; lexical scope | [P15 guide](hw1.html#p15-free-variable-checker) | [p. 6](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=6) |
 
 ## The three larger assignments
+
+| Start in the textbook | Transfer this reasoning | Check the assignment difference |
+|---|---|---|
+| [Chapters 3–5 · Fun](textbook-05.html#depth-5-3) | Environments, closures, self/peer bindings | [HW2 comparison](hw2.html#what-transfers-from-textbook-fun): ML− forbids list equality |
+| [Chapters 6–7 · State and heap](textbook-06.html#depth-6-3) | Latest-store threading, fresh cells, aliasing | [HW3 comparison](hw3.html#what-transfers-from-chapters-6-and-7): B separates procedure and location bindings |
+| [Chapter 8 · Constraints](textbook-08.html#depth-8-5) | Generate, unify, apply substitution | [HW4 comparison](hw4.html#what-transfers-from-chapter-8): one public result type and an explicit equality policy |
+
+Choose the source for the language being implemented. Similar constructor names are useful connections, but do not make these specifications identical.
 
 | Assignment feature | Definition → representation | Learn it here | Primary rule source |
 |---|---|---|---|

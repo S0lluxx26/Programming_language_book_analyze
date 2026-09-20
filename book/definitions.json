@@ -188,7 +188,7 @@
       "call by value",
       "call-by-value"
     ],
-    "meaning": "Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value.",
+    "meaning": "Evaluate the argument before entering the function body. A pure interpreter binds the parameter to that value; an implicit-reference interpreter puts it in a fresh parameter cell. Copying a reference or record value can still preserve shared cells.",
     "page": 183,
     "chapter": "07-state.html",
     "homework": "HW2 CALL; HW3 CALLV"
@@ -236,7 +236,7 @@
     "meaning": "Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots.",
     "page": 218,
     "chapter": "08-records.html",
-    "homework": "Lecture extension beyond HW3"
+    "homework": "Textbook §7.3 and lecture 9; beyond the HW3 implementation contract"
   },
   {
     "id": "type",

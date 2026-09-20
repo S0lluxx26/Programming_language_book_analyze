@@ -1,7 +1,11 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Definitions → homework · The Programming Languages Notebook</title><meta name="description" content="Find the exact definitions, chapters, and source pages needed for each assignment."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Definitions → homework"><meta property="og:description" content="Find the exact definitions, chapters, and source pages needed for each assignment."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" aria-current="page">Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Concept-to-exercise map</p><h1>Definitions → homework</h1><p class="dek">Find the exact definitions, chapters, and source pages needed for each assignment.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="the-dependency-graph">The dependency graph</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Concept-to-exercise map</p><h1>Definitions → homework</h1><p class="dek">Find the exact definitions, chapters, and source pages needed for each assignment.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><aside class="study-bridge" aria-label="Textbook connection">
+<p><strong>Practice map</strong> · Start with a textbook definition, then check the separately numbered assignment contract.</p>
+<p><a href="textbook.html#chapter-by-chapter-reading-guide">All nine chapters · Reading guide</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=7">Source PDF, p. 7</a></p>
+</aside>
+<h2 id="the-dependency-graph">The dependency graph</h2>
 <p>Start at the assignment, move backward to its prerequisite definitions, and then return to the implementation. The arrows below indicate prerequisites, not an official deadline schedule.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/homework-map-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/homework-map-1.svg" width="584.0289306640625" height="1002.5" alt="Concepts leading to the four homework assignments"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/homework-map-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Concepts leading to the four homework assignments
@@ -16,6 +20,7 @@
   T --&gt; H4[&quot;HW4&lt;br/&gt;ML− type checker&quot;]
   H2 -. &quot;same AST, different meaning&quot; .-&gt; H4
 </code></pre></details></figure><h2 id="every-hw1-problem">Every HW1 problem</h2>
+<p>Textbook exercise numbers and homework numbers are independent. Use the <a href="hw1.html#match-homework-to-the-textbook">15-row HW1 correspondence</a> to find the related textbook exercise and its differences. In particular, textbook Problem 12 is differentiation; HW1 P12 evaluates formulas, and <strong>HW1 P13</strong> is differentiation.</p>
 <table>
 <thead>
 <tr>
@@ -122,6 +127,33 @@
 <table>
 <thead>
 <tr>
+<th>Start in the textbook</th>
+<th>Transfer this reasoning</th>
+<th>Check the assignment difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="textbook-05.html#depth-5-3">Chapters 3–5 · Fun</a></td>
+<td><a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">Environments</a>, <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closures</a>, self/peer bindings</td>
+<td><a href="hw2.html#what-transfers-from-textbook-fun">HW2 comparison</a>: ML− forbids list equality</td>
+</tr>
+<tr>
+<td><a href="textbook-06.html#depth-6-3">Chapters 6–7 · State and heap</a></td>
+<td>Latest-<a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">store</a> threading, fresh cells, aliasing</td>
+<td><a href="hw3.html#what-transfers-from-chapters-6-and-7">HW3 comparison</a>: B separates procedure and location bindings</td>
+</tr>
+<tr>
+<td><a href="textbook-08.html#depth-8-5">Chapter 8 · Constraints</a></td>
+<td>Generate, unify, apply <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitution</a></td>
+<td><a href="hw4.html#what-transfers-from-chapter-8">HW4 comparison</a>: one public result <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> and an explicit equality policy</td>
+</tr>
+</tbody>
+</table>
+<p>Choose the source for the language being implemented. Similar constructor names are useful connections, but do not make these specifications identical.</p>
+<table>
+<thead>
+<tr>
 <th>Assignment feature</th>
 <th>Definition → representation</th>
 <th>Learn it here</th>
@@ -131,13 +163,13 @@
 <tbody>
 <tr>
 <td>HW2 variables and <a class="syntax-link" href="syntax.html#let" title="Binding: let x = e1 in e2 — syntax meaning and source"><code>LET</code></a></td>
-<td>Runtime <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> → name/value list</td>
+<td>Runtime environment → name/value list</td>
 <td><a href="04-expressions.html">Expressions</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf#page=2">HW2 pp. 2–3</a></td>
 </tr>
 <tr>
 <td>HW2 <a class="syntax-link" href="syntax.html#function" title="Functions and application — syntax meaning and source"><code>PROC</code></a> and <a class="syntax-link" href="syntax.html#function" title="Functions and application — syntax meaning and source"><code>CALL</code></a></td>
-<td><a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">Closure</a> → parameter, body, captured environment</td>
+<td>Closure → parameter, body, captured environment</td>
 <td><a href="05-closures.html">Closures</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf#page=3">HW2 p. 3</a></td>
 </tr>
@@ -155,7 +187,7 @@
 </tr>
 <tr>
 <td>HW3 mutation and loops</td>
-<td><a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">Store</a> → location/value map; return updated memory</td>
+<td>Store → location/value map; return updated memory</td>
 <td><a href="07-state.html">State</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf#page=2">HW3 pp. 2–3</a></td>
 </tr>
@@ -173,7 +205,7 @@
 </tr>
 <tr>
 <td>HW4 <a class="syntax-link" href="syntax.html#typing" title="Static typing judgment — syntax meaning and source"><code>typeof</code></a></td>
-<td><a href="glossary.html#type-environment" class="definition-link" title="A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation. — English textbook, PDF p. 230">Type environment</a> → constraints → <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitution</a></td>
+<td><a href="glossary.html#type-environment" class="definition-link" title="A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation. — English textbook, PDF p. 230">Type environment</a> → constraints → substitution</td>
 <td><a href="12-inference.html">Inference</a></td>
 <td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf#page=2">HW4 p. 2</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=26">lecture 17 p. 26</a></td>
 </tr>
@@ -200,7 +232,7 @@
 <td><a href="07-state.html#thread-the-latest-memory">Store threading</a></td>
 </tr>
 <tr>
-<td><a href="glossary.html#call-by-value" class="definition-link" title="Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value. — English textbook, PDF p. 183">Call by value</a> changes a scalar caller variable</td>
+<td><a href="glossary.html#call-by-value" class="definition-link" title="Evaluate the argument before entering the function body. A pure interpreter binds the parameter to that value; an implicit-reference interpreter puts it in a fresh parameter cell. Copying a reference or record value can still preserve shared cells. — English textbook, PDF p. 183">Call by value</a> changes a scalar caller variable</td>
 <td>Parameter reused the caller’s location</td>
 <td><a href="07-state.html#call-by-value-and-call-by-reference">Calls</a></td>
 </tr>
@@ -210,7 +242,7 @@
 <td><a href="08-records.html#copying-a-record-value-can-preserve-sharing">Aliasing</a></td>
 </tr>
 <tr>
-<td><code>x x</code> gives an endlessly expanding <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a></td>
+<td><code>x x</code> gives an endlessly expanding type</td>
 <td>Missing <a href="glossary.html#occurs-check" class="definition-link" title="Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar. — English textbook, PDF p. 269">occurs check</a></td>
 <td><a href="12-inference.html#the-occurs-check-prevents-infinite-simple-types">Unification</a></td>
 </tr>

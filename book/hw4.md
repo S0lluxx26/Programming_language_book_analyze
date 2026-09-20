@@ -6,6 +6,16 @@ Implement `typeof : exp -> typ`, returning a type for an accepted ML− program 
 
 The guide below derives a **monomorphic constraint-based baseline** from lectures 13–17. It explicitly identifies equality, partial-operation safety, and polymorphism decisions rather than claiming that unpublished grading requirements are known.
 
+## What transfers from Chapter 8
+
+Reuse the [equation-generation rules](textbook-08.html#depth-8-5), substitution composition, and occurs check. Preserve three interface and policy differences:
+
+1. HW4 requires `typeof : exp -> typ` and the exception `TypeError`. The textbook download uses different entry points and an exception carrying a message.
+2. The textbook's `infer_fun` returns a **list of alternative types** under its scalar-equality baseline. For `proc x (x = x)`, it can list `int → bool` and `bool → bool`. That is not the homework's single `typ` result; do not take the first alternative and call it a principal unrestricted type.
+3. The conservative policy below rejects unresolved equality obligations, while the textbook demonstration enumerates scalar alternatives. Neither choice is an instructor-issued resolution of the handout's missing rules. Both exclude list equality to match ML−; this is narrower than textbook Fun's dynamic equality.
+
+The [§8.8 implementation notes](textbook-08.html#8-8-implementation) also explain monomorphic let and partial-operation limits. Keep those limits visible when adapting the algorithm.
+
 ## Design the pipeline
 
 ```mermaid

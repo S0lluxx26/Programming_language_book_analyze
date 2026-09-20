@@ -62,6 +62,20 @@ The lecture checks equal arity, contravariant parameters, and covariant results.
 
 A method call looks up the signature available from the receiver’s static type. Arguments must fit the corresponding parameter types, and the call receives the declared result type. Runtime lookup may choose an overriding body; override checks make that substitution safe.
 
+<details class="textbook-depth"><summary>Step by step · A static promise survives a dynamic override</summary>
+
+Suppose a `Base` method has signature `ColorPoint → Point`, and `Child` overrides it with `Point → ColorPoint`.
+
+1. A caller sees a `Base`-typed receiver and is allowed to pass a `ColorPoint`.
+2. The actual receiver is a `Child`, so dynamic lookup selects the override.
+3. Its input type is `Point`, which accepts that `ColorPoint`: the parameter check is `ColorPoint <: Point`.
+4. The override returns a `ColorPoint`, which fulfills the caller's promised `Point` result.
+5. The call's static result remains `Point` when checked through `Base`; knowing which body happens to run does not retroactively refine that static type.
+
+See [Lecture 19, pp.16–20](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=16) and the [object dispatch explanation](10-objects.html#self-and-super-choose-different-lookup-starts). This is directional substitutability, not the symmetric equations solved in HW4.
+
+</details>
+
 ## The homework connection
 
 HW4 targets ML−, not the typed class language, so it needs unification rather than class subtyping. This chapter is an extension of the same static reasoning method. Do not add subtype conversions to ordinary `int`/`bool` unification: distinct base types remain distinct in the lecture’s system.

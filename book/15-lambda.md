@@ -52,6 +52,28 @@ A Church numeral describes repeated function application: two is `λf. λx. f (f
 
 In an eager implementation, an encoded conditional needs delayed branches if unchosen computations must remain unevaluated. Passing two already evaluated arguments to an ordinary function does not reproduce the short-circuit behavior of a native `if`.
 
+<details class="textbook-depth"><summary>Step by step · Reduce a boolean choice without evaluating its unused branch</summary>
+
+With `I = λz.z` and the divergent term `Ω` defined above, normal order gives:
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: A Church true selects its first branch
+  accDescr: Substitute the first argument into the selector, then discard the unused second argument without reducing it.
+  A["1. ((λt. λf. t) I) Ω"] --> B["2. (λf. I) Ω"]
+  B --> C["3. I = λz.z; Ω is discarded"]
+```
+
+1. Parenthesize application to the left.
+2. Substitute `I` for `t`; no free variable is captured because `I` is closed.
+3. Substitute for `f`; there is no occurrence to replace, so `Ω` is discarded.
+4. `I` is already a normal form. An eager application would instead try to evaluate `Ω` before this final step and diverge.
+
+This follows the boolean translation in [§9.2](textbook-09.html#depth-9-2). The notation describes lambda reduction, not an OCaml function call. For recursion, compare the textbook's normal-order Y unfolding with the delayed Z-style test in HW2.
+
+</details>
+
 ## Recursion as a fixed point
 
 A fixed point of a function F is a value r satisfying `F r = r` in the relevant semantic sense. To express a recursive computation, write a functional F that takes the would-be recursive function as an argument and returns one layer of its behavior. A fixed-point combinator supplies the self-reference.

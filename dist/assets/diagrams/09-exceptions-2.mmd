@@ -1,7 +1,9 @@
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
 flowchart TD
-  accTitle: What frame does handler search encounter?
-  accDescr: Select the branch that matches the current case.
-  Q{"What frame does handler search encounter?"}
-  Q -->|"Ordinary frame"| N0["Discard it and keep searching outward."]
-  Q -->|"Handler frame"| N1["Bind the payload and evaluate the handler<br/>with the outer continuation."]
-  Q -->|"End"| N2["No enclosing handler exists; the exception<br/>is uncaught."]
+  accTitle: Handler search discards a pending addition
+  accDescr: Evaluate the payload under a raise frame, discard Plus2, find Try, then evaluate the handler with End.
+  A["1. 5 with Plus1(raise 9, ρ, K)"] --> B["2. raise 9 with Plus2(5, K)"]
+  B --> C["3. 9 with Raise1(Plus2(5, K))"]
+  C --> D["4. Discard Plus2; find handler K"]
+  D --> E["5. x + 2 with x = 9 and End"]
+  E --> F["6. Return 11; no addition of 5"]

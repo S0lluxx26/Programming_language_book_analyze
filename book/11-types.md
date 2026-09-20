@@ -24,11 +24,13 @@ flowchart TD
 | Integer literal | None | `int` |
 | Variable x | x has a binding in Γ | Γ(x) |
 | `a + b` | a : int and b : int | `int` |
-| `if c then a else b` | c : bool; a and b have a common type T | `T` |
+| `if c then a else b` | c : bool; a and b have the same type T | `T` |
 | `proc x body` | Under x : A, body : B | `A → B` |
 | `f argument` | f : A → B and argument : A | `B` |
 
 Typing both branches of a conditional is useful even though evaluation chooses only one. A simple syntax-directed type system conservatively checks all branches. It may reject `if true then 4 else false` even though the bad branch is unreachable in that particular expression.
+
+Here “same type” means equality after solving unknowns. It does not mean a common superclass or an automatic union type; those are different type-system designs. The [Lecture 19 subtyping extension](14-subtyping.html) must not change this Chapter 8 rule.
 
 ## A worked derivation
 
@@ -47,6 +49,8 @@ flowchart TD
 ```
 
 The diagram is a dependency tree: the conclusion rests on all of its premises. In an annotated language, the parameter type may be supplied. In an unannotated language, the checker must infer it, which motivates [constraint generation](12-inference.html).
+
+To reconstruct the example without guessing `x`'s type: (1) assign it fresh `α`; (2) `iszero x` forces `α = int`; (3) `x + 2` also requires `α = int` and produces `int`; (4) both branches are `int`, so the result is `α → int`, which resolves to `int → int`. For recursive functions, first assume a provisional arrow for the function itself; [§8.4 explains the additional binding and body constraints](textbook-08.html#depth-8-4).
 
 ## Soundness is a one-way guarantee
 

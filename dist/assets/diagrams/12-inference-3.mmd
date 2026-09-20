@@ -1,0 +1,7 @@
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: Compose substitutions through earlier function types
+  accDescr: Binding beta and gamma must update the earlier arrow assigned to alpha, and the final substitution must update the result type.
+  A["1. α = β → γ"] --> B["2. β = int: α becomes int → γ"]
+  B --> C["3. γ = bool: α becomes int → bool"]
+  C --> D["4. S(α → β) = (int → bool) → int"]

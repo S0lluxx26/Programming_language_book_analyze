@@ -36,6 +36,16 @@ The same discipline applies to sequences, conditionals, loop conditions, argumen
 
 ## Explicit and implicit references
 
+The opening `Name → Location` model describes **implicit** references. Keep these three environments distinct:
+
+| Language model | Environment entry | What a variable expression returns |
+|---|---|---|
+| Pure language, Chapters 3–5 | Name → value | The saved value |
+| Explicit references, §6.1 | Name → value, which may be a location | The saved value; use dereference to read a referenced cell |
+| Implicit references, §6.2 | Name → location | The value found by following that location into memory |
+
+An explicit-reference environment does not map every integer variable to a cell. In `let n = 4 in let r = ref n in ...`, `n` denotes the integer `4`, while `r` denotes a location containing `4`. HW3 adds a further distinction: its environment also contains separate procedure bindings.
+
 In explicit-reference languages, allocating a cell, reading it, and writing it have separate operations. OCaml references illustrate the idea:
 
 ```ocaml
@@ -56,6 +66,25 @@ An implicit-reference language makes variable bindings allocate cells and variab
 | Can two parameters alias? | Fresh scalar parameter cells do not | Yes, when passed the same variable |
 
 If `a` initially contains `4`, calling a procedure that assigns `p := 9` by value leaves `a = 4`; by reference it leaves `a = 9`. With record values, copying the value can still copy field addresses and preserve shared mutable fields. Call by value does not promise a deep copy of reachable memory.
+
+## Delaying an argument is different from sharing a cell
+
+The PDF also compares lazy evaluation in [pp.187–188](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=187). A reference call passes a location; a lazy call postpones computation. These answer different questions.
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: Argument timing versus reference sharing
+  accDescr: An unused divergent expression blocks an eager value call but can be skipped by lazy evaluation. Reference calls instead require an existing variable.
+  A["1. Inspect the actual argument"] --> B{"2. Which call rule?"}
+  B -->|"Value: expression"| C["3. Evaluate before entering body"]
+  B -->|"Lazy: expression"| D["3. Suspend until needed"]
+  B -->|"Reference: variable"| E["3. Share the existing cell"]
+```
+
+For `(fun x -> 1) (forever 0)`, an eager evaluation never reaches the body; a lazy evaluation can return `1`. This is a strategy comparison, not runnable terminating OCaml code. HW2 and B are eager; B's `CALLR` accepts identifiers and does not implement laziness. See the [complete call-method comparison](textbook-06.html#depth-6-2-3).
+
+Freshness is also relative to the **store after** evaluating an initializer. For `ref (ref 0)`, the inner cell must survive allocation of a different outer cell. Follow [§6.3's nested-allocation trace](textbook-06.html#depth-6-3) before implementing a fresh-location helper.
 
 ## The homework connection
 

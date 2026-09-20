@@ -60,7 +60,7 @@
       "with",
       "let rec"
     ],
-    "meaning": "match inspects a value's constructor and binds its components. Cases are tried in order. Patterns describe shapes, not Boolean tests. Recursive calls usually follow recursive components.",
+    "meaning": "match inspects a value's constructor and binds its components. Cases are tried in order. Patterns describe shapes, not Boolean tests. let rec makes a function name available in its own body; and can join mutually recursive function definitions. Recursive calls usually follow smaller components, but rec alone does not guarantee termination.",
     "example": "match xs with [] -> 0 | h :: t -> 1 + length t covers empty and nonempty lists.",
     "definition": "pattern-matching",
     "lecture": 3,
@@ -163,7 +163,7 @@
       "CALLR",
       "CALLREF"
     ],
-    "meaning": "OCaml ref allocates, ! reads, and := writes a reference cell. OCaml assignment returns unit; course assignment may return the assigned value. CALLV uses a fresh parameter cell; CALLR reuses a caller location.",
+    "meaning": "OCaml ref allocates, ! reads, and := writes a reference cell and returns unit. B's ASSIGN returns the assigned value. In B, CALLV allocates fresh parameter cells after evaluating arguments; CALLR accepts identifiers and reuses caller locations. The textbook engine names its single-argument reference-call constructor CALLREF. A reference call is not lazy evaluation.",
     "example": "let r = ref 0 in r := 2; !r returns 2, but the assignment subexpression returns ().",
     "definition": "call-by-reference",
     "lecture": 8,
@@ -326,7 +326,7 @@
       "fold_left",
       "fold_right"
     ],
-    "meaning": "A fold replaces list construction with a combining function and a base accumulator. List.fold_left f z [a;b] combines left to right as f (f z a) b. List.fold_right f [a;b] z associates right as f a (f b z). The accumulator and element argument positions differ. A bare fold is a general idea or a locally defined helper; check its signature.",
+    "meaning": "A fold replaces list construction with a combining function and a base accumulator. List.fold_left f z [a;b] combines as f (f z a) b; List.fold_right f [a;b] z associates as f a (f b z). The accumulator and element positions differ. In strict OCaml a right fold computes the recursive result before the outer combiner, so using && there does not stop traversal early. A bare fold is a general idea or a local helper; check its signature.",
     "example": "List.fold_left (-) 0 [1;2] = -3, while List.fold_right (-) [1;2] 0 = -1.",
     "definition": "higher-order-function",
     "lecture": 4,

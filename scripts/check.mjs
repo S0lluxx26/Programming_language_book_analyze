@@ -1,6 +1,8 @@
 import {lecturePlacements, lectureTarget} from './integrated-lectures.mjs';
 import {chapterSheets} from './chapter-cheatsheets.mjs';
 import {textbookDepth} from './textbook-depth.mjs';
+import {supportingGuides} from './supporting-guides.mjs';
+import {textbookContext} from './textbook-context.mjs';
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
 import {checkpoints} from './section-checkpoints.mjs';
@@ -12,6 +14,18 @@ for(const n of notation){assert(syntax.some(s=>s.id===n.syntax),'Missing panel s
 for(const id of ['mapping','cons','append','recursive','fold'])assert(notation.some(n=>n.id===id),'Required notation '+id);
 const manifest=JSON.parse(fs.readFileSync('sources/manifest.json','utf8'));
 const sources=new Map(manifest.files.map(f=>[f.url,f]));
+const supportingPages=catalog.slice(catalog.findIndex(p=>p.slug==='setup')).map(p=>p.slug);
+assert.equal(supportingPages.length,24,'Expected all requested supporting pages');
+assert.deepEqual(supportingGuides.map(e=>e.page),supportingPages,'Supporting routes must match the navigation');
+for(const entry of supportingGuides){
+  const html=fs.readFileSync('dist/'+entry.page+'.html','utf8');
+  assert.equal(html.split('class="study-bridge"').length-1,1,'One textbook connection per supporting page');
+  assert(html.includes('href="'+entry.target+'"'),'Missing canonical textbook destination');
+}
+for(const d of JSON.parse(fs.readFileSync('book/definitions.json','utf8'))){
+  const target=textbookContext(d.id).url;
+  assert(fs.readFileSync('dist/glossary.html','utf8').includes('href="'+target+'"'),'Definition lacks textbook context: '+d.id);
+}
 let links=0,pdfLinks=0,definitionLinks=0;
 for(const page of catalog){
   const file=`dist/${page.slug}.html`,html=fs.readFileSync(file,'utf8');
@@ -127,6 +141,6 @@ for(const sheet of chapterSheets){
  assert(html.includes(`id="chapter-cheat-sheet"`),"Missing chapter cheat sheet");
  assert(sheet.terms.length>=5 && sheet.steps.length>=4 && sheet.meaning && sheet.formula && sheet.example && sheet.trap,"Incomplete chapter cheat sheet");
 }
-const report={textbookDepthSupplements:textbookDepth.length,chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,integratedLectures:lectures.length,legacyLectureRedirects:lectures.length+1,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+const report={supportingPages:supportingGuides.length,textbookDepthSupplements:textbookDepth.length,chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,integratedLectures:lectures.length,legacyLectureRedirects:lectures.length+1,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

@@ -8,6 +8,19 @@ Implement `runml : program -> value` for the ML− language in the [official han
 
 The supplied public entry point already starts `eval` under `empty_env`. Follow its actual order, `eval expression environment`. The interface’s simplicity does not remove the need for environments internally.
 
+## What transfers from textbook Fun
+
+Use [Chapters 3–5](textbook-05.html#depth-5-3) to understand the architecture, then follow the assignment rules at each constructor.
+
+| Feature | Textbook companion | HW2 requirement |
+|---|---|---|
+| Closure environments | Saved definition environment, restored self/peer names | Same reasoning; use the starter's value constructors and `eval expression environment` |
+| `EQUAL(NIL, NIL)` | Fun permits list equality: result is `Bool true` | ML− forbids it: raise `UndefinedSemantics` |
+| Equality inside nested lists | Companion states an interpretation of the PDF's underspecified case | No nested-list policy is needed: the top-level list comparison is already forbidden |
+| Helpers and printing | Independent examples may use modules and a teaching printer | Starter says no modules; retain its supplied output formatter |
+
+The difference in equality is explicit in [textbook p.152](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=152) and [HW2 p.3](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf#page=3). Copying `textbook_functional.ml` unchanged would therefore fail to implement the homework language even though many AST names match.
+
 ## Build in layers
 
 ```mermaid

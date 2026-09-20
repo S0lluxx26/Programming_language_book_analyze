@@ -1,0 +1,8 @@
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: Argument timing versus reference sharing
+  accDescr: An unused divergent expression blocks an eager value call but can be skipped by lazy evaluation. Reference calls instead require an existing variable.
+  A["1. Inspect the actual argument"] --> B{"2. Which call rule?"}
+  B -->|"Value: expression"| C["3. Evaluate before entering body"]
+  B -->|"Lazy: expression"| D["3. Suspend until needed"]
+  B -->|"Reference: variable"| E["3. Share the existing cell"]

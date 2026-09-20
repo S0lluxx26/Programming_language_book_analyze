@@ -71,4 +71,7 @@
 @media print{.textbook-depth{background:white;break-inside:auto}.textbook-depth>summary{break-after:avoid}}
 .equation-guide table{min-width:680px}.equation-guide td:nth-child(2){min-width:270px}.equation-guide td:nth-child(2) code{white-space:nowrap}
 .table-scroll-hint{font-size:12px;color:var(--muted)}
+.study-bridge{border:1px solid var(--line);border-left:3px solid var(--blue);background:var(--soft);padding:14px 18px;margin:0 0 28px;border-radius:6px;font-size:14px}
+.study-bridge p{margin:0 0 10px}.study-bridge p:last-child{margin-bottom:0}
+@media screen and (max-width:800px){.compact-diagram .diagram-link{text-align:center}.compact-diagram .diagram-link img{min-width:0}.compact-diagram figcaption::after{content:none}}
 @media print{.equation-guide table{min-width:0}.equation-guide td:nth-child(2){min-width:0}.equation-guide td:nth-child(2) code{white-space:normal}.table-scroll-hint{display:none}}

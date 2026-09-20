@@ -228,7 +228,7 @@
 <li>Match the data constructors.</li>
 <li>Check every branch returns a compatible type.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-2.svg" width="462.22802734375" height="387" alt="Lecture 3 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-2.svg" width="462.22802734375" height="387" alt="Lecture 3 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 3 reasoning route
   accDescr: Numbered stages for applying basics of ocaml.
@@ -286,7 +286,7 @@ flowchart TD
 <p>To remove <strong>only the first</strong> occurrence of a value, stop when the head matches and return the tail. On <code>[2;1;2]</code>, removing 2 gives <code>[1;2]</code>. Recurring after the match, or using <code>filter</code>, can remove later occurrences too and solve a different problem.</p>
 <h3 id="insertion-sort-give-the-helper-a-precondition">Insertion sort: give the helper a precondition</h3>
 <p><code>insert x sorted</code> assumes its second argument is sorted. It places x before the first element at least as large as x; if the list ends, append x there.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-4.svg" width="275.09375" height="699" alt="Chapter 2 - insertion sort builds on a sorted recursive result"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-4.svg" width="275.09375" height="699" alt="Chapter 2 - insertion sort builds on a sorted recursive result"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 2 - insertion sort builds on a sorted recursive result
   accDescr: Sort the tail first, then insert the removed head into that sorted result, working from the empty list upward.
   A[&quot;1. sort [3;1;2]&quot;] --&gt; B[&quot;2. sort [1;2]&quot;]
@@ -398,7 +398,7 @@ fold_left  f z [a;b;c] = f (f (f z a) b) c
 <li>Test empty and singleton cases.</li>
 <li>Consider an accumulator or fold.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-6.svg" width="355.859375" height="491" alt="Lecture 4 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure compact-diagram"><a class="diagram-link" href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-6.svg" width="355.859375" height="491" alt="Lecture 4 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 4 reasoning route
   accDescr: Numbered stages for applying recursion and higher-order programming.

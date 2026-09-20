@@ -66,6 +66,26 @@ apply (S2 after S1) T = apply S2 (apply S1 T)
 
 Choose one direction for composition and document it in helper names. The final type must receive the fully composed substitution, not just the last binding discovered.
 
+<details class="textbook-depth"><summary>Step by step · Watch earlier bindings change as equations are solved</summary>
+
+Suppose the remaining equations are `α = β → γ`, `β = int`, and `γ = bool`.
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: Compose substitutions through earlier function types
+  accDescr: Binding beta and gamma must update the earlier arrow assigned to alpha, and the final substitution must update the result type.
+  A["1. α = β → γ"] --> B["2. β = int: α becomes int → γ"]
+  B --> C["3. γ = bool: α becomes int → bool"]
+  C --> D["4. S(α → β) = (int → bool) → int"]
+```
+
+The final substitution is `S = {α ↦ int → bool, β ↦ int, γ ↦ bool}`. Each new binding updates earlier types; the diagram shows those normalized results. An implementation may store chains instead, provided `apply` follows them consistently and rejects cycles. The original PDF uses the mathematical composition convention explained in [§8.6.2's solver trace](textbook-08.html#depth-8-6-2).
+
+To generate the equations in the first place, read `V(Γ, e, t)` as “the constraints that make e have requested type t under Γ.” The [complete eight-case table](textbook-08.html#depth-8-5) connects that notation to literals, variables, addition, tests, conditionals, let, procedures, and calls. List constraints are a later extension for Fun/ML−.
+
+</details>
+
 ## The homework connection
 
 [HW4](hw4.html) needs fresh variables, equations for every AST constructor, and a unifier over unit, integers, booleans, arrows, lists, and variables. Recursive procedures require assuming provisional function types while checking their bodies; mutual recursion requires both provisional bindings at once.

@@ -64,6 +64,14 @@ x + 2
 
 The second definition sees the old `x = 4`, so it produces `7`. Its body sees `x = 7` and returns `9`. Evaluating the definition in the extended environment would either create an accidental recursive binding or require a value that does not exist yet.
 
+| Step | Expression being evaluated | Environment used | Result |
+|---|---|---|---|
+| 1 | First initializer `4` | `[]` | `4` |
+| 2 | Second initializer `x + 3` | `[("x", 4)]` | `7` |
+| 3 | Inner body `x + 2` | `[("x", 7); ("x", 4)]` | `9` |
+
+The corresponding AST is `Bind("x", Number 4, Bind("x", Plus(Name "x", Number 3), Plus(Name "x", Number 2)))`. The extra entries model shadowing; they are not assignments to a shared variable. [Chapter 3's full derivation](textbook-03.html#depth-3-2-2) shows how the same three steps appear as premises above an inference-rule line.
+
 ## Premises become recursive calls
 
 | Rule element | Interpreter counterpart |

@@ -328,6 +328,10 @@
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"e1 with M0<br/>Produce v1 and M1.\"]\n  N1[\"e2 with M1<br/>Observe all effects from e1; produce v2<br/>and M2.\"]\n  N0 --> N1\n  N2[\"Combine v1 and v2<br/>Check the operation’s required value<br/>shapes.\"]\n  N1 --> N2\n  N3[\"Return result with M2<br/>Preserve the latest state.\"]\n  N2 --> N3\n"
   },
   {
+    "name": "07-state-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 800}}}%%\nflowchart TD\n  accTitle: Argument timing versus reference sharing\n  accDescr: An unused divergent expression blocks an eager value call but can be skipped by lazy evaluation. Reference calls instead require an existing variable.\n  A[\"1. Inspect the actual argument\"] --> B{\"2. Which call rule?\"}\n  B -->|\"Value: expression\"| C[\"3. Evaluate before entering body\"]\n  B -->|\"Lazy: expression\"| D[\"3. Suspend until needed\"]\n  B -->|\"Reference: variable\"| E[\"3. Share the existing cell\"]\n"
+  },
+  {
     "name": "08-records-1",
     "source": "flowchart LR\n  accTitle: Two records can share one field cell\n  accDescr: Variables a and b have separate cells, but both stored record values refer to the same score location.\n  A[\"Variable a\"] --> LA[\"Cell A<br/>record value\"]\n  B[\"Variable b\"] --> LB[\"Cell B<br/>record value\"]\n  LA -->|\"score field\"| S[\"Shared field location 1<br/>contains 12\"]\n  LB -->|\"score field\"| S\n"
   },
@@ -345,6 +349,10 @@
   },
   {
     "name": "09-exceptions-2",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 800}}}%%\nflowchart TD\n  accTitle: Handler search discards a pending addition\n  accDescr: Evaluate the payload under a raise frame, discard Plus2, find Try, then evaluate the handler with End.\n  A[\"1. 5 with Plus1(raise 9, ρ, K)\"] --> B[\"2. raise 9 with Plus2(5, K)\"]\n  B --> C[\"3. 9 with Raise1(Plus2(5, K))\"]\n  C --> D[\"4. Discard Plus2; find handler K\"]\n  D --> E[\"5. x + 2 with x = 9 and End\"]\n  E --> F[\"6. Return 11; no addition of 5\"]\n"
+  },
+  {
+    "name": "09-exceptions-3",
     "source": "flowchart TD\n  accTitle: What frame does handler search encounter?\n  accDescr: Select the branch that matches the current case.\n  Q{\"What frame does handler search encounter?\"}\n  Q -->|\"Ordinary frame\"| N0[\"Discard it and keep searching outward.\"]\n  Q -->|\"Handler frame\"| N1[\"Bind the payload and evaluate the handler<br/>with the outer continuation.\"]\n  Q -->|\"End\"| N2[\"No enclosing handler exists; the exception<br/>is uncaught.\"]\n"
   },
   {
@@ -372,6 +380,10 @@
     "source": "flowchart TD\n  accTitle: What shapes appear on the two sides?\n  accDescr: Select the branch that matches the current case.\n  Q{\"What shapes appear on the two sides?\"}\n  Q -->|\"Identical types\"| N0[\"Discard the equation; it is already<br/>satisfied.\"]\n  Q -->|\"Same type constructor\"| N1[\"Decompose functions into domain/result<br/>equations and lists into element<br/>equations.\"]\n  Q -->|\"Variable versus type\"| N2[\"Bind the variable only if it does not<br/>occur inside the other type.\"]\n  Q -->|\"Different constructors\"| N3[\"Reject: no substitution can make int and<br/>bool equal.\"]\n"
   },
   {
+    "name": "12-inference-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 800}}}%%\nflowchart TD\n  accTitle: Compose substitutions through earlier function types\n  accDescr: Binding beta and gamma must update the earlier arrow assigned to alpha, and the final substitution must update the result type.\n  A[\"1. α = β → γ\"] --> B[\"2. β = int: α becomes int → γ\"]\n  B --> C[\"3. γ = bool: α becomes int → bool\"]\n  C --> D[\"4. S(α → β) = (int → bool) → int\"]\n"
+  },
+  {
     "name": "13-polymorphism-1",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Infer the definition<br/>Solve its constraints, including<br/>constraints on the environment.\"]\n  N1[\"Generalize independent variables<br/>Exclude variables free in the updated<br/>environment.\"]\n  N0 --> N1\n  N2[\"Bind a type scheme<br/>Record which variables may be freshly<br/>chosen at use sites.\"]\n  N1 --> N2\n  N3[\"Instantiate each use<br/>Replace quantified variables with new<br/>unknowns every time.\"]\n  N2 --> N3\n"
   },
@@ -386,6 +398,10 @@
   {
     "name": "15-lambda-1",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Identify the binder being applied<br/>Substitute only for occurrences bound by<br/>this abstraction.\"]\n  N1[\"Inspect free variables of the argument<br/>Determine which names must remain free.\"]\n  N0 --> N1\n  N2[\"Rename conflicting inner binders<br/>Use fresh names and rename their bound<br/>occurrences consistently.\"]\n  N1 --> N2\n  N3[\"Substitute and continue<br/>Preserve the binding structure of the<br/>original term.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "15-lambda-2",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 800}}}%%\nflowchart TD\n  accTitle: A Church true selects its first branch\n  accDescr: Substitute the first argument into the selector, then discard the unused second argument without reducing it.\n  A[\"1. ((λt. λf. t) I) Ω\"] --> B[\"2. (λf. I) Ω\"]\n  B --> C[\"3. I = λz.z; Ω is discarded\"]\n"
   },
   {
     "name": "homework-map-1",

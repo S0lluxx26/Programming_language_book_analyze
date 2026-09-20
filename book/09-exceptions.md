@@ -37,6 +37,26 @@ An exception is not an ordinary return value flowing through every pending opera
 
 The handler frame stores the handler parameter, handler expression, environment at the `try`, and the continuation outside the `try`. When a value is raised, walk through frames until reaching that handler. Evaluate the handler in its saved environment extended by the payload binding, then continue outside the handler.
 
+<details class="textbook-depth"><summary>Step by step · Follow the actual frames</summary>
+
+For `try (5 + raise 9) catch(x) (x + 2)`, let `K = Try(x, x+2, ρ, End)`.
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 800}}}%%
+flowchart TD
+  accTitle: Handler search discards a pending addition
+  accDescr: Evaluate the payload under a raise frame, discard Plus2, find Try, then evaluate the handler with End.
+  A["1. 5 with Plus1(raise 9, ρ, K)"] --> B["2. raise 9 with Plus2(5, K)"]
+  B --> C["3. 9 with Raise1(Plus2(5, K))"]
+  C --> D["4. Discard Plus2; find handler K"]
+  D --> E["5. x + 2 with x = 9 and End"]
+  E --> F["6. Return 11; no addition of 5"]
+```
+
+`Raise1` first evaluates the expression producing the payload; `find-handler` then traverses the surrounding continuation. The new body runs outside `K`, so it cannot catch its own later exception with that same handler. This makes the [Lecture 10 rules, pp.18–20](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf#page=18) concrete.
+
+</details>
+
 ```mermaid
 flowchart TD
   accTitle: What frame does handler search encounter?

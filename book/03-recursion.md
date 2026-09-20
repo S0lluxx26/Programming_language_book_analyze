@@ -58,6 +58,33 @@ let right = List.fold_right ( - ) [8; 3; 1] 0
 
 The fact that two folds agree for integer addition does not make them interchangeable for arbitrary operations.
 
+<details class="textbook-depth"><summary>Step by step · Fold direction and short-circuiting are different questions</summary>
+
+Read the argument types first:
+
+```text
+fold_left  : ('acc -> 'elt -> 'acc) -> 'acc -> 'elt list -> 'acc
+fold_right : ('elt -> 'acc -> 'acc) -> 'elt list -> 'acc -> 'acc
+```
+
+1. A left fold receives the accumulator before the current element: `f (f z a) b`.
+2. A right fold receives the element before the recursive result: `f a (f b z)`.
+3. In strict OCaml, that recursive result is computed before the outer combining function can use it. A right fold is therefore not an early-stopping search, even if its combiner contains `&&`.
+4. A recursive `p h && forall p t` can avoid visiting the remaining tail. Use it when allowed; textbook Problem 8 specifically asks for `fold_right`, while HW1 P7 does not.
+
+```ocaml
+let fold_probe () =
+  let seen = ref [] in
+  let all = List.fold_right
+    (fun x rest -> seen := x :: !seen; x > 0 && rest)
+    [2; -1; 3] true in
+  (all, List.rev !seen)
+```
+
+The result is `(false, [3; -1; 2])`: all three combining calls run, from the right. This complete example is in [the supporting examples](examples/supporting_examples.ml). For the course's 4.14 library, `fold_left` is tail recursive and `fold_right` is not; see the [versioned List reference](https://ocaml.org/manual/4.14/libref/List.html).
+
+</details>
+
 ## A function can be the answer
 
 ```ocaml

@@ -10,17 +10,20 @@ cd COSE212-2026fall
 code .
 ```
 
-In VS Code, choose **Reopen in Container**. Run `ocaml -version` inside the container to check the environment actually in use. The website’s TryML PDF link currently returns 404, so the official local environment is the documented route available at this snapshot.
+In VS Code, choose **Reopen in Container**. Open a new terminal in that container and run `ocaml -version`; the course image is configured for 4.14.1. The commands below run in that Linux container, including when VS Code itself runs on Windows. If `ocaml` is missing in PowerShell, first check that you opened the container terminal. At the downloaded snapshot, the course's TryML PDF link returned 404; use the official workbench instructions.
 
-## Three ways to run OCaml
+## Choose where to type each command
 
 | Method | Command | What to expect |
 |---|---|---|
 | Interactive top level | `ocaml` | Enter expressions ending in `;;`; OCaml displays values and inferred types |
 | Load a file in the top level | `#use "scratch.ml";;` | Evaluates definitions from the file in the current session |
+| Run a source file from the shell | `ocaml scratch.ml` | Executes the file; only explicit printing appears |
 | Compile a program | `ocamlc -o scratch scratch.ml` then `./scratch` | Creates and runs a program; print explicitly to see output |
 
-Inside a `.ml` file, most ordinary definitions do not need `;;`. At the interactive prompt, `;;` tells the top level that the current phrase is finished. Do not copy the displayed `#` prompt into source files.
+Inside a `.ml` file, ordinary consecutive `let` definitions do not need `;;`. At the interactive prompt, `;;` finishes a phrase. Omit the displayed prompt `#`, but **keep the leading `#` in directives such as `#use` and `#quit`**. Directives belong in the REPL, not in a file you compile with `ocamlc`.
+
+`ocaml scratch.ml` uses script mode; `ocaml < scratch.ml` feeds the interactive system and expects phrase terminators. Prefer the first command for the downloadable examples. These modes and directives are distinguished in the [OCaml 4.14 manual](https://ocaml.org/manual/4.14/toplevel.html).
 
 ```ocaml
 let square x = x * x
@@ -28,6 +31,18 @@ let () = Printf.printf "%d\n" (square 6)
 ```
 
 This original example prints `36`. A definition by itself does not print its value in a compiled program.
+
+<details class="textbook-depth"><summary>Step by step · Your first successful run</summary>
+
+1. Save the two lines above as `scratch.ml` in the folder open in the container.
+2. In the container **shell**, run `ocaml scratch.ml`. Expect one line: `36`.
+3. Run `ocamlc -i scratch.ml` to inspect the interface. It includes `val square : int -> int`.
+4. Run `ocaml` to enter the **REPL**, then type `#use "scratch.ml";;`. This loads `square` and also executes the print statement again.
+5. Enter `square 7;;`. Expect `- : int = 49`. Enter `#quit;;` to return to the shell.
+
+If you edit the file, the existing REPL does not automatically reload it. Use `#use` again, or start a fresh REPL to avoid confusing old bindings with current code. `Cannot find file` means the filename or current directory does not match; it is not an OCaml type error.
+
+</details>
 
 ## A productive scratch-file habit
 
@@ -60,7 +75,9 @@ Download [the original OCaml examples](examples/notebook_examples.ml) and run th
 ocaml notebook_examples.ml
 ```
 
-They demonstrate structural recursion, lexical closures, persistent store updates, and unification with assertions. They are separate teaching examples, not replacements for the assignment templates. The repository’s validation report records the interpreter version used for testing.
+They demonstrate structural recursion, lexical closures, persistent store updates, and unification with assertions. They are separate teaching examples, not replacements for the assignment templates. The repository’s validation report lists the interpreter version used for testing.
+
+For the new focused walkthroughs, download [supporting examples](examples/supporting_examples.ml) and run `ocaml supporting_examples.ml`. For chapter implementations, use the download beside the relevant [textbook section](textbook.html#chapter-by-chapter-reading-guide). Run files separately: similarly named AST constructors do not imply interchangeable languages. In particular, HW2's starter forbids modules, so textbook `List.*` and module examples are for learning, not direct submission code.
 
 ## A checklist for confusing errors
 

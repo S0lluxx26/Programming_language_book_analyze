@@ -56,6 +56,21 @@ flowchart TD
 
 Reachability is conservative relative to whether a program will actually use a value in the future. A reachable cell may never be read again, but retaining it avoids incorrectly freeing live memory. The lecture’s undecidability discussion concerns perfect prediction of future usefulness, not the finite graph traversal used by a tracing collector.
 
+<details class="textbook-depth"><summary>Step by step · Decide which heap edges must be followed</summary>
+
+In the [PDF p.216 example](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=216), the roots are `ℓ1` and `ℓ2`:
+
+1. The record at `ℓ2` points to `ℓ3` and `ℓ1`.
+2. The pointer at `ℓ3` leads to `ℓ4`.
+3. The closure at `ℓ4` saves an environment that reaches `ℓ5`.
+4. No root reaches the separate `ℓ6 ↔ ℓ7` cycle. Marking retains `ℓ1` through `ℓ5` and can reclaim `ℓ6, ℓ7`.
+
+Open the [full diagram and marking table](textbook-07.html#depth-7-3-2) to follow these steps. This is the textbook's pointer/closure language; B does not store those same value forms.
+
+At an arbitrary point inside an interpreter, roots must also include values and environments saved by pending computations. For example, the already evaluated left operand of a call may hold a closure while the right operand allocates. Collecting from only the currently visited expression's environment could incorrectly free that closure's cells. The chapter download therefore exposes a marking exercise and explains its collection-point limits.
+
+</details>
+
 ## Pointers and lifetime errors
 
 | Problem | What happens | Mental model |
