@@ -78,3 +78,9 @@ Source snapshot: 20 September 2026.
 - Reviewed dark typography, reference rail, Mermaid diagrams and source code, and the mobile toolbar. Verified light-mode reload persistence and dark-mode navigation persistence using keyboard and mouse. Mobile document width remains 375 px at a 390 × 844 viewport; no console warnings/errors were reported.
 - Theme colors are screen-only, preserving the existing light print stylesheet and unmodified downloadable SVGs.
 - Build and static validation passed for all 58 pages, 106 diagrams, and 6,457 links.
+
+## Textbook chapter cheat sheets
+
+- Added nine concise chapter summaries with definitions, main meaning, a key rule, a worked micro-example, four solving steps, and a common trap. Existing glossary linking and the section-aware syntax rail also apply to these summaries.
+- Added direct links from the textbook contents. Static validation enforces all nine chapter sheets and required content, and checks their source and navigation links.
+- Reviewed Chapter 4 on desktop and at 390 × 844 in dark mode; document width and scroll width both measured 375 px.

@@ -1,3 +1,4 @@
+import {chapterSheets} from './chapter-cheatsheets.mjs';
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
 import {checkpoints} from './section-checkpoints.mjs';
@@ -87,6 +88,12 @@ for(const w of walkthroughs){
   assert.equal((html.match(/class="code-line"/g)||[]).length,w.lines.length,'Missing code explanation');
   assert(w.lines.every(([code,note])=>code&&note),'Unexplained code line');
 }
-const report={sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+assert.deepEqual(chapterSheets.map(s=>s.chapter),[1,2,3,4,5,6,7,8,9]);
+for(const sheet of chapterSheets){
+ const html=fs.readFileSync(`dist/textbook-${String(sheet.chapter).padStart(2,"0")}.html`,"utf8");
+ assert(html.includes(`id="chapter-cheat-sheet"`),"Missing chapter cheat sheet");
+ assert(sheet.terms.length>=5 && sheet.steps.length>=4 && sheet.meaning && sheet.formula && sheet.example && sheet.trap,"Incomplete chapter cheat sheet");
+}
+const report={chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

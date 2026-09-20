@@ -1,3 +1,4 @@
+import {chapterCheatSheet} from './chapter-cheatsheets.mjs';
 import fs from 'node:fs';
 export const checkpoints=JSON.parse(fs.readFileSync('book/section-checkpoints.json','utf8'));
 const bridges=[
@@ -22,5 +23,5 @@ export function addSectionCheckpoints(page,source){
     const c=checkpoints.find(c=>c.section===section);if(!c)throw Error('Missing checkpoint '+section);
     chunks[i]=chunks[i].trimEnd()+'\n\n<aside class="section-checkpoint" data-checkpoint="'+section+'" aria-label="Checkpoint '+section+'"><p><strong>Predict · '+section+'</strong> '+esc(c.question)+'</p><details><summary>Reveal reasoning and common trap</summary><p>'+esc(c.answer)+'</p><p><strong>Common trap:</strong> '+esc(c.trap)+'</p><a href="'+c.prerequisite+'">Revisit the prerequisite →</a></details></aside>\n\n';
   }
-  return intro+chunks.join('');
+  return intro+chapterCheatSheet(n)+chunks.join('');
 }

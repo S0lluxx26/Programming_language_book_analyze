@@ -1,6 +1,6 @@
 ## New reading tools
 
-[Lecture cheat sheets 0–20](lectures.html) · [Syntax and notation reference](syntax.html). Each textbook chapter now has an expandable, numbered code walkthrough with an explanation beside every line.
+[Chapter cheat sheets 1–9](#chapter-cheat-sheets) · [Lecture cheat sheets 0–20](lectures.html) · [Syntax and notation reference](syntax.html). Each textbook chapter now has an expandable, numbered code walkthrough with an explanation beside every line.
 
 ## Read the textbook with a guide beside you
 
@@ -137,3 +137,17 @@ The [concept chapters](01-induction.html) remain available for shorter explanati
 ## Source and solution notes
 
 The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §7.4's printed evaluator result needs an internal value-and-memory pair; §8.8's Fun extension needs an explicit equality policy; §9.2 initially encodes natural numbers and uses normal order. These are explained in their chapters.
+
+## Chapter cheat sheets
+
+Review the main idea, definitions, formula, example, and solving checklist before or after reading a chapter.
+
+- [Chapter 1 cheat sheet](textbook-01.html#chapter-cheat-sheet)
+- [Chapter 2 cheat sheet](textbook-02.html#chapter-cheat-sheet)
+- [Chapter 3 cheat sheet](textbook-03.html#chapter-cheat-sheet)
+- [Chapter 4 cheat sheet](textbook-04.html#chapter-cheat-sheet)
+- [Chapter 5 cheat sheet](textbook-05.html#chapter-cheat-sheet)
+- [Chapter 6 cheat sheet](textbook-06.html#chapter-cheat-sheet)
+- [Chapter 7 cheat sheet](textbook-07.html#chapter-cheat-sheet)
+- [Chapter 8 cheat sheet](textbook-08.html#chapter-cheat-sheet)
+- [Chapter 9 cheat sheet](textbook-09.html#chapter-cheat-sheet)
