@@ -1,8 +1,11 @@
 flowchart TD
   accTitle: Chapter 4 - make recursion available inside its own body
-  accDescr: A recursive closure records the function name and reintroduces it on application before binding the parameter.
+  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller's binding. Both then bind the argument.
   A["Create recursive closure f, x, body, saved"] --> B["Bind f in the surrounding body"]
   B --> C["Call f with argument v"]
-  C --> D["Choose saved or caller environment by scope policy"]
-  D --> E["Install f as self; install x as v"]
-  E --> F["Evaluate body; recursive calls repeat this process"]
+  C --> D{"Scope policy"}
+  D -->|Static| E["Use saved environment; install f as self"]
+  D -->|Dynamic| G["Use caller environment, including its current f"]
+  E --> H["Install x as v"]
+  G --> H
+  H --> F["Evaluate body; recursive calls repeat this process"]

@@ -34,7 +34,7 @@ lookup x ρ2 = 2
 </code></pre></details></figure><p><strong>Trace:</strong> <code>let x = 2 in let x = x + 3 in x</code> returns 5. The inner right-hand side reads the outer 2 before the inner binding exists. Evaluating it after extending x would implement a different rule.</p>
 <h2 id="3-3-implementation">3.3 Implementation</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=114">Read in the PDF: pp. 114–117</a>. This section already contains a worked interpreter in the PDF. The companion implementation below continues into Chapters 4 and 5, so you can see what changes and what stays the same.</p>
-<p><a href="examples/textbook_functional.ml">Download the executable interpreter and checks</a>. Run <code>ocaml textbook_functional.ml</code>.</p>
+<p><a href="examples/textbook_functional.ml" download="">Download the executable interpreter and checks</a>. Run <code>ocaml textbook_functional.ml</code>.</p>
 <p>The file's <code>eval e env</code> follows these rules: <code>CONST</code> returns an integer value; <code>VAR</code> looks up a name; arithmetic checks operand shapes; <code>LET</code> extends the environment; <code>IF</code> selects one branch. The unified Chapter 5 syntax uses <code>EQUAL(e, CONST 0)</code> for Chapter 3's zero test.</p>
 <pre><code class="language-ocaml"><span class="hljs-comment">(* The essential LET branch in the complete evaluator. *)</span>
 | <span class="hljs-type">LET</span> (x,a,b) -&gt;

@@ -48,7 +48,7 @@ flowchart TD
 
 [Read in the PDF: p. 137](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=137).
 
-Ordinary closure creation cannot refer to a binding that has not yet been installed. A recursive closure therefore stores its own function name as well as its parameter, body, and definition environment. On application, reconstruct a body environment containing the function's own closure and the argument binding.
+Ordinary closure creation cannot refer to a binding that has not yet been installed. A recursive closure therefore packages its own function name as well as its parameter, body, and definition environment. On static-scope application, reconstruct a body environment containing the function's own closure and the argument binding.
 
 ```text
 saved environment
@@ -57,17 +57,20 @@ saved environment
   = environment for evaluating f's body
 ```
 
-The parameter binding is the newest binding. This order matters if names coincide. In the dynamic variant, a recursive call can instead find the function through the calling environment; the companion also reinstalls its self binding explicitly.
+The parameter binding is the newest binding. This order matters if names coincide. In the dynamic variant, the recursive name is resolved through the calling environment. A caller that rebinds that name can therefore change the recursive call's destination; reinstalling the original function would incorrectly hide this dynamic binding.
 
 ```mermaid
 flowchart TD
   accTitle: Chapter 4 - make recursion available inside its own body
-  accDescr: A recursive closure records the function name and reintroduces it on application before binding the parameter.
+  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller's binding. Both then bind the argument.
   A["Create recursive closure f, x, body, saved"] --> B["Bind f in the surrounding body"]
   B --> C["Call f with argument v"]
-  C --> D["Choose saved or caller environment by scope policy"]
-  D --> E["Install f as self; install x as v"]
-  E --> F["Evaluate body; recursive calls repeat this process"]
+  C --> D{"Scope policy"}
+  D -->|Static| E["Use saved environment; install f as self"]
+  D -->|Dynamic| G["Use caller environment, including its current f"]
+  E --> H["Install x as v"]
+  G --> H
+  H --> F["Evaluate body; recursive calls repeat this process"]
 ```
 
 ## 4.3 Implementation

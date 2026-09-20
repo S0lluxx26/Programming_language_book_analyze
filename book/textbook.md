@@ -133,5 +133,3 @@ The [concept chapters](01-induction.html) remain available for shorter explanati
 ## Source and solution notes
 
 The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §7.4's printed evaluator result needs an internal value-and-memory pair; §8.8's Fun extension needs an explicit equality policy; §9.2 initially encodes natural numbers and uses normal order. These are explained in their chapters.
-
-The PDF's hidden text layer contains an apparent “Exercise 3” near Figure 4.2. Visual inspection of p. 127 shows a scope figure, not a separate visible exercise. It is therefore treated as a worked scope example, not invented as a new numbered problem.

@@ -39,6 +39,11 @@ md.core.ruler.after('inline','definition-links',state=>{
   }
 });
 const fallback = md.renderer.rules.fence;
+const originalLink = md.renderer.rules.link_open || ((tokens,idx,options,env,self)=>self.renderToken(tokens,idx,options));
+md.renderer.rules.link_open=(tokens,idx,options,env,self)=>{
+  if(/^examples\/[^/]+\.ml$/.test(tokens[idx].attrGet('href')||''))tokens[idx].attrSet('download','');
+  return originalLink(tokens,idx,options,env,self);
+};
 let currentPage='', diagramCount=0;
 const diagrams=[];
 md.renderer.rules.fence = (tokens, idx, options, env, self) => {

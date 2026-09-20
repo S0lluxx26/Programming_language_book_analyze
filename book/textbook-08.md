@@ -12,7 +12,7 @@ The initial language returns to a small pure core: numbers, variables, arithmeti
 
 [Read in the PDF: p. 226](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226).
 
-Types include `int`, `bool`, and function types `a -> b`. An unknown type variable α represents a type to be determined, not an arbitrary runtime value. The type of a function records the relation between acceptable argument types and returned result types.
+Types include `int`, `bool`, and function types `a -> b`. An unknown type variable α represents a type to be determined, not an arbitrary runtime value. The type of a function describes the relation between acceptable argument types and returned result types.
 
 For `fun x -> x+1`, addition constrains x to int and the result is int; hence `int -> int`. For `fun x -> x`, input and result must be the same unknown type, producing `α -> α`.
 
@@ -107,7 +107,7 @@ flowchart TD
 
 [Read in the PDF: p. 271](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=271).
 
-A single monomorphic unknown is shared by all uses of a binding. Thus using the same identity function on both an integer and a boolean can force an inconsistent equation. Let-polymorphism instead stores a type scheme and creates fresh instances at each use.
+A single monomorphic unknown is shared by all uses of a binding. Thus using the same identity function on both an integer and a boolean can force an inconsistent equation. Let-polymorphism instead associates the binding with a type scheme and creates fresh instances at each use.
 
 The key rule is `generalize(Γ,t) = ∀(FTV(t) − FTV(Γ)).t`. Only variables independent of the surrounding type environment may be generalized. Ordinary procedure parameters remain monomorphic. At lookup, instantiate the quantified variables with fresh unknowns; do not freshen the unquantified environment-dependent variables.
 
@@ -142,7 +142,7 @@ Add Unit and list types. NIL has `list α` for a fresh α; CONS requires a head 
 
 Recursive definitions prebind their function types before checking bodies. Mutual recursion prebinds both function types before either body. All recursive calls within this extension are monomorphic.
 
-**Equality needs more than an ordinary equation.** The evaluator permits int/int and bool/bool equality, not arbitrary list or function equality. The solution records a scalar restriction and tries these two alternatives with unification. `infer_fun` returns all consistent resulting types. Consequently `fun x -> x=x` has two alternatives, `int -> bool` and `bool -> bool`, rather than an unrestricted `α -> bool`. This straightforward solver can be exponential in unresolved equality constraints; it is intended for small teaching examples.
+**Equality needs more than an ordinary equation.** The evaluator permits int/int and bool/bool equality, not arbitrary list or function equality. The solution adds a scalar restriction and tries these two alternatives with unification. `infer_fun` returns all consistent resulting types. Consequently `fun x -> x=x` has two alternatives, `int -> bool` and `bool -> bool`, rather than an unrestricted `α -> bool`. This straightforward solver can be exponential in unresolved equality constraints; it is intended for small teaching examples.
 
 **What successful typing does not establish:** `HEAD NIL` can have a list-element type while failing dynamically, and integer division can still encounter zero. These shape types do not prove nonemptiness, nonzero divisors, termination, or freedom from integer overflow. Stronger refinements would be a separate analysis.
 

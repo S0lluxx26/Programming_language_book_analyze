@@ -29,24 +29,27 @@
 </code></pre></details></figure><p><strong>Worked example, pp. 125–127:</strong> x starts at 1; f adds x to its argument; x is shadowed with 2; g also adds x; then compute <code>f 1 + g 1</code>. Static scope gives <strong>2 + 3 = 5</strong>. Dynamic scope gives <strong>3 + 3 = 6</strong>. Draw two saved environments for the static case; do not update f's saved x when defining g.</p>
 <h2 id="4-2-3-recursive-functions">4.2.3 Recursive Functions</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=137">Read in the PDF: p. 137</a>.</p>
-<p>Ordinary closure creation cannot refer to a binding that has not yet been installed. A recursive closure therefore <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">stores</a> its own function name as well as its parameter, body, and definition environment. On application, reconstruct a body environment containing the function's own closure and the argument binding.</p>
+<p>Ordinary closure creation cannot refer to a binding that has not yet been installed. A recursive closure therefore packages its own function name as well as its parameter, body, and definition environment. On static-scope application, reconstruct a body environment containing the function's own closure and the argument binding.</p>
 <pre><code class="language-text">saved environment
   + f ↦ the recursive closure itself
   + x ↦ argument value
   = environment for evaluating f&#39;s body
 </code></pre>
-<p>The parameter binding is the newest binding. This order matters if names coincide. In the dynamic variant, a recursive call can instead find the function through the calling environment; the companion also reinstalls its self binding explicitly.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-2.svg" width="294.421875" height="707.2000122070312" alt="Chapter 4 - make recursion available inside its own body"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<p>The parameter binding is the newest binding. This order matters if names coincide. In the dynamic variant, the recursive name is resolved through the calling environment. A caller that rebinds that name can therefore change the recursive call's destination; reinstalling the original function would incorrectly hide this dynamic binding.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-2.svg" width="572.921875" height="893.689208984375" alt="Chapter 4 - make recursion available inside its own body"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 4 - make recursion available inside its own body
-  accDescr: A recursive closure records the function name and reintroduces it on application before binding the parameter.
+  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller&#39;s binding. Both then bind the argument.
   A[&quot;Create recursive closure f, x, body, saved&quot;] --&gt; B[&quot;Bind f in the surrounding body&quot;]
   B --&gt; C[&quot;Call f with argument v&quot;]
-  C --&gt; D[&quot;Choose saved or caller environment by scope policy&quot;]
-  D --&gt; E[&quot;Install f as self; install x as v&quot;]
-  E --&gt; F[&quot;Evaluate body; recursive calls repeat this process&quot;]
+  C --&gt; D{&quot;Scope policy&quot;}
+  D --&gt;|Static| E[&quot;Use saved environment; install f as self&quot;]
+  D --&gt;|Dynamic| G[&quot;Use caller environment, including its current f&quot;]
+  E --&gt; H[&quot;Install x as v&quot;]
+  G --&gt; H
+  H --&gt; F[&quot;Evaluate body; recursive calls repeat this process&quot;]
 </code></pre></details></figure><h2 id="4-3-implementation">4.3 Implementation</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=143">Read in the PDF: pp. 143–145</a>. <strong>Task:</strong> implement and test both static and dynamic scope.</p>
-<p><a href="examples/textbook_functional.ml">Download the complete solution</a>. <code>run expression</code> uses static scope. <code>eval ~scope:Dynamic expression []</code> uses dynamic scope. The file implements both ordinary and recursive procedure calls and verifies the 5-versus-6 example and factorial under both policies.</p>
+<p><a href="examples/textbook_functional.ml" download="">Download the complete solution</a>. <code>run expression</code> uses static scope. <code>eval ~scope:Dynamic expression []</code> uses dynamic scope. The file implements both ordinary and recursive procedure calls and verifies the 5-versus-6 example and factorial under both policies.</p>
 <h3 id="worked-solution-strategy">Worked solution strategy</h3>
 <ol>
 <li>Add procedure variants to values before adding call branches.</li>

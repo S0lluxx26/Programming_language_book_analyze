@@ -31,7 +31,7 @@ flowchart TD
 
 ### Mutual recursion
 
-Both definitions must be available in either function body. Store the pair's definitions and their shared outer environment. Calling even reinstalls even and odd, then its parameter; calling odd performs the corresponding operation with odd as the selected body. Installing only the called function makes the first cross-call fail.
+Both definitions must be available in either function body. Keep the pair's definitions and their shared outer environment together. Calling even reinstalls even and odd, then its parameter; calling odd performs the corresponding operation with odd as the selected body. Installing only the called function makes the first cross-call fail.
 
 ```mermaid
 flowchart TD

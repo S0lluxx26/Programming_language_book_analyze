@@ -65,7 +65,7 @@ let () =
   check "drop" (drop [1;2;3] 2 = [3] && drop [1] 9 = [] && drop [1] 0 = [1]);
   check "sigma" (sigma (fun x -> x*x) 1 7 = 140 && sigma Fun.id 4 3 = 0);
   check "iter" (iter (5,fun x -> x+2) 0 = 10 && iter (0,fun _ -> failwith "called") 7 = 7);
-  check "iter rejects negative" (try ignore (iter (-1,Fun.id)); false with Invalid_argument _ -> true);
+  check "iter rejects negative" (try ignore (iter (-1,Fun.id) 0); false with Invalid_argument _ -> true);
   check "all" (all (fun x -> x > 0) [1;2] && not (all (fun x -> x > 0) [1;0]) && all (fun _ -> false) []);
   check "digits" (lst2int [1;2;3] = 123 && lst2int [0;4] = 4 && lst2int [] = 0);
   List.iter (fun xs ->

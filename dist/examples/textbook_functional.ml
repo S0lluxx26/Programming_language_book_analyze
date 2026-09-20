@@ -59,10 +59,13 @@ let rec eval ?(scope=Static) ?(emit=print_endline) e env =
       let base saved = match scope with Static -> saved | Dynamic -> env in
       (match closure with
        | Procedure(x,b,saved) -> go b ((x,arg)::base saved)
-       | RecProcedure(f,x,b,saved) -> go b ((x,arg)::(f,closure)::base saved)
+       | RecProcedure(f,x,b,saved) ->
+           let body_env = match scope with Static -> (f,closure)::saved | Dynamic -> env in
+           go b ((x,arg)::body_env)
        | MRecProcedure(f,x,b,g,y,c,saved) ->
            let other = MRecProcedure(g,y,c,f,x,b,saved) in
-           go b ((x,arg)::(f,closure)::(g,other)::base saved)
+           let body_env = match scope with Static -> (f,closure)::(g,other)::saved | Dynamic -> env in
+           go b ((x,arg)::body_env)
        | _ -> error "called a non-procedure")
   | PRINT e -> let v = go e env in emit (display v); Unit
   | SEQ(a,b) -> ignore (go a env); go b env
@@ -81,6 +84,10 @@ let () =
     MUL(VAR "n",CALL(VAR "f",SUB(VAR "n",CONST 1)))),CALL(VAR "f",CONST 5)) in
   check "recursive closure" (run factorial = Int 120);
   check "dynamic recursion" (eval ~scope:Dynamic factorial [] = Int 120);
+  let rebound = LETREC("f","x",IF(EQUAL(VAR "x",CONST 0),CONST 0,CALL(VAR "f",CONST 0)),
+    LET("g",VAR "f",LET("f",PROC("x",CONST 99),CALL(VAR "g",CONST 1)))) in
+  check "static recursion retains own definition" (run rebound = Int 0);
+  check "dynamic recursive name comes from caller" (eval ~scope:Dynamic rebound [] = Int 99);
   let even = "even","n",IF(EQUAL(VAR "n",CONST 0),TRUE,CALL(VAR "odd",SUB(VAR "n",CONST 1))) in
   let odd = "odd","n",IF(EQUAL(VAR "n",CONST 0),FALSE,CALL(VAR "even",SUB(VAR "n",CONST 1))) in
   check "mutual even" (run (LETMREC(even,odd,CALL(VAR "even",CONST 8))) = Bool true);
