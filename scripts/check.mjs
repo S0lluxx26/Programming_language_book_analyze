@@ -44,7 +44,7 @@ assert.equal((fs.readFileSync('book/hw1.md','utf8').match(/^## P\d+/gm)||[]).len
 const structure=JSON.parse(fs.readFileSync('book/textbook-structure.json','utf8'));
 assert.equal(catalog.filter(p=>p.textbook && p.slug!=='textbook-02-problems').length,9);
 assert.equal(structure.sections.length,48);
-assert.equal(textbookDepth.length,25,'Expected the reviewed textbook supplements');
+assert.equal(textbookDepth.length,28,'Expected the reviewed textbook supplements');
 assert.equal(new Set(textbookDepth.map(s=>s.section)).size,textbookDepth.length,'Duplicate supplement section');
 assert.equal(new Set(textbookDepth.map(s=>s.page)).size,9,'Supplements must cover all nine chapters');
 for(const entry of textbookDepth){
@@ -82,6 +82,11 @@ for(const p of structure.problems){
   assert(body?.includes('```mermaid'),`Problem ${p.number}: missing diagram`);
   assert(body.includes('worked-solution'),`Problem ${p.number}: missing solution`);
   assert(body.includes(`#page=${p.page})`),`Problem ${p.number}: missing PDF page`);
+  assert(body.includes('**Interface:**')&&body.includes('**Before you code:**')&&body.includes('**Check your result:**'),`Problem ${p.number}: missing independent-attempt contract`);
+}
+const exerciseHTML=fs.readFileSync('dist/textbook-02-problems.html','utf8');
+for(const section of exerciseHTML.split(/<h2\b/).filter(s=>/Problem \d+/.test(s.slice(0,160)))){
+  assert(section.indexOf('<strong>Interface:</strong>')<section.indexOf('class="thinking-route"'),'Exercise interface must precede thinking steps');
 }
 assert.equal(catalog.length,36);
 assert(!catalog.some(p=>p.part==='Lecture revision'||/^lectures?$|^lecture-/.test(p.slug)), 'Retired lecture navigation must be absent');

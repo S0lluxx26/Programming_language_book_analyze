@@ -26,7 +26,18 @@ export function addThinkingRoutes(page,source){
         'flowchart TD\n  accTitle: '+page.toUpperCase()+' '+route.heading+' - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n'+route.steps.map(([title],i)=>`  S${i+1}["${i+1}. ${title}"]`).join('\n')+'\n'+route.steps.slice(1).map((_,i)=>`  S${i+1} --> S${i+2}`).join('\n');
       content+='\n```mermaid\n'+graph+'\n```\n';
     }
-    source=source.replace(heading,heading+content);
+    if(page==='textbook-02-problems'){
+      // State the task and interface before giving the reasoning plan.
+      const start=source.indexOf(heading)+heading.length;
+      const next=source.indexOf('\n## ',start);
+      const end=next<0?source.length:next;
+      const preflight=source.indexOf('**Before you code:**',start);
+      if(preflight<0||preflight>=end)throw Error('Missing exercise prerequisites: '+route.heading);
+      const paragraphEnd=/\r?\n\r?\n/.exec(source.slice(preflight,end));
+      if(!paragraphEnd)throw Error('Unterminated exercise prerequisites: '+route.heading);
+      const insertion=preflight+paragraphEnd.index+paragraphEnd[0].length;
+      source=source.slice(0,insertion)+content+'\n'+source.slice(insertion);
+    }else source=source.replace(heading,heading+content);
   }
   return source;
 }

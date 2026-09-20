@@ -4,9 +4,15 @@ These are the **textbook's §2.4 Problems 1–12**, not HW1's different problem 
 
 [Download the complete OCaml solutions and checks](examples/textbook_exercises.ml). Every implementation below is included in that file. Helpers for differentiation and both fold versions of all five Problem 10 functions are also included. Solutions assume arithmetic results fit OCaml's integer range.
 
+**Before opening a solution:** read its **Interface**, **Before you code**, and **Check your result** lines. They state the requested function shape, link to the needed chapter idea, and give an observable target. A type variable such as `'a` stands for an element type; repeated occurrences must agree. `a -> b -> c` takes successive arguments, while `a * b -> c` takes one pair. Each problem's numbered thinking steps describe how to derive the answer.
+
 ## Problem 1 — Inclusive range
 
 **Source:** [p. 89](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=89). **Task:** construct the integers from n through m, inclusive. **Key idea:** a smaller interval. **Related homework:** [HW1 guide](hw1.html).
+
+**Interface:** `range : int -> int -> int list`. The PDF assumes n ≤ m.
+
+**Before you code:** review [recursive contracts and decreasing inputs](textbook-02.html#depth-2-2). **Check your result:** `range 3 7` contains both endpoints and exactly five integers; equal endpoints produce a singleton.
 
 ```mermaid
 flowchart TD
@@ -36,6 +42,10 @@ For `range 3 5`, expand `3 :: (4 :: [5])`. The interval length decreases each ti
 
 **Source:** [p. 90](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90). **Task:** concatenate a list of lists in order. **Key idea:** replace each outer list constructor with append, not cons.
 
+**Interface:** `concat : 'a list list -> 'a list`.
+
+**Before you code:** review [lists, cons, and append](syntax.html#list) and [fold choice](textbook-02.html#depth-2-3). **Check your result:** the outer nesting disappears once, while every element keeps its original order. `[[1;2];[];[3]]` gives `[1;2;3]`.
+
 ```mermaid
 flowchart TD
   accTitle: Problem 2 - flatten a list of lists
@@ -60,6 +70,10 @@ For `[[1;2]; []; [3]]`, the expansion is `[1;2] @ ([] @ ([3] @ []))`. Empty inne
 ## Problem 3 — Interleave two lists
 
 **Source:** [p. 90](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90). **Task:** alternate elements, starting with the first list, then retain the unmatched suffix. This is not a function that builds a list of pairs.
+
+**Interface:** `zipper : int list -> int list -> int list`, as requested by the PDF. The worked implementation also supports other common element types.
+
+**Before you code:** review [pattern matching on data shapes](textbook-02.html#depth-2-1). **Check your result:** `[1;3]` interleaved with `[2;4;6]` gives `[1;2;3;4;6]`; neither input loses its leftover elements.
 
 ```mermaid
 flowchart TD
@@ -86,6 +100,10 @@ let rec zipper xs ys = match xs, ys with
 ## Problem 4 — Unzip pairs
 
 **Source:** [pp. 90–91](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90). **Task:** separate first and second components while preserving order. **Key idea:** the recursive answer is itself a pair.
+
+**Interface:** `unzip : ('a * 'b) list -> 'a list * 'b list`.
+
+**Before you code:** review [tuples versus lists](textbook-02.html#depth-2-1). **Check your result:** `[(1,"a");(2,"b")]` gives `([1;2],["a";"b"])`. Both output lists have the input's length, but their element types may differ.
 
 ```mermaid
 flowchart TD
@@ -114,6 +132,10 @@ For `[(1,"a"); (2,"b")]`, the tail gives `([2],["b"])`; prepend 1 and `"a"`. The
 
 **Source:** [p. 91](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91). **Task:** remove n leading elements, returning empty if the list runs out.
 
+**Interface:** `drop : 'a list -> int -> 'a list` — list first, count second.
+
+**Before you code:** review [counting down along a list](textbook-02.html#depth-2-2). **Check your result:** dropping 0 returns the original list; dropping more elements than exist returns `[]`. Negative counts are not specified by the PDF; the solution below documents its extension.
+
 ```mermaid
 flowchart TD
   accTitle: Problem 5 - count down while discarding heads
@@ -140,6 +162,10 @@ let rec drop xs n =
 ## Problem 6 — Generalized summation
 
 **Source:** [pp. 91–92](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91). **Task:** sum f(i) over an inclusive interval. **Key idea:** parameterize the contribution, keep the traversal.
+
+**Interface:** `sigma : (int -> int) -> int -> int -> int`.
+
+**Before you code:** review [functions as arguments](textbook-02.html#depth-2-3) and [Problem 1's interval](#problem-1-inclusive-range). **Check your result:** summing the identity function from 1 through 10 gives 55; a one-point interval contributes exactly one call to f.
 
 ```mermaid
 flowchart TD
@@ -169,6 +195,10 @@ For the square function on 1 through 3, the contributions are 1, 4, 9, so the an
 
 **Source:** [p. 92](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=92). **Task:** return a function that applies f exactly n times. **Key idea:** zero repetitions means the identity function, not the number zero.
 
+**Interface:** `iter : int * (int -> int) -> (int -> int)` — its first argument is a pair, and its result is a function.
+
+**Before you code:** review [application and function types](textbook-02.html#application-arrows-and-scope). **Check your result:** `iter (0,f)` must return its eventual argument unchanged without calling f. Only nonnegative repetition counts are specified.
+
 ```mermaid
 flowchart TD
   accTitle: Problem 7 - build an n-fold function
@@ -197,6 +227,10 @@ For `iter (3, fun x -> x+2) 0`, the carried values are 0, 2, 4, 6. Constructing 
 
 **Source:** [p. 93](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93). **Task:** all elements must satisfy p; use `fold_right`.
 
+**Interface:** `all : ('a -> bool) -> 'a list -> bool`. The right-fold requirement is part of the task.
+
+**Before you code:** review [fold accumulator types and grouping](textbook-02.html#depth-2-3). **Check your result:** empty input is true; a single counterexample makes the result false. Keep the correct result separate from whether the traversal stops early.
+
 ```mermaid
 flowchart TD
   accTitle: Problem 8 - fold universal truth
@@ -220,6 +254,10 @@ For `[7;8;9]` and `p x = x > 5`, the logical expression is `true && (true && (tr
 
 **Source:** [p. 93](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93). **Task:** read decimal digits with `fold_left`. **Invariant:** the accumulator is the number represented by the processed prefix.
 
+**Interface:** `lst2int : int list -> int`. Every input element is assumed to be a digit from 0 through 9.
+
+**Before you code:** review [the prefix-accumulator meaning of a left fold](textbook-02.html#depth-2-3). **Check your result:** `[1;2;3]` means 123, while `[0;4]` means 4; the order of digits matters.
+
 ```mermaid
 flowchart LR
   accTitle: Problem 9 - extend a decimal prefix
@@ -242,6 +280,18 @@ Multiplication by ten shifts existing digits left by one decimal place; addition
 ## Problem 10 — Rewrite five functions with folds
 
 **Source:** [pp. 93–94](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93). **Task:** length, reverse, positive-element check, map, and filter. The wording mentions both folds; the downloadable solution supplies **both versions of all five**.
+
+**Interface:** preserve each original function's arguments and result:
+
+| Subpart | Requested function type | Required meaning |
+|---|---|---|
+| 1 · length | `'a list -> int` | Count elements |
+| 2 · reverse | `'a list -> 'a list` | Reverse their order |
+| 3 · is_all_pos | `int list -> bool` | True exactly when every element is positive |
+| 4 · map | `('a -> 'b) -> 'a list -> 'b list` | Transform each element in its original position |
+| 5 · filter | `('a -> bool) -> 'a list -> 'a list` | Keep matching elements in their original order |
+
+**Before you code:** review [map, filter, and both fold signatures](textbook-02.html#depth-2-3). **Check your result:** test all five functions on empty and mixed-sign lists; map and filter must preserve order. The download uses `_r` and `_l` suffixes so both implementations can coexist.
 
 ```mermaid
 flowchart TD
@@ -276,6 +326,10 @@ For mapping increment over `[1;2;3]`, the left fold builds `[4;3;2]`, then `List
 
 **Source:** [pp. 94–95](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=94). **Task:** arithmetic on `ZERO | SUCC of nat`. **Definitions:** inductive definition and structural recursion.
 
+**Interface:** `natadd : nat -> nat -> nat` and `natmul : nat -> nat -> nat`, with `type nat = ZERO | SUCC of nat`.
+
+**Before you code:** review [constructor-based induction](textbook-01.html#depth-1-3). **Check your result:** return a `nat` tree rather than a host integer; ZERO must obey the identities for addition and multiplication. `SUCC (SUCC ZERO)` represents 2, so count constructors to check small examples.
+
 ```mermaid
 flowchart TD
   accTitle: Problem 11 - derive arithmetic from ZERO and SUCC
@@ -305,6 +359,49 @@ Interpret the equations mathematically: `0+b=b`, `(a+1)+b=1+(a+b)`, `0*b=0`, and
 ## Problem 12 — Symbolic differentiation
 
 **Source:** [pp. 95–96](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=95). **Task:** differentiate a syntax tree with respect to a named variable. **Key distinction:** return another expression tree, not the value of the derivative at a chosen number.
+
+**Interface:** `diff : aexp * string -> aexp`. It takes **one pair** `(expression, variable_name)`.
+
+**Before you code:** review [syntax trees versus computed results](textbook-01.html#depth-1-2) and [datatype pattern matching](textbook-02.html#depth-2-1). **Check your result:** `x² + 2x + 1` should become an expression representing `2x + 2`; differentiating with respect to another name must use that name consistently.
+
+### Read the input datatype first
+
+The datatype from the task is:
+
+```ocaml
+type aexp =
+  | Const of int
+  | Var of string
+  | Power of string * int
+  | Times of aexp list
+  | Sum of aexp list
+```
+
+| Constructor | Mathematical meaning | Contents to inspect |
+|---|---|---|
+| `Const n` | A constant | One integer |
+| `Var x` | The variable named x | One string, compared with the differentiation variable |
+| `Power (x,n)` | x raised to exponent n | A variable name and exponent; the base is not an arbitrary subtree |
+| `Times factors` | Product of the factors | A list of expression trees, potentially more than two |
+| `Sum terms` | Sum of the terms | A list of expression trees |
+
+For the PDF's example, `Sum [Power ("x",2); Times [Const 2; Var "x"]; Const 1]` has this shape:
+
+```mermaid
+flowchart TD
+  accTitle: Problem 12 - read the polynomial as a tree before differentiating
+  accDescr: The outer sum has a power, a product, and a constant child. The product has two factors, constant two and variable x.
+  S["Sum: x squared + 2x + 1"] --> P["Power: x, exponent 2"]
+  S --> T["Times: 2x"]
+  S --> C["Const 1"]
+  T --> N["Const 2"]
+  T --> X["Var x"]
+```
+
+1. Match the outer Sum and process its three children.
+2. Apply the power rule to the first child and the product rule to the second.
+3. The last child is a constant, so it contributes zero.
+4. Construct the derivative AST; simplify neutral terms to obtain the displayed answer. The worked solution's empty-sum and empty-product conventions are stated below.
 
 ```mermaid
 flowchart TD
@@ -338,6 +435,28 @@ let rec diff (e,x) = match e with
 ```
 
 The complete file defines `sum`, `product`, and `power` as smart constructors: remove zero summands, eliminate unit factors, turn an empty sum into 0 and an empty product into 1, and represent powers 0 and 1 directly. This gives the book's displayed simplified answer for `x² + 2x + 1`: `2x + 2`.
+
+<details class="worked-solution"><summary>Show the helper definitions used by diff</summary>
+
+These helpers, together with the datatype above, make the displayed `diff` function runnable. Empty Sum and Times lists use the conventional identities 0 and 1; the PDF's example does not itself specify these boundary cases. This is a small simplifier, not a canonical polynomial normalizer.
+
+```ocaml
+let sum terms =
+  let terms = List.filter (function Const 0 -> false | _ -> true) terms in
+  match terms with [] -> Const 0 | [x] -> x | _ -> Sum terms
+
+let product terms =
+  if List.exists (function Const 0 -> true | _ -> false) terms then Const 0
+  else let terms = List.filter (function Const 1 -> false | _ -> true) terms in
+    match terms with [] -> Const 1 | [x] -> x | _ -> Times terms
+
+let power x n =
+  if n = 0 then Const 1 else if n = 1 then Var x else Power (x,n)
+```
+
+Define the helpers **before** `diff` in the `.ml` file. `power "x" 1` returns `Var "x"`; `product [Const 1; Var "x"]` removes the unit factor. Neither example executes the variable x or needs a value for it.
+
+</details>
 
 For three factors, the recursive rule expands to `h'uv + h(u'v + uv')`. Each term differentiates exactly one factor. Differentiating every factor in one product would incorrectly give `h'u'v'`.
 

@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>6. State Changes · The Programming Languages Notebook</title><meta name="description" content="Compare explicit and implicit references and solve both stateful interpreter tasks."><meta name="theme-color" content="#142b48"><meta property="og:title" content="6. State Changes"><meta property="og:description" content="Compare explicit and implicit references and solve both stateful interpreter tasks."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" aria-current="page">6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 6 · PDF pp. 161–192</p><h1>6. State Changes</h1><p class="dek">Compare explicit and implicit references and solve both stateful interpreter tasks.</p><p class="reading-meta">18 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161" target="_blank" rel="noopener">Original PDF · pp. 161–192 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#6-1-first-approach">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 6 · PDF pp. 161–192</p><h1>6. State Changes</h1><p class="dek">Compare explicit and implicit references and solve both stateful interpreter tasks.</p><p class="reading-meta">21 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161" target="_blank" rel="noopener">Original PDF · pp. 161–192 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#6-1-first-approach">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (2)</summary>
 <ul>
 <li><a href="#lecture-08">L8 · Distinguish aliasing from delayed evaluation</a></li>
@@ -265,6 +265,28 @@
 <li>Read the caller's variable in the returned memory.</li>
 </ol>
 <p>The displayed call-by-reference rule expects a variable actual argument so there is an existing variable location to reuse. Do not silently invent a location for an arbitrary expression such as <code>x+1</code> without defining an extension. Passing an OCaml reference value by value can also share a cell, but that mechanism is not the same as this formal rule for aliasing the parameter's variable cell.</p>
+<h3 id="argument-timing-eager-and-lazy-evaluation">Argument timing: eager and lazy evaluation</h3>
+<p>The end of this source section, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=187">PDF pp. 187–188</a>, introduces a further question: <strong>when must an argument's computation run?</strong> This is separate from which variable cell a parameter uses.</p>
+<p>Use the source's idea of a nonterminating <code>forever</code> function and a function that ignores its parameter:</p>
+<pre><code class="language-text">letrec forever(x) = forever x in
+(fun ignored -&gt; 1) (forever 0)
+</code></pre>
+<ol>
+<li>Under eager call by value, evaluate the argument <code>forever 0</code> before entering the function body.</li>
+<li>That call keeps recurring. The outer body is never reached, so the whole program does not terminate.</li>
+<li>Under deferred argument evaluation, enter the outer body while retaining the argument as a suspended computation.</li>
+<li>The body returns 1 without requesting its parameter, so the suspended <code>forever 0</code> is never run.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-4.svg" width="581.3115234375" height="615.4125366210938" alt="Chapter 6 - an unused argument separates eager and deferred execution"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Chapter 6 - an unused argument separates eager and deferred execution
+  accDescr: Eager evaluation enters a diverging argument before the body. Deferred evaluation can return one because the body never requests the argument.
+  A[&quot;1. Apply a function that ignores its argument&quot;] --&gt; B{&quot;2. Argument policy?&quot;}
+  B --&gt;|&quot;Eager value call&quot;| C[&quot;3a. Evaluate forever 0&quot;]
+  C --&gt; D[&quot;4a. Keeps recurring; body never reached&quot;]
+  B --&gt;|&quot;Defer until used&quot;| E[&quot;3b. Enter body without evaluating argument&quot;]
+  E --&gt; F[&quot;4b. Return 1; argument unused&quot;]
+</code></pre></details></figure><p>“Deferred” alone does not say whether repeated uses recompute the argument. Call by name can reevaluate it; call by need saves the computed result for reuse. Both avoid an unused argument in this example. Effects make this distinction observable, so a full lazy language needs more rules than merely postponing a call.</p>
+<p>The downloadable state evaluator implements the chapter's <strong>eager value calls and location-sharing reference calls</strong>. <a class="syntax-link" href="syntax.html#reference" title="Reference operations and assignment — syntax meaning and source"><code>CALLREF</code></a> passes an existing variable location; it does not suspend an arbitrary expression. A lazy interpreter is outside those implementation tasks. <a href="textbook-09.html#9-1-lambda-calculus">Chapter 9's normal-order example</a> revisits avoiding an unused argument, using <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitution</a> rather than a store of suspensions.</p>
 </details>
 <aside class="section-checkpoint" data-checkpoint="6.2.3" aria-label="Checkpoint 6.2.3"><p><strong>Predict · 6.2.3</strong> a initially holds 4. A procedure sets its parameter to 9. What is a afterward under value and reference calls?</p><details><summary>Reveal reasoning and common trap</summary><p>Value call: 4, because the parameter has a fresh cell. Reference call: 9, because it aliases a&#39;s existing cell. Copying record values can still share their field cells even under a value call.</p><p><strong>Common trap:</strong> Call by value is not a promise to deep-copy every reachable object.</p><a href="07-state.html#call-by-value-and-call-by-reference">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-08" data-lecture="8">Distinguish aliasing from delayed evaluation <small>Lecture 8</small></h3>
@@ -285,7 +307,7 @@
 <li>Update or read the selected cell.</li>
 <li>Return value and final memory.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-4.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-5.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 8 reasoning route
   accDescr: Numbered stages for applying state and parameter passing.
@@ -314,6 +336,60 @@ flowchart TD
 <p>Let and value calls allocate cells. <code>VAR</code> reads through the binding's address. <a class="syntax-link" href="syntax.html#store" title="Locations and memory — syntax meaning and source"><code>SET</code></a> changes the existing address. <a class="syntax-link" href="syntax.html#reference" title="Reference operations and assignment — syntax meaning and source"><code>CALLREF</code></a> resolves its variable argument in the caller, then aliases that location in the callee. Recursive procedure binding first reserves a cell and then stores a closure whose captured environment includes that cell; this supports self-reference without rebuilding the whole environment.</p>
 <p><strong>Checks included:</strong> counter ordering, both parameter modes, recursion, pointers and record sharing for the next chapter. The counter is part of each store, so separate runs begin independently and collection does not reuse an old address accidentally.</p>
 <p><strong>Homework connection:</strong> <a href="hw3.html">HW3</a> depends on these distinctions, while using its own <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>. Next: <a href="textbook-07.html">Chapter 7</a>.</p>
+<details class="textbook-depth" id="depth-6-3" data-depth="6.3">
+<summary>Step by step · Allocate after an initializer that allocates</summary>
+<p>The freshness condition on <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=167">PDF pp. 167–168</a> is <code>ℓ ∉ Dom(σ₁)</code>: use the store <strong>returned by evaluating the initializer</strong>. The implementation tasks on <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=188">pp. 188–192</a> need this order even when allocation is nested.</p>
+<p>Consider <code>ref (ref 0)</code> in the explicit-reference language, beginning with empty memory. In the downloadable interpreter its AST is <code>NEWREF (NEWREF (CONST 0))</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+<th>Result value</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Evaluate the inner initializer 0</td>
+<td><code>Int 0</code></td>
+<td>Empty</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Allocate the inner cell at ℓ0</td>
+<td><code>Loc 0</code></td>
+<td>ℓ0 ↦ Int 0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Use step 2's result to initialize a fresh outer cell ℓ1</td>
+<td><code>Loc 1</code></td>
+<td>ℓ0 ↦ Int 0, ℓ1 ↦ Loc 0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dereference the outer result once</td>
+<td><code>Loc 0</code></td>
+<td>Unchanged</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Dereference that result again</td>
+<td><code>Int 0</code></td>
+<td>Unchanged</td>
+</tr>
+</tbody>
+</table>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-6.svg" width="783.625" height="75" alt="Chapter 6 - nested allocation creates two different cells"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart LR
+  accTitle: Chapter 6 - nested allocation creates two different cells
+  accDescr: The returned outer location one contains the inner location zero, whose cell contains integer zero. Allocation must preserve both cells.
+  R[&quot;Returned value: Loc 1&quot;] --&gt; O[&quot;Outer cell l1: Loc 0&quot;]
+  O --&gt; I[&quot;Inner cell l0: Int 0&quot;]
+</code></pre></details></figure><p>If the outer allocation picks a location from the original empty store, it may reuse ℓ0 and overwrite the inner cell. The same bug appears if it allocates into the original store and drops the initializer's new cells. Correct code first gets <code>(v, updated_memory)</code> from the recursive evaluator, then calls <code>alloc v updated_memory</code>.</p>
+<p>For this two-cell result, assert that the locations differ, that the outer contents point to the inner cell, and that two dereferences yield 0. The <a href="examples/textbook_state.ml" download="">state example file</a> includes these checks. Location names are arbitrary: the invariant is the distinct cells and their edges, not the particular numbers 0 and 1.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="6.3" aria-label="Checkpoint 6.3"><p><strong>Predict · 6.3</strong> What should a stateful interpreter return for a sequence that assigns x=6 and then reads x?</p><details><summary>Reveal reasoning and common trap</summary><p>The value 6 together with the final memory containing 6 at x&#39;s cell. Returning the correct value but stale memory can break the enclosing expression.</p><p><strong>Common trap:</strong> Validate both components of value * memory, not just the printed answer.</p><a href="syntax.html#evaluation">Revisit the prerequisite →</a></details></aside>
 <h2 id="lecture-extension-exceptions-and-continuations">Lecture extension: Exceptions and continuations</h2>
 <p>This slide topic extends the chapter’s model; it is not a numbered section of the supplied textbook. Make pending computation explicit so a raised exception can discard frames up to the nearest handler.</p>
@@ -335,7 +411,7 @@ flowchart TD
 <li>Discard frames to the nearest handler.</li>
 <li>Run the handler in its saved environment.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-5.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-7.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 10 reasoning route
   accDescr: Numbered stages for applying exceptions and continuations.

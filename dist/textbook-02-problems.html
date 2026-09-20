@@ -1,10 +1,14 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2.4 Problems · Worked solutions · The Programming Languages Notebook</title><meta name="description" content="Derive each solution with a Mermaid thinking flow, worked OCaml code, and boundary checks."><meta name="theme-color" content="#142b48"><meta property="og:title" content="2.4 Problems · Worked solutions"><meta property="og:description" content="Derive each solution with a Mermaid thinking flow, worked OCaml code, and boundary checks."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" aria-current="page">2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook §2.4 · Problems 1–12</p><h1>2.4 Problems · Worked solutions</h1><p class="dek">Derive each solution with a Mermaid thinking flow, worked OCaml code, and boundary checks.</p><p class="reading-meta">17 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=89" target="_blank" rel="noopener">Original PDF · pp. 89–96 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><h2 id="how-to-use-these-solutions">How to use these solutions</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook §2.4 · Problems 1–12</p><h1>2.4 Problems · Worked solutions</h1><p class="dek">Derive each solution with a Mermaid thinking flow, worked OCaml code, and boundary checks.</p><p class="reading-meta">23 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=89" target="_blank" rel="noopener">Original PDF · pp. 89–96 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><h2 id="how-to-use-these-solutions">How to use these solutions</h2>
 <p>These are the <strong>textbook's §2.4 Problems 1–12</strong>, not HW1's different problem list. Read the paraphrased task, follow the Mermaid flow, and try writing the code before opening the worked solution. <a href="textbook-02.html#2-4-exercises">Return to Chapter 2</a>.</p>
 <p><a href="examples/textbook_exercises.ml" download="">Download the complete OCaml solutions and checks</a>. Every implementation below is included in that file. Helpers for differentiation and both fold versions of all five Problem 10 functions are also included. Solutions assume arithmetic results fit OCaml's integer range.</p>
+<p><strong>Before opening a solution:</strong> read its <strong>Interface</strong>, <strong>Before you code</strong>, and <strong>Check your result</strong> lines. They state the requested function shape, link to the needed chapter idea, and give an observable target. A <a href="glossary.html#type-variable" class="definition-link" title="An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable. — English textbook, PDF p. 254">type variable</a> such as <code>'a</code> stands for an element <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a>; repeated occurrences must agree. <code>a -&gt; b -&gt; c</code> takes successive arguments, while <code>a * b -&gt; c</code> takes one pair. Each problem's numbered thinking steps describe how to derive the answer.</p>
 <h2 id="problem-1-inclusive-range">Problem 1 — Inclusive range</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=89">p. 89</a>. <strong>Task:</strong> construct the integers from n through m, inclusive. <strong>Key idea:</strong> a smaller interval. <strong>Related homework:</strong> <a href="hw1.html">HW1 guide</a>.</p>
+<p><strong>Interface:</strong> <code>range : int -&gt; int -&gt; int list</code>. The PDF assumes n ≤ m.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-2">recursive contracts and decreasing inputs</a>. <strong>Check your result:</strong> <code>range 3 7</code> contains both endpoints and exactly five integers; equal endpoints produce a singleton.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -13,7 +17,6 @@
 <li><strong>Check termination.</strong> The remaining interval shrinks; do not increment past the final endpoint.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=89">p. 89</a>. <strong>Task:</strong> construct the integers from n through m, inclusive. <strong>Key idea:</strong> a smaller interval. <strong>Related homework:</strong> <a href="hw1.html">HW1 guide</a>.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-1.svg" width="616.32373046875" height="659.859375" alt="Problem 1 - shrink an inclusive interval"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 1 - shrink an inclusive interval
   accDescr: Empty intervals return empty; a singleton stops without overflowing the next integer; otherwise emit the lower endpoint.
@@ -31,6 +34,9 @@
 <p>For <code>range 3 5</code>, expand <code>3 :: (4 :: [5])</code>. The interval length decreases each time. The singleton branch avoids computing <code>max_int + 1</code> at the last endpoint. The book assumes <code>n &lt;= m</code>; returning <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a> for a reversed interval is an explicit extension. Time and output space are linear in the interval length; this direct version also uses linear call-stack space.</p>
 </details>
 <h2 id="problem-2-flatten-one-list-level">Problem 2 — Flatten one list level</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">p. 90</a>. <strong>Task:</strong> concatenate a list of lists in order. <strong>Key idea:</strong> replace each outer list constructor with append, not cons.</p>
+<p><strong>Interface:</strong> <code>concat : 'a list list -&gt; 'a list</code>.</p>
+<p><strong>Before you code:</strong> review <a href="syntax.html#list">lists, cons, and append</a> and <a href="textbook-02.html#depth-2-3">fold choice</a>. <strong>Check your result:</strong> the outer nesting disappears once, while every element keeps its original order. <code>[[1;2];[];[3]]</code> gives <code>[1;2;3]</code>.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -39,7 +45,6 @@
 <li><strong>Combine with append.</strong> Append the current inner list to the flattened tail, preserving order.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">p. 90</a>. <strong>Task:</strong> concatenate a list of lists in order. <strong>Key idea:</strong> replace each outer list constructor with append, not cons.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-2.svg" width="533.52685546875" height="609.0406494140625" alt="Problem 2 - flatten a list of lists"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 2 - flatten a list of lists
   accDescr: Flatten the tail, then append the current inner list before that result.
@@ -54,6 +59,9 @@
 <p>For <code>[[1;2]; []; [3]]</code>, the expansion is <code>[1;2] @ ([] @ ([3] @ []))</code>. Empty inner lists contribute nothing. Using <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>::</code></a> would retain nesting. Each inner list is copied once by append, giving time linear in the total number of elements plus the outer list length. Test an empty outer list and several empty inner lists.</p>
 </details>
 <h2 id="problem-3-interleave-two-lists">Problem 3 — Interleave two lists</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">p. 90</a>. <strong>Task:</strong> alternate elements, starting with the first list, then retain the unmatched suffix. This is not a function that builds a list of pairs.</p>
+<p><strong>Interface:</strong> <code>zipper : int list -&gt; int list -&gt; int list</code>, as requested by the PDF. The worked implementation also supports other common element types.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-1">pattern matching on data shapes</a>. <strong>Check your result:</strong> <code>[1;3]</code> interleaved with <code>[2;4;6]</code> gives <code>[1;2;3;4;6]</code>; neither input loses its leftover elements.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -62,7 +70,6 @@
 <li><strong>Recurse on both tails.</strong> Keep the same alternating rule until one input ends.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">p. 90</a>. <strong>Task:</strong> alternate elements, starting with the first list, then retain the unmatched suffix. This is not a function that builds a list of pairs.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-3.svg" width="520.082275390625" height="559.1062622070312" alt="Problem 3 - interleave with asymmetric remainders"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 3 - interleave with asymmetric remainders
   accDescr: When either list is exhausted, return the other; otherwise emit two heads and recur on two tails.
@@ -75,9 +82,12 @@
   | <span class="hljs-literal">[]</span>, rest | rest, <span class="hljs-literal">[]</span> -&gt; rest
   | x::xt, y::yt -&gt; x :: y :: zipper xt yt
 </code></pre>
-<p><code>zipper [1;3] [2;4;6]</code> emits 1, 2, then 3, 4, then shares the remaining <code>[6]</code>. Each recursive call consumes one element from both lists. Check each list empty separately, and each unequal-length direction. The implementation is polymorphic, which includes the integer-list <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> requested by the book.</p>
+<p><code>zipper [1;3] [2;4;6]</code> emits 1, 2, then 3, 4, then shares the remaining <code>[6]</code>. Each recursive call consumes one element from both lists. Check each list empty separately, and each unequal-length direction. The implementation is polymorphic, which includes the integer-list type requested by the book.</p>
 </details>
 <h2 id="problem-4-unzip-pairs">Problem 4 — Unzip pairs</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">pp. 90–91</a>. <strong>Task:</strong> separate first and second components while preserving order. <strong>Key idea:</strong> the recursive answer is itself a pair.</p>
+<p><strong>Interface:</strong> <code>unzip : ('a * 'b) list -&gt; 'a list * 'b list</code>.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-1">tuples versus lists</a>. <strong>Check your result:</strong> <code>[(1,&quot;a&quot;);(2,&quot;b&quot;)]</code> gives <code>([1;2],[&quot;a&quot;;&quot;b&quot;])</code>. Both output lists have the input's length, but their element types may differ.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -86,7 +96,6 @@
 <li><strong>Prepend each component.</strong> Add the current first component to the first output and the second to the second output.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=90">pp. 90–91</a>. <strong>Task:</strong> separate first and second components while preserving order. <strong>Key idea:</strong> the recursive answer is itself a pair.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-4.svg" width="541.061279296875" height="590.3406372070312" alt="Problem 4 - use both components of one recursive answer"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 4 - use both components of one recursive answer
   accDescr: Unzip the tail once, then prepend each head component to its matching result list.
@@ -103,6 +112,9 @@
 <p>For <code>[(1,&quot;a&quot;); (2,&quot;b&quot;)]</code>, the tail gives <code>([2],[&quot;b&quot;])</code>; prepend 1 and <code>&quot;a&quot;</code>. The result has type <code>'a list * 'b list</code>, and the two lists need not share an element type. Calling <code>unzip rest</code> twice would duplicate work. Time is linear; the induction hypothesis states both output lists already preserve the tail's component order.</p>
 </details>
 <h2 id="problem-5-drop-a-prefix">Problem 5 — Drop a prefix</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91">p. 91</a>. <strong>Task:</strong> remove n leading elements, returning empty if the list runs out.</p>
+<p><strong>Interface:</strong> <code>drop : 'a list -&gt; int -&gt; 'a list</code> — list first, count second.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-2">counting down along a list</a>. <strong>Check your result:</strong> dropping 0 returns the original list; dropping more elements than exist returns <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a>. Negative counts are not specified by the PDF; the solution below documents its extension.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -111,7 +123,6 @@
 <li><strong>Return the remaining suffix.</strong> No rebuilding or element inspection is needed.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91">p. 91</a>. <strong>Task:</strong> remove n leading elements, returning empty if the list runs out.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-5.svg" width="591.968505859375" height="655.8406372070312" alt="Problem 5 - count down while discarding heads"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 5 - count down while discarding heads
   accDescr: Stop when the requested count is exhausted or the list is empty.
@@ -128,6 +139,9 @@
 <p><code>drop [1;2;3] 2</code> becomes <code>drop [2;3] 1</code>, then <code>drop [3] 0</code>, giving <code>[3]</code>. No output rebuilding is needed: the answer is an existing suffix. Negative n is unspecified in the problem; this solution treats it as zero. The call is <a href="glossary.html#tail-recursion" class="definition-link" title="Recursion in which the recursive call is the final computation in its branch. An accumulator can carry work that would otherwise remain on the stack. — English textbook, PDF p. 79">tail recursive</a> and visits at most <code>min(n, length xs)</code> nodes for nonnegative n.</p>
 </details>
 <h2 id="problem-6-generalized-summation">Problem 6 — Generalized summation</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91">pp. 91–92</a>. <strong>Task:</strong> sum f(i) over an inclusive interval. <strong>Key idea:</strong> parameterize the contribution, keep the traversal.</p>
+<p><strong>Interface:</strong> <code>sigma : (int -&gt; int) -&gt; int -&gt; int -&gt; int</code>.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-3">functions as arguments</a> and <a href="#problem-1-inclusive-range">Problem 1's interval</a>. <strong>Check your result:</strong> summing the identity function from 1 through 10 gives 55; a one-point interval contributes exactly one call to f.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -136,7 +150,6 @@
 <li><strong>Add the current term.</strong> Combine it with the sum over the smaller interval.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=91">pp. 91–92</a>. <strong>Task:</strong> sum f(i) over an inclusive interval. <strong>Key idea:</strong> parameterize the contribution, keep the traversal.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-6.svg" width="547.36767578125" height="694.6062622070312" alt="Problem 6 - separate the interval from its contribution function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 6 - separate the interval from its contribution function
   accDescr: An empty interval contributes zero; otherwise add the current contribution to the smaller interval&#39;s sum.
@@ -154,6 +167,9 @@
 <p>For the square function on 1 through 3, the contributions are 1, 4, 9, so the answer is 14. The empty-sum identity is 0. The function is called once per integer, assuming mathematical, side-effect-free f; this expression does not prescribe an effect order for OCaml's <code>+</code> operands. Use explicit <a class="syntax-link" href="syntax.html#let" title="Binding: let x = e1 in e2 — syntax meaning and source"><code>let</code></a> bindings if effect order matters. Boundary checks include equal endpoints and an empty interval.</p>
 </details>
 <h2 id="problem-7-repeated-function-application">Problem 7 — Repeated function application</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=92">p. 92</a>. <strong>Task:</strong> return a function that applies f exactly n times. <strong>Key idea:</strong> zero repetitions means the identity function, not the number zero.</p>
+<p><strong>Interface:</strong> <code>iter : int * (int -&gt; int) -&gt; (int -&gt; int)</code> — its first argument is a pair, and its result is a function.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#application-arrows-and-scope">application and function types</a>. <strong>Check your result:</strong> <code>iter (0,f)</code> must return its eventual argument unchanged without calling f. Only nonnegative repetition counts are specified.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -162,7 +178,6 @@
 <li><strong>Apply and decrease.</strong> Replace x with f x and decrease the count until zero.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=92">p. 92</a>. <strong>Task:</strong> return a function that applies f exactly n times. <strong>Key idea:</strong> zero repetitions means the identity function, not the number zero.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-7.svg" width="460.31005859375" height="622.2281494140625" alt="Problem 7 - build an n-fold function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 7 - build an n-fold function
   accDescr: Return a function whose loop counts applications down to zero while carrying the current value.
@@ -180,6 +195,9 @@
 <p>For <code>iter (3, fun x -&gt; x+2) 0</code>, the carried values are 0, 2, 4, 6. Constructing <code>iter (3,f)</code> returns a function; it does not immediately call f. Test n = 0 with a function that would fail if called. Negative repetition is rejected because the problem only defines zero and positive counts. The returned function uses tail recursion.</p>
 </details>
 <h2 id="problem-8-universal-predicate-with-a-right-fold">Problem 8 — Universal predicate with a right fold</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">p. 93</a>. <strong>Task:</strong> all elements must satisfy p; use <a class="syntax-link" href="syntax.html#fold" title="Folds: combining a list — syntax meaning and source"><code>fold_right</code></a>.</p>
+<p><strong>Interface:</strong> <code>all : ('a -&gt; bool) -&gt; 'a list -&gt; bool</code>. The right-fold requirement is part of the task.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-3">fold accumulator types and grouping</a>. <strong>Check your result:</strong> empty input is true; a single counterexample makes the result false. Keep the correct result separate from whether the traversal stops early.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -188,7 +206,6 @@
 <li><strong>Use the required fold.</strong> Implement that rule with fold_right; strict folding still computes the suffix.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">p. 93</a>. <strong>Task:</strong> all elements must satisfy p; use <a class="syntax-link" href="syntax.html#fold" title="Folds: combining a list — syntax meaning and source"><code>fold_right</code></a>.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-8.svg" width="290.859375" height="443.0999755859375" alt="Problem 8 - fold universal truth"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-8.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 8 - fold universal truth
   accDescr: The empty list is true; combine each predicate result with the suffix&#39;s result using conjunction.
@@ -201,6 +218,9 @@
 <p>For <code>[7;8;9]</code> and <code>p x = x &gt; 5</code>, the logical expression is <code>true &amp;&amp; (true &amp;&amp; (true &amp;&amp; true))</code>. The empty list returns true because there is no counterexample. OCaml evaluates the folded suffix before applying the combining function, so this satisfies the fold requirement but is not an early-stopping traversal. Test empty input and a failure near either end.</p>
 </details>
 <h2 id="problem-9-digits-to-a-number">Problem 9 — Digits to a number</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">p. 93</a>. <strong>Task:</strong> read decimal digits with <a class="syntax-link" href="syntax.html#fold" title="Folds: combining a list — syntax meaning and source"><code>fold_left</code></a>. <strong>Invariant:</strong> the accumulator is the number represented by the processed prefix.</p>
+<p><strong>Interface:</strong> <code>lst2int : int list -&gt; int</code>. Every input element is assumed to be a digit from 0 through 9.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-3">the prefix-accumulator meaning of a left fold</a>. <strong>Check your result:</strong> <code>[1;2;3]</code> means 123, while <code>[0;4]</code> means 4; the order of digits matters.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -209,7 +229,6 @@
 <li><strong>Fold from the left.</strong> Start at zero and verify the intermediate values for a three-digit example.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">p. 93</a>. <strong>Task:</strong> read decimal digits with <a class="syntax-link" href="syntax.html#fold" title="Folds: combining a list — syntax meaning and source"><code>fold_left</code></a>. <strong>Invariant:</strong> the accumulator is the number represented by the processed prefix.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-9.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-9.svg" width="886.25" height="75" alt="Problem 9 - extend a decimal prefix"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-9.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart LR
   accTitle: Problem 9 - extend a decimal prefix
   accDescr: Processing digits one, two, three updates the prefix value from zero to one to twelve to one hundred twenty-three.
@@ -222,6 +241,45 @@
 <p>Multiplication by ten shifts existing digits left by one decimal place; addition installs the new units digit. Empty input gives 0 and leading zeros have no effect. The book assumes each element is between 0 and 9; validation is therefore not part of the required algorithm. Test <code>[0;4]</code>, <code>[0]</code>, and <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a>. Very long inputs can overflow OCaml integers.</p>
 </details>
 <h2 id="problem-10-rewrite-five-functions-with-folds">Problem 10 — Rewrite five functions with folds</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">pp. 93–94</a>. <strong>Task:</strong> length, reverse, positive-element check, map, and filter. The wording mentions both folds; the downloadable solution supplies <strong>both versions of all five</strong>.</p>
+<p><strong>Interface:</strong> preserve each original function's arguments and result:</p>
+<table>
+<thead>
+<tr>
+<th>Subpart</th>
+<th>Requested function type</th>
+<th>Required meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 · length</td>
+<td><code>'a list -&gt; int</code></td>
+<td>Count elements</td>
+</tr>
+<tr>
+<td>2 · reverse</td>
+<td><code>'a list -&gt; 'a list</code></td>
+<td>Reverse their order</td>
+</tr>
+<tr>
+<td>3 · is_all_pos</td>
+<td><code>int list -&gt; bool</code></td>
+<td>True exactly when every element is positive</td>
+</tr>
+<tr>
+<td>4 · map</td>
+<td><code>('a -&gt; 'b) -&gt; 'a list -&gt; 'b list</code></td>
+<td>Transform each element in its original position</td>
+</tr>
+<tr>
+<td>5 · filter</td>
+<td><code>('a -&gt; bool) -&gt; 'a list -&gt; 'a list</code></td>
+<td>Keep matching elements in their original order</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Before you code:</strong> review <a href="textbook-02.html#depth-2-3">map, filter, and both fold signatures</a>. <strong>Check your result:</strong> test all five functions on empty and mixed-sign lists; map and filter must preserve order. The download uses <code>_r</code> and <code>_l</code> suffixes so both implementations can coexist.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -231,7 +289,6 @@
 <li><strong>Restore order if needed.</strong> Reverse the accumulated result for left-fold map and filter; test all five functions.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=93">pp. 93–94</a>. <strong>Task:</strong> length, reverse, positive-element check, map, and filter. The wording mentions both folds; the downloadable solution supplies <strong>both versions of all five</strong>.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-10.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-10.svg" width="1410.97314453125" height="357.79998779296875" alt="Problem 10 - derive a fold from the result being built"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-10.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 10 - derive a fold from the result being built
   accDescr: Counting, conjunction, reversal, transformation, and selection require different accumulator meanings.
@@ -283,6 +340,9 @@
 <p><strong>Checks:</strong> empty input, singleton input, and <code>[3;0;-2;4]</code> distinguish order and predicate mistakes. The solution file compares every version to the corresponding standard-library behavior.</p>
 </details>
 <h2 id="problem-11-peano-addition-and-multiplication">Problem 11 — Peano addition and multiplication</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=94">pp. 94–95</a>. <strong>Task:</strong> arithmetic on <code>ZERO | SUCC of nat</code>. <strong>Definitions:</strong> <a href="glossary.html#inductive-definition" class="definition-link" title="A specification of the smallest set containing its base elements and closed under its construction rules. — English textbook, PDF p. 12">inductive definition</a> and <a href="glossary.html#structural-recursion" class="definition-link" title="Computing over an inductively built value by recursively processing its smaller components and combining their results. — English textbook, PDF p. 70">structural recursion</a>.</p>
+<p><strong>Interface:</strong> <code>natadd : nat -&gt; nat -&gt; nat</code> and <code>natmul : nat -&gt; nat -&gt; nat</code>, with <code>type nat = ZERO | SUCC of nat</code>.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-01.html#depth-1-3">constructor-based induction</a>. <strong>Check your result:</strong> return a <code>nat</code> tree rather than a host integer; ZERO must obey the identities for addition and multiplication. <code>SUCC (SUCC ZERO)</code> represents 2, so count constructors to check small examples.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -291,7 +351,6 @@
 <li><strong>Define multiplication with addition.</strong> Each SUCC contributes one more copy of the second operand.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=94">pp. 94–95</a>. <strong>Task:</strong> arithmetic on <code>ZERO | SUCC of nat</code>. <strong>Definitions:</strong> <a href="glossary.html#inductive-definition" class="definition-link" title="A specification of the smallest set containing its base elements and closed under its construction rules. — English textbook, PDF p. 12">inductive definition</a> and <a href="glossary.html#structural-recursion" class="definition-link" title="Computing over an inductively built value by recursively processing its smaller components and combining their results. — English textbook, PDF p. 70">structural recursion</a>.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-11.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-11.svg" width="852.57861328125" height="505.7250061035156" alt="Problem 11 - derive arithmetic from ZERO and SUCC"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-11.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 11 - derive arithmetic from ZERO and SUCC
   accDescr: Addition turns a successor into a successor of a smaller sum; multiplication turns it into one more addition.
@@ -311,6 +370,9 @@
 <p>Interpret the equations mathematically: <code>0+b=b</code>, <code>(a+1)+b=1+(a+b)</code>, <code>0*b=0</code>, and <code>(a+1)*b=b+a*b</code>. For 2 times 3, multiplication expands to 3 plus (3 plus 0). Induction on the first argument proves both definitions correct; multiplication uses the already-established addition result. Check zero in either argument, one, and the book's 2/3 example.</p>
 </details>
 <h2 id="problem-12-symbolic-differentiation">Problem 12 — Symbolic differentiation</h2>
+<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=95">pp. 95–96</a>. <strong>Task:</strong> differentiate a syntax tree with respect to a named variable. <strong>Key distinction:</strong> return another expression tree, not the value of the derivative at a chosen number.</p>
+<p><strong>Interface:</strong> <code>diff : aexp * string -&gt; aexp</code>. It takes <strong>one pair</strong> <code>(expression, variable_name)</code>.</p>
+<p><strong>Before you code:</strong> review <a href="textbook-01.html#depth-1-2">syntax trees versus computed results</a> and <a href="textbook-02.html#depth-2-1">datatype pattern matching</a>. <strong>Check your result:</strong> <code>x² + 2x + 1</code> should become an expression representing <code>2x + 2</code>; differentiating with respect to another name must use that name consistently.</p>
 <div class="thinking-route">
 <p><strong>Thinking steps</strong></p>
 <ol>
@@ -320,8 +382,67 @@
 <li><strong>Simplify and validate.</strong> Remove neutral terms if desired, then check boundary cases and the worked polynomial.</li>
 </ol>
 </div>
-<p><strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=95">pp. 95–96</a>. <strong>Task:</strong> differentiate a syntax tree with respect to a named variable. <strong>Key distinction:</strong> return another expression tree, not the value of the derivative at a chosen number.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-12.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-12.svg" width="1230.083984375" height="574.0026245117188" alt="Problem 12 - dispatch differentiation by expression constructor"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-12.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<h3 id="read-the-input-datatype-first">Read the input datatype first</h3>
+<p>The datatype from the task is:</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">type</span> aexp =
+  | <span class="hljs-type">Const</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">int</span>
+  | <span class="hljs-type">Var</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">string</span>
+  | <span class="hljs-type">Power</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">string</span> * <span class="hljs-built_in">int</span>
+  | <span class="hljs-type">Times</span> <span class="hljs-keyword">of</span> aexp <span class="hljs-built_in">list</span>
+  | <span class="hljs-type">Sum</span> <span class="hljs-keyword">of</span> aexp <span class="hljs-built_in">list</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Constructor</th>
+<th>Mathematical meaning</th>
+<th>Contents to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Const n</code></td>
+<td>A constant</td>
+<td>One integer</td>
+</tr>
+<tr>
+<td><code>Var x</code></td>
+<td>The variable named x</td>
+<td>One string, compared with the differentiation variable</td>
+</tr>
+<tr>
+<td><code>Power (x,n)</code></td>
+<td>x raised to exponent n</td>
+<td>A variable name and exponent; the base is not an arbitrary subtree</td>
+</tr>
+<tr>
+<td><code>Times factors</code></td>
+<td>Product of the factors</td>
+<td>A list of expression trees, potentially more than two</td>
+</tr>
+<tr>
+<td><code>Sum terms</code></td>
+<td>Sum of the terms</td>
+<td>A list of expression trees</td>
+</tr>
+</tbody>
+</table>
+<p>For the PDF's example, <code>Sum [Power (&quot;x&quot;,2); Times [Const 2; Var &quot;x&quot;]; Const 1]</code> has this shape:</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-12.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-12.svg" width="617.912109375" height="283" alt="Problem 12 - read the polynomial as a tree before differentiating"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-12.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Problem 12 - read the polynomial as a tree before differentiating
+  accDescr: The outer sum has a power, a product, and a constant child. The product has two factors, constant two and variable x.
+  S[&quot;Sum: x squared + 2x + 1&quot;] --&gt; P[&quot;Power: x, exponent 2&quot;]
+  S --&gt; T[&quot;Times: 2x&quot;]
+  S --&gt; C[&quot;Const 1&quot;]
+  T --&gt; N[&quot;Const 2&quot;]
+  T --&gt; X[&quot;Var x&quot;]
+</code></pre></details></figure><ol>
+<li>Match the outer Sum and process its three children.</li>
+<li>Apply the power rule to the first child and the product rule to the second.</li>
+<li>The last child is a constant, so it contributes zero.</li>
+<li>Construct the derivative <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>; simplify neutral terms to obtain the displayed answer. The worked solution's empty-sum and empty-product conventions are stated below.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-problems-13.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-problems-13.svg" width="1230.083984375" height="574.0026245117188" alt="Problem 12 - dispatch differentiation by expression constructor"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-problems-13.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Problem 12 - dispatch differentiation by expression constructor
   accDescr: Constants, variables, powers, sums, and products have separate derivative rules; product terms differentiate one factor at a time.
   A[&quot;diff expression with respect to x&quot;] --&gt; B{&quot;Constructor&quot;}
@@ -347,6 +468,22 @@
            product [h; diff (<span class="hljs-type">Times</span> t,x)]]
 </code></pre>
 <p>The complete file defines <code>sum</code>, <code>product</code>, and <code>power</code> as smart constructors: remove zero summands, eliminate unit factors, turn an empty sum into 0 and an empty product into 1, and represent powers 0 and 1 directly. This gives the book's displayed simplified answer for <code>x² + 2x + 1</code>: <code>2x + 2</code>.</p>
+<details class="worked-solution"><summary>Show the helper definitions used by diff</summary>
+<p>These helpers, together with the datatype above, make the displayed <code>diff</code> function runnable. Empty Sum and Times lists use the conventional identities 0 and 1; the PDF's example does not itself specify these boundary cases. This is a small simplifier, not a canonical polynomial normalizer.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> sum terms =
+  <span class="hljs-keyword">let</span> terms = <span class="hljs-type">List</span>.filter (<span class="hljs-keyword">function</span> <span class="hljs-type">Const</span> <span class="hljs-number">0</span> -&gt; <span class="hljs-literal">false</span> | _ -&gt; <span class="hljs-literal">true</span>) terms <span class="hljs-keyword">in</span>
+  <span class="hljs-keyword">match</span> terms <span class="hljs-keyword">with</span> <span class="hljs-literal">[]</span> -&gt; <span class="hljs-type">Const</span> <span class="hljs-number">0</span> | [x] -&gt; x | _ -&gt; <span class="hljs-type">Sum</span> terms
+
+<span class="hljs-keyword">let</span> product terms =
+  <span class="hljs-keyword">if</span> <span class="hljs-type">List</span>.exists (<span class="hljs-keyword">function</span> <span class="hljs-type">Const</span> <span class="hljs-number">0</span> -&gt; <span class="hljs-literal">true</span> | _ -&gt; <span class="hljs-literal">false</span>) terms <span class="hljs-keyword">then</span> <span class="hljs-type">Const</span> <span class="hljs-number">0</span>
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">let</span> terms = <span class="hljs-type">List</span>.filter (<span class="hljs-keyword">function</span> <span class="hljs-type">Const</span> <span class="hljs-number">1</span> -&gt; <span class="hljs-literal">false</span> | _ -&gt; <span class="hljs-literal">true</span>) terms <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">match</span> terms <span class="hljs-keyword">with</span> <span class="hljs-literal">[]</span> -&gt; <span class="hljs-type">Const</span> <span class="hljs-number">1</span> | [x] -&gt; x | _ -&gt; <span class="hljs-type">Times</span> terms
+
+<span class="hljs-keyword">let</span> power x n =
+  <span class="hljs-keyword">if</span> n = <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> <span class="hljs-type">Const</span> <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> n = <span class="hljs-number">1</span> <span class="hljs-keyword">then</span> <span class="hljs-type">Var</span> x <span class="hljs-keyword">else</span> <span class="hljs-type">Power</span> (x,n)
+</code></pre>
+<p>Define the helpers <strong>before</strong> <code>diff</code> in the <code>.ml</code> file. <code>power &quot;x&quot; 1</code> returns <code>Var &quot;x&quot;</code>; <code>product [Const 1; Var &quot;x&quot;]</code> removes the unit factor. Neither example executes the variable x or needs a value for it.</p>
+</details>
 <p>For three factors, the recursive rule expands to <code>h'uv + h(u'v + uv')</code>. Each term differentiates exactly one factor. Differentiating every factor in one product would incorrectly give <code>h'u'v'</code>.</p>
 <p><strong>Boundary cases:</strong> the derivative of <code>Power(&quot;x&quot;,0)</code> is 0 without constructing a negative power; another variable contributes 0; the empty product denotes 1 and therefore differentiates to 0. The polynomial interpretation uses nonnegative powers. Negative exponents require a rational-function domain and restrictions at zero, beyond these checks.</p>
 <p>The test file checks the exact book example and evaluates the derived tree for <code>x*x*x</code> at several integers against <code>3*x*x</code>. A numerically correct tree may have a different syntactic shape from the book's example; algebraic equivalence and exact constructor equality are different requirements.</p>

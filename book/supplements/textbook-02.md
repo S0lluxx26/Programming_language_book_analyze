@@ -49,6 +49,32 @@ Matching tries branches from top to bottom. A catch-all first branch makes later
 
 **Modules and failures:** `List.map` means the `map` function in module `List`. `exception Missing` declares an exception; `raise Missing` exits the current computation until a matching `try ... with Missing -> ...` handles it. Use a failure only when the problem's contract calls for it. An autograder may require a particular exception or prohibit library helpers, as the [homework pages](homework-map.html) explain.
 
+### Follow the queue example without assuming mutation
+
+The module example on [PDF pp. 69–70](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=69) groups queue operations. This small version makes the result of each operation explicit:
+
+```ocaml
+module IntQueue = struct
+  type t = int list
+  exception Empty
+  let empty : t = []
+  let enq (q : t) x = q @ [x]
+  let deq (q : t) = match q with
+    | [] -> raise Empty
+    | first :: rest -> (first, rest)
+end
+```
+
+1. `let q0 = IntQueue.empty` names an empty queue.
+2. `let q1 = IntQueue.enq q0 10` returns a new queue `[10]`; q0 still denotes `[]`.
+3. `let q2 = IntQueue.enq q1 20` returns `[10;20]`; q1 still denotes `[10]`.
+4. `let first, rest = IntQueue.deq q2` binds first to 10 and rest to `[20]`. q2 itself remains `[10;20]`.
+5. `IntQueue.deq IntQueue.empty` raises `IntQueue.Empty`; it cannot return a first element that does not exist.
+
+The dot selects a member of a module; it does not mean that the queue was modified. The `: t` annotations tie the operations to the integer-list type. This simple module exposes its list representation. A module signature can hide it, but grouping code in `struct ... end` alone does not make the type abstract. This list-based enqueue also copies the existing queue; it is a teaching example, not a constant-time queue implementation.
+
+[Download the queue and factorial examples with checks](examples/textbook_review.ml).
+
 ## 2.2 Design a recursive function before writing its cases
 
 Source progression: [PDF pp. 70–80](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=70). For each function, write the input contract, decreasing argument, and result of the smaller call.
@@ -86,6 +112,24 @@ The recursive call supplies exactly the helper's precondition. That is also the 
 For ordinary factorial, `fact 3` waits for `fact 2` so it can multiply by 3. For an accumulator helper `loop n acc`, the multiplication happens **before** the next call; the next call's result is returned directly. Use the invariant `loop n acc = acc × n!` for nonnegative n.
 
 Tail calls can reuse stack space; this does not make all memory usage constant. A tail-recursive list builder still allocates result cells, and changing argument order in a fold may change the answer. Keep the correctness invariant separate from the space argument.
+
+### Check the draft's factorial boundaries
+
+The C loop printed on [PDF p. 78](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=78) starts i at 0 and multiplies by i. For any positive n, the first multiplication makes the result zero, so the displayed loop does not compute n!. A correct loop over nonnegative n multiplies the integers **1 through n**, starting from 1. This is an error in the draft's example, not a difference between functional and imperative programming.
+
+The later recursive variants on pp. 80–81 stop at n=1, which requires a positive-input contract. To include `0! = 1`, use a zero base case:
+
+```ocaml
+let factorial n =
+  if n < 0 then invalid_arg "factorial: negative input";
+  let rec loop remaining acc =
+    if remaining = 0 then acc
+    else loop (remaining - 1) (remaining * acc)
+  in
+  loop n 1
+```
+
+For n=3, `(remaining,acc)` goes `(3,1) → (2,3) → (1,6) → (0,6)`. For n=0, the first call returns 1 without multiplying. The invariant from above, `acc × remaining! = original n!`, holds at every state. Negative inputs are rejected; results must fit OCaml's integer range. The [downloadable example](examples/textbook_review.ml) checks 0, 1, 5, and the negative-input case.
 
 ## 2.3 Choose map, filter, or fold from the desired result
 

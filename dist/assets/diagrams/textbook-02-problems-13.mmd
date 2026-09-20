@@ -1,0 +1,12 @@
+flowchart TD
+  accTitle: Problem 12 - dispatch differentiation by expression constructor
+  accDescr: Constants, variables, powers, sums, and products have separate derivative rules; product terms differentiate one factor at a time.
+  A["diff expression with respect to x"] --> B{"Constructor"}
+  B -->|Const| C["0"]
+  B -->|Var y| D["1 if y=x, otherwise 0"]
+  B -->|Power y,n| E["0 if y differs or n=0; otherwise n times y to n-1"]
+  B -->|Sum| F["Differentiate every summand"]
+  B -->|Times h and tail| G["Derivative h times tail PLUS h times derivative tail"]
+  G --> H["Remove zero terms and unit factors"]
+  F --> H
+  E --> H

@@ -101,6 +101,12 @@ let eval_memory e env mem = snd(eval Implicit e env mem)
 let checks = ref 0
 let check name ok = incr checks; if not ok then failwith name
 let () =
+  let nested = NEWREF(NEWREF(CONST 0)) in
+  let outer,m = eval Explicit nested [] empty in
+  let outer_l = location outer in
+  let inner_l = location (read outer_l m) in
+  check "nested allocation keeps distinct cells" (outer_l <> inner_l && List.length m.cells=2 && read inner_l m=Int 0);
+  check "nested dereference" (run Explicit (DEREF(DEREF nested))=Int 0);
   let counter = LET("p",NEWREF(CONST 0),LET("f",PROC("u",SEQ(
     SETREF(VAR "p",ADD(DEREF(VAR "p"),CONST 1)),DEREF(VAR "p"))),
     ADD(CALL(VAR "f",CONST 0),CALL(VAR "f",CONST 0)))) in

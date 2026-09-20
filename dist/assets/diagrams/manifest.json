@@ -105,6 +105,10 @@
   },
   {
     "name": "textbook-02-problems-12",
+    "source": "flowchart TD\n  accTitle: Problem 12 - read the polynomial as a tree before differentiating\n  accDescr: The outer sum has a power, a product, and a constant child. The product has two factors, constant two and variable x.\n  S[\"Sum: x squared + 2x + 1\"] --> P[\"Power: x, exponent 2\"]\n  S --> T[\"Times: 2x\"]\n  S --> C[\"Const 1\"]\n  T --> N[\"Const 2\"]\n  T --> X[\"Var x\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-13",
     "source": "flowchart TD\n  accTitle: Problem 12 - dispatch differentiation by expression constructor\n  accDescr: Constants, variables, powers, sums, and products have separate derivative rules; product terms differentiate one factor at a time.\n  A[\"diff expression with respect to x\"] --> B{\"Constructor\"}\n  B -->|Const| C[\"0\"]\n  B -->|Var y| D[\"1 if y=x, otherwise 0\"]\n  B -->|Power y,n| E[\"0 if y differs or n=0; otherwise n times y to n-1\"]\n  B -->|Sum| F[\"Differentiate every summand\"]\n  B -->|Times h and tail| G[\"Derivative h times tail PLUS h times derivative tail\"]\n  G --> H[\"Remove zero terms and unit factors\"]\n  F --> H\n  E --> H\n"
   },
   {
@@ -156,6 +160,10 @@
     "source": "flowchart TD\n  accTitle: Chapter 5 - compare lists under the worked evaluator policy\n  accDescr: Validate comparable values first, then compare list lengths and corresponding elements recursively without ever comparing closures.\n  A[\"1. Evaluate both operands\"] --> B{\"2. Any Unit or procedure, even nested?\"}\n  B -->|Yes| X[\"Reject unsupported equality\"]\n  B -->|No| C{\"3. Same top-level family?\"}\n  C -->|No| X\n  C -->|Yes, lists| D{\"4. Same length and all paired elements equal?\"}\n  C -->|Yes, scalars| S[\"Compare integer or boolean values\"]\n  D -->|Yes| T[\"true\"]\n  D -->|No| F[\"false\"]\n"
   },
   {
+    "name": "textbook-05-4",
+    "source": "flowchart TD\n  accTitle: Chapter 5 - mutual calls preserve both recursive bindings\n  accDescr: Each call extends the shared saved environment with both function closures and a fresh parameter binding; the decreasing argument reaches even zero.\n  A[\"1. Save common outer environment rho0\"] --> B[\"2. Bind even=C_even and odd=C_odd\"]\n  B --> C[\"3. even 2: both closures, n=2\"]\n  C --> D[\"4. odd 1: both closures, n=1\"]\n  D --> E[\"5. even 0: both closures, n=0\"]\n  E --> F[\"6. Base case returns true\"]\n"
+  },
+  {
     "name": "textbook-06-1",
     "source": "flowchart TD\n  accTitle: Chapter 6 - explicit reference assignment threads memory\n  accDescr: Evaluate the location expression, then the new value with the updated memory, then update that cell.\n  A[\"SETREF e1 e2 with memory m0\"] --> B[\"Evaluate e1 to location l and memory m1\"]\n  B --> C[\"Evaluate e2 using m1 to value v and memory m2\"]\n  C --> D[\"Update l to v in m2\"]\n  D --> E[\"Return v and the new memory\"]\n"
   },
@@ -169,10 +177,18 @@
   },
   {
     "name": "textbook-06-4",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 6 - an unused argument separates eager and deferred execution\n  accDescr: Eager evaluation enters a diverging argument before the body. Deferred evaluation can return one because the body never requests the argument.\n  A[\"1. Apply a function that ignores its argument\"] --> B{\"2. Argument policy?\"}\n  B -->|\"Eager value call\"| C[\"3a. Evaluate forever 0\"]\n  C --> D[\"4a. Keeps recurring; body never reached\"]\n  B -->|\"Defer until used\"| E[\"3b. Enter body without evaluating argument\"]\n  E --> F[\"4b. Return 1; argument unused\"]\n"
   },
   {
     "name": "textbook-06-5",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-06-6",
+    "source": "flowchart LR\n  accTitle: Chapter 6 - nested allocation creates two different cells\n  accDescr: The returned outer location one contains the inner location zero, whose cell contains integer zero. Allocation must preserve both cells.\n  R[\"Returned value: Loc 1\"] --> O[\"Outer cell l1: Loc 0\"]\n  O --> I[\"Inner cell l0: Int 0\"]\n"
+  },
+  {
+    "name": "textbook-06-7",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 10 reasoning route\n  accDescr: Numbered stages for applying exceptions and continuations.\n  N0[\"1. Push frames for pending work\"]\n  N1[\"2. Install a handler frame for try\"]\n  N0 --> N1\n  N2[\"3. Evaluate the raised payload\"]\n  N1 --> N2\n  N3[\"4. Discard frames to the nearest handler\"]\n  N2 --> N3\n  N4[\"5. Run the handler in its saved environment\"]\n  N3 --> N4\n"
   },
   {

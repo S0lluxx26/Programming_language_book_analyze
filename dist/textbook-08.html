@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>8. Static Type Systems · The Programming Languages Notebook</title><meta name="description" content="Read typing rules, generate and solve equations, and implement the Fun extension."><meta name="theme-color" content="#142b48"><meta property="og:title" content="8. Static Type Systems"><meta property="og:description" content="Read typing rules, generate and solve equations, and implement the Fun extension."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" aria-current="page">8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 8 · PDF pp. 223–276</p><h1>8. Static Type Systems</h1><p class="dek">Read typing rules, generate and solve equations, and implement the Fun extension.</p><p class="reading-meta">32 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223" target="_blank" rel="noopener">Original PDF · pp. 223–276 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#8-1-target-language">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 8 · PDF pp. 223–276</p><h1>8. Static Type Systems</h1><p class="dek">Read typing rules, generate and solve equations, and implement the Fun extension.</p><p class="reading-meta">36 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223" target="_blank" rel="noopener">Original PDF · pp. 223–276 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#8-1-target-language">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (8)</summary>
 <ul>
 <li><a href="#lecture-12">L12 · Understand the limits of static checking</a></li>
@@ -74,7 +74,7 @@
 <p><strong>Read in the PDF:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223">Chapter 8, pp. 223–276</a>. <strong>Goal:</strong> derive and solve the conditions under which a program has a type. <strong>Definitions:</strong> <a href="glossary.html#type-environment">type environment</a>, <a href="glossary.html#unification">unification</a>, <a href="glossary.html#occurs-check">occurs check</a>, <a href="glossary.html#type-scheme">type scheme</a>.</p>
 <h2 id="8-1-target-language">8.1 Target Language</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=225">Read in the PDF: p. 225</a>.</p>
-<p>The initial language returns to a small pure core: numbers, variables, arithmetic, a zero test, conditionals, let, procedures, and calls. Reducing the language lets you focus on typing rules before extending them to Fun. A type checker analyzes the syntax tree; it does not run the program to discover what a variable happens to contain.</p>
+<p>The initial language returns to a small pure core: numbers, variables, arithmetic, a zero test, conditionals, let, recursive binding, procedures, and calls. Reducing the language lets you focus on typing rules before extending them to Fun. A type checker analyzes the syntax tree; it does not run the program to discover what a variable happens to contain. The source's §8.8 starter later omits LETREC from its initial <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>; recursive cases return in the Fun extension.</p>
 <p><strong>The same tree, different questions:</strong></p>
 <table>
 <thead>
@@ -203,6 +203,15 @@ flowchart TD
 </tbody>
 </table>
 <p>Always ask “sound or complete <strong>with respect to which property or rules?</strong>” An algorithm can be complete for a deliberately conservative set of rules.</p>
+<h3 id="add-a-recursive-function-s-type-before-checking-its-body">Add a recursive function's type before checking its body</h3>
+<p>The LETREC rule in <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=238">Figure 8.4, PDF p. 238</a> carries a provisional function type into two different scopes. For <code>letrec f(x) = body in inside</code>:</p>
+<ol>
+<li>Introduce fresh parameter and result types a and b.</li>
+<li>Check <code>body</code> at type b under <code>Γ[f ↦ a→b, x ↦ a]</code>. Both f and x are available here.</li>
+<li>Check <code>inside</code> at the requested overall type t under <code>Γ[f ↦ a→b]</code>. The parameter x is not introduced in this scope.</li>
+<li>Solve both groups of constraints together; every recursive call to f shares that same a→b in this monomorphic rule.</li>
+</ol>
+<p>The type environment contains a <strong>type for f</strong>, not a runtime <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closure</a>. Waiting until the body has been checked before adding f would make its recursive occurrences appear unbound. Assigning a fresh unrelated type to each recursive call would fail to enforce this rule.</p>
 </details>
 <aside class="section-checkpoint" data-checkpoint="8.4" aria-label="Checkpoint 8.4"><p><strong>Predict · 8.4</strong> If Γ proves f:int→bool, what type must a have for f a, and what is the call&#39;s type?</p><details><summary>Reveal reasoning and common trap</summary><p>a must have int; the result has bool. The application rule connects the argument to the function&#39;s domain and the whole expression to its codomain.</p><p><strong>Common trap:</strong> Do not unify the argument with the function&#39;s entire arrow type.</p><a href="syntax.html#function">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-13" data-lecture="13">Read a typing rule as a derivation <small>Lecture 13</small></h3>
@@ -236,7 +245,7 @@ flowchart TD
   N2 --&gt; N3
   N4[&quot;5. Check the conclusion type&quot;]
   N3 --&gt; N4
-</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: derive one rule per <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> constructor before implementing inference.</p>
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: derive one rule per AST constructor before implementing inference.</p>
 <p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
 <p><strong>Try it:</strong> Why cannot Γ simply contain runtime values?</p>
 <details class="worked-solution"><summary>Reveal the explanation</summary>
@@ -247,6 +256,97 @@ flowchart TD
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=243">Read in the PDF: p. 243</a>.</p>
 <p>An evaluator often computes children and combines concrete values immediately. A checker cannot always know a procedure parameter's type before it examines the body and its uses. One approach asks the programmer for annotations. Automatic inference instead introduces unknowns and collects equations to solve later.</p>
 <p>This separation avoids guessing types or trying every possible function type. The syntax determines constraints; the solver propagates consequences across distant uses of the same unknown.</p>
+<details class="textbook-depth" id="depth-8-5" data-depth="8.5">
+<summary>Step by step · Translate each typing rule into equations</summary>
+<p>The PDF's Figure 8.9 on <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=256">pp. 256–258</a> provides the bridge from judgments to <code>gen_equations</code>. Read <a class="syntax-link" href="syntax.html#constraints" title="Constraint generation V — syntax meaning and source"><code>V(Γ,e,t)</code></a> as “generate requirements for expression e to have the <strong>requested</strong> type t.” The request can contain unknowns; V does not have to know their solution yet.</p>
+<p>Here <code>∧</code> means collect <strong>all</strong> the constraints, not evaluate an OCaml boolean expression. Each “fresh” type variable is new to this generation run. <code>Γ[x↦a]</code> shadows x only in the indicated recursive call.</p>
+<div class="equation-guide">
+<p class="table-scroll-hint">Scroll the table sideways to read each formula and its explanation.</p>
+<table>
+<thead>
+<tr>
+<th>Expression shape</th>
+<th>Equations / recursive requests</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numeral n</td>
+<td><code>t = int</code></td>
+<td>Its result is an integer</td>
+</tr>
+<tr>
+<td>Variable x</td>
+<td><code>t = Γ(x)</code></td>
+<td>Every occurrence uses the current binding; an absent name is an error</td>
+</tr>
+<tr>
+<td><code>e₁ + e₂</code></td>
+<td><code>t = int ∧ V(Γ,e₁,int) ∧ V(Γ,e₂,int)</code></td>
+<td>Constrain the result and both operands</td>
+</tr>
+<tr>
+<td><code>iszero e</code></td>
+<td><code>t = bool ∧ V(Γ,e,int)</code></td>
+<td>Integer input, boolean result</td>
+</tr>
+<tr>
+<td><code>if c then a else b</code></td>
+<td><code>V(Γ,c,bool) ∧ V(Γ,a,t) ∧ V(Γ,b,t)</code></td>
+<td>Both branches share the requested result type</td>
+</tr>
+<tr>
+<td><code>let x=a in b</code></td>
+<td>Fresh u; <code>V(Γ,a,u) ∧ V(Γ[x↦u],b,t)</code></td>
+<td>Type the initializer before exposing its binding to the body</td>
+</tr>
+<tr>
+<td><code>fun x -&gt; body</code></td>
+<td>Fresh u,v; <code>t = u→v ∧ V(Γ[x↦u],body,v)</code></td>
+<td>Build an arrow and constrain its result through the body</td>
+</tr>
+<tr>
+<td><code>f a</code></td>
+<td>Fresh u; <code>V(Γ,f,u→t) ∧ V(Γ,a,u)</code></td>
+<td>Connect the argument type with the function's domain</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>Match the outer constructor of the AST.</li>
+<li>Emit equations about that constructor's own result.</li>
+<li>Allocate fresh unknowns only where the row calls for them.</li>
+<li>Recurse on each child using the row's environment and requested type.</li>
+<li>Concatenate the equations, solve them, and apply the solution to the original root type.</li>
+</ol>
+<p><strong>Trace <code>let x=1 in iszero x</code>, with requested root type r:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Recursive request</th>
+<th>Emitted equation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initializer 1 at fresh type u</td>
+<td><code>u = int</code></td>
+</tr>
+<tr>
+<td>Body <code>iszero x</code> at r, under x↦u</td>
+<td><code>r = bool</code></td>
+</tr>
+<tr>
+<td>The zero-test operand x at int</td>
+<td><code>int = u</code></td>
+</tr>
+</tbody>
+</table>
+<p>The equations agree, and solving yields r=bool. No concrete execution of x or <code>iszero</code> occurred during inference. The small system is intentionally monomorphic; <a href="#depth-8-7">generalizing a let scheme</a> is an additional operation, not something to perform at every ordinary lookup.</p>
+<p>The table matches Figure 8.9's core cases. The starter's subtraction case uses the same integer requirements as addition, and recursive bindings use the <a href="#depth-8-4">separate LETREC rule</a>. The source's larger Fun extension adds further constructors and equality obligations; it is not covered by copying this table alone.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="8.5" aria-label="Checkpoint 8.5"><p><strong>Predict · 8.5</strong> Why introduce a fresh α for an unannotated parameter instead of immediately choosing int?</p><details><summary>Reveal reasoning and common trap</summary><p>The body may require bool, an arrow, a list, or no concrete type at all. A fresh unknown preserves possibilities until constraints justify a choice.</p><p><strong>Common trap:</strong> A successful example with integer inputs does not justify hard-coding int.</p><a href="glossary.html#type-variable">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-14" data-lecture="14">Treat annotations as claims to verify <small>Lecture 14</small></h3>
 <ul>
@@ -367,7 +467,7 @@ flowchart TD
 </details>
 <h2 id="8-6-1-generating-type-equations">8.6.1 Generating Type Equations</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248">Read in the PDF: p. 248</a>.</p>
-<p>Let <code>G(Γ,e,t)</code> produce the conditions for e to have expected type t. A constant adds <code>t = int</code>. A variable adds <code>t = Γ(x)</code>. A procedure introduces fresh a and b, adds <code>t = a -&gt; b</code>, and generates the body at b under <code>Γ[x ↦ a]</code>. A monomorphic let introduces one fresh type shared by the definition and all uses in its body.</p>
+<p>Let <a class="syntax-link" href="syntax.html#constraints" title="Constraint generation V — syntax meaning and source"><code>V(Γ,e,t)</code></a> produce the conditions for e to have expected type t, following the PDF's notation; this is <code>gen_equations</code> in the implementation. A constant adds <code>t = int</code>. A variable adds <code>t = Γ(x)</code>. A procedure introduces fresh a and b, adds <code>t = a -&gt; b</code>, and generates the body at b under <code>Γ[x ↦ a]</code>. A monomorphic let introduces one fresh type shared by the definition and all uses in its body. The <a href="#depth-8-5">rule-to-equation table</a> gives the full core pattern.</p>
 <p><strong>Worked example:</strong> infer <code>fun f -&gt; fun x -&gt; f (x+1)</code>.</p>
 <ol>
 <li>Give f type α and x type β.</li>

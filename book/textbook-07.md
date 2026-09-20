@@ -80,6 +80,8 @@ Use integers, booleans, pointers, records, and closures as values. In implicit m
 
 Use the Chapter 6 state-threading pattern for every constructor. Record construction evaluates both initializers in order, allocates their cells, and returns a field map. `FIELD` and `DEREF` read cells. `FIELDASSIGN` and `STORE` update them. Procedure calls retain lexical scope and the current store.
 
+**Match the interface when using the download:** the AST on [PDF p. 220](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=220) names variable assignment `ASSIGN(x,e)`. Our shared Chapter 6–7 engine retains the name `SET(x,e)` from Chapter 6 for the same operation. Translate that constructor name when comparing examples; pointer assignment is separately named `STORE`, and field assignment is `FIELDASSIGN`. Also supply the mode: `eval Implicit expression environment memory` is the shared engine's value-and-memory entry point.
+
 **Source discrepancy:** p. 220 prints `eval : program -> env -> mem -> mem`. The language's expression rules need both the value and updated memory internally. The solution therefore uses `eval ... -> value * mem` and provides `eval_memory` as an adapter with the printed memory-only result. Throwing away intermediate values inside the recursive evaluator would make arithmetic and field access impossible.
 
 ### Task 3 — Implement gc

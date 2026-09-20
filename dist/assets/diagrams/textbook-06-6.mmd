@@ -1,0 +1,5 @@
+flowchart LR
+  accTitle: Chapter 6 - nested allocation creates two different cells
+  accDescr: The returned outer location one contains the inner location zero, whose cell contains integer zero. Allocation must preserve both cells.
+  R["Returned value: Loc 1"] --> O["Outer cell l1: Loc 0"]
+  O --> I["Inner cell l0: Int 0"]

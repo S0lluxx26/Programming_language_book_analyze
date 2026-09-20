@@ -69,3 +69,6 @@
 .textbook-depth h3{font-size:1.2rem}.textbook-depth>p,.textbook-depth>ol{font-size:15px}
 @media(max-width:800px){.textbook-depth{padding:14px}.textbook-depth table{font-size:13px}}
 @media print{.textbook-depth{background:white;break-inside:auto}.textbook-depth>summary{break-after:avoid}}
+.equation-guide table{min-width:680px}.equation-guide td:nth-child(2){min-width:270px}.equation-guide td:nth-child(2) code{white-space:nowrap}
+.table-scroll-hint{font-size:12px;color:var(--muted)}
+@media print{.equation-guide table{min-width:0}.equation-guide td:nth-child(2){min-width:0}.equation-guide td:nth-child(2) code{white-space:normal}.table-scroll-hint{display:none}}

@@ -6,7 +6,7 @@
 
 [Read in the PDF: p. 225](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=225).
 
-The initial language returns to a small pure core: numbers, variables, arithmetic, a zero test, conditionals, let, procedures, and calls. Reducing the language lets you focus on typing rules before extending them to Fun. A type checker analyzes the syntax tree; it does not run the program to discover what a variable happens to contain.
+The initial language returns to a small pure core: numbers, variables, arithmetic, a zero test, conditionals, let, recursive binding, procedures, and calls. Reducing the language lets you focus on typing rules before extending them to Fun. A type checker analyzes the syntax tree; it does not run the program to discover what a variable happens to contain. The source's §8.8 starter later omits LETREC from its initial AST; recursive cases return in the Fun extension.
 
 **The same tree, different questions:**
 
@@ -82,7 +82,7 @@ The next two subsections separate how these equations are generated from how the
 
 [Read in the PDF: p. 248](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248).
 
-Let `G(Γ,e,t)` produce the conditions for e to have expected type t. A constant adds `t = int`. A variable adds `t = Γ(x)`. A procedure introduces fresh a and b, adds `t = a -> b`, and generates the body at b under `Γ[x ↦ a]`. A monomorphic let introduces one fresh type shared by the definition and all uses in its body.
+Let `V(Γ,e,t)` produce the conditions for e to have expected type t, following the PDF's notation; this is `gen_equations` in the implementation. A constant adds `t = int`. A variable adds `t = Γ(x)`. A procedure introduces fresh a and b, adds `t = a -> b`, and generates the body at b under `Γ[x ↦ a]`. A monomorphic let introduces one fresh type shared by the definition and all uses in its body. The [rule-to-equation table](#depth-8-5) gives the full core pattern.
 
 **Worked example:** infer `fun f -> fun x -> f (x+1)`.
 

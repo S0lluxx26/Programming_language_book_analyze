@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 5 - mutual calls preserve both recursive bindings
+  accDescr: Each call extends the shared saved environment with both function closures and a fresh parameter binding; the decreasing argument reaches even zero.
+  A["1. Save common outer environment rho0"] --> B["2. Bind even=C_even and odd=C_odd"]
+  B --> C["3. even 2: both closures, n=2"]
+  C --> D["4. odd 1: both closures, n=1"]
+  D --> E["5. even 0: both closures, n=0"]
+  E --> F["6. Base case returns true"]

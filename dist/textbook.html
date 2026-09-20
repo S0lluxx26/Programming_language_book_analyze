@@ -6,7 +6,7 @@
 <h2 id="read-the-textbook-with-a-guide-beside-you">Read the textbook with a guide beside you</h2>
 <p>This reader follows <strong>Hakjoo Oh’s <em>Principles of Programming Languages</em> (English draft, 31 August 2026)</strong> in its own nine-chapter order. Section numbers and PDF page links match the downloaded book. Explanations, Mermaid diagrams, and worked solutions here are original companion material; use the linked PDF whenever you want the author's exact wording, figures, or notation.</p>
 <p><strong>How to read:</strong> skim the chapter cheat sheet, then read its numbered sections. Lecture highlights appear beside the matching idea; expand <strong>Practice with Lecture…</strong> for a worked example, numbered Mermaid flow, homework connection, and self-check. The chapter’s reading-route links let you jump directly to sections or code. Answer the <strong>Predict</strong> checkpoint before revealing the reasoning and common trap. These checks are original practice prompts, separate from numbered textbook exercises. Use <strong>Syntax beside you</strong> for an unfamiliar symbol without leaving the section, then attempt the chapter’s problems before opening solutions. Highlighted terms link to precise definitions. A section's <strong>Read in the PDF</strong> link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.</p>
-<p><strong>For a first reading:</strong> open <strong>Step by step</strong> when a summary moves too quickly. These 25 expandable explanations restore intermediate steps from the PDF's progression, using original examples, numbered reasoning, tables, and Mermaid diagrams. For revision, leave them closed and use the cheat sheet and checkpoints. The reader follows all 48 numbered source sections; it is a companion to the PDF, not a reproduction of every paragraph and figure.</p>
+<p><strong>For a first reading:</strong> open <strong>Step by step</strong> when a summary moves too quickly. These 28 expandable explanations restore intermediate steps from the PDF's progression, using original examples, numbered reasoning, tables, and Mermaid diagrams. For revision, leave them closed and use the cheat sheet and checkpoints. The reader follows all 48 numbered source sections; it is a companion to the PDF, not a reproduction of every paragraph and figure.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-1.svg" width="755.9365234375" height="829.9000244140625" alt="The textbook&#39;s nine-chapter learning path"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: The textbook&#39;s nine-chapter learning path
   accDescr: Inductive definitions support OCaml, interpreters, memory models, type analysis, and lambda calculus.
@@ -36,8 +36,8 @@
 </tr>
 <tr>
 <td>2 · OCaml</td>
-<td>Too little basic syntax before recursive exercises</td>
-<td><a href="textbook-02.html#depth-2-1">Types and patterns</a> · <a href="textbook-02.html#depth-2-2">Recursive design</a> · <a href="textbook-02.html#depth-2-3">Map, filter, fold</a></td>
+<td>Syntax, persistent module values, and problem interfaces</td>
+<td><a href="textbook-02.html#depth-2-1">Types, patterns, and modules</a> · <a href="textbook-02.html#depth-2-2">Recursive design</a> · <a href="textbook-02.html#depth-2-3">Map, filter, fold</a> · <a href="textbook-02-problems.html">All 12 problem contracts</a></td>
 </tr>
 <tr>
 <td>3 · <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">Environments</a></td>
@@ -51,13 +51,13 @@
 </tr>
 <tr>
 <td>5 · Fun</td>
-<td><a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>/value distinction and source-accurate list equality</td>
-<td><a href="textbook-05.html#depth-5-1">Three language layers</a> · <a href="textbook-05.html#depth-5-2">Operation contracts</a></td>
+<td><a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>/value distinction, list equality, and mutual call environments</td>
+<td><a href="textbook-05.html#depth-5-1">Three language layers</a> · <a href="textbook-05.html#depth-5-2">Operation contracts</a> · <a href="textbook-05.html#depth-5-3">Mutual recursion</a></td>
 </tr>
 <tr>
 <td>6 · State</td>
-<td>Seeing the exact cell changed at each step</td>
-<td><a href="textbook-06.html#depth-6-1-2">Memory trace</a> · <a href="textbook-06.html#depth-6-2-2">Copy versus alias</a> · <a href="textbook-06.html#depth-6-2-3">Parameter passing</a></td>
+<td>Cells, argument timing, and allocation order</td>
+<td><a href="textbook-06.html#depth-6-1-2">Memory trace</a> · <a href="textbook-06.html#depth-6-2-2">Copy versus alias</a> · <a href="textbook-06.html#depth-6-2-3">Value/reference/lazy calls</a> · <a href="textbook-06.html#depth-6-3">Nested allocation</a></td>
 </tr>
 <tr>
 <td>7 · Heap</td>
@@ -66,8 +66,8 @@
 </tr>
 <tr>
 <td>8 · <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">Types</a></td>
-<td>Intermediate equations and fresh-instance boundaries</td>
-<td><a href="textbook-08.html#depth-8-4">Typing derivation</a> · <a href="textbook-08.html#depth-8-6-1">Two uses of f</a> · <a href="textbook-08.html#depth-8-6-2">Solver state</a> · <a href="textbook-08.html#depth-8-7">Schemes</a></td>
+<td>Rule-to-equation translation and fresh-instance boundaries</td>
+<td><a href="textbook-08.html#depth-8-4">Typing and recursive bindings</a> · <a href="textbook-08.html#depth-8-5">Equation-generation table</a> · <a href="textbook-08.html#depth-8-6-1">Two uses of f</a> · <a href="textbook-08.html#depth-8-6-2">Solver state</a> · <a href="textbook-08.html#depth-8-7">Schemes</a></td>
 </tr>
 <tr>
 <td>9 · <a href="glossary.html#lambda-calculus" class="definition-link" title="A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings. — English textbook, PDF p. 279">Lambda calculus</a></td>
@@ -193,6 +193,7 @@
 <p>The <a href="01-induction.html">concept chapters</a> remain available for shorter explanations and interactive traces. Exceptions and classes appear in course slides but are not separate chapters in this English PDF.</p>
 <h2 id="source-and-solution-notes">Source and solution notes</h2>
 <p>The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §5.2 includes list equality but leaves nested comparisons open; §7.4's printed evaluator result needs an internal value-and-memory pair; the §8.8 downloadable checker deliberately supports only monomorphic types and scalar equality, so it covers less than the Fun evaluator; §9.2 initially encodes natural numbers and uses <a href="glossary.html#normal-order" class="definition-link" title="Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form. — English textbook, PDF p. 284">normal order</a>. These are explained in their chapters.</p>
+<p>The <a href="textbook-02.html#check-the-draft-s-factorial-boundaries">factorial note</a> corrects the draft's loop starting at zero. The <a href="textbook-07.html#7-4-implementation">Chapter 7 implementation note</a> maps the PDF's <code>ASSIGN</code> constructor to the shared engine's <a class="syntax-link" href="syntax.html#store" title="Locations and memory — syntax meaning and source"><code>SET</code></a>. These small interface and boundary differences matter when comparing code line by line.</p>
 <h2 id="chapter-cheat-sheets">Chapter cheat sheets</h2>
 <p>Review the main idea, definitions, formula, example, and solving checklist before or after reading a chapter.</p>
 <ul>

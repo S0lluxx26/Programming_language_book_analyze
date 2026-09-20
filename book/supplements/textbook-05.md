@@ -51,3 +51,34 @@ flowchart TD
 For `[[1];[2;3]] = [[1];[2;4]]`, the first pair of inner lists is equal; the second pair reaches 3 versus 4, so the result is false. `[] = []` is true. A list containing a procedure is rejected even if an earlier unequal element could have short-circuited the comparison. Validation makes this error policy predictable.
 
 **Checker boundary:** [the Chapter 8 downloadable checker](textbook-08.html#8-8-implementation) still implements a deliberately narrower scalar-equality restriction. It can reject a list comparison that this evaluator runs successfully. Do not treat its rejection as the PDF's definition of equality.
+
+## 5.3 Build both bindings when calling a mutually recursive closure
+
+The rule on [PDF p. 155](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=155) and datatype on [p. 157](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=157) carry seven components. Reading them as a record of two definitions is easier than memorizing a long tuple.
+
+Let even and odd share outer environment ρ₀. The body of even returns true at 0 and otherwise calls odd with n−1; odd returns false at 0 and otherwise calls even with n−1.
+
+| Component of even's closure | What it preserves |
+|---|---|
+| `even, n, even_body` | The selected function's name, parameter, and body |
+| `odd, n, odd_body` | Its partner's name, parameter, and body |
+| `ρ₀` | Their shared definition environment |
+
+1. Create closure C_even using that order. Create C_odd with the two definition triples swapped, retaining ρ₀.
+2. Bind **both names** in the surrounding letrec body.
+3. To call even 2, start from ρ₀, install even→C_even and odd→C_odd, then install the parameter n→2.
+4. The body calls odd 1. The argument is evaluated in the current call's environment; odd's body uses ρ₀ extended with both closures and its own n→1.
+5. That body calls even 0, whose body environment has n→0 and both closures again. It returns true, which becomes the result of the waiting calls.
+
+```mermaid
+flowchart TD
+  accTitle: Chapter 5 - mutual calls preserve both recursive bindings
+  accDescr: Each call extends the shared saved environment with both function closures and a fresh parameter binding; the decreasing argument reaches even zero.
+  A["1. Save common outer environment rho0"] --> B["2. Bind even=C_even and odd=C_odd"]
+  B --> C["3. even 2: both closures, n=2"]
+  C --> D["4. odd 1: both closures, n=1"]
+  D --> E["5. even 0: both closures, n=0"]
+  E --> F["6. Base case returns true"]
+```
+
+The callee's parameter binding replaces the previous call's argument for that body; it does not alter the saved ρ₀. Keeping only the current function's self-binding would make the first partner call unbound. Copying the partner without swapping which triple is selected would execute the wrong body. Match this table to `MRecProcedure` in the [complete evaluator](examples/textbook_functional.ml).

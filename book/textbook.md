@@ -8,7 +8,7 @@ This reader follows **Hakjoo Oh’s _Principles of Programming Languages_ (Engli
 
 **How to read:** skim the chapter cheat sheet, then read its numbered sections. Lecture highlights appear beside the matching idea; expand **Practice with Lecture…** for a worked example, numbered Mermaid flow, homework connection, and self-check. The chapter’s reading-route links let you jump directly to sections or code. Answer the **Predict** checkpoint before revealing the reasoning and common trap. These checks are original practice prompts, separate from numbered textbook exercises. Use **Syntax beside you** for an unfamiliar symbol without leaving the section, then attempt the chapter’s problems before opening solutions. Highlighted terms link to precise definitions. A section's **Read in the PDF** link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.
 
-**For a first reading:** open **Step by step** when a summary moves too quickly. These 25 expandable explanations restore intermediate steps from the PDF's progression, using original examples, numbered reasoning, tables, and Mermaid diagrams. For revision, leave them closed and use the cheat sheet and checkpoints. The reader follows all 48 numbered source sections; it is a companion to the PDF, not a reproduction of every paragraph and figure.
+**For a first reading:** open **Step by step** when a summary moves too quickly. These 28 expandable explanations restore intermediate steps from the PDF's progression, using original examples, numbered reasoning, tables, and Mermaid diagrams. For revision, leave them closed and use the cheat sheet and checkpoints. The reader follows all 48 numbered source sections; it is a companion to the PDF, not a reproduction of every paragraph and figure.
 
 ```mermaid
 flowchart TD
@@ -31,13 +31,13 @@ The PDF comparison found that the earlier website was easier to scan but often t
 | Chapter | Main gap addressed | Open the worked explanation |
 |---|---|---|
 | 1 · Induction | Moving from constructors to rules and proofs | [Membership tree](textbook-01.html#depth-1-1) · [Evaluation rules](textbook-01.html#depth-1-2) · [Induction hypotheses](textbook-01.html#depth-1-3) |
-| 2 · OCaml | Too little basic syntax before recursive exercises | [Types and patterns](textbook-02.html#depth-2-1) · [Recursive design](textbook-02.html#depth-2-2) · [Map, filter, fold](textbook-02.html#depth-2-3) |
+| 2 · OCaml | Syntax, persistent module values, and problem interfaces | [Types, patterns, and modules](textbook-02.html#depth-2-1) · [Recursive design](textbook-02.html#depth-2-2) · [Map, filter, fold](textbook-02.html#depth-2-3) · [All 12 problem contracts](textbook-02-problems.html) |
 | 3 · Environments | Map notation and missing derivation steps | [Read the notation](textbook-03.html#depth-3-2-1) · [Full let derivation](textbook-03.html#depth-3-2-2) |
 | 4 · Functions | What a returned function remembers | [Free-variable calculation](textbook-04.html#depth-4-2) · [Returned closure](textbook-04.html#depth-4-2-1) · [Recursive binding](textbook-04.html#depth-4-2-3) |
-| 5 · Fun | AST/value distinction and source-accurate list equality | [Three language layers](textbook-05.html#depth-5-1) · [Operation contracts](textbook-05.html#depth-5-2) |
-| 6 · State | Seeing the exact cell changed at each step | [Memory trace](textbook-06.html#depth-6-1-2) · [Copy versus alias](textbook-06.html#depth-6-2-2) · [Parameter passing](textbook-06.html#depth-6-2-3) |
+| 5 · Fun | AST/value distinction, list equality, and mutual call environments | [Three language layers](textbook-05.html#depth-5-1) · [Operation contracts](textbook-05.html#depth-5-2) · [Mutual recursion](textbook-05.html#depth-5-3) |
+| 6 · State | Cells, argument timing, and allocation order | [Memory trace](textbook-06.html#depth-6-1-2) · [Copy versus alias](textbook-06.html#depth-6-2-2) · [Value/reference/lazy calls](textbook-06.html#depth-6-2-3) · [Nested allocation](textbook-06.html#depth-6-3) |
 | 7 · Heap | Following all kinds of reference edges | [Pointer locations](textbook-07.html#depth-7-2) · [Complete marking example](textbook-07.html#depth-7-3-2) |
-| 8 · Types | Intermediate equations and fresh-instance boundaries | [Typing derivation](textbook-08.html#depth-8-4) · [Two uses of f](textbook-08.html#depth-8-6-1) · [Solver state](textbook-08.html#depth-8-6-2) · [Schemes](textbook-08.html#depth-8-7) |
+| 8 · Types | Rule-to-equation translation and fresh-instance boundaries | [Typing and recursive bindings](textbook-08.html#depth-8-4) · [Equation-generation table](textbook-08.html#depth-8-5) · [Two uses of f](textbook-08.html#depth-8-6-1) · [Solver state](textbook-08.html#depth-8-6-2) · [Schemes](textbook-08.html#depth-8-7) |
 | 9 · Lambda calculus | Turning encoding formulas into reductions | [Substitution](textbook-09.html#depth-9-1) · [Church data](textbook-09.html#depth-9-2) · [One recursive unfolding](textbook-09.html#depth-9-3) |
 
 ## Part I — The tools for thinking
@@ -155,6 +155,8 @@ The [concept chapters](01-induction.html) remain available for shorter explanati
 ## Source and solution notes
 
 The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §5.2 includes list equality but leaves nested comparisons open; §7.4's printed evaluator result needs an internal value-and-memory pair; the §8.8 downloadable checker deliberately supports only monomorphic types and scalar equality, so it covers less than the Fun evaluator; §9.2 initially encodes natural numbers and uses normal order. These are explained in their chapters.
+
+The [factorial note](textbook-02.html#check-the-draft-s-factorial-boundaries) corrects the draft's loop starting at zero. The [Chapter 7 implementation note](textbook-07.html#7-4-implementation) maps the PDF's `ASSIGN` constructor to the shared engine's `SET`. These small interface and boundary differences matter when comparing code line by line.
 
 ## Chapter cheat sheets
 

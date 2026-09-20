@@ -20,6 +20,57 @@ If the else branch were false, the branch requirement would be `int = bool`, so 
 
 Always ask “sound or complete **with respect to which property or rules?**” An algorithm can be complete for a deliberately conservative set of rules.
 
+### Add a recursive function's type before checking its body
+
+The LETREC rule in [Figure 8.4, PDF p. 238](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=238) carries a provisional function type into two different scopes. For `letrec f(x) = body in inside`:
+
+1. Introduce fresh parameter and result types a and b.
+2. Check `body` at type b under `Γ[f ↦ a→b, x ↦ a]`. Both f and x are available here.
+3. Check `inside` at the requested overall type t under `Γ[f ↦ a→b]`. The parameter x is not introduced in this scope.
+4. Solve both groups of constraints together; every recursive call to f shares that same a→b in this monomorphic rule.
+
+The type environment contains a **type for f**, not a runtime closure. Waiting until the body has been checked before adding f would make its recursive occurrences appear unbound. Assigning a fresh unrelated type to each recursive call would fail to enforce this rule.
+
+## 8.5 Translate each typing rule into equations
+
+The PDF's Figure 8.9 on [pp. 256–258](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=256) provides the bridge from judgments to `gen_equations`. Read `V(Γ,e,t)` as “generate requirements for expression e to have the **requested** type t.” The request can contain unknowns; V does not have to know their solution yet.
+
+Here `∧` means collect **all** the constraints, not evaluate an OCaml boolean expression. Each “fresh” type variable is new to this generation run. `Γ[x↦a]` shadows x only in the indicated recursive call.
+
+<div class="equation-guide">
+<p class="table-scroll-hint">Scroll the table sideways to read each formula and its explanation.</p>
+
+| Expression shape | Equations / recursive requests | Why |
+|---|---|---|
+| Numeral n | `t = int` | Its result is an integer |
+| Variable x | `t = Γ(x)` | Every occurrence uses the current binding; an absent name is an error |
+| `e₁ + e₂` | `t = int ∧ V(Γ,e₁,int) ∧ V(Γ,e₂,int)` | Constrain the result and both operands |
+| `iszero e` | `t = bool ∧ V(Γ,e,int)` | Integer input, boolean result |
+| `if c then a else b` | `V(Γ,c,bool) ∧ V(Γ,a,t) ∧ V(Γ,b,t)` | Both branches share the requested result type |
+| `let x=a in b` | Fresh u; `V(Γ,a,u) ∧ V(Γ[x↦u],b,t)` | Type the initializer before exposing its binding to the body |
+| `fun x -> body` | Fresh u,v; `t = u→v ∧ V(Γ[x↦u],body,v)` | Build an arrow and constrain its result through the body |
+| `f a` | Fresh u; `V(Γ,f,u→t) ∧ V(Γ,a,u)` | Connect the argument type with the function's domain |
+
+</div>
+
+1. Match the outer constructor of the AST.
+2. Emit equations about that constructor's own result.
+3. Allocate fresh unknowns only where the row calls for them.
+4. Recurse on each child using the row's environment and requested type.
+5. Concatenate the equations, solve them, and apply the solution to the original root type.
+
+**Trace `let x=1 in iszero x`, with requested root type r:**
+
+| Recursive request | Emitted equation |
+|---|---|
+| Initializer 1 at fresh type u | `u = int` |
+| Body `iszero x` at r, under x↦u | `r = bool` |
+| The zero-test operand x at int | `int = u` |
+
+The equations agree, and solving yields r=bool. No concrete execution of x or `iszero` occurred during inference. The small system is intentionally monomorphic; [generalizing a let scheme](#depth-8-7) is an additional operation, not something to perform at every ordinary lookup.
+
+The table matches Figure 8.9's core cases. The starter's subtraction case uses the same integer requirements as addition, and recursive bindings use the [separate LETREC rule](#depth-8-4). The source's larger Fun extension adds further constructors and equality obligations; it is not covered by copying this table alone.
+
 ## 8.6.1 Combine constraints from two uses of the same function
 
 Source: the equation-generation method on [PDF pp. 248–258](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248). Unlike the earlier single-call example, this one makes one use of f constrain another.

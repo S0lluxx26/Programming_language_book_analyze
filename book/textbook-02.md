@@ -79,7 +79,7 @@ flowchart TD
   F --> G
 ```
 
-The chapter's examples of removing elements, insertion sort, and merging use the same method. In insertion sort, insert a head into the recursively sorted tail; the supporting invariant is that insertion preserves sortedness and adds exactly one occurrence of the new element.
+The chapter's examples of removing elements and insertion sort use the same method. In insertion sort, insert a head into the recursively sorted tail; the supporting invariant is that insertion preserves sortedness and adds exactly one occurrence of the new element. The [step-by-step explanation](#depth-2-2) also identifies a faulty factorial loop in the draft and gives a version that handles zero correctly.
 
 ## 2.3 Higher-Order Functions
 

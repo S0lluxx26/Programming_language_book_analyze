@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 10 reasoning route
+  accDescr: Numbered stages for applying exceptions and continuations.
+  N0["1. Push frames for pending work"]
+  N1["2. Install a handler frame for try"]
+  N0 --> N1
+  N2["3. Evaluate the raised payload"]
+  N1 --> N2
+  N3["4. Discard frames to the nearest handler"]
+  N2 --> N3
+  N4["5. Run the handler in its saved environment"]
+  N3 --> N4
