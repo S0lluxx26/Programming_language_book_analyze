@@ -1,0 +1,386 @@
+[
+  {
+    "section": "1.1",
+    "focus": "Separate closure under rules from the least generated set.",
+    "question": "With base 0 and step n → n+3, why is 12 a member but 10 is not?",
+    "answer": "0 → 3 → 6 → 9 → 12 is a finite derivation. Every rule preserves divisibility by 3, so no derivation produces 10.",
+    "trap": "Listing a few generated numbers does not prove that an unlisted number is impossible.",
+    "prerequisite": "glossary.html#inductive-definition"
+  },
+  {
+    "section": "1.2",
+    "focus": "Distinguish a well-formed tree from a defined result.",
+    "question": "Can a division-by-zero expression be a valid syntax tree?",
+    "answer": "Yes. The grammar can permit the division constructor and its two operands while the evaluation rule requires a nonzero denominator. Shape and meaning are different checks.",
+    "trap": "A constructor does not guarantee its operation succeeds.",
+    "prerequisite": "glossary.html#abstract-syntax-tree"
+  },
+  {
+    "section": "1.3",
+    "focus": "Use hypotheses only for smaller constructor inputs.",
+    "question": "For Fork(left,right), which two induction hypotheses may you use to prove leaves = forks + 1?",
+    "answer": "Assume the equation separately for left and right. Add their leaf counts; the combined tree has one additional fork, so the equation follows. You may not assume it for Fork(left,right) itself.",
+    "trap": "Assuming the conclusion for the whole tree makes the proof circular.",
+    "prerequisite": "glossary.html#structural-induction"
+  },
+  {
+    "section": "2.1",
+    "focus": "Distinguish element construction from list concatenation.",
+    "question": "Which builds [1;2;3]: 1 :: [2;3], [1] @ [2;3], or [1] :: [2;3]?",
+    "answer": "The first two do. The third tries to put an int list element into an int list; its element types do not match. Cons takes one element and a list; append takes two lists.",
+    "trap": "The value left of :: is one element, even when that element is itself a list.",
+    "prerequisite": "syntax.html#list"
+  },
+  {
+    "section": "2.2",
+    "focus": "State an accumulator invariant rather than memorizing tail recursion.",
+    "question": "While reversing [1;2;3], the accumulator is [2;1] and the remaining list is [3]. What must the final result be?",
+    "answer": "reverse remaining @ accumulator = [3] @ [2;1] = [3;2;1]. Moving 3 into the accumulator preserves that equation and leaves no remaining work.",
+    "trap": "Tail position reduces stack usage; it does not automatically preserve order or make an expensive combine operation cheap.",
+    "prerequisite": "glossary.html#tail-recursion"
+  },
+  {
+    "section": "2.3",
+    "focus": "Derive fold direction from parentheses.",
+    "question": "Compute both subtraction folds over [5;2] with initial accumulator 0.",
+    "answer": "Left: (0−5)−2 = −7. Right: 5−(2−0) = 3. Expanding the applications exposes both the association and the accumulator's argument position.",
+    "trap": "Agreement for addition does not make folds interchangeable for subtraction.",
+    "prerequisite": "syntax.html#fold"
+  },
+  {
+    "section": "2.4",
+    "focus": "Turn a problem statement into a contract before revealing code.",
+    "question": "Before writing range n m, what cases and invariant should you decide?",
+    "answer": "Decide what happens for n>m and n=m, then specify that the output is the ascending inclusive interval. Recurse over a smaller interval and test the final endpoint. The companion explicitly extends reversed bounds to [].",
+    "trap": "Textbook problem numbers and HW1 problem numbers are separate lists.",
+    "prerequisite": "textbook-02-problems.html#problem-1-inclusive-range"
+  },
+  {
+    "section": "3.1",
+    "focus": "Identify the host-language representation of object-language syntax.",
+    "question": "In ADD(VAR x, CONST 2), does building the VAR node look up x?",
+    "answer": "No. Constructing the tree only records x's name. Lookup happens later when the evaluator processes that node under an environment.",
+    "trap": "Do not evaluate a program while merely constructing its AST.",
+    "prerequisite": "glossary.html#abstract-syntax-tree"
+  },
+  {
+    "section": "3.2",
+    "focus": "Read the evaluation judgment as an input/output contract.",
+    "question": "In ρ ⊢ e ⇒ v, which parts are inputs and which is the result?",
+    "answer": "The expression e and runtime environment ρ are inputs. v is the resulting language value. A missing derivation can mean an undefined operation; it is not a special value invented by the grammar.",
+    "trap": "A runtime value and the expression representing it are different objects.",
+    "prerequisite": "syntax.html#evaluation"
+  },
+  {
+    "section": "3.2.1",
+    "focus": "Predict lookup under shadowing without mutating the outer environment.",
+    "question": "Let ρ1=[x↦1] and ρ2=[x↦2]ρ1. What do lookup x ρ1 and lookup x ρ2 return?",
+    "answer": "They return 1 and 2 respectively. The new first binding shadows the old one only for lookups using ρ2; ρ1 remains available unchanged.",
+    "trap": "Extending an immutable environment is not assignment to an old binding.",
+    "prerequisite": "syntax.html#extension"
+  },
+  {
+    "section": "3.2.2",
+    "focus": "Choose exactly the premises demanded by a rule.",
+    "question": "In the toy language, should if true then 8 else 1/0 evaluate the division?",
+    "answer": "No. Evaluate the guard, choose the true rule, and evaluate only 8. The result is 8. The unchosen branch supplies no evaluation premise for this rule.",
+    "trap": "Recursing into every child unconditionally is not a valid implementation of IF.",
+    "prerequisite": "glossary.html#inference-rule"
+  },
+  {
+    "section": "3.3",
+    "focus": "Make a small test distinguish correct binding from a plausible wrong implementation.",
+    "question": "What does let x=4 in let y=(let x=2 in x+1) in x−y return?",
+    "answer": "The initializer for y uses an inner x=2 and yields 3. Its temporary binding does not escape. The final expression sees outer x=4 and y=3, so the result is 1.",
+    "trap": "Do not leak an initializer's local environment into its enclosing body.",
+    "prerequisite": "glossary.html#shadowing"
+  },
+  {
+    "section": "4.1",
+    "focus": "Separate procedure creation from procedure execution.",
+    "question": "Does evaluating proc x (missing+x) immediately look up an unbound name missing?",
+    "answer": "No. It produces a closure containing the body and definition environment. The body is evaluated only on application; calling it would then try the lookup and fail if missing is unbound.",
+    "trap": "Evaluating a PROC body at definition time destroys first-class function behavior.",
+    "prerequisite": "syntax.html#function"
+  },
+  {
+    "section": "4.2",
+    "focus": "Interpret free variables relative to an expression boundary.",
+    "question": "In let x=10 in proc y (x+y), is x free in the procedure? Is it free in the whole expression?",
+    "answer": "It is free relative to proc y (x+y), since that procedure binds only y. It is bound in the whole expression by the enclosing let.",
+    "trap": "Free in a subexpression does not mean globally unbound.",
+    "prerequisite": "glossary.html#free-variable"
+  },
+  {
+    "section": "4.2.1",
+    "focus": "Keep caller arguments and captured body bindings separate.",
+    "question": "If f y = x+y captures x=10, what does let x=90 in f x return under static scope?",
+    "answer": "The caller evaluates the argument x to 90. The body uses captured x=10 and parameter y=90, producing 100.",
+    "trap": "The saved environment supplies the body, not the argument expression at the call site.",
+    "prerequisite": "glossary.html#closure"
+  },
+  {
+    "section": "4.2.2",
+    "focus": "Change only the body environment when comparing scope policies.",
+    "question": "Using the same f and call as the previous section, what result does dynamic scope give?",
+    "answer": "180. The argument is still 90, but the body now obtains nonlocal x=90 from the caller rather than captured x=10.",
+    "trap": "Static versus dynamic scope is not the same distinction as eager versus lazy argument evaluation.",
+    "prerequisite": "glossary.html#dynamic-scope"
+  },
+  {
+    "section": "4.2.3",
+    "focus": "Explain the self-binding in a recursive closure.",
+    "question": "Why must a lexical recursive call make the function name available again inside its body?",
+    "answer": "The saved outer environment may predate the recursive binding. Installing the closure under its own name lets its body resolve the next recursive call; the current parameter binding is then added.",
+    "trap": "The parameter must receive this call's argument, not a stale argument saved from an earlier call.",
+    "prerequisite": "06-scope-recursion.html#a-recursive-closure-remembers-its-own-name"
+  },
+  {
+    "section": "4.3",
+    "focus": "Test escaping closures rather than only direct calls.",
+    "question": "What should (let make = proc x (proc y (x+y)) in let add2 = make 2 in add2 5) return under lexical scope?",
+    "answer": "7. The returned inner closure keeps x=2 after make returns, then receives y=5. A caller-only environment can lose x and fail this test.",
+    "trap": "Passing factorial does not by itself demonstrate correct closure capture.",
+    "prerequisite": "05-closures.html#draw-creation-and-application-separately"
+  },
+  {
+    "section": "5.1",
+    "focus": "Distinguish constructors with superficially similar empty values.",
+    "question": "Are Unit and NIL interchangeable, and is HEAD NIL defined?",
+    "answer": "No. Unit is the single uninformative value; NIL is an empty list. HEAD requires a nonempty list, so HEAD NIL has no ordinary result in this evaluator.",
+    "trap": "An empty list still belongs to the list value family.",
+    "prerequisite": "syntax.html#list"
+  },
+  {
+    "section": "5.2",
+    "focus": "Track side effects separately from returned values.",
+    "question": "What is produced by SEQ(PRINT 1, CONST 2), using the chapter's rules?",
+    "answer": "The output stream receives 1. PRINT returns Unit, which SEQ discards; the whole expression returns the integer value 2.",
+    "trap": "Output and the evaluator's return value are separate observations.",
+    "prerequisite": "syntax.html#evaluation"
+  },
+  {
+    "section": "5.3",
+    "focus": "Use the empty case to expose incorrect branch evaluation.",
+    "question": "Why is reversing [] a useful interpreter test even when reversing [1;2] succeeds?",
+    "answer": "The empty case should take the base branch without evaluating HEAD or TAIL. An interpreter that evaluates both IF branches may fail on [], revealing a semantic bug.",
+    "trap": "Implement the language's conditional, not a host helper that eagerly computes both alternatives.",
+    "prerequisite": "textbook-03.html#3-2-2-inference-rules"
+  },
+  {
+    "section": "6.1",
+    "focus": "Identify the extra location value in explicit references.",
+    "question": "After let r=ref 4, what does evaluating r return in the explicit-reference model, and what does !r return?",
+    "answer": "r returns the location value; !r follows that location in memory and returns 4. These are two separate evaluation operations.",
+    "trap": "Ordinary variable lookup does not automatically dereference in this model.",
+    "prerequisite": "syntax.html#reference"
+  },
+  {
+    "section": "6.1.1",
+    "focus": "Read new reference constructors by their operand roles.",
+    "question": "In SETREF(target, rhs), what must target evaluate to?",
+    "answer": "A location value identifying the cell to update. The right operand supplies the new contents after the target has been evaluated and its updated memory passed on.",
+    "trap": "A numerical value that happens to resemble an address is not a location value.",
+    "prerequisite": "syntax.html#store"
+  },
+  {
+    "section": "6.1.2",
+    "focus": "Make the memory passed between premises explicit.",
+    "question": "If each call to f increments a shared counter from 0 and returns its new value, what is f 0 + f 0 under left-to-right evaluation?",
+    "answer": "The first call returns 1 with memory M1. The second receives M1 and returns 2 with M2. The sum is 3, returned with M2.",
+    "trap": "Giving both calls the original memory yields the wrong effect history.",
+    "prerequisite": "07-state.html#thread-the-latest-memory"
+  },
+  {
+    "section": "6.2",
+    "focus": "Distinguish the two maps of implicit references.",
+    "question": "If ρ(x)=L3 and M(L3)=8, what does evaluating x return?",
+    "answer": "8, by first resolving x to L3 and then reading L3 in M. The environment supplies the address; the store supplies its current contents.",
+    "trap": "Environment lookup alone is insufficient in the implicit-reference model.",
+    "prerequisite": "syntax.html#store"
+  },
+  {
+    "section": "6.2.1",
+    "focus": "Distinguish variable assignment from writing through a reference expression.",
+    "question": "Which location does SET(x,e) update in the implicit-reference language?",
+    "answer": "The existing location ρ(x), after evaluating e with the required store threading. It does not allocate a new cell or replace x's environment binding.",
+    "trap": "SET and SETREF have different target forms; do not translate their syntax mechanically.",
+    "prerequisite": "syntax.html#reference"
+  },
+  {
+    "section": "6.2.2",
+    "focus": "Understand that captured locations observe current memory.",
+    "question": "A closure captures x↦L0 when M(L0)=1. Before calling it, L0 is assigned 9. What does its free x read?",
+    "answer": "9. The closure retains the binding to L0, while the call uses the current store. Capturing a location does not freeze that location's old contents.",
+    "trap": "Lexical scope fixes which binding is used, not an immutable snapshot of mutable contents.",
+    "prerequisite": "glossary.html#closure"
+  },
+  {
+    "section": "6.2.3",
+    "focus": "Predict whether parameter assignment affects the caller.",
+    "question": "a initially holds 4. A procedure sets its parameter to 9. What is a afterward under value and reference calls?",
+    "answer": "Value call: 4, because the parameter has a fresh cell. Reference call: 9, because it aliases a's existing cell. Copying record values can still share their field cells even under a value call.",
+    "trap": "Call by value is not a promise to deep-copy every reachable object.",
+    "prerequisite": "07-state.html#call-by-value-and-call-by-reference"
+  },
+  {
+    "section": "6.3",
+    "focus": "Test effect propagation at the return boundary.",
+    "question": "What should a stateful interpreter return for a sequence that assigns x=6 and then reads x?",
+    "answer": "The value 6 together with the final memory containing 6 at x's cell. Returning the correct value but stale memory can break the enclosing expression.",
+    "trap": "Validate both components of value * memory, not just the printed answer.",
+    "prerequisite": "syntax.html#evaluation"
+  },
+  {
+    "section": "7.1",
+    "focus": "Separate variable-cell identity from field-cell identity.",
+    "question": "b receives a's record value. Does assigning a new record to b necessarily change a's old field?",
+    "answer": "No. The variable cells can differ while their old record values share field locations. Reassigning b changes b's cell; updating b.field before that reassignment changes the shared field cell.",
+    "trap": "Field update and variable assignment follow different edges.",
+    "prerequisite": "08-records.html#copying-a-record-value-can-preserve-sharing"
+  },
+  {
+    "section": "7.2",
+    "focus": "Distinguish an address from the cell containing that address.",
+    "question": "In the course pointer language, let x=1 in let p=&x in *p:=7; x returns what?",
+    "answer": "7. p's own variable cell contains the address of x's cell. Dereferencing p for the assignment reaches x's cell and changes it.",
+    "trap": "The location of p and the location stored in p are different levels.",
+    "prerequisite": "syntax.html#store"
+  },
+  {
+    "section": "7.3",
+    "focus": "Distinguish leaving scope from losing reachability.",
+    "question": "Can a cell remain live after the binding that created it leaves scope?",
+    "answer": "Yes. A returned pointer, record field, or closure can still reach that cell. Reclamation must consider those paths, not only the vanished name.",
+    "trap": "Scope boundaries do not automatically define heap lifetimes.",
+    "prerequisite": "glossary.html#reachability"
+  },
+  {
+    "section": "7.3.1",
+    "focus": "Expose the danger of freeing through one alias.",
+    "question": "p and q point to the same cell. If the program frees it through p, is reading through q safe?",
+    "answer": "No. q is now a dangling reference. Removing or abandoning p does not prove that all references to the cell have disappeared.",
+    "trap": "One alias's lifetime is not ownership of the shared cell.",
+    "prerequisite": "08-records.html#pointers-and-lifetime-errors"
+  },
+  {
+    "section": "7.3.2",
+    "focus": "Compute reachability on a cycle and state the approximation.",
+    "question": "Root L0 points to L1, L1 points back to L0, and L2 is isolated. Which cells are retained?",
+    "answer": "L0 and L1. Mark before following edges so the cycle terminates; sweep L2. Retention means reachable, not guaranteed to be used again.",
+    "trap": "An internal cycle without a root path would be collectible by tracing.",
+    "prerequisite": "syntax.html#reach"
+  },
+  {
+    "section": "7.4",
+    "focus": "Test GC against pending computation outside the callee.",
+    "question": "Why can environment-only collection inside f be unsafe in f 0 + !p?",
+    "answer": "The caller still needs p after f returns, but p may not appear in f's environment. Either include continuation roots or restrict collection to points with no surrounding work remaining, as the provided solution does.",
+    "trap": "Being last inside one function is not the same as having no global continuation.",
+    "prerequisite": "glossary.html#continuation"
+  },
+  {
+    "section": "8.1",
+    "focus": "Separate static traversal from executing a branch.",
+    "question": "Does a simple type checker ignore the else branch of if true then 1 else false?",
+    "answer": "No. It checks both branch types and rejects int versus bool under the ordinary same-result-type rule, even though this particular execution chooses 1.",
+    "trap": "A known guard value does not change the stated syntax-directed typing rule.",
+    "prerequisite": "glossary.html#typing-judgment"
+  },
+  {
+    "section": "8.2",
+    "focus": "Read arrow association and shared unknowns.",
+    "question": "What relationship does α→α impose, and how is α→β→γ grouped?",
+    "answer": "α→α requires the input and result to have the same type. α→β→γ means α→(β→γ), a function whose result is another function.",
+    "trap": "Repeating the same type variable expresses a constraint, not two independent choices.",
+    "prerequisite": "syntax.html#type"
+  },
+  {
+    "section": "8.3",
+    "focus": "Keep type facts separate from runtime bindings.",
+    "question": "When checking proc x (x+1), what belongs in Γ for x?",
+    "answer": "A type, initially a fresh unknown α if unannotated. Addition constrains α to int. A runtime integer or memory location belongs to evaluation, not Γ.",
+    "trap": "Running the program to discover x's value is not static inference.",
+    "prerequisite": "syntax.html#typing"
+  },
+  {
+    "section": "8.4",
+    "focus": "Derive a call's result from the domain constraint.",
+    "question": "If Γ proves f:int→bool, what type must a have for f a, and what is the call's type?",
+    "answer": "a must have int; the result has bool. The application rule connects the argument to the function's domain and the whole expression to its codomain.",
+    "trap": "Do not unify the argument with the function's entire arrow type.",
+    "prerequisite": "syntax.html#function"
+  },
+  {
+    "section": "8.5",
+    "focus": "Choose inference rather than guessing parameter types.",
+    "question": "Why introduce a fresh α for an unannotated parameter instead of immediately choosing int?",
+    "answer": "The body may require bool, an arrow, a list, or no concrete type at all. A fresh unknown preserves possibilities until constraints justify a choice.",
+    "trap": "A successful example with integer inputs does not justify hard-coding int.",
+    "prerequisite": "glossary.html#type-variable"
+  },
+  {
+    "section": "8.6",
+    "focus": "Apply the complete solution to the provisional result.",
+    "question": "The root type is α, and solving gives α=β and β=int. What must typeof return?",
+    "answer": "int. Generate constraints, solve them, and recursively apply the resulting substitution to the root. Returning α or stopping at β leaves solved information unused.",
+    "trap": "The last discovered binding alone is not the full substitution.",
+    "prerequisite": "syntax.html#substitution"
+  },
+  {
+    "section": "8.6.1",
+    "focus": "Create fresh child unknowns while sharing binder types.",
+    "question": "For f 1 with expected result β, which constraint must the callee satisfy?",
+    "answer": "f must have int→β. A general call rule introduces a fresh argument type α, constrains f:α→β and the argument:α, then the literal forces α=int.",
+    "trap": "Repeated uses of one monomorphic binder must share its context type.",
+    "prerequisite": "syntax.html#constraints"
+  },
+  {
+    "section": "8.6.2",
+    "focus": "Detect an indirect occurs-check cycle.",
+    "question": "After α=β→int, can you safely add β=α?",
+    "answer": "No. Applying the current substitution turns β=α into β=β→int, so β occurs inside its proposed replacement. Reject before extending the substitution.",
+    "trap": "An occurs check on unresolved names alone misses indirect cycles.",
+    "prerequisite": "glossary.html#occurs-check"
+  },
+  {
+    "section": "8.7",
+    "focus": "Generalize only environment-independent variables.",
+    "question": "If f has α→β and β is free in Γ but α is not, what scheme may be assigned at let?",
+    "answer": "∀α.α→β. Each use gets a fresh input type, but β remains tied to the surrounding environment. Quantifying β would invent independence that the program does not have.",
+    "trap": "Ordinary procedure parameters are not generalized like let-bound identifiers.",
+    "prerequisite": "syntax.html#scheme"
+  },
+  {
+    "section": "8.8",
+    "focus": "State the limits of a successful shape-type check.",
+    "question": "Does giving HEAD NIL a list-element result type prove that it executes successfully?",
+    "answer": "No. A homogeneous-list type records element shape, not nonemptiness. The evaluator may still reject the empty list; stronger guarantees need a different analysis or specification.",
+    "trap": "Do not turn simple type safety into a promise of no division errors, empty-list errors, or divergence.",
+    "prerequisite": "hw4.html#soundness-and-partial-operations"
+  },
+  {
+    "section": "9.1",
+    "focus": "Preserve free-variable identity during beta reduction.",
+    "question": "Reduce (λx.λy.x) y without capturing the argument's free y.",
+    "answer": "Rename the inner binder to fresh z, then substitute: (λx.λz.x) y → λz.y. The supplied y remains free.",
+    "trap": "λy.y is not equivalent: it binds the formerly free y.",
+    "prerequisite": "glossary.html#capture-avoiding-substitution"
+  },
+  {
+    "section": "9.2",
+    "focus": "Identify the number representation before interpreting subtraction.",
+    "question": "What does the book's Church-natural translation do with 1−3, and what changes for signed subtraction?",
+    "answer": "Natural predecessor-based subtraction yields 0. The optional signed translation uses a pair whose difference represents an integer and requires a different decoder; there 1−3 represents −2.",
+    "trap": "The encoding is a semantic choice, not merely a display format.",
+    "prerequisite": "15-lambda.html#encodings-turn-data-into-behavior"
+  },
+  {
+    "section": "9.3",
+    "focus": "Separate weak evaluation from full normalization and budget exhaustion.",
+    "question": "Is λx.((λy.y) x) already a full normal form, and does a step-limit prove divergence?",
+    "answer": "It is not a full normal form: reduction under the lambda gives λx.x. A step limit only says the chosen computation did not finish within that budget; it is not a proof of divergence.",
+    "trap": "Returning as soon as the outer term is a lambda implements a weaker operation than the requested normalizer.",
+    "prerequisite": "glossary.html#normal-form"
+  }
+]

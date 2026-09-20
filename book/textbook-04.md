@@ -24,6 +24,17 @@ Compute free variables structurally: a variable contributes itself; an operation
 
 Static scope uses the binding determined by the function's definition context. A closure packages `(parameter, body, saved environment)`. At a call, evaluate the callee and argument in the caller's environment, then evaluate the body in the saved environment extended with the parameter. The caller's shadowing declarations do not replace the saved ones.
 
+**One call, two contexts:** suppose f y = x+y was defined with x=10, and the caller now has x=90.
+
+| Stage of f x | Context used | Result |
+|---|---|---|
+| Find f | Caller environment | The saved closure |
+| Evaluate argument x | Caller environment | 90 |
+| Bind parameter y | Extend the saved environment | x=10, y=90 |
+| Evaluate x+y | That extended saved environment | 100 |
+
+The argument and the body both mention x, but they are different occurrences evaluated in different contexts.
+
 ## 4.2.2 Dynamic Scope
 
 [Read in the PDF: p. 134](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=134).

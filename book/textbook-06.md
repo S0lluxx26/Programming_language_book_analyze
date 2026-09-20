@@ -40,6 +40,17 @@ flowchart TD
 
 The second model makes variable storage implicit. The environment maps each variable to a location, and lookup reads that location's value from memory. A let binding allocates a fresh variable cell. Assignment changes that cell without changing the environment mapping.
 
+**Compare the two models before continuing:**
+
+| Question | Explicit references | Implicit references |
+|---|---|---|
+| What does an ordinary variable denote? | A value, which may be a location | A location whose contents are read automatically |
+| What does ordinary let do? | Bind the evaluated value | Allocate a variable cell and bind its location |
+| How is a cell read? | An explicit dereference operation | Ordinary variable access follows both maps |
+| What changes during assignment? | Contents at the target reference | Contents at the variable’s location |
+
+In both models, the store records mutation. Neither model permits discarding an operand’s updated memory.
+
 ## 6.2.1 Syntactic Structure
 
 [Read in the PDF: p. 174](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=174).

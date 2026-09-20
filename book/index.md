@@ -52,18 +52,18 @@ Every assignment asks you to walk a tree. What changes is the information carrie
 
 ## A suggested eight-session route
 
-These are study sessions, not the official lecture calendar or assignment deadlines. Split a session when a topic needs more practice.
+These are study sessions, not the official calendar or deadlines. The links below are the 15 short concept guides, not the nine numbered textbook chapters. For the PDF order, use the [textbook contents](textbook.html). Split a session when needed.
 
 | Session | Read | Draw or explain | Practice |
 |---|---|---|---|
-| 1 | Chapters 1–2 | A data constructor and its matching branch | HW1 P1–P5, P9–P11 |
-| 2 | Chapter 3 | A recursion tree and an accumulator invariant | HW1 P6–P8, P12–P15 |
-| 3 | Chapters 4–5 | A `let` environment and a captured closure | HW2 constants, bindings, procedures |
-| 4 | Chapter 6 | The environments of mutually recursive calls | Finish the HW2 reasoning and tests |
-| 5 | Chapters 7–8 | Two names pointing to one memory cell | HW3 stores, records, and calls |
-| 6 | Chapters 9–10 | A handler stack and method lookup chain | Original self-check exercises |
-| 7 | Chapters 11–12 | A typing derivation and unification worklist | HW4 constraint generation |
-| 8 | Chapters 13–15 | Generalization, subtyping, and substitution | HW4 design review and course review |
+| 1 | [Induction](01-induction.html) and [OCaml basics](02-ocaml.html) | A data constructor and its matching branch | HW1 P1–P5, P9–P11 |
+| 2 | [Recursion](03-recursion.html) | A recursion tree and an accumulator invariant | HW1 P6–P8, P12–P15 |
+| 3 | [Expressions](04-expressions.html) and [closures](05-closures.html) | A `let` environment and a captured closure | HW2 constants, bindings, procedures |
+| 4 | [Scope and recursion](06-scope-recursion.html) | The environments of mutually recursive calls | Finish the HW2 reasoning and tests |
+| 5 | [State](07-state.html) and [records](08-records.html) | Two names pointing to one memory cell | HW3 stores, records, and calls |
+| 6 | [Exceptions](09-exceptions.html) and [objects](10-objects.html) | A handler stack and method lookup chain | Original self-check exercises |
+| 7 | [Types](11-types.html) and [inference](12-inference.html) | A typing derivation and unification worklist | HW4 constraint generation |
+| 8 | [Polymorphism](13-polymorphism.html), [subtyping](14-subtyping.html), and [lambda calculus](15-lambda.html) | Generalization, subtyping, and substitution | HW4 design review and course review |
 
 ## How to use a chapter
 

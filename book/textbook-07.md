@@ -1,6 +1,6 @@
 ## Before you begin
 
-**Read in the PDF:** [Chapter 7, pp. 193–221](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193). **Goal:** follow the heap graph and keep exactly the cells a future computation may access. **Definitions:** [record](glossary.html#record), [store](glossary.html#store), [garbage collection](glossary.html#garbage-collection).
+**Read in the PDF:** [Chapter 7, pp. 193–221](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193). **Goal:** follow the heap graph and conservatively retain reachable cells; reachability does not predict exactly which cells will be used again. **Definitions:** [record](glossary.html#record), [store](glossary.html#store), [garbage collection](glossary.html#garbage-collection).
 
 ## 7.1 Records
 

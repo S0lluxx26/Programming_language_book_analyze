@@ -64,3 +64,10 @@ Source snapshot: 20 September 2026.
 - Verified the Chapter 2 problem page follows the active section, distinguishes cons from append, and opens fold_right in place without navigation. Search for ↦ returns its mapping explanation.
 - Reviewed the sticky desktop rail with no overlap of article text, and the collapsed/open panel at 390-pixel mobile width with no document overflow. Hidden panel controls are removed from keyboard navigation through the native hidden attribute.
 - Static validation checks all quick-reference IDs, required user examples, and source targets. Single-letter uppercase notation is matched case-sensitively so a range bound m does not trigger memory M.
+
+## Section clarity review
+
+- Inventoried 493 H2–H4 headings across 58 reading pages, recording before/after structural evidence and a recommendation for each. This screening is distinguished from editorial judgment in reports/CONTENT_REVIEW.md.
+- Added 48 individually authored prediction checkpoints covering every numbered textbook section, with collapsed reasoning, a common trap, and a prerequisite link. Automated validation enforces exact section coverage and rendered uniqueness.
+- Added nine chapter transitions and focused comparisons for lexical scope, reference models, and type analysis, plus a complete inference trace. Corrected study-route numbering and the conservative-GC description.
+- Verified Chapter 8 disclosure by mouse and keyboard, desktop layout, and mobile layout at 390 × 844. Document width and scroll width were both 375 px.

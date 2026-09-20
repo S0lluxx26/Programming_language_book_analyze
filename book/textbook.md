@@ -6,7 +6,7 @@
 
 This reader follows **Hakjoo Oh’s _Principles of Programming Languages_ (English draft, 31 August 2026)** in its own nine-chapter order. Section numbers and PDF page links match the downloaded book. Explanations, Mermaid diagrams, and worked solutions here are original companion material; use the linked PDF whenever you want the author's exact wording, figures, or notation.
 
-**How to read:** open a chapter, read its section explanation, follow the arrows in the thinking flow, and then attempt its problem before opening the worked solution. Highlighted terms link to precise definitions. A section's **Read in the PDF** link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.
+**How to read:** check the chapter’s prerequisite, read a section, and follow its thinking flow. Answer the **Predict** checkpoint before revealing the reasoning and common trap. These checks are original practice prompts, separate from numbered textbook exercises. Use **Syntax beside you** for an unfamiliar symbol without leaving the section, then attempt the chapter’s problems before opening solutions. Highlighted terms link to precise definitions. A section's **Read in the PDF** link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.
 
 ```mermaid
 flowchart TD

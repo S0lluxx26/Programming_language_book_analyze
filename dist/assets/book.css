@@ -37,3 +37,12 @@
 .reference-contents{border-top:1px solid #dce5ed;padding-top:10px;margin-top:12px}
 @media(max-width:1200px){.on-this-page.notation-rail{display:block;position:fixed;top:auto;bottom:16px;right:16px;width:300px;max-width:calc(100vw - 32px);z-index:9}.notation-rail #notation-body{max-height:min(65vh,540px)}.notation-panel{box-shadow:0 5px 30px #142b4830}main{padding-bottom:55px}}
 @media print{.on-this-page.notation-rail{display:none!important}}
+/* Section-level active recall without expanding every answer at once. */
+.chapter-bridge{border-left:4px solid #477e9e;background:#f1f6fb;padding:18px 22px;margin:0 0 28px;border-radius:0 7px 7px 0}
+.chapter-bridge>strong{font-size:1.05rem;color:#244c6a}
+.chapter-bridge p{margin:9px 0}.chapter-bridge .checkpoint-hint{font-size:.85rem;color:#536c80}
+.section-checkpoint{border:1px solid #c3d7ca;border-left:4px solid #619476;background:#f6faf7;padding:16px 20px;margin:28px 0 38px;border-radius:6px}
+.section-checkpoint>p{margin:0;font-size:.95rem}.section-checkpoint>p>strong{display:block;color:#38684c;font-size:.8rem;letter-spacing:.05em;margin-bottom:7px}
+.section-checkpoint details{margin:12px 0 0;padding:0;border:0;background:transparent}.section-checkpoint summary{color:#38684c;font-weight:650;cursor:pointer;font-size:.9rem}
+.section-checkpoint details p{font-size:.9rem;line-height:1.7}.section-checkpoint details a{font-size:.85rem}
+@media print{.section-checkpoint{break-inside:avoid}.chapter-bridge{background:white}}

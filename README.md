@@ -94,3 +94,7 @@ Push to `main` to run `.github/workflows/pages.yml`. The workflow rebuilds diagr
 ## Attribution and scope
 
 Course textbooks, slides, homework specifications, and templates belong to their respective authors. This is an independent study companion, not an official course publication. Original source documents remain authoritative. Mermaid is used for graph rendering; markdown-it and highlight.js build the reading pages. No analytics, remote font services, or user accounts are required.
+
+## Content clarity review
+
+The [review plan](CONTENT_REVIEW_PLAN.md) and [section-by-section report](reports/CONTENT_REVIEW.md) document the audit of 493 headings. The reader includes 48 section checkpoints with revealable reasoning, common traps, and prerequisite links. Regenerate the current inventory with `node scripts/audit-content.mjs`; preserve the committed baseline for comparison.

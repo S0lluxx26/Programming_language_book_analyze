@@ -8,6 +8,16 @@
 
 The initial language returns to a small pure core: numbers, variables, arithmetic, a zero test, conditionals, let, procedures, and calls. Reducing the language lets you focus on typing rules before extending them to Fun. A type checker analyzes the syntax tree; it does not run the program to discover what a variable happens to contain.
 
+**The same tree, different questions:**
+
+| Analysis of an expression | What it carries | What it produces | What IF does |
+|---|---|---|---|
+| Pure evaluation | Runtime values in ρ | A value or runtime failure; it may diverge | Runs the selected branch |
+| Stateful evaluation | Environment and memory | A value plus updated memory, or failure/divergence | Runs the selected branch with the guard’s memory |
+| Type inference | Types in Γ and fresh unknowns | A type or a typing rejection | Checks both branches for compatible types |
+
+A runtime test and a typing derivation answer different questions; one cannot substitute for the other.
+
 ## 8.2 Type
 
 [Read in the PDF: p. 226](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226).
@@ -45,7 +55,7 @@ flowchart TD
 
 [Read in the PDF: p. 243](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=243).
 
-An evaluator often computes children and combines concrete values immediately. A checker cannot always know a procedure parameter's type before it examines the body and its uses. One approach asks the programmer for annotations. Automatic inference instead introduces unknowns and records equations to solve later.
+An evaluator often computes children and combines concrete values immediately. A checker cannot always know a procedure parameter's type before it examines the body and its uses. One approach asks the programmer for annotations. Automatic inference instead introduces unknowns and collects equations to solve later.
 
 This separation avoids guessing types or trying every possible function type. The syntax determines constraints; the solver propagates consequences across distant uses of the same unknown.
 
@@ -54,6 +64,19 @@ This separation avoids guessing types or trying every possible function type. Th
 [Read in the PDF: p. 248](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248).
 
 The pipeline is: allocate a fresh type for the whole expression, generate equations, solve them, then apply the resulting substitution to the requested type. A substitution maps type variables to types and must act recursively inside function and list types.
+
+**Small complete trace:** infer the type of the identity procedure applied to 1. The provisional result is α and its parameter type is β.
+
+| Stage | Information | Why |
+|---|---|---|
+| Type the identity body | Procedure type β → β | The body returns its parameter |
+| Type the argument | int | It is the literal 1 |
+| Constrain application | β → β = int → α | Callee domain matches argument; codomain matches result |
+| Decompose | β=int and β=α | Function types compare both components |
+| Propagate | α=int | Replace β consistently in the remaining equation |
+| Report | int | Apply the complete solution to the root α |
+
+The next two subsections separate how these equations are generated from how they are solved.
 
 ## 8.6.1 Generating Type Equations
 

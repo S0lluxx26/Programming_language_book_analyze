@@ -1,5 +1,6 @@
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
+import {checkpoints} from './section-checkpoints.mjs';
 import {lectures,syntax,walkthroughs,lectureSlug} from './learning-aids.mjs';
 const catalog=JSON.parse(fs.readFileSync('book/catalog.json','utf8'));
 const notation=JSON.parse(fs.readFileSync('book/notation-panel.json','utf8'));
@@ -40,6 +41,13 @@ assert.equal((fs.readFileSync('book/hw1.md','utf8').match(/^## P\d+/gm)||[]).len
 const structure=JSON.parse(fs.readFileSync('book/textbook-structure.json','utf8'));
 assert.equal(catalog.filter(p=>p.textbook && p.slug!=='textbook-02-problems').length,9);
 assert.equal(structure.sections.length,48);
+assert.deepEqual(checkpoints.map(c=>c.section),structure.sections.map(s=>s.section),'One ordered checkpoint per source section');
+for(const checkpoint of checkpoints){
+  assert(checkpoint.focus&&checkpoint.question&&checkpoint.answer&&checkpoint.trap&&checkpoint.prerequisite,'Incomplete checkpoint '+checkpoint.section);
+  const section=structure.sections.find(s=>s.section===checkpoint.section);
+  const html=fs.readFileSync('dist/'+section.slug+'.html','utf8');
+  assert.equal(html.split('data-checkpoint="'+checkpoint.section+'"').length-1,1,'Missing or duplicate checkpoint '+checkpoint.section);
+}
 for(const section of structure.sections){
   const markdown=fs.readFileSync(`book/${section.slug}.md`,'utf8');
   assert(markdown.includes(`## ${section.section} `),`Missing textbook section ${section.section}`);
@@ -79,6 +87,6 @@ for(const w of walkthroughs){
   assert.equal((html.match(/class="code-line"/g)||[]).length,w.lines.length,'Missing code explanation');
   assert(w.lines.every(([code,note])=>code&&note),'Unexplained code line');
 }
-const report={floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+const report={sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));
