@@ -1,18 +1,28 @@
 const dialog=document.querySelector('#search-dialog'),input=document.querySelector('#search-input'),results=document.querySelector('#search-results'),status=document.querySelector('.search-status');
-// Keep optional revision compact; an explicit cheat-sheet link reveals it.
-const cheatSheet=document.querySelector('.chapter-cheatsheet');
-if(cheatSheet){
-  const revealCheatSheet=()=>{if(location.hash==='#chapter-cheat-sheet')cheatSheet.open=true;};
-  revealCheatSheet();
-  addEventListener('hashchange',revealCheatSheet);
+// Optional reading stays compact; links reveal their target and its enclosing
+// disclosures, including subsection anchors inside a step-by-step supplement.
+const readingDisclosures=[...document.querySelectorAll('.chapter-cheatsheet,.textbook-depth')];
+if(readingDisclosures.length){
+  const revealTarget=hash=>{
+    let id;try{id=decodeURIComponent(hash.slice(1));}catch{return;}
+    const target=document.getElementById(id);if(!target)return;
+    let disclosed=false;
+    for(let node=target;node;node=node.parentElement){if(node.tagName==='DETAILS'){node.open=true;disclosed=true;}}
+    // A browser may resolve the fragment before a closed ancestor has layout.
+    // Reposition after opening and after synchronous table/rail setup finishes.
+    if(disclosed)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+  };
+  revealTarget(location.hash);
+  if(document.readyState!=='complete')addEventListener('load',()=>revealTarget(location.hash),{once:true});
+  addEventListener('hashchange',()=>revealTarget(location.hash));
   document.addEventListener('click',event=>{
     const link=event.target.closest('a[href]');
     if(!link||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
-    if(link.origin===location.origin&&link.pathname===location.pathname&&link.hash==='#chapter-cheat-sheet')cheatSheet.open=true;
+    if(link.origin===location.origin&&link.pathname===location.pathname)revealTarget(link.hash);
   });
-  let openBeforePrint=false;
-  addEventListener('beforeprint',()=>{openBeforePrint=cheatSheet.open;cheatSheet.open=true;});
-  addEventListener('afterprint',()=>{cheatSheet.open=openBeforePrint;});
+  let openBeforePrint=[];
+  addEventListener('beforeprint',()=>{openBeforePrint=readingDisclosures.map(d=>d.open);readingDisclosures.forEach(d=>{d.open=true;});});
+  addEventListener('afterprint',()=>{readingDisclosures.forEach((d,i)=>{d.open=openBeforePrint[i]??false;});});
 }
 const openSearch=()=>{dialog.showModal();input.focus();};
 document.querySelector('.search-trigger').addEventListener('click',openSearch);

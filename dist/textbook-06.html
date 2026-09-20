@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>6. State Changes · The Programming Languages Notebook</title><meta name="description" content="Compare explicit and implicit references and solve both stateful interpreter tasks."><meta name="theme-color" content="#142b48"><meta property="og:title" content="6. State Changes"><meta property="og:description" content="Compare explicit and implicit references and solve both stateful interpreter tasks."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" aria-current="page">6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 6 · PDF pp. 161–192</p><h1>6. State Changes</h1><p class="dek">Compare explicit and implicit references and solve both stateful interpreter tasks.</p><p class="reading-meta">14 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161" target="_blank" rel="noopener">Original PDF · pp. 161–192 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#6-1-first-approach">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 6 · PDF pp. 161–192</p><h1>6. State Changes</h1><p class="dek">Compare explicit and implicit references and solve both stateful interpreter tasks.</p><p class="reading-meta">18 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161" target="_blank" rel="noopener">Original PDF · pp. 161–192 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#6-1-first-approach">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (2)</summary>
 <ul>
 <li><a href="#lecture-08">L8 · Distinguish aliasing from delayed evaluation</a></li>
@@ -82,6 +82,75 @@
   C --&gt; D[&quot;Update l to v in m2&quot;]
   D --&gt; E[&quot;Return v and the new memory&quot;]
 </code></pre></details></figure><p><strong>Worked trace:</strong> a counter starts at 0; f increments it and returns its new contents. In <code>f 0 + f 0</code>, the first call returns 1 and passes the changed store to the second call, which returns 2. The sum is <strong>3</strong>. Reusing the original store for both operands would produce the wrong result.</p>
+<details class="textbook-depth" id="depth-6-1-2" data-depth="6.1.2">
+<summary>Step by step · Write the value and the memory after every step</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=165">PDF pp. 165–173</a>. The stateful judgment returns <code>(value, memory)</code>. The environment ρ tells you what a name denotes; memory σ tells you what an allocated location currently contains.</p>
+<p>Consider the course-language sequence <code>let r = ref 1 in (r := 7; !r)</code>. Let ℓ₀ be a fresh location.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Expression / action</th>
+<th>Environment information</th>
+<th>Memory afterward</th>
+<th>Produced value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Evaluate initializer 1</td>
+<td>No r yet</td>
+<td>Empty</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Allocate <code>ref 1</code></td>
+<td>No r yet</td>
+<td>ℓ₀ ↦ 1</td>
+<td>Location ℓ₀</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Bind r</td>
+<td>r ↦ ℓ₀</td>
+<td>ℓ₀ ↦ 1</td>
+<td>Continue into body</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Evaluate assignment operands</td>
+<td>r still denotes ℓ₀</td>
+<td>ℓ₀ ↦ 1</td>
+<td>Location ℓ₀ and integer 7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Update the cell</td>
+<td>r still denotes ℓ₀</td>
+<td>ℓ₀ ↦ 7</td>
+<td>7 under this chapter's assignment rule</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Evaluate <code>!r</code> using step 5's memory</td>
+<td>r ↦ ℓ₀</td>
+<td>ℓ₀ ↦ 7</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Host-language distinction:</strong> actual OCaml's <code>r := 7</code> returns <code>()</code>. The course evaluator's assignment rule returns the assigned value. OCaml implements the rule; it does not decide the object language's return convention.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-2.svg" width="1279.6630859375" height="93.69999694824219" alt="Chapter 6 - thread updated memory through a sequence"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart LR
+  accTitle: Chapter 6 - thread updated memory through a sequence
+  accDescr: Allocation creates a cell, assignment changes that cell, and dereference uses the updated memory to obtain seven.
+  A[&quot;1. Empty memory&quot;] --&gt; B[&quot;2. Allocate l0 with 1&quot;]
+  B --&gt; C[&quot;3. Bind r to l0&quot;]
+  C --&gt; D[&quot;4. Store 7 in l0&quot;]
+  D --&gt; E[&quot;5. Read l0 from new memory: 7&quot;]
+</code></pre></details></figure><p>Allocation must choose a location outside the domain of the memory <strong>after the initializer runs</strong>. The initializer may allocate cells too. Similarly, evaluate a later operand in the preceding operand's output memory; reusing the original memory loses effects.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="6.1.2" aria-label="Checkpoint 6.1.2"><p><strong>Predict · 6.1.2</strong> If each call to f increments a shared counter from 0 and returns its new value, what is f 0 + f 0 under left-to-right evaluation?</p><details><summary>Reveal reasoning and common trap</summary><p>The first call returns 1 with memory M1. The second receives M1 and returns 2 with M2. The sum is 3, returned with M2.</p><p><strong>Common trap:</strong> Giving both calls the original memory yields the wrong effect history.</p><a href="07-state.html#thread-the-latest-memory">Revisit the prerequisite →</a></details></aside>
 <h2 id="6-2-second-approach">6.2 Second Approach</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=174">Read in the PDF: p. 174</a>.</p>
@@ -127,11 +196,25 @@
 <h2 id="6-2-2-semantic-structure">6.2.2 Semantic Structure</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=175">Read in the PDF: p. 175</a>.</p>
 <p>Keep the two maps separate: <code>ρ(x) = l</code> and <code>σ(l) = v</code>. Evaluating <code>VAR x</code> follows both. For <code>LET(x,a,b)</code>, evaluate a, allocate a fresh location for its value, extend the environment with that location, then evaluate b using the updated memory. A <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closure</a> saves an environment of locations, while each call uses the current store, so changes to captured cells remain visible.</p>
+<details class="textbook-depth" id="depth-6-2-2" data-depth="6.2.2">
+<summary>Step by step · Distinguish a copied value from an aliased cell</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=175">PDF pp. 175–182</a>. Under implicit references, every variable lookup goes through a location: <code>ρ(x)=ℓ</code> then <code>σ(ℓ)=v</code>.</p>
+<p>For <code>let x = 1 in let y = x in (y := 7; x)</code>:</p>
+<ol>
+<li>Allocate ℓx containing 1 and bind x to ℓx.</li>
+<li>Evaluate x to the <strong>value</strong> 1.</li>
+<li>Allocate a fresh ℓy containing that value and bind y to ℓy.</li>
+<li>Assignment to y updates ℓy to 7.</li>
+<li>Lookup of x still reads 1 from ℓx.</li>
+</ol>
+<p>Copying a scalar value into a new variable cell does not alias the two cells. Later, a copied record or pointer value can itself contain shared locations; <a href="textbook-07.html#7-1-records">Chapter 7 follows those extra arrows</a>.</p>
+<p><strong>Closures save bindings, not a frozen memory snapshot.</strong> A counter closure remembers the location of its count variable. If that cell changes from 0 to 1 to 2 across calls, the same saved binding finds the current contents in each call's incoming store. Two independently created counters instead allocate two locations and evolve separately.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="6.2.2" aria-label="Checkpoint 6.2.2"><p><strong>Predict · 6.2.2</strong> A closure captures x↦L0 when M(L0)=1. Before calling it, L0 is assigned 9. What does its free x read?</p><details><summary>Reveal reasoning and common trap</summary><p>9. The closure retains the binding to L0, while the call uses the current store. Capturing a location does not freeze that location&#39;s old contents.</p><p><strong>Common trap:</strong> Lexical scope fixes which binding is used, not an immutable snapshot of mutable contents.</p><a href="glossary.html#closure">Revisit the prerequisite →</a></details></aside>
 <h2 id="6-2-3-function-call-method">6.2.3 Function Call Method</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=183">Read in the PDF: p. 183</a>.</p>
 <p>Call by value allocates a fresh parameter cell initialized with the argument's value. Call by reference binds the parameter directly to the caller variable's existing location. Both evaluate the body using the closure's definition environment extended appropriately.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-2.svg" width="606.0927734375" height="556.8343505859375" alt="Chapter 6 - parameter passing is a choice about locations"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-3.svg" width="606.0927734375" height="556.8343505859375" alt="Chapter 6 - parameter passing is a choice about locations"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 6 - parameter passing is a choice about locations
   accDescr: Value calls allocate a new cell; reference calls reuse the caller&#39;s cell, making assignment visible to the caller.
   A[&quot;Caller a is stored at location L1&quot;] --&gt; B{&quot;Call method&quot;}
@@ -140,6 +223,49 @@
   C --&gt; E[&quot;Assign parameter: only L2 changes&quot;]
   D --&gt; F[&quot;Assign parameter: caller&#39;s L1 changes&quot;]
 </code></pre></details></figure><p><strong>Worked result:</strong> start with a = 1 and let f set its parameter to 9. After a value call, a remains <strong>1</strong>. After a reference call, a becomes <strong>9</strong>. Copying a record value can still share its field locations; “call by value” does not imply recursively copying every reachable cell.</p>
+<details class="textbook-depth" id="depth-6-2-3" data-depth="6.2.3">
+<summary>Step by step · Trace parameter passing with locations</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=183">PDF pp. 183–187</a>. Suppose x's cell ℓx contains 1 and the procedure body assigns 9 to its parameter p.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Call by value in the implicit-reference language</th>
+<th>Call by reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Obtain actual argument</td>
+<td>Evaluate x and obtain 1</td>
+<td>Find x's existing location ℓx</td>
+</tr>
+<tr>
+<td>Bind parameter p</td>
+<td>Allocate fresh ℓp holding 1</td>
+<td>Bind p directly to ℓx</td>
+</tr>
+<tr>
+<td>Assign <code>p := 9</code></td>
+<td>Update ℓp</td>
+<td>Update ℓx</td>
+</tr>
+<tr>
+<td>Read x afterward</td>
+<td>1</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Write down the caller's name-to-location map.</li>
+<li>Check whether the call rule transports a <strong>value</strong> or reuses a <strong>location</strong>.</li>
+<li>Extend the callee's lexical environment accordingly.</li>
+<li>Apply the body updates to the selected location.</li>
+<li>Read the caller's variable in the returned memory.</li>
+</ol>
+<p>The displayed call-by-reference rule expects a variable actual argument so there is an existing variable location to reuse. Do not silently invent a location for an arbitrary expression such as <code>x+1</code> without defining an extension. Passing an OCaml reference value by value can also share a cell, but that mechanism is not the same as this formal rule for aliasing the parameter's variable cell.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="6.2.3" aria-label="Checkpoint 6.2.3"><p><strong>Predict · 6.2.3</strong> a initially holds 4. A procedure sets its parameter to 9. What is a afterward under value and reference calls?</p><details><summary>Reveal reasoning and common trap</summary><p>Value call: 4, because the parameter has a fresh cell. Reference call: 9, because it aliases a&#39;s existing cell. Copying record values can still share their field cells even under a value call.</p><p><strong>Common trap:</strong> Call by value is not a promise to deep-copy every reachable object.</p><a href="07-state.html#call-by-value-and-call-by-reference">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-08" data-lecture="8">Distinguish aliasing from delayed evaluation <small>Lecture 8</small></h3>
 <ul>
@@ -159,7 +285,7 @@
 <li>Update or read the selected cell.</li>
 <li>Return value and final memory.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-3.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-4.svg" width="442.3603515625" height="491" alt="Lecture 8 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 8 reasoning route
   accDescr: Numbered stages for applying state and parameter passing.
@@ -209,7 +335,7 @@ flowchart TD
 <li>Discard frames to the nearest handler.</li>
 <li>Run the handler in its saved environment.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-4.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-06-5.svg" width="424.19091796875" height="491" alt="Lecture 10 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-06-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 10 reasoning route
   accDescr: Numbered stages for applying exceptions and continuations.

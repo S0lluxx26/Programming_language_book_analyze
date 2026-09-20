@@ -16,7 +16,7 @@ Unit is the single value used when a computation has no informative result. An e
 
 Extend the value domain to `Unit`, integers, booleans, lists of values, ordinary closures, recursive closures, and mutually recursive closures. An untyped evaluator's list can contain different value shapes; the homogeneous-list type discipline arrives later, in Chapter 8.
 
-For `CONS(a,b)`, evaluate a to a value and b to a list, then prepend. For append, both values must be lists. Arithmetic requires integers. The book's equality cases compare two integers or two booleans; using OCaml's generic structural equality on all values would silently add other cases, including inappropriate procedure comparisons.
+For `CONS(a,b)`, evaluate a to a value and b to a list, then prepend. For append, both values must be lists. Arithmetic requires integers. The book's equality cases compare two integers, two booleans, or two lists of equal length with equal corresponding elements ([PDF p. 152](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=152)). Procedure equality is excluded. The PDF leaves nested-list comparison open; the [step-by-step contract below](#depth-5-2) states the worked evaluator's recursive policy. Using OCaml's generic equality on every value would silently add unsupported cases.
 
 ```mermaid
 flowchart TD

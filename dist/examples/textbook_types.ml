@@ -1,5 +1,7 @@
-(* Original 8.8 solutions: equation generation, unification, and a monomorphic
-   Fun extension. Equality has two alternatives: int/int or bool/bool. *)
+(* Original 8.8 teaching baseline: equation generation, unification, and a
+   monomorphic Fun extension with restricted equality (int/int or bool/bool).
+   Unlike PDF p.152 and textbook_functional.ml, this checker rejects list
+   equality. It does not implement the full equality domain or let-polymorphism. *)
 type exp = UNIT | TRUE | FALSE | CONST of int | VAR of string
   | ADD of exp*exp | SUB of exp*exp | MUL of exp*exp | DIV of exp*exp
   | ISZERO of exp | EQUAL of exp*exp | LESS of exp*exp | NOT of exp

@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4. Defining and Calling Functions · The Programming Languages Notebook</title><meta name="description" content="Trace static and dynamic scope, build closures, and implement recursive procedures."><meta name="theme-color" content="#142b48"><meta property="og:title" content="4. Defining and Calling Functions"><meta property="og:description" content="Trace static and dynamic scope, build closures, and implement recursive procedures."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" aria-current="page">4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 4 · PDF pp. 119–145</p><h1>4. Defining and Calling Functions</h1><p class="dek">Trace static and dynamic scope, build closures, and implement recursive procedures.</p><p class="reading-meta">13 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119" target="_blank" rel="noopener">Original PDF · pp. 119–145 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#4-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 4 · PDF pp. 119–145</p><h1>4. Defining and Calling Functions</h1><p class="dek">Trace static and dynamic scope, build closures, and implement recursive procedures.</p><p class="reading-meta">17 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119" target="_blank" rel="noopener">Original PDF · pp. 119–145 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#4-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (2)</summary>
 <ul>
 <li><a href="#lecture-06">L6 · Restore the right bindings at each call</a></li>
@@ -71,6 +71,19 @@
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=123">Read in the PDF: p. 123</a>.</p>
 <p>A free variable is an occurrence not bound within the expression currently being considered. In <code>fun y -&gt; x+y</code>, y is bound and x is free. This makes the central question precise: when the function is called, which binding supplies its free x?</p>
 <p>Compute free variables structurally: a variable contributes itself; an operation unions its children's sets; a procedure removes its parameter; a let unions the right-hand side's set with the body's set after removing the bound name. A free variable of a subexpression can still be bound by an enclosing expression.</p>
+<details class="textbook-depth" id="depth-4-2" data-depth="4.2">
+<summary>Step by step · Compute free variables by respecting each binding region</summary>
+<p>The definitions on <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=123">PDF pp. 123–127</a> explain what a closure must remember. A free occurrence gets its meaning from outside the expression being analyzed.</p>
+<p>For <code>let x = x + 1 in fun y -&gt; x + y + z</code>, compute from the inside out:</p>
+<ol>
+<li><code>FV(x+1) = {x}</code>. This occurrence is in the initializer, outside the new x's binding region.</li>
+<li><code>FV(x+y+z) = {x,y,z}</code>.</li>
+<li><code>FV(fun y -&gt; x+y+z) = {x,z}</code> after removing the parameter y.</li>
+<li>For the let body, remove its bound x: <code>{x,z} − {x} = {z}</code>.</li>
+<li>Union with the initializer's free variables: <code>{x} ∪ {z} = {x,z}</code>.</li>
+</ol>
+<p>The rule is <code>FV(let x=e₁ in e₂) = FV(e₁) ∪ (FV(e₂) − {x})</code>. Removing x from the whole union would wrongly bind the initializer's x. Also distinguish the free variables of the <strong>whole let expression</strong> from those of the <strong>returned function</strong>: its x will be supplied by the environment created when the let runs.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="4.2" aria-label="Checkpoint 4.2"><p><strong>Predict · 4.2</strong> In let x=10 in proc y (x+y), is x free in the procedure? Is it free in the whole expression?</p><details><summary>Reveal reasoning and common trap</summary><p>It is free relative to proc y (x+y), since that procedure binds only y. It is bound in the whole expression by the enclosing let.</p><p><strong>Common trap:</strong> Free in a subexpression does not mean globally unbound.</p><a href="glossary.html#free-variable">Revisit the prerequisite →</a></details></aside>
 <h2 id="4-2-1-static-scope">4.2.1 Static Scope</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=128">Read in the PDF: p. 128</a>.</p>
@@ -108,11 +121,70 @@
 </tbody>
 </table>
 <p>The argument and the body both mention x, but they are different occurrences evaluated in different contexts.</p>
+<details class="textbook-depth" id="depth-4-2-1" data-depth="4.2.1">
+<summary>Step by step · Follow a function that returns another function</summary>
+<p>Source: the closure and higher-order examples on <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=128">PDF pp. 128–133</a>. This OCaml-shaped expression has the same lexical-scope lesson as the course's PROC/CALL language:</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> make = <span class="hljs-keyword">fun</span> x -&gt; <span class="hljs-keyword">fun</span> y -&gt; x + y <span class="hljs-keyword">in</span>
+<span class="hljs-keyword">let</span> add_three = make <span class="hljs-number">3</span> <span class="hljs-keyword">in</span>
+<span class="hljs-keyword">let</span> x = <span class="hljs-number">100</span> <span class="hljs-keyword">in</span>
+add_three <span class="hljs-number">4</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What is evaluated</th>
+<th>Value / environment to retain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Define <code>make</code></td>
+<td>Closure containing parameter x, body <code>fun y -&gt; x+y</code>, and its definition environment</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Call <code>make 3</code></td>
+<td>Run that body with x bound to 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Evaluate the inner <code>fun y</code></td>
+<td>Return a new closure whose saved environment includes x=3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Bind caller's x to 100</td>
+<td>Changes the caller's environment; it does not rewrite the saved closure</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Call <code>add_three 4</code></td>
+<td>Extend its saved environment with y=4; evaluate 3+4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Return</td>
+<td>Integer 7</td>
+</tr>
+</tbody>
+</table>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-1.svg" width="292.5625" height="651.0999755859375" alt="Chapter 4 - a returned closure keeps its definition environment"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Chapter 4 - a returned closure keeps its definition environment
+  accDescr: Calling make with three creates a closure that remembers x equals three, independently of a later caller binding of one hundred.
+  A[&quot;1. make 3&quot;] --&gt; B[&quot;2. Body creates fun y -&gt; x+y with x=3&quot;]
+  B --&gt; C[&quot;3. add_three stores that closure&quot;]
+  C --&gt; D[&quot;4. Caller binds x=100&quot;]
+  D --&gt; E[&quot;5. add_three 4 uses saved x=3 and y=4&quot;]
+  E --&gt; F[&quot;6. Result 7&quot;]
+</code></pre></details></figure><p>The call of <code>make</code> has finished, but the returned function still needs x. This is why a procedure value must include an environment, not just parameter and body. Under the chapter's dynamic-scope alternative, the final lookup would use the caller's x and produce 104; that is a different rule, not a closure optimization.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="4.2.1" aria-label="Checkpoint 4.2.1"><p><strong>Predict · 4.2.1</strong> If f y = x+y captures x=10, what does let x=90 in f x return under static scope?</p><details><summary>Reveal reasoning and common trap</summary><p>The caller evaluates the argument x to 90. The body uses captured x=10 and parameter y=90, producing 100.</p><p><strong>Common trap:</strong> The saved environment supplies the body, not the argument expression at the call site.</p><a href="glossary.html#closure">Revisit the prerequisite →</a></details></aside>
 <h2 id="4-2-2-dynamic-scope">4.2.2 Dynamic Scope</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=134">Read in the PDF: p. 134</a>.</p>
 <p>Dynamic scope uses the calling environment for nonlocal names. Changing the caller can therefore change a function's meaning. The distinction is the <strong>base environment for the body</strong>, not whether arguments are evaluated before a call.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-1.svg" width="585.98291015625" height="685.6891479492188" alt="Chapter 4 - choose the environment for a function call"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-2.svg" width="585.98291015625" height="685.6891479492188" alt="Chapter 4 - choose the environment for a function call"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 4 - choose the environment for a function call
   accDescr: Both variants evaluate the argument in the caller; static scope extends the definition environment while dynamic scope extends the caller environment.
   A[&quot;Evaluate callee and argument in caller environment&quot;] --&gt; B{&quot;Scope policy&quot;}
@@ -132,7 +204,7 @@
   = environment for evaluating f&#39;s body
 </code></pre>
 <p>The parameter binding is the newest binding. This order matters if names coincide. In the dynamic variant, the recursive name is resolved through the calling environment. A caller that rebinds that name can therefore change the recursive call's destination; reinstalling the original function would incorrectly hide this dynamic binding.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-2.svg" width="572.921875" height="893.689208984375" alt="Chapter 4 - make recursion available inside its own body"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-3.svg" width="572.921875" height="893.689208984375" alt="Chapter 4 - make recursion available inside its own body"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 4 - make recursion available inside its own body
   accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller&#39;s binding. Both then bind the argument.
   A[&quot;Create recursive closure f, x, body, saved&quot;] --&gt; B[&quot;Bind f in the surrounding body&quot;]
@@ -143,7 +215,19 @@
   E --&gt; H[&quot;Install x as v&quot;]
   G --&gt; H
   H --&gt; F[&quot;Evaluate body; recursive calls repeat this process&quot;]
-</code></pre></details></figure><aside class="section-checkpoint" data-checkpoint="4.2.3" aria-label="Checkpoint 4.2.3"><p><strong>Predict · 4.2.3</strong> Why must a lexical recursive call make the function name available again inside its body?</p><details><summary>Reveal reasoning and common trap</summary><p>The saved outer environment may predate the recursive binding. Installing the closure under its own name lets its body resolve the next recursive call; the current parameter binding is then added.</p><p><strong>Common trap:</strong> The parameter must receive this call&#39;s argument, not a stale argument saved from an earlier call.</p><a href="06-scope-recursion.html#a-recursive-closure-remembers-its-own-name">Revisit the prerequisite →</a></details></aside>
+</code></pre></details></figure><details class="textbook-depth" id="depth-4-2-3" data-depth="4.2.3">
+<summary>Step by step · Explain the extra self-binding in recursion</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=137">PDF pp. 137–145</a>. The obstacle is circular: the function's body needs the function name, but an ordinary closure is created before its new let binding exists.</p>
+<ol>
+<li>In an ordinary <code>let f = fun n -&gt; ... f ... in ...</code>, f in the initializer is not introduced by that let. Without an earlier f, the captured environment has no meaning for the recursive occurrence.</li>
+<li><code>letrec</code> <a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">records</a> the function name, parameter, body, and outer environment in a recursive closure.</li>
+<li>Calling that closure builds a body environment containing the function itself and the actual argument.</li>
+<li>A recursive call finds the self-binding and repeats the same procedure.</li>
+</ol>
+<p>For factorial at 2, the successive parameter bindings are n=2, n=1, and n=0. Under each one, f still denotes the same recursive definition. The base case returns 1, then the pending multiplications produce 1 and 2.</p>
+<p>Keep the two contracts separate: <strong>lexical scope</strong> supplies the outer free variables from the saved environment; <strong>recursive binding</strong> makes the selected definition available to itself. Using a caller's unrelated binding of f would break the latter under static scope.</p>
+</details>
+<aside class="section-checkpoint" data-checkpoint="4.2.3" aria-label="Checkpoint 4.2.3"><p><strong>Predict · 4.2.3</strong> Why must a lexical recursive call make the function name available again inside its body?</p><details><summary>Reveal reasoning and common trap</summary><p>The saved outer environment may predate the recursive binding. Installing the closure under its own name lets its body resolve the next recursive call; the current parameter binding is then added.</p><p><strong>Common trap:</strong> The parameter must receive this call&#39;s argument, not a stale argument saved from an earlier call.</p><a href="06-scope-recursion.html#a-recursive-closure-remembers-its-own-name">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-06" data-lecture="6">Restore the right bindings at each call <small>Lecture 6</small></h3>
 <ul>
 <li>Evaluate the callee and argument in the caller environment, but run the body in the captured environment.</li>
@@ -162,7 +246,7 @@
 <li>Add recursive bindings and parameter.</li>
 <li>Evaluate the body.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-3.svg" width="402.5751953125" height="491" alt="Lecture 6 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-4.svg" width="402.5751953125" height="491" alt="Lecture 6 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 6 reasoning route
   accDescr: Numbered stages for applying procedures and recursive closures.
@@ -217,7 +301,7 @@ flowchart TD
 <li>Replace each use with its position.</li>
 <li>Evaluate positions in the matching value list.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-4.svg" width="444.02978515625" height="387" alt="Lecture 7 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-04-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-04-5.svg" width="444.02978515625" height="387" alt="Lecture 7 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-04-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 7 reasoning route
   accDescr: Numbered stages for applying lexical addresses and nameless programs.

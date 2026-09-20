@@ -1,11 +1,7 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
-flowchart TD
-  accTitle: Lecture 5 reasoning route
-  accDescr: Numbered stages for applying expressions and environments.
-  N0["1. Match the AST constructor"]
-  N1["2. Evaluate the rule premises"]
-  N0 --> N1
-  N2["3. Check required value shapes"]
-  N1 --> N2
-  N3["4. Return the rule conclusion"]
-  N2 --> N3
+flowchart BT
+  accTitle: Chapter 3 - proof dependencies for a let expression
+  accDescr: The initializer determines the extended environment; lookup and numeral premises justify the body and then the entire let judgment.
+  A["1. Empty env: 4 evaluates to 4"] --> L["6. Empty env: whole LET evaluates to 6"]
+  X["3. Extended env: x evaluates to 4"] --> B["5. Extended env: x+2 evaluates to 6"]
+  N["4. Extended env: 2 evaluates to 2"] --> B
+  B --> L

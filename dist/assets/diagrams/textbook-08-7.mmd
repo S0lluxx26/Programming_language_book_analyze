@@ -1,13 +1,8 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 16 reasoning route
-  accDescr: Numbered stages for applying type inference ii: constraint generation.
-  N0["1. Receive context expression and target type"]
-  N1["2. Match the expression constructor"]
-  N0 --> N1
-  N2["3. Create fresh child unknowns"]
-  N1 --> N2
-  N3["4. Generate child constraints in proper contexts"]
-  N2 --> N3
-  N4["5. Union the constraints"]
-  N3 --> N4
+  accTitle: Chapter 8 - constraints connect distant uses of f
+  accDescr: Two calls constrain the same monomorphic function type, while addition constrains both results, determining the outer function type.
+  A["1. f x: alpha = beta -> gamma"] --> D["3. Addition: gamma=int, delta=int"]
+  B["2. f 1: alpha = int -> delta"] --> D
+  D --> E["4. Unify beta -> int with int -> int"]
+  E --> F["5. beta=int; alpha=int -> int"]
+  F --> G["6. Whole type: (int -> int) -> int -> int"]

@@ -1,8 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme
-  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.
-  A["Infer let-bound identity: alpha to alpha"] --> B["Solve constraints and apply them to the environment"]
-  B --> C["Generalize alpha only if absent from environment free variables"]
-  C --> D["Store scheme: forall alpha, alpha to alpha"]
-  D --> E["Integer use gets fresh beta: beta=int"]
-  D --> F["Boolean use gets fresh gamma: gamma=bool"]
+  accTitle: Lecture 17 reasoning route
+  accDescr: Numbered stages for applying type inference iii: unification.
+  N0["1. Apply the current substitution"]
+  N1["2. Discard identical sides"]
+  N0 --> N1
+  N2["3. Decompose matching constructors"]
+  N1 --> N2
+  N3["4. Reject mismatch or occurs-check failure"]
+  N2 --> N3
+  N4["5. Compose and propagate a new binding"]
+  N3 --> N4

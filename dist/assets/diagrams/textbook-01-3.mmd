@@ -1,11 +1,7 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
-flowchart TD
-  accTitle: Lecture 1 reasoning route
-  accDescr: Numbered stages for applying inductive definitions i.
-  N0["1. List base elements"]
-  N1["2. Apply construction rules"]
-  N0 --> N1
-  N2["3. Build a derivation for membership"]
-  N1 --> N2
-  N3["4. Prove both inclusions for a claimed set equality"]
-  N2 --> N3
+flowchart BT
+  accTitle: Chapter 1 - premises build a list derivation
+  accDescr: The empty list and the integer two justify the singleton; that singleton and one justify the two-element list.
+  E["Base: empty list is a list"] --> S["Constructor: 2 :: [] is a list"]
+  N2["2 is an integer"] --> S
+  S --> L["Constructor: 1 :: [2] is a list"]
+  N1["1 is an integer"] --> L

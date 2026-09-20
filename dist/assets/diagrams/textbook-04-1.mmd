@@ -1,9 +1,8 @@
 flowchart TD
-  accTitle: Chapter 4 - choose the environment for a function call
-  accDescr: Both variants evaluate the argument in the caller; static scope extends the definition environment while dynamic scope extends the caller environment.
-  A["Evaluate callee and argument in caller environment"] --> B{"Scope policy"}
-  B -->|Static| C["Start from closure's saved environment"]
-  B -->|Dynamic| D["Start from current caller environment"]
-  C --> E["Bind parameter to argument value"]
-  D --> E
-  E --> F["Evaluate the body"]
+  accTitle: Chapter 4 - a returned closure keeps its definition environment
+  accDescr: Calling make with three creates a closure that remembers x equals three, independently of a later caller binding of one hundred.
+  A["1. make 3"] --> B["2. Body creates fun y -> x+y with x=3"]
+  B --> C["3. add_three stores that closure"]
+  C --> D["4. Caller binds x=100"]
+  D --> E["5. add_three 4 uses saved x=3 and y=4"]
+  E --> F["6. Result 7"]

@@ -21,6 +21,23 @@ let lookup x env = try List.assoc x env with Not_found -> error ("unbound: "^x)
 let integer = function Int n -> n | _ -> error "expected integer"
 let boolean = function Bool b -> b | _ -> error "expected boolean"
 let list = function List xs -> xs | _ -> error "expected list"
+(* PDF p.152 includes lists but leaves nested equality underspecified.
+   Policy: recursively compare scalar/list data; reject Unit and procedures
+   anywhere, even after an unequal prefix. Mixed allowed element shapes differ. *)
+let rec comparable = function
+  | Int _ | Bool _ -> true
+  | List xs -> List.for_all comparable xs
+  | Unit | Procedure _ | RecProcedure _ | MRecProcedure _ -> false
+let rec same_data a b = match a,b with
+  | Int x,Int y -> x=y
+  | Bool x,Bool y -> x=y
+  | List xs,List ys -> List.length xs=List.length ys && List.for_all2 same_data xs ys
+  | _ -> false
+let equal_value a b =
+  if not (comparable a && comparable b) then error "equality excludes unit and procedures";
+  match a,b with
+  | Int _,Int _ | Bool _,Bool _ | List _,List _ -> Bool(same_data a b)
+  | _ -> error "equality requires matching top-level value families"
 let rec display = function
   | Unit -> "()" | Int n -> string_of_int n | Bool b -> string_of_bool b
   | List vs -> "[" ^ String.concat "; " (List.map display vs) ^ "]"
@@ -36,9 +53,7 @@ let rec eval ?(scope=Static) ?(emit=print_endline) e env =
   | MUL(a,b) -> bin (fun x y -> Int(x*y)) a b
   | DIV(a,b) -> bin (fun x y -> if y=0 then error "division by zero" else Int(x/y)) a b
   | LESS(a,b) -> bin (fun x y -> Bool(x<y)) a b
-  | EQUAL(a,b) -> let x = go a env in let y = go b env in
-      (match x,y with Int x,Int y -> Bool(x=y) | Bool x,Bool y -> Bool(x=y)
-       | _ -> error "equality requires two integers or two booleans")
+  | EQUAL(a,b) -> let x = go a env in let y = go b env in equal_value x y
   | NOT a -> Bool(not (boolean (go a env)))
   | NIL -> List []
   | CONS(a,b) -> let x = go a env in let xs = list (go b env) in List(x::xs)
@@ -99,8 +114,16 @@ let () =
   check "division" (run (DIV(CONST 7,CONST 2)) = Int 3);
   check "less / not" (run (NOT(LESS(CONST 3,CONST 2))) = Bool true);
   check "boolean equality" (run (EQUAL(TRUE,FALSE)) = Bool false);
+  check "empty list equality" (run (EQUAL(NIL,NIL)) = Bool true);
+  check "equal lists" (run (EQUAL(xs,xs)) = Bool true);
+  check "list length mismatch" (run (EQUAL(xs,CONS(CONST 1,NIL))) = Bool false);
+  check "list element mismatch" (run (EQUAL(CONS(CONST 1,NIL),CONS(CONST 2,NIL))) = Bool false);
+  check "nested list equality" (run (EQUAL(CONS(xs,NIL),CONS(xs,NIL))) = Bool true);
+  check "nested list mismatch" (run (EQUAL(CONS(xs,NIL),CONS(CONS(CONST 0,NIL),NIL))) = Bool false);
+  check "different allowed element shapes" (run (EQUAL(CONS(CONST 1,NIL),CONS(TRUE,NIL))) = Bool false);
+  check "reject procedure after unequal prefix" (fails (EQUAL(CONS(CONST 1,CONS(PROC("x",VAR "x"),NIL)),CONS(CONST 2,NIL))));
   check "unchosen branch" (run (IF(TRUE,CONST 9,DIV(CONST 1,CONST 0))) = Int 9);
-  check "undefined operations" (List.for_all fails [VAR "missing";HEAD NIL;TAIL NIL;ADD(TRUE,CONST 1);DIV(CONST 1,CONST 0);CALL(CONST 0,CONST 1);EQUAL(NIL,NIL)]);
+  check "undefined operations" (List.for_all fails [VAR "missing";HEAD NIL;TAIL NIL;ADD(TRUE,CONST 1);DIV(CONST 1,CONST 0);CALL(CONST 0,CONST 1);EQUAL(CONST 1,TRUE);EQUAL(UNIT,UNIT);EQUAL(CONS(UNIT,NIL),NIL);EQUAL(PROC("x",VAR "x"),PROC("y",VAR "y"))]);
   let output = ref [] in
   check "print returns unit" (eval ~emit:(fun s -> output:=s::!output) (PRINT(CONST 3)) [] = Unit);
   ignore(eval ~emit:(fun s -> output:=s::!output) (SEQ(PRINT(CONST 4),PRINT(CONST 5))) []);

@@ -1,0 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 7 reasoning route
+  accDescr: Numbered stages for applying lexical addresses and nameless programs.
+  N0["1. Maintain the nearest-first binder list"]
+  N1["2. Push a binder on entering its scope"]
+  N0 --> N1
+  N2["3. Replace each use with its position"]
+  N1 --> N2
+  N3["4. Evaluate positions in the matching value list"]
+  N2 --> N3

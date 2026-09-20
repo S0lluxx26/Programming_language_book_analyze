@@ -1,13 +1,13 @@
 %%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 19 reasoning route
-  accDescr: Numbered stages for applying typed objects and subtyping.
-  N0["1. Build inherited field and method signatures"]
-  N1["2. Check override compatibility"]
+  accTitle: Lecture 18 reasoning route
+  accDescr: Numbered stages for applying let-polymorphism.
+  N0["1. Infer and solve the let initializer"]
+  N1["2. Apply substitutions to type and context"]
   N0 --> N1
-  N2["3. Check each method body in its context"]
+  N2["3. Generalize variables absent from the context"]
   N1 --> N2
-  N3["4. Check the main expression"]
+  N3["4. Bind the identifier to its generalized scheme"]
   N2 --> N3
-  N4["5. Use subtyping at permitted compatibility checks"]
+  N4["5. Instantiate freshly at every use"]
   N3 --> N4

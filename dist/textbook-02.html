@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2. Functional Programming · The Programming Languages Notebook</title><meta name="description" content="Read OCaml, derive recursion, and solve the twelve exercises in section 2.4."><meta name="theme-color" content="#142b48"><meta property="og:title" content="2. Functional Programming"><meta property="og:description" content="Read OCaml, derive recursion, and solve the twelve exercises in section 2.4."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" aria-current="page">2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 2 · PDF pp. 33–96</p><h1>2. Functional Programming</h1><p class="dek">Read OCaml, derive recursion, and solve the twelve exercises in section 2.4.</p><p class="reading-meta">13 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=33" target="_blank" rel="noopener">Original PDF · pp. 33–96 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#2-1-ocaml-basics">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 2 · PDF pp. 33–96</p><h1>2. Functional Programming</h1><p class="dek">Read OCaml, derive recursion, and solve the twelve exercises in section 2.4.</p><p class="reading-meta">20 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=33" target="_blank" rel="noopener">Original PDF · pp. 33–96 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#2-1-ocaml-basics">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (2)</summary>
 <ul>
 <li><a href="#lecture-03">L3 · Read curried functions and assignment constraints</a></li>
@@ -88,6 +88,107 @@
   E --&gt; F
 </code></pre></details></figure><p><strong>Read this carefully:</strong> <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>::</code></a> adds one element to the front of a list; <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>@</code></a> concatenates two lists. Thus <code>1 :: [2;3]</code> is valid, while <code>[1] :: [2;3]</code> mixes a list element with integer elements. The corresponding valid concatenation is <code>[1] @ [2;3]</code>.</p>
 <p>Exceptions interrupt normal evaluation and can be handled with <code>try ... with</code>. References introduce mutable cells, but most of this chapter's exercises need only immutable values and recursion. See <a href="setup.html">the OCaml workbench</a> for the course <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> and commands.</p>
+<details class="textbook-depth" id="depth-2-1" data-depth="2.1">
+<summary>Step by step · Read OCaml expressions, types, and patterns</summary>
+<p>Use these small steps through OCaml values, types, and patterns before attempting the recursion exercises. Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=34">PDF pp. 34–70</a>.</p>
+<h3 id="values-and-their-types">Values and their types</h3>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Type / meaning</th>
+<th>Common mistake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3 + 4</code></td>
+<td><code>int</code>, result 7</td>
+<td>Using integer <code>+</code> on floats</td>
+</tr>
+<tr>
+<td><code>3.0 +. 4.0</code></td>
+<td><code>float</code>, result 7.0</td>
+<td>Expecting automatic int-to-float conversion</td>
+</tr>
+<tr>
+<td><code>if true then 3 else 4</code></td>
+<td><code>int</code>; both branches must have the same type</td>
+<td>Returning an int in one branch and a bool in the other</td>
+</tr>
+<tr>
+<td><code>(3, true)</code></td>
+<td><code>int * bool</code>, a two-component tuple</td>
+<td>Confusing a tuple with a list</td>
+</tr>
+<tr>
+<td><code>[3; 4]</code></td>
+<td><code>int list</code>, two elements of one type</td>
+<td>Writing <code>[3, 4]</code>, which is a one-element list containing a tuple</td>
+</tr>
+<tr>
+<td><a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a></td>
+<td><code>'a list</code>, an empty list with an unconstrained element type</td>
+<td>Treating it as unit <code>()</code></td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td><code>unit</code>, the one value of this type</td>
+<td>Treating it as “no value at all”</td>
+</tr>
+</tbody>
+</table>
+<p>The top-level prompt's <code>;;</code> tells the interactive reader to finish a phrase. Ordinary definitions in a <code>.ml</code> file generally do not need it. A single <code>;</code> has a different job: it separates list elements inside brackets, or sequences expressions outside them.</p>
+<h3 id="application-arrows-and-scope">Application, arrows, and scope</h3>
+<ol>
+<li><strong>Parenthesize application first.</strong> <code>f x + 1</code> means <code>(f x) + 1</code>; <code>f (x + 1)</code> passes a different argument.</li>
+<li><strong>Group calls to the left.</strong> <code>add 2 3</code> means <code>(add 2) 3</code>. <code>let add x y = x + y</code> abbreviates <code>let add = fun x -&gt; fun y -&gt; x + y</code>.</li>
+<li><strong>Group type arrows to the right.</strong> <code>int -&gt; int -&gt; int</code> means <code>int -&gt; (int -&gt; int)</code>. After one argument, a function remains.</li>
+<li><strong>Keep tuple arguments distinct.</strong> <code>let add_pair (x,y) = x+y</code> has type <code>int * int -&gt; int</code>. Call it with <code>add_pair (2,3)</code>.</li>
+<li><strong>Track the binding region.</strong> In <code>let x = 2 in let x = x+3 in x</code>, the inner right-hand side sees 2; the inner body sees 5. A binding is not an assignment.</li>
+</ol>
+<p>For <code>let id x = x</code>, OCaml can infer <code>'a -&gt; 'a</code>. The same <a href="glossary.html#type-variable" class="definition-link" title="An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable. — English textbook, PDF p. 254">type variable</a> occurs twice because the result has the argument's type. A let-bound identity can be used at several types; this does <strong>not</strong> mean an ordinary function parameter can change type halfway through its body. <a href="textbook-08.html#8-7-polymorphic-type-systems">Chapter 8 explains fresh instances</a>.</p>
+<h3 id="turn-a-datatype-into-exhaustive-cases">Turn a datatype into exhaustive cases</h3>
+<pre><code class="language-ocaml"><span class="hljs-keyword">type</span> tree = <span class="hljs-type">Leaf</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">int</span> | <span class="hljs-type">Fork</span> <span class="hljs-keyword">of</span> tree * tree
+
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">rec</span> sum_leaves t =
+  <span class="hljs-keyword">match</span> t <span class="hljs-keyword">with</span>
+  | <span class="hljs-type">Leaf</span> n -&gt; n
+  | <span class="hljs-type">Fork</span> (left, right) -&gt; sum_leaves left + sum_leaves right
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Line or pattern</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Leaf of int</code></td>
+<td>Leaf carries one integer; it is not an empty leaf</td>
+</tr>
+<tr>
+<td><code>Fork of tree * tree</code></td>
+<td>Fork carries two subtrees</td>
+</tr>
+<tr>
+<td><code>Leaf n</code></td>
+<td>Match this constructor and give its payload the local name n</td>
+</tr>
+<tr>
+<td><code>Fork (left,right)</code></td>
+<td>Bind both smaller trees before recurring</td>
+</tr>
+<tr>
+<td><code>_</code> in a pattern</td>
+<td>Accept a value without naming it; it is not a reusable variable</td>
+</tr>
+</tbody>
+</table>
+<p>Matching tries branches from top to bottom. A catch-all first branch makes later branches useless. For a list, <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a> and <code>h :: t</code> cover every shape; h is one element and t is the remaining <strong>list</strong>. <a href="syntax.html#list">The syntax reference explains <code>::</code></a>: it prepends one element, whereas <a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>@</code></a> joins two lists.</p>
+<p><strong>Modules and failures:</strong> <code>List.map</code> means the <code>map</code> function in module <code>List</code>. <code>exception Missing</code> declares an exception; <code>raise Missing</code> exits the current computation until a matching <code>try ... with Missing -&gt; ...</code> handles it. Use a failure only when the problem's contract calls for it. An autograder may require a particular exception or prohibit library helpers, as the <a href="homework-map.html">homework pages</a> explain.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="2.1" aria-label="Checkpoint 2.1"><p><strong>Predict · 2.1</strong> Which builds [1;2;3]: 1 :: [2;3], [1] @ [2;3], or [1] :: [2;3]?</p><details><summary>Reveal reasoning and common trap</summary><p>The first two do. The third tries to put an int list element into an int list; its element types do not match. Cons takes one element and a list; append takes two lists.</p><p><strong>Common trap:</strong> The value left of :: is one element, even when that element is itself a list.</p><a href="syntax.html#list">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-03" data-lecture="3">Read curried functions and assignment constraints <small>Lecture 3</small></h3>
 <ul>
@@ -151,6 +252,33 @@ flowchart TD
   C --&gt; G[&quot;Check examples, boundary cases, and cost&quot;]
   F --&gt; G
 </code></pre></details></figure><p>The chapter's examples of removing elements, insertion sort, and merging use the same method. In insertion sort, insert a head into the recursively sorted tail; the supporting invariant is that insertion preserves sortedness and adds exactly one occurrence of the new element.</p>
+<details class="textbook-depth" id="depth-2-2" data-depth="2.2">
+<summary>Step by step · Design a recursive function before writing its cases</summary>
+<p>Source progression: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=70">PDF pp. 70–80</a>. For each function, write the input contract, decreasing argument, and result of the smaller call.</p>
+<h3 id="indexing-and-removing-one-occurrence">Indexing and removing one occurrence</h3>
+<p>For a zero-based <code>nth xs i</code>, the front element has index 0. With the contract <code>0 ≤ i &lt; length xs</code>, use:</p>
+<ol>
+<li>A nonempty list with i = 0: return the head.</li>
+<li>A nonempty list with i &gt; 0: recurse on the tail with i−1.</li>
+<li>An empty list or negative i: follow the stated error policy; these inputs violate the contract.</li>
+</ol>
+<p>To remove <strong>only the first</strong> occurrence of a value, stop when the head matches and return the tail. On <code>[2;1;2]</code>, removing 2 gives <code>[1;2]</code>. Recurring after the match, or using <code>filter</code>, can remove later occurrences too and solve a different problem.</p>
+<h3 id="insertion-sort-give-the-helper-a-precondition">Insertion sort: give the helper a precondition</h3>
+<p><code>insert x sorted</code> assumes its second argument is sorted. It places x before the first element at least as large as x; if the list ends, append x there.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-4.svg" width="275.09375" height="699" alt="Chapter 2 - insertion sort builds on a sorted recursive result"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Chapter 2 - insertion sort builds on a sorted recursive result
+  accDescr: Sort the tail first, then insert the removed head into that sorted result, working from the empty list upward.
+  A[&quot;1. sort [3;1;2]&quot;] --&gt; B[&quot;2. sort [1;2]&quot;]
+  B --&gt; C[&quot;3. sort [2]&quot;]
+  C --&gt; D[&quot;4. sort [] = []&quot;]
+  D --&gt; E[&quot;5. insert 2 [] = [2]&quot;]
+  E --&gt; F[&quot;6. insert 1 [2] = [1;2]&quot;]
+  F --&gt; G[&quot;7. insert 3 [1;2] = [1;2;3]&quot;]
+</code></pre></details></figure><p>The recursive call supplies exactly the helper's precondition. That is also the induction argument for sortedness. Inserting into the unsorted original tail loses this guarantee. Worst-case repeated insertion scans prefixes of lengths 0 through n−1, giving quadratic time.</p>
+<h3 id="pending-work-explains-tail-recursion">Pending work explains tail recursion</h3>
+<p>For ordinary factorial, <code>fact 3</code> waits for <code>fact 2</code> so it can multiply by 3. For an accumulator helper <code>loop n acc</code>, the multiplication happens <strong>before</strong> the next call; the next call's result is returned directly. Use the invariant <code>loop n acc = acc × n!</code> for nonnegative n.</p>
+<p>Tail calls can reuse stack space; this does not make all memory usage constant. A tail-recursive list builder still allocates result cells, and changing argument order in a fold may change the answer. Keep the correctness invariant separate from the space argument.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="2.2" aria-label="Checkpoint 2.2"><p><strong>Predict · 2.2</strong> While reversing [1;2;3], the accumulator is [2;1] and the remaining list is [3]. What must the final result be?</p><details><summary>Reveal reasoning and common trap</summary><p>reverse remaining @ accumulator = [3] @ [2;1] = [3;2;1]. Moving 3 into the accumulator preserves that equation and leaves no remaining work.</p><p><strong>Common trap:</strong> Tail position reduces stack usage; it does not automatically preserve order or make an expensive combine operation cheap.</p><a href="glossary.html#tail-recursion">Revisit the prerequisite →</a></details></aside>
 <h2 id="2-3-higher-order-functions">2.3 Higher-Order Functions</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81">Read in the PDF: p. 81</a>.</p>
@@ -159,7 +287,7 @@ flowchart TD
 fold_left  f z [a;b;c] = f (f (f z a) b) c
 </code></pre>
 <p>These parenthesizations explain the result better than the phrases “right to left” and “left to right” alone. With subtraction, <code>[1;2;3]</code> and initial 0 produce 2 with the right fold and -6 with the left fold. The operation is not associative.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-4.svg" width="580.45703125" height="775.88720703125" alt="Choose a fold from the meaning of its accumulator"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-5.svg" width="580.45703125" height="775.88720703125" alt="Choose a fold from the meaning of its accumulator"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Choose a fold from the meaning of its accumulator
   accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.
   A[&quot;What does the partial answer represent?&quot;] --&gt; B{&quot;Suffix answer or prefix summary?&quot;}
@@ -169,6 +297,55 @@ fold_left  f z [a;b;c] = f (f (f z a) b) c
   D --&gt; E
   E --&gt; F[&quot;Expand a three-element example by hand&quot;]
 </code></pre></details></figure><p>A left fold is tail recursive, but constructing a reversed list and reversing once may be necessary to preserve the original order. Also, strict evaluation matters: a right fold computes its tail accumulator before the combining function runs. Using <code>&amp;&amp;</code> inside that function does not make the entire traversal short-circuit.</p>
+<details class="textbook-depth" id="depth-2-3" data-depth="2.3">
+<summary>Step by step · Choose map, filter, or fold from the desired result</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81">PDF pp. 81–88</a>. A higher-order function receives or returns a function. The function argument specifies the changing part of a reusable traversal.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>What the helper does</th>
+<th>Empty input</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List.map f xs</code></td>
+<td>Transform each element, <code>'a -&gt; 'b</code></td>
+<td><a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a></td>
+<td>Increment every integer</td>
+</tr>
+<tr>
+<td><code>List.filter p xs</code></td>
+<td>Keep elements satisfying <code>'a -&gt; bool</code></td>
+<td><a class="syntax-link" href="syntax.html#list" title="Lists, cons, and tuples — syntax meaning and source"><code>[]</code></a></td>
+<td>Keep positive integers</td>
+</tr>
+<tr>
+<td><code>List.fold_left f init xs</code></td>
+<td>Update an accumulator, <code>'acc -&gt; 'a -&gt; 'acc</code></td>
+<td><code>init</code></td>
+<td>Running sum or reversed list</td>
+</tr>
+<tr>
+<td><code>List.fold_right f xs init</code></td>
+<td>Combine an element with the folded tail, <code>'a -&gt; 'acc -&gt; 'acc</code></td>
+<td><code>init</code></td>
+<td>Rebuild a list in its original order</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trace a pipeline:</strong> <code>[-1;2;3]</code> → map <code>(fun x -&gt; x+1)</code> → <code>[0;3;4]</code> → filter <code>(fun x -&gt; x mod 2 = 0)</code> → <code>[0;4]</code> → fold_left <code>(+)</code> from 0 → 4.</p>
+<ol>
+<li>Decide whether the output has one item per input, some of the original items, or a combined result.</li>
+<li>Choose the traversal with that contract.</li>
+<li>Write the helper's input and result types before its body.</li>
+<li>For a fold, check the initial accumulator and the order of helper arguments.</li>
+<li>Test empty input and a noncommutative helper such as subtraction; addition alone hides order mistakes.</li>
+</ol>
+<p>For subtraction, <code>fold_left (-) 0 [1;2;3]</code> groups as <code>((0−1)−2)−3 = −6</code>; <code>fold_right (-) [1;2;3] 0</code> groups as <code>1−(2−(3−0)) = 2</code>. These parentheses are the computation. Now use <a href="textbook-02-problems.html">Problem 10's fold exercises</a> to turn this distinction into implementations.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="2.3" aria-label="Checkpoint 2.3"><p><strong>Predict · 2.3</strong> Compute both subtraction folds over [5;2] with initial accumulator 0.</p><details><summary>Reveal reasoning and common trap</summary><p>Left: (0−5)−2 = −7. Right: 5−(2−0) = 3. Expanding the applications exposes both the association and the accumulator&#39;s argument position.</p><p><strong>Common trap:</strong> Agreement for addition does not make folds interchangeable for subtraction.</p><a href="syntax.html#fold">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-04" data-lecture="4">Choose fold direction deliberately <small>Lecture 4</small></h3>
 <ul>
@@ -188,7 +365,7 @@ fold_left  f z [a;b;c] = f (f (f z a) b) c
 <li>Test empty and singleton cases.</li>
 <li>Consider an accumulator or fold.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-5.svg" width="355.859375" height="491" alt="Lecture 4 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-02-6.svg" width="355.859375" height="491" alt="Lecture 4 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-02-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 4 reasoning route
   accDescr: Numbered stages for applying recursion and higher-order programming.

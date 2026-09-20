@@ -1,12 +1,14 @@
 ## New reading tools
 
-[Chapter cheat sheets 1–9](#chapter-cheat-sheets) · [Lectures integrated into the textbook](textbook.html#lecture-to-chapter-map) · [Syntax and notation reference](syntax.html). Read definitions, lecture examples, Mermaid thinking flows, and chapter code walkthroughs along one textbook path.
+[Chapter cheat sheets 1–9](#chapter-cheat-sheets) · [Step-by-step reading guide](#chapter-by-chapter-reading-guide) · [Lectures integrated into the textbook](textbook.html#lecture-to-chapter-map) · [Syntax and notation reference](syntax.html). Read definitions, lecture examples, Mermaid thinking flows, and chapter code walkthroughs along one textbook path.
 
 ## Read the textbook with a guide beside you
 
 This reader follows **Hakjoo Oh’s _Principles of Programming Languages_ (English draft, 31 August 2026)** in its own nine-chapter order. Section numbers and PDF page links match the downloaded book. Explanations, Mermaid diagrams, and worked solutions here are original companion material; use the linked PDF whenever you want the author's exact wording, figures, or notation.
 
 **How to read:** skim the chapter cheat sheet, then read its numbered sections. Lecture highlights appear beside the matching idea; expand **Practice with Lecture…** for a worked example, numbered Mermaid flow, homework connection, and self-check. The chapter’s reading-route links let you jump directly to sections or code. Answer the **Predict** checkpoint before revealing the reasoning and common trap. These checks are original practice prompts, separate from numbered textbook exercises. Use **Syntax beside you** for an unfamiliar symbol without leaving the section, then attempt the chapter’s problems before opening solutions. Highlighted terms link to precise definitions. A section's **Read in the PDF** link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.
+
+**For a first reading:** open **Step by step** when a summary moves too quickly. These 25 expandable explanations restore intermediate steps from the PDF's progression, using original examples, numbered reasoning, tables, and Mermaid diagrams. For revision, leave them closed and use the cheat sheet and checkpoints. The reader follows all 48 numbered source sections; it is a companion to the PDF, not a reproduction of every paragraph and figure.
 
 ```mermaid
 flowchart TD
@@ -21,6 +23,22 @@ flowchart TD
   E --> H["8. Predict types before execution"]
   D --> I["9. Translate to lambda calculus"]
 ```
+
+## Chapter-by-chapter reading guide
+
+The PDF comparison found that the earlier website was easier to scan but often too compressed for a first encounter. Start with the added explanation matching your difficulty:
+
+| Chapter | Main gap addressed | Open the worked explanation |
+|---|---|---|
+| 1 · Induction | Moving from constructors to rules and proofs | [Membership tree](textbook-01.html#depth-1-1) · [Evaluation rules](textbook-01.html#depth-1-2) · [Induction hypotheses](textbook-01.html#depth-1-3) |
+| 2 · OCaml | Too little basic syntax before recursive exercises | [Types and patterns](textbook-02.html#depth-2-1) · [Recursive design](textbook-02.html#depth-2-2) · [Map, filter, fold](textbook-02.html#depth-2-3) |
+| 3 · Environments | Map notation and missing derivation steps | [Read the notation](textbook-03.html#depth-3-2-1) · [Full let derivation](textbook-03.html#depth-3-2-2) |
+| 4 · Functions | What a returned function remembers | [Free-variable calculation](textbook-04.html#depth-4-2) · [Returned closure](textbook-04.html#depth-4-2-1) · [Recursive binding](textbook-04.html#depth-4-2-3) |
+| 5 · Fun | AST/value distinction and source-accurate list equality | [Three language layers](textbook-05.html#depth-5-1) · [Operation contracts](textbook-05.html#depth-5-2) |
+| 6 · State | Seeing the exact cell changed at each step | [Memory trace](textbook-06.html#depth-6-1-2) · [Copy versus alias](textbook-06.html#depth-6-2-2) · [Parameter passing](textbook-06.html#depth-6-2-3) |
+| 7 · Heap | Following all kinds of reference edges | [Pointer locations](textbook-07.html#depth-7-2) · [Complete marking example](textbook-07.html#depth-7-3-2) |
+| 8 · Types | Intermediate equations and fresh-instance boundaries | [Typing derivation](textbook-08.html#depth-8-4) · [Two uses of f](textbook-08.html#depth-8-6-1) · [Solver state](textbook-08.html#depth-8-6-2) · [Schemes](textbook-08.html#depth-8-7) |
+| 9 · Lambda calculus | Turning encoding formulas into reductions | [Substitution](textbook-09.html#depth-9-1) · [Church data](textbook-09.html#depth-9-2) · [One recursive unfolding](textbook-09.html#depth-9-3) |
 
 ## Part I — The tools for thinking
 
@@ -114,7 +132,7 @@ flowchart TD
 - [8.6.1 Generating Type Equations](textbook-08.html#8-6-1-generating-type-equations)
 - [8.6.2 Solving Type Equations](textbook-08.html#8-6-2-solving-type-equations)
 - [8.7 Polymorphic Type Systems](textbook-08.html#8-7-polymorphic-type-systems)
-- [8.8 Implementation: generator, solver, and Fun extension](textbook-08.html#8-8-implementation)
+- [8.8 Implementation: generator, solver, and restricted Fun checker](textbook-08.html#8-8-implementation)
 
 ### 9. Lambda Calculus · PDF pp. 277–292
 
@@ -136,7 +154,7 @@ The [concept chapters](01-induction.html) remain available for shorter explanati
 
 ## Source and solution notes
 
-The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §7.4's printed evaluator result needs an internal value-and-memory pair; §8.8's Fun extension needs an explicit equality policy; §9.2 initially encodes natural numbers and uses normal order. These are explained in their chapters.
+The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §5.2 includes list equality but leaves nested comparisons open; §7.4's printed evaluator result needs an internal value-and-memory pair; the §8.8 downloadable checker deliberately supports only monomorphic types and scalar equality, so it covers less than the Fun evaluator; §9.2 initially encodes natural numbers and uses normal order. These are explained in their chapters.
 
 ## Chapter cheat sheets
 

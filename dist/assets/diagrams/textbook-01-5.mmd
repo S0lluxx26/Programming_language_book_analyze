@@ -1,10 +1,8 @@
 flowchart TD
-  accTitle: A structural proof has a branch for each construction rule
-  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.
-  A["How was the string constructed?"] --> B{"Last rule"}
-  B -->|Base| C["One opening and one closing parenthesis"]
-  B -->|Wrap s| D["Assume equal counts for s; add one to both"]
-  B -->|Join s and t| E["Assume equal counts for each; add their counts"]
-  C --> F["Equal counts for every derivable string"]
-  D --> F
-  E --> F
+  accTitle: From a grammar constructor to an evaluator case
+  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.
+  A["Expression node"] --> B{"Literal or binary constructor?"}
+  B -->|Literal| C["Return its numeric value"]
+  B -->|Binary| D["Evaluate left child"]
+  D --> E["Evaluate right child"]
+  E --> F["Apply the selected operation"]

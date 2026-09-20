@@ -1,8 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Chapter 7 - decide whether environment-only collection is safe
-  accDescr: A global continuation condition is stricter than being locally the last expression of a function.
-  A["About to evaluate an expression"] --> B{"Any surrounding work still pending?"}
-  B -->|Yes| C["Skip environment-only GC"]
-  B -->|No| D["Mark from current environment and sweep"]
-  C --> E["Evaluate with the current store"]
-  D --> E
+  accTitle: Lecture 9 reasoning route
+  accDescr: Numbered stages for applying records, pointers, and garbage collection.
+  N0["1. Collect every live root"]
+  N1["2. Follow locations inside reachable values"]
+  N0 --> N1
+  N2["3. Repeat until no new location appears"]
+  N1 --> N2
+  N3["4. Retain reachable cells"]
+  N2 --> N3
+  N4["5. Test aliases and cycles"]
+  N3 --> N4

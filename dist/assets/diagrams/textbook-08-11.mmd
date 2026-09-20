@@ -1,13 +1,8 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 18 reasoning route
-  accDescr: Numbered stages for applying let-polymorphism.
-  N0["1. Infer and solve the let initializer"]
-  N1["2. Apply substitutions to type and context"]
-  N0 --> N1
-  N2["3. Generalize variables absent from the context"]
-  N1 --> N2
-  N3["4. Bind the identifier to its generalized scheme"]
-  N2 --> N3
-  N4["5. Instantiate freshly at every use"]
-  N3 --> N4
+  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme
+  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.
+  A["Infer let-bound identity: alpha to alpha"] --> B["Solve constraints and apply them to the environment"]
+  B --> C["Generalize alpha only if absent from environment free variables"]
+  C --> D["Store scheme: forall alpha, alpha to alpha"]
+  D --> E["Integer use gets fresh beta: beta=int"]
+  D --> F["Boolean use gets fresh gamma: gamma=bool"]

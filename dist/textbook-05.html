@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>5. Functional Language Fun · The Programming Languages Notebook</title><meta name="description" content="Combine lists, mutually recursive closures, output, and sequencing into a complete language."><meta name="theme-color" content="#142b48"><meta property="og:title" content="5. Functional Language Fun"><meta property="og:description" content="Combine lists, mutually recursive closures, output, and sequencing into a complete language."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" aria-current="page">5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 5 · PDF pp. 147–160</p><h1>5. Functional Language Fun</h1><p class="dek">Combine lists, mutually recursive closures, output, and sequencing into a complete language.</p><p class="reading-meta">8 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147" target="_blank" rel="noopener">Original PDF · pp. 147–160 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#5-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 5 · PDF pp. 147–160</p><h1>5. Functional Language Fun</h1><p class="dek">Combine lists, mutually recursive closures, output, and sequencing into a complete language.</p><p class="reading-meta">11 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147" target="_blank" rel="noopener">Original PDF · pp. 147–160 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#5-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <aside class="chapter-bridge"><strong>One feature → a complete functional language</strong><p>Reuse the same evaluation method across more constructors. New value shapes and output make shape checks and evaluation order important.</p><a href="textbook-04.html#4-2-1-static-scope">Before this chapter: Static scope →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
 <details class="chapter-cheatsheet"><summary>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
@@ -59,11 +59,53 @@
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147">Read in the PDF: p. 147</a>.</p>
 <p>Fun adds unit, boolean constants, lists, multiplication and division, comparison, boolean negation, mutually recursive definitions, output, and sequencing. The useful way to read this larger grammar is in families: <strong>data</strong>, <strong>operations on data</strong>, <strong>binding and calls</strong>, and <strong>effects that impose an order</strong>.</p>
 <p>Unit is the single value used when a computation has no informative result. An empty list is a different value. The syntax constructor <code>NIL</code> creates a list; <code>ISNIL</code> tests one; <code>HEAD</code> and <code>TAIL</code> require a nonempty list. Each operation has its own contract.</p>
+<details class="textbook-depth" id="depth-5-1" data-depth="5.1">
+<summary>Step by step · Connect surface syntax, AST constructors, and runtime values</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147">PDF pp. 147–150</a>. The interpreter is an OCaml program that processes a different language, Fun. Its uppercase <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> constructors are data, not OCaml functions that automatically execute the represented operation.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Example</th>
+<th>What it says</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Surface Fun expression</td>
+<td><code>head (1 :: [])</code></td>
+<td>A programmer requests the first element</td>
+</tr>
+<tr>
+<td>AST supplied to the evaluator</td>
+<td><code>HEAD (CONS (CONST 1, NIL))</code></td>
+<td>A head node containing a cons node and its children</td>
+</tr>
+<tr>
+<td>Intermediate runtime list</td>
+<td><code>List [Int 1]</code></td>
+<td>The result of evaluating the cons node</td>
+</tr>
+<tr>
+<td>Final runtime value</td>
+<td><code>Int 1</code></td>
+<td>The result of applying the head rule</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Inspect <code>HEAD</code>; it needs its operand evaluated first.</li>
+<li>Inspect <code>CONS</code>; evaluate <code>CONST 1</code> and <code>NIL</code> in order.</li>
+<li>Check that the second result is a list, then form <code>List [Int 1]</code>.</li>
+<li>Check that the list is nonempty, then return its first value.</li>
+</ol>
+<p><code>UNIT</code> evaluates to <code>Unit</code>, while <code>NIL</code> evaluates to <code>List []</code>. Both are legitimate results with different shapes. <code>HEAD NIL</code> fails; <code>ISNIL NIL</code> returns true. Making that distinction explicit is more useful than memorizing constructor names alone.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="5.1" aria-label="Checkpoint 5.1"><p><strong>Predict · 5.1</strong> Are Unit and NIL interchangeable, and is HEAD NIL defined?</p><details><summary>Reveal reasoning and common trap</summary><p>No. Unit is the single uninformative value; NIL is an empty list. HEAD requires a nonempty list, so HEAD NIL has no ordinary result in this evaluator.</p><p><strong>Common trap:</strong> An empty list still belongs to the list value family.</p><a href="syntax.html#list">Revisit the prerequisite →</a></details></aside>
 <h2 id="5-2-semantic-structure">5.2 Semantic Structure</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=148">Read in the PDF: p. 148</a>.</p>
 <p>Extend the value domain to <code>Unit</code>, integers, booleans, lists of values, ordinary <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closures</a>, recursive closures, and mutually recursive closures. An untyped evaluator's list can contain different value shapes; the homogeneous-list <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> discipline arrives later, in Chapter 8.</p>
-<p>For <code>CONS(a,b)</code>, evaluate a to a value and b to a list, then prepend. For append, both values must be lists. Arithmetic requires integers. The book's equality cases compare two integers or two booleans; using OCaml's generic structural equality on all values would silently add other cases, including inappropriate procedure comparisons.</p>
+<p>For <code>CONS(a,b)</code>, evaluate a to a value and b to a list, then prepend. For append, both values must be lists. Arithmetic requires integers. The book's equality cases compare two integers, two booleans, or two lists of equal length with equal corresponding elements (<a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=152">PDF p. 152</a>). Procedure equality is excluded. The PDF leaves nested-list comparison open; the <a href="#depth-5-2">step-by-step contract below</a> states the worked evaluator's recursive policy. Using OCaml's generic equality on every value would silently add unsupported cases.</p>
 <figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-05-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-05-1.svg" width="552.53271484375" height="805.319580078125" alt="Chapter 5 - evaluate operations only when their value shapes match"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-05-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 5 - evaluate operations only when their value shapes match
   accDescr: Constructor dispatch determines the expected shapes; invalid shapes produce an explicit undefined-operation error.
@@ -83,6 +125,71 @@
   D --&gt; E[&quot;odd 0&quot;]
   E --&gt; F[&quot;false&quot;]
 </code></pre></details></figure><p><code>PRINT e</code> first evaluates e, emits its representation, and returns Unit. <code>SEQ(a,b)</code> evaluates a for its effect, then b for the final result. Explicit <a class="syntax-link" href="syntax.html#let" title="Binding: let x = e1 in e2 — syntax meaning and source"><code>let</code></a> bindings in the interpreter enforce the intended left-to-right operand order; relying on the host language's argument evaluation order is unsafe.</p>
+<details class="textbook-depth" id="depth-5-2" data-depth="5.2">
+<summary>Step by step · Give every operation a precise value contract</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=150">PDF pp. 150–155</a>, especially <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=152">the list-equality rules and qualification on p. 152</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Required input</th>
+<th>Result / boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONS</code></td>
+<td>A value and a list</td>
+<td>A list with the value prepended</td>
+</tr>
+<tr>
+<td><code>APPEND</code></td>
+<td>Two lists</td>
+<td>All elements of the first followed by the second</td>
+</tr>
+<tr>
+<td><code>HEAD</code>, <code>TAIL</code></td>
+<td>A nonempty list</td>
+<td>First value / remaining list; empty input fails</td>
+</tr>
+<tr>
+<td><code>NOT</code></td>
+<td>A boolean</td>
+<td>Its opposite</td>
+</tr>
+<tr>
+<td><code>EQUAL</code></td>
+<td>Two integers, two booleans, or two comparable lists</td>
+<td>A boolean; function comparison is excluded</td>
+</tr>
+<tr>
+<td><code>PRINT</code></td>
+<td>An evaluated value</td>
+<td>Emits output, then returns Unit</td>
+</tr>
+<tr>
+<td><a class="syntax-link" href="syntax.html#store" title="Locations and memory — syntax meaning and source"><code>SEQ</code></a></td>
+<td>Two expressions evaluated in order</td>
+<td>Discards the first result and returns the second</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Equality in the PDF includes lists.</strong> Two lists compare equal when their lengths agree and all corresponding elements compare equal. The rule is broader than scalar-only equality in some of the course's other languages; check which language a problem specifies.</p>
+<p>The PDF leaves the treatment of nested list elements open. The worked evaluator makes its policy explicit: recursively compare integer, boolean, and list values; reject Unit and procedures anywhere in either operand. Top-level operands must be from the same family. Inside lists, different allowed shapes compare unequal. This is a documented completion of the underspecified case, not an additional rule quoted from the PDF.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-05-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-05-3.svg" width="815.5339965820312" height="1177.6500244140625" alt="Chapter 5 - compare lists under the worked evaluator policy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-05-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Chapter 5 - compare lists under the worked evaluator policy
+  accDescr: Validate comparable values first, then compare list lengths and corresponding elements recursively without ever comparing closures.
+  A[&quot;1. Evaluate both operands&quot;] --&gt; B{&quot;2. Any Unit or procedure, even nested?&quot;}
+  B --&gt;|Yes| X[&quot;Reject unsupported equality&quot;]
+  B --&gt;|No| C{&quot;3. Same top-level family?&quot;}
+  C --&gt;|No| X
+  C --&gt;|Yes, lists| D{&quot;4. Same length and all paired elements equal?&quot;}
+  C --&gt;|Yes, scalars| S[&quot;Compare integer or boolean values&quot;]
+  D --&gt;|Yes| T[&quot;true&quot;]
+  D --&gt;|No| F[&quot;false&quot;]
+</code></pre></details></figure><p>For <code>[[1];[2;3]] = [[1];[2;4]]</code>, the first pair of inner lists is equal; the second pair reaches 3 versus 4, so the result is false. <code>[] = []</code> is true. A list containing a procedure is rejected even if an earlier unequal element could have short-circuited the comparison. Validation makes this error policy predictable.</p>
+<p><strong>Checker boundary:</strong> <a href="textbook-08.html#8-8-implementation">the Chapter 8 downloadable checker</a> still implements a deliberately narrower scalar-equality restriction. It can reject a list comparison that this evaluator runs successfully. Do not treat its rejection as the PDF's definition of equality.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="5.2" aria-label="Checkpoint 5.2"><p><strong>Predict · 5.2</strong> What is produced by SEQ(PRINT 1, CONST 2), using the chapter&#39;s rules?</p><details><summary>Reveal reasoning and common trap</summary><p>The output stream receives 1. PRINT returns Unit, which SEQ discards; the whole expression returns the integer value 2.</p><p><strong>Common trap:</strong> Output and the evaluator&#39;s return value are separate observations.</p><a href="syntax.html#evaluation">Revisit the prerequisite →</a></details></aside>
 <h2 id="5-3-implementation">5.3 Implementation</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=156">Read in the PDF: pp. 156–160</a>. <strong>Task:</strong> implement <code>run : program -&gt; value</code> for all listed constructors.</p>

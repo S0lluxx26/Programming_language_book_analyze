@@ -1,13 +1,12 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 17 reasoning route
-  accDescr: Numbered stages for applying type inference iii: unification.
-  N0["1. Apply the current substitution"]
-  N1["2. Discard identical sides"]
-  N0 --> N1
-  N2["3. Decompose matching constructors"]
-  N1 --> N2
-  N3["4. Reject mismatch or occurs-check failure"]
-  N2 --> N3
-  N4["5. Compose and propagate a new binding"]
-  N3 --> N4
+  accTitle: Chapter 8 - unification decision tree
+  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.
+  A["Apply current substitution to both sides"] --> B{"Same type?"}
+  B -->|Yes| C["Discard equation"]
+  B -->|No| D{"One side a variable?"}
+  D -->|Yes| E{"Variable occurs in other side?"}
+  E -->|Yes| F["Reject infinite type"]
+  E -->|No| G["Bind variable and update substitution"]
+  D -->|No| H{"Matching function or list constructors?"}
+  H -->|Yes| I["Enqueue component equations"]
+  H -->|No| J["Reject constructor mismatch"]

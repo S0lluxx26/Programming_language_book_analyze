@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>7. Pointers and Memory Management · The Programming Languages Notebook</title><meta name="description" content="Follow records and pointers, then solve all four evaluator and garbage-collector tasks."><meta name="theme-color" content="#142b48"><meta property="og:title" content="7. Pointers and Memory Management"><meta property="og:description" content="Follow records and pointers, then solve all four evaluator and garbage-collector tasks."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" aria-current="page">7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 7 · PDF pp. 193–221</p><h1>7. Pointers and Memory Management</h1><p class="dek">Follow records and pointers, then solve all four evaluator and garbage-collector tasks.</p><p class="reading-meta">15 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193" target="_blank" rel="noopener">Original PDF · pp. 193–221 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#7-1-records">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 7 · PDF pp. 193–221</p><h1>7. Pointers and Memory Management</h1><p class="dek">Follow records and pointers, then solve all four evaluator and garbage-collector tasks.</p><p class="reading-meta">18 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193" target="_blank" rel="noopener">Original PDF · pp. 193–221 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#7-1-records">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (2)</summary>
 <ul>
 <li><a href="#lecture-09">L9 · Trace every live root</a></li>
@@ -81,6 +81,54 @@
 <p>A pointer is a first-class location value. <code>&amp;x</code> returns the location already associated with x. <code>new e</code> allocates a new cell initialized by e. Dereferencing reads the pointed-to cell; pointer assignment updates it. A pointer variable itself has a cell that contains the pointer, so distinguish the variable's location from the location stored inside it.</p>
 <p>For <code>let x = 1 in let p = &amp;x in *p := 7; x</code>, p's contents point to x's cell. The assignment updates that cell, and the final result is 7. Returning the address of a parameter is valid under this chapter's heap model while that cell remains reachable; automatically freeing every parameter cell on return would be incorrect.</p>
 <p>The prose includes taking a field's address, but the §7.4 supplied <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> has only <code>ADDROF of var</code>. The solution follows the listed AST. Adding field-address syntax would reuse the field-location lookup already used by <code>FIELDASSIGN</code>.</p>
+<details class="textbook-depth" id="depth-7-2" data-depth="7.2">
+<summary>Step by step · Draw both locations of a pointer variable</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=201">PDF pp. 201–207</a>. In this implicit-reference language, a variable lives in a cell. If its value is a pointer, that cell contains the address of another cell.</p>
+<p>For <code>let x = 1 in let p = &amp;x in (*p := 7; x)</code>, use different names ℓx and ℓp:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Lookup</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where is x's variable cell?</td>
+<td><a class="syntax-link" href="syntax.html#extension" title="Lookup and map extension — syntax meaning and source"><code>ρ(x)</code></a></td>
+<td>ℓx</td>
+</tr>
+<tr>
+<td>Where is p's variable cell?</td>
+<td><code>ρ(p)</code></td>
+<td>ℓp</td>
+</tr>
+<tr>
+<td>What value does p contain?</td>
+<td><code>σ(ℓp)</code></td>
+<td>Pointer ℓx</td>
+</tr>
+<tr>
+<td>What does <code>*p</code> read?</td>
+<td><code>σ(σ(ρ(p)))</code> in this example</td>
+<td>Contents of ℓx</td>
+</tr>
+<tr>
+<td>What does <code>&amp;p</code> return?</td>
+<td><code>ρ(p)</code></td>
+<td>ℓp, not ℓx</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Evaluate p by looking up ℓp, then reading its contents ℓx.</li>
+<li>Evaluate the right side of the pointer assignment to 7.</li>
+<li>Update ℓx, the pointed-to cell; leave ℓp containing ℓx.</li>
+<li>Read x through ℓx and obtain 7.</li>
+</ol>
+<p>Changing <code>*p</code> changes the pointee. Assigning a different pointer to p would change ℓp instead. Mark each arrow before predicting which other expressions observe a mutation.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="7.2" aria-label="Checkpoint 7.2"><p><strong>Predict · 7.2</strong> In the course pointer language, let x=1 in let p=&amp;x in *p:=7; x returns what?</p><details><summary>Reveal reasoning and common trap</summary><p>7. p&#39;s own variable cell contains the address of x&#39;s cell. Dereferencing p for the assignment reaches x&#39;s cell and changes it.</p><p><strong>Common trap:</strong> The location of p and the location stored in p are different levels.</p><a href="syntax.html#store">Revisit the prerequisite →</a></details></aside>
 <h2 id="7-3-memory-management">7.3 Memory Management</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=208">Read in the PDF: p. 208</a>.</p>
@@ -106,6 +154,65 @@
   G --&gt; B
 </code></pre></details></figure><p><strong>Worked heap:</strong> roots contain location 0; cell 0 points to 1; cell 1 points to 0; cell 2 contains an unrelated integer. The reachable set is <code>{0,1}</code>. Marking before traversing prevents the cycle from looping forever. Cell 2 is removed. Reference counting alone would have difficulty reclaiming an unreachable cycle; tracing collection can reclaim it when it has no path from a root.</p>
 <p>Reachability includes pending computation, not just the environment of the expression currently executing. The book limits collection to points with <strong>no remaining <a href="glossary.html#continuation" class="definition-link" title="An explicit representation of the work waiting for a computation's result. Exception handling can inspect and discard these pending frames. — Course slides, PDF p. 9">continuation</a></strong> when it roots only in the current environment. Collecting during an arbitrary nested call could delete a value the caller still needs.</p>
+<details class="textbook-depth" id="depth-7-3-2" data-depth="7.3.2">
+<summary>Step by step · Mark a heap containing records, pointers, closures, and a cycle</summary>
+<p>This redraws the reasoning in <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=216">PDF pp. 216–217</a>. The root environment gives x→ℓ1 and y→ℓ2. Each arrow below represents a location contained in a root or a stored value.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-3.svg" width="600.6439208984375" height="537" alt="Chapter 7 - all reference shapes in the textbook heap example"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: Chapter 7 - all reference shapes in the textbook heap example
+  accDescr: Roots reach cells one and two; record, pointer, and closure edges reach three, four, and five. An isolated cycle between six and seven is unreachable.
+  X[&quot;Root x&quot;] --&gt; L1[&quot;l1: integer 0&quot;]
+  Y[&quot;Root y&quot;] --&gt; L2[&quot;l2: record&quot;]
+  L2 --&gt;|&quot;field b&quot;| L1
+  L2 --&gt;|&quot;field a&quot;| L3[&quot;l3: pointer to l4&quot;]
+  L3 --&gt; L4[&quot;l4: closure&quot;]
+  L4 --&gt;|&quot;saved binding z&quot;| L5[&quot;l5: integer 0&quot;]
+  L6[&quot;l6: pointer to l7&quot;] --&gt; L7[&quot;l7: pointer to l6&quot;]
+  L7 --&gt; L6
+</code></pre></details></figure><table>
+<thead>
+<tr>
+<th>Round</th>
+<th>Why a location is added</th>
+<th>Marked set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Start from the two environment roots</td>
+<td>{ℓ1,ℓ2}</td>
+</tr>
+<tr>
+<td>1</td>
+<td>The record in ℓ2 contains field locations ℓ3 and ℓ1</td>
+<td>{ℓ1,ℓ2,ℓ3}</td>
+</tr>
+<tr>
+<td>2</td>
+<td>The pointer in ℓ3 contains ℓ4</td>
+<td>{ℓ1,ℓ2,ℓ3,ℓ4}</td>
+</tr>
+<tr>
+<td>3</td>
+<td>The closure in ℓ4 captures z→ℓ5</td>
+<td>{ℓ1,ℓ2,ℓ3,ℓ4,ℓ5}</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ℓ5 contains an integer, so there is no further edge</td>
+<td>No change: fixed point reached</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Initialize the marked set and worklist from all roots permitted at this collection point.</li>
+<li>Visit an unmarked location, mark it, then add the locations contained in its value.</li>
+<li>Repeat until the worklist contributes no new locations.</li>
+<li>Sweep ℓ6 and ℓ7. Their mutual references do not create a path <strong>from a root</strong>.</li>
+<li>Preserve the surviving cells' contents and edges. This mark-and-sweep example removes entries; it does not rewrite the record's field b or relocate cells.</li>
+</ol>
+<p><strong>Why use reachability?</strong> Being reachable is sufficient reason to retain a cell, even if execution never actually reads it again. Predicting all future uses exactly would require solving questions about arbitrary program execution, including termination. Tracing a finite graph is computable and conservatively keeps extra cells. It is safe only if the roots include everything pending execution can still access; keep the chapter's no-remaining-continuation restriction when rooting from only the current environment.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="7.3.2" aria-label="Checkpoint 7.3.2"><p><strong>Predict · 7.3.2</strong> Root L0 points to L1, L1 points back to L0, and L2 is isolated. Which cells are retained?</p><details><summary>Reveal reasoning and common trap</summary><p>L0 and L1. Mark before following edges so the cycle terminates; sweep L2. Retention means reachable, not guaranteed to be used again.</p><p><strong>Common trap:</strong> An internal cycle without a root path would be collectible by tracing.</p><a href="syntax.html#reach">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-09" data-lecture="9">Trace every live root <small>Lecture 9</small></h3>
 <ul>
@@ -125,7 +232,7 @@
 <li>Retain reachable cells.</li>
 <li>Test aliases and cycles.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-3.svg" width="418.736328125" height="491" alt="Lecture 9 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-4.svg" width="418.736328125" height="491" alt="Lecture 9 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 9 reasoning route
   accDescr: Numbered stages for applying records, pointers, and garbage collection.
@@ -156,7 +263,7 @@ flowchart TD
 <p>Compute the transitive closure of all root locations, then filter the store. The solution follows pointers, record fields, ordinary closures, and recursive closures. An already-marked set terminates cycles. Its list-based implementation favors readability; hash sets or balanced trees improve large-heap performance. It conservatively includes shadowed environment entries, which can retain extra cells but cannot free a live one.</p>
 <h3 id="task-4-integrate-gc-safely">Task 4 — Integrate gc safely</h3>
 <p>The executable solution threads a flag meaning <strong>no outer computation remains</strong>. It begins true for the whole run. Conditions, operands, initializers, and call arguments run with it false. A final branch, let body, sequence's second expression, or call body inherits the outer flag. Collection happens only on entry when that flag is true. With <code>run ~collect:true Implicit e</code>, this implements the textbook's restricted safe-point policy.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-4.svg" width="589.96875" height="679.518798828125" alt="Chapter 7 - decide whether environment-only collection is safe"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-5.svg" width="589.96875" height="679.518798828125" alt="Chapter 7 - decide whether environment-only collection is safe"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 7 - decide whether environment-only collection is safe
   accDescr: A global continuation condition is stricter than being locally the last expression of a function.
   A[&quot;About to evaluate an expression&quot;] --&gt; B{&quot;Any surrounding work still pending?&quot;}
@@ -188,7 +295,7 @@ flowchart TD
 <li>Choose method lookup start class.</li>
 <li>Run method with fields parameters and self.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-5.svg" width="443.12060546875" height="491" alt="Lecture 11 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-07-6.svg" width="443.12060546875" height="491" alt="Lecture 11 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-07-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 11 reasoning route
   accDescr: Numbered stages for applying classes and objects.

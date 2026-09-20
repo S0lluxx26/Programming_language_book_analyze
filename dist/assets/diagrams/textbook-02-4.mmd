@@ -1,9 +1,9 @@
 flowchart TD
-  accTitle: Choose a fold from the meaning of its accumulator
-  accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.
-  A["What does the partial answer represent?"] --> B{"Suffix answer or prefix summary?"}
-  B -->|Suffix| C["Right fold: element plus answer for the tail"]
-  B -->|Prefix| D["Left fold: old accumulator plus next element"]
-  C --> E["Choose the empty-list answer"]
-  D --> E
-  E --> F["Expand a three-element example by hand"]
+  accTitle: Chapter 2 - insertion sort builds on a sorted recursive result
+  accDescr: Sort the tail first, then insert the removed head into that sorted result, working from the empty list upward.
+  A["1. sort [3;1;2]"] --> B["2. sort [1;2]"]
+  B --> C["3. sort [2]"]
+  C --> D["4. sort [] = []"]
+  D --> E["5. insert 2 [] = [2]"]
+  E --> F["6. insert 1 [2] = [1;2]"]
+  F --> G["7. insert 3 [1;2] = [1;2;3]"]

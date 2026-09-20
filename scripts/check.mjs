@@ -1,5 +1,6 @@
 import {lecturePlacements, lectureTarget} from './integrated-lectures.mjs';
 import {chapterSheets} from './chapter-cheatsheets.mjs';
+import {textbookDepth} from './textbook-depth.mjs';
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
 import {checkpoints} from './section-checkpoints.mjs';
@@ -43,6 +44,16 @@ assert.equal((fs.readFileSync('book/hw1.md','utf8').match(/^## P\d+/gm)||[]).len
 const structure=JSON.parse(fs.readFileSync('book/textbook-structure.json','utf8'));
 assert.equal(catalog.filter(p=>p.textbook && p.slug!=='textbook-02-problems').length,9);
 assert.equal(structure.sections.length,48);
+assert.equal(textbookDepth.length,25,'Expected the reviewed textbook supplements');
+assert.equal(new Set(textbookDepth.map(s=>s.section)).size,textbookDepth.length,'Duplicate supplement section');
+assert.equal(new Set(textbookDepth.map(s=>s.page)).size,9,'Supplements must cover all nine chapters');
+for(const entry of textbookDepth){
+  assert(structure.sections.some(s=>s.section===entry.section&&s.slug===entry.page),'Unknown supplement section');
+  assert(entry.body.includes('pl-book-eng.pdf#page=')&&/^1\. |^\| 1 \||\["1\. /m.test(entry.body),'Supplement needs source and numbered reasoning: '+entry.section);
+  const html=fs.readFileSync('dist/'+entry.page+'.html','utf8');
+  const tag='<details class="textbook-depth" id="'+entry.id+'" data-depth="'+entry.section+'">';
+  assert.equal(html.split(tag).length-1,1,'Supplement must render once and start collapsed');
+}
 assert.deepEqual(checkpoints.map(c=>c.section),structure.sections.map(s=>s.section),'One ordered checkpoint per source section');
 for(const checkpoint of checkpoints){
   assert(checkpoint.focus&&checkpoint.question&&checkpoint.answer&&checkpoint.trap&&checkpoint.prerequisite,'Incomplete checkpoint '+checkpoint.section);
@@ -111,6 +122,6 @@ for(const sheet of chapterSheets){
  assert(html.includes(`id="chapter-cheat-sheet"`),"Missing chapter cheat sheet");
  assert(sheet.terms.length>=5 && sheet.steps.length>=4 && sheet.meaning && sheet.formula && sheet.example && sheet.trap,"Incomplete chapter cheat sheet");
 }
-const report={chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,integratedLectures:lectures.length,legacyLectureRedirects:lectures.length+1,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+const report={textbookDepthSupplements:textbookDepth.length,chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,integratedLectures:lectures.length,legacyLectureRedirects:lectures.length+1,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

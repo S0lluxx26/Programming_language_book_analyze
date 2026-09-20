@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3. Variables and the Environment · The Programming Languages Notebook</title><meta name="description" content="Follow the textbook from syntax and environments to an executable interpreter."><meta name="theme-color" content="#142b48"><meta property="og:title" content="3. Variables and the Environment"><meta property="og:description" content="Follow the textbook from syntax and environments to an executable interpreter."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" aria-current="page">3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 3 · PDF pp. 97–117</p><h1>3. Variables and the Environment</h1><p class="dek">Follow the textbook from syntax and environments to an executable interpreter.</p><p class="reading-meta">10 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97" target="_blank" rel="noopener">Original PDF · pp. 97–117 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#3-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 3 · PDF pp. 97–117</p><h1>3. Variables and the Environment</h1><p class="dek">Follow the textbook from syntax and environments to an executable interpreter.</p><p class="reading-meta">14 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97" target="_blank" rel="noopener">Original PDF · pp. 97–117 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#3-1-syntactic-structure">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (1)</summary>
 <ul>
 <li><a href="#lecture-05">L5 · Follow the premises of the evaluation rule</a></li>
@@ -81,6 +81,60 @@ lookup x ρ1 = 1
 lookup x ρ2 = 2
 </code></pre>
 <p>This is <strong><a href="glossary.html#shadowing" class="definition-link" title="A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding. — English textbook, PDF p. 105">shadowing</a></strong>. The older x still exists in the outer environment but is hidden by the newer x in the inner one. It becomes visible again when evaluation returns to an expression using the outer environment.</p>
+<details class="textbook-depth" id="depth-3-2-1" data-depth="3.2.1">
+<summary>Step by step · Decode the mathematical maps before tracing names</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=102">PDF pp. 102–105</a>. An environment is a finite mapping from identifiers to values. It is neither the AST nor a global variable table that every call may overwrite.</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Plain meaning</th>
+<th>Concrete reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Var → Value</code></td>
+<td>A function space / mapping <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a></td>
+<td>Given an identifier, look up its value</td>
+</tr>
+<tr>
+<td><code>A × B</code></td>
+<td>Pairs with one component from each set</td>
+<td><code>(identifier, value)</code> has two components</td>
+</tr>
+<tr>
+<td><code>A + B</code> in a value domain</td>
+<td>Tagged alternatives, a disjoint sum</td>
+<td>An integer <strong>or</strong> a boolean; not arithmetic addition</td>
+</tr>
+<tr>
+<td><code>Dom(ρ)</code></td>
+<td>Names for which ρ has a binding</td>
+<td>Lookup outside this set is undefined</td>
+</tr>
+<tr>
+<td><code>ρ[x ↦ v]</code></td>
+<td>Extend or shadow x with v</td>
+<td>Look up x here first; other names retain their old values</td>
+</tr>
+<tr>
+<td><code>{x ↦ v}ρ</code> in the PDF</td>
+<td>The same overriding extension</td>
+<td>The new binding has priority</td>
+</tr>
+</tbody>
+</table>
+<p>An association-list implementation uses <code>(x,v) :: env</code> and looks up the <strong>first</strong> matching name. Keeping an older x later in the list is consistent with shadowing; the newer occurrence wins. A mathematical mapping describes the behavior, while an association list is one implementation of it.</p>
+<p>For <code>ρ = {x ↦ 4, y ↦ 8}</code>, trace an extension as follows:</p>
+<ol>
+<li>Create <code>ρ₁ = ρ[x ↦ 9]</code>, giving the new x binding priority.</li>
+<li>Look up x in ρ₁: the new binding answers 9.</li>
+<li>Look up y in ρ₁: no new binding replaces y, so the original mapping answers 8.</li>
+<li>Look up x in the original ρ: it still answers 4.</li>
+</ol>
+<p>The original ρ can still be used elsewhere. Chapter 6 introduces a separate changing <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">store</a>; these extensions alone do not model assignment.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="3.2.1" aria-label="Checkpoint 3.2.1"><p><strong>Predict · 3.2.1</strong> Let ρ1=[x↦1] and ρ2=[x↦2]ρ1. What do lookup x ρ1 and lookup x ρ2 return?</p><details><summary>Reveal reasoning and common trap</summary><p>They return 1 and 2 respectively. The new first binding shadows the old one only for lookups using ρ2; ρ1 remains available unchanged.</p><p><strong>Common trap:</strong> Extending an immutable environment is not assignment to an old binding.</p><a href="syntax.html#extension">Revisit the prerequisite →</a></details></aside>
 <h2 id="3-2-2-inference-rules">3.2.2 Inference Rules</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=106">Read in the PDF: p. 106</a>.</p>
@@ -93,6 +147,61 @@ lookup x ρ2 = 2
   C --&gt; D[&quot;Evaluate e2 in rho2&quot;]
   D --&gt; E[&quot;Return the body&#39;s value&quot;]
 </code></pre></details></figure><p><strong>Trace:</strong> <code>let x = 2 in let x = x + 3 in x</code> returns 5. The inner right-hand side reads the outer 2 before the inner binding exists. Evaluating it after extending x would implement a different rule.</p>
+<details class="textbook-depth" id="depth-3-2-2" data-depth="3.2.2">
+<summary>Step by step · Expand one complete evaluation derivation</summary>
+<p>Read alongside <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=106">PDF pp. 106–113</a>. The judgment <a class="syntax-link" href="syntax.html#evaluation" title="Runtime evaluation judgment — syntax meaning and source"><code>ρ ⊢ e ⇒ v</code></a> reads: <strong>under environment ρ, expression e evaluates to value v</strong>.</p>
+<p>For <code>let x = 4 in x + 2</code>, start with the empty environment ρ₀.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Judgment / action</th>
+<th>Rule and reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>ρ₀ ⊢ 4 ⇒ 4</code></td>
+<td>A numeral evaluates to itself</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Define <code>ρ₁ = ρ₀[x ↦ 4]</code></td>
+<td>LET makes the value available to its body</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>ρ₁ ⊢ x ⇒ 4</code></td>
+<td>Variable lookup uses ρ₁</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>ρ₁ ⊢ 2 ⇒ 2</code></td>
+<td>Numeral rule again</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>ρ₁ ⊢ x+2 ⇒ 6</code></td>
+<td>Addition combines steps 3 and 4</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>ρ₀ ⊢ let x=4 in x+2 ⇒ 6</code></td>
+<td>LET combines its initializer and body results</td>
+</tr>
+</tbody>
+</table>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-2.svg" width="763.7926025390625" height="339.0999755859375" alt="Chapter 3 - proof dependencies for a let expression"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart BT
+  accTitle: Chapter 3 - proof dependencies for a let expression
+  accDescr: The initializer determines the extended environment; lookup and numeral premises justify the body and then the entire let judgment.
+  A[&quot;1. Empty env: 4 evaluates to 4&quot;] --&gt; L[&quot;6. Empty env: whole LET evaluates to 6&quot;]
+  X[&quot;3. Extended env: x evaluates to 4&quot;] --&gt; B[&quot;5. Extended env: x+2 evaluates to 6&quot;]
+  N[&quot;4. Extended env: 2 evaluates to 2&quot;] --&gt; B
+  B --&gt; L
+</code></pre></details></figure><p>The diagram shows <strong>premise-to-conclusion dependencies</strong>. To execute it, obtain the initializer first, create ρ₁, then evaluate the body. In OCaml the corresponding structure is <code>let v = eval init env in eval body ((x,v)::env)</code>. The initial environment is used for <code>init</code>; the extended one is used only for <code>body</code>.</p>
+<p><strong>Try a change:</strong> replacing 4 with an unbound variable prevents step 1 from succeeding. Replacing the body with <code>true + 2</code> fails the addition rule's operand requirement. Both are runtime failures in this untyped chapter, for different reasons.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="3.2.2" aria-label="Checkpoint 3.2.2"><p><strong>Predict · 3.2.2</strong> In the toy language, should if true then 8 else 1/0 evaluate the division?</p><details><summary>Reveal reasoning and common trap</summary><p>No. Evaluate the guard, choose the true rule, and evaluate only 8. The result is 8. The unchosen branch supplies no evaluation premise for this rule.</p><p><strong>Common trap:</strong> Recursing into every child unconditionally is not a valid implementation of IF.</p><a href="glossary.html#inference-rule">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-05" data-lecture="5">Follow the premises of the evaluation rule <small>Lecture 5</small></h3>
 <ul>
@@ -111,7 +220,7 @@ lookup x ρ2 = 2
 <li>Check required value shapes.</li>
 <li>Return the rule conclusion.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-2.svg" width="335.58740234375" height="387" alt="Lecture 5 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-3.svg" width="335.58740234375" height="387" alt="Lecture 5 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
 flowchart TD
   accTitle: Lecture 5 reasoning route
   accDescr: Numbered stages for applying expressions and environments.
@@ -140,7 +249,7 @@ flowchart TD
 </code></pre>
 <h3 id="worked-trace-from-the-chapter">Worked trace from the chapter</h3>
 <p>The nested example on p. 117 first binds x to 1 and y to 2. The right-hand side of the final y binding temporarily shadows x with 2, producing <code>2 + 2 = 4</code>. The final subtraction runs in the outer x scope, with x = 1 and the new y = 4, so it produces <strong>-3</strong>. The temporary x does not leak out of its own expression.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-3.svg" width="278.875" height="669.7999877929688" alt="Chapter 3 - keep an inner binding from leaking out"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-03-4.svg" width="278.875" height="669.7999877929688" alt="Chapter 3 - keep an inner binding from leaking out"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-03-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 3 - keep an inner binding from leaking out
   accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.
   A[&quot;Outer environment: x=1, y=2&quot;] --&gt; B[&quot;Evaluate new y&#39;s right-hand side&quot;]

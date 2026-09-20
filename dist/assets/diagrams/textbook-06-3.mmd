@@ -1,13 +1,8 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 8 reasoning route
-  accDescr: Numbered stages for applying state and parameter passing.
-  N0["1. Identify explicit or implicit references"]
-  N1["2. Find or allocate the location"]
-  N0 --> N1
-  N2["3. Evaluate operands while threading memory"]
-  N1 --> N2
-  N3["4. Update or read the selected cell"]
-  N2 --> N3
-  N4["5. Return value and final memory"]
-  N3 --> N4
+  accTitle: Chapter 6 - parameter passing is a choice about locations
+  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.
+  A["Caller a is stored at location L1"] --> B{"Call method"}
+  B -->|Value| C["Read a; allocate fresh parameter cell L2"]
+  B -->|Reference| D["Parameter also points to L1"]
+  C --> E["Assign parameter: only L2 changes"]
+  D --> F["Assign parameter: caller's L1 changes"]

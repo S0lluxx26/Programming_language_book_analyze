@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>9. Lambda Calculus · The Programming Languages Notebook</title><meta name="description" content="Understand substitution and normal order, then build a reducer and translators."><meta name="theme-color" content="#142b48"><meta property="og:title" content="9. Lambda Calculus"><meta property="og:description" content="Understand substitution and normal order, then build a reducer and translators."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" aria-current="page">9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 9 · PDF pp. 277–292</p><h1>9. Lambda Calculus</h1><p class="dek">Understand substitution and normal order, then build a reducer and translators.</p><p class="reading-meta">12 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277" target="_blank" rel="noopener">Original PDF · pp. 277–292 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#9-1-lambda-calculus">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 9 · PDF pp. 277–292</p><h1>9. Lambda Calculus</h1><p class="dek">Understand substitution and normal order, then build a reducer and translators.</p><p class="reading-meta">16 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277" target="_blank" rel="noopener">Original PDF · pp. 277–292 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#9-1-lambda-calculus">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
 <details class="lecture-index"><summary>Find lecture practice in this chapter (1)</summary>
 <ul>
 <li><a href="#lecture-20">L20 · Choose a reduction strategy before encoding recursion</a></li>
@@ -84,6 +84,49 @@
 <h3 id="normal-order-and-normal-form">Normal order and normal form</h3>
 <p><a href="glossary.html#normal-order" class="definition-link" title="Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form. — English textbook, PDF p. 284">Normal order</a> repeatedly contracts the leftmost outermost redex, including redexes inside abstractions when seeking a full normal form. A weak evaluator that stops as soon as it sees a lambda is not the requested normalizer.</p>
 <p>Let Ω be <code>(λx. x x) (λx. x x)</code>. In <code>(λunused. answer) Ω</code>, normal order contracts the outer call and returns <code>answer</code> without reducing Ω. Eager evaluation would try Ω first and diverge. Normal order reaches a normal form when one exists, but some terms have none; no reducer can promise termination for every input.</p>
+<details class="textbook-depth" id="depth-9-1" data-depth="9.1">
+<summary>Step by step · Separate renaming, substitution, and evaluation order</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=279">PDF pp. 279–285</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="glossary.html#alpha-renaming" class="definition-link" title="Consistently changing a binder and the occurrences it binds while preserving the program's binding structure. — English textbook, PDF p. 283">Alpha-renaming</a></td>
+<td>Change a bound name and exactly its bound occurrences to a fresh name</td>
+<td><code>λx.x</code> and <code>λz.z</code> represent the same binding structure</td>
+</tr>
+<tr>
+<td>Capture-avoiding substitution</td>
+<td>Replace free occurrences while preserving binding</td>
+<td>Substitute y for x in <code>λy.x y</code> only after renaming the inner y</td>
+</tr>
+<tr>
+<td>Beta-reduction</td>
+<td>Contract a call whose function is a lambda</td>
+<td><code>(λx.body) arg → body[x:=arg]</code></td>
+</tr>
+<tr>
+<td>Normal order</td>
+<td>Choose the leftmost outermost redex at every step</td>
+<td>Avoid evaluating an unused divergent argument</td>
+</tr>
+</tbody>
+</table>
+<p>For <code>(λx. λy. x y) y</code>:</p>
+<ol>
+<li>The argument y is free; it must remain free after substitution.</li>
+<li>Rename the inner binder y to a fresh z, obtaining <code>(λx. λz. x z) y</code>.</li>
+<li>Substitute the argument for the free x in the body, giving <code>λz. y z</code>.</li>
+<li>Stop: <code>y z</code> is not a beta-redex because its function is a variable, not a lambda.</li>
+</ol>
+<p>This result is a normal form even though it contains an application. Conversely, <code>λz. (λw.w) z</code> is a lambda but still contains a redex; full normalization proceeds to <code>λz.z</code>.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="9.1" aria-label="Checkpoint 9.1"><p><strong>Predict · 9.1</strong> Reduce (λx.λy.x) y without capturing the argument&#39;s free y.</p><details><summary>Reveal reasoning and common trap</summary><p>Rename the inner binder to fresh z, then substitute: (λx.λz.x) y → λz.y. The supplied y remains free.</p><p><strong>Common trap:</strong> λy.y is not equivalent: it binds the formerly free y.</p><a href="glossary.html#capture-avoiding-substitution">Revisit the prerequisite →</a></details></aside>
 <h3 class="lecture-heading" id="lecture-20" data-lecture="20">Choose a reduction strategy before encoding recursion <small>Lecture 20</small></h3>
 <ul>
@@ -182,6 +225,71 @@ flowchart TD
   E --&gt; F[&quot;Decode the resulting numeral or other value&quot;]
 </code></pre></details></figure><p>For <code>1 + 2</code>, the normalized term applies s three times to z. For recursion, write a functional F that accepts the would-be recursive function. The Y combinator yields a term behaving as F applied to its own fixed point. Under normal order, a conditional can reach the recursion's base case without first expanding every recursive branch.</p>
 <p><strong>Two boundaries in the source:</strong> p. 287 explicitly restricts the displayed number encoding to naturals and omits signed integers. Also, translating by these equations and using normal order does not preserve the termination behavior of a call-by-value source program in every case. The unused-Ω example shows why. Treat this as the book's normal-order encoding exercise, not a proof of full call-by-value compiler correctness.</p>
+<details class="textbook-depth" id="depth-9-2" data-depth="9.2">
+<summary>Step by step · Decode Church data through what it does</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=286">PDF pp. 286–290</a>. The names below abbreviate closed lambda terms. They are explanatory names, not extra primitive constructors.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Encoding</th>
+<th>Behavioral meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRUE</td>
+<td><code>λt.λf.t</code></td>
+<td>Select the first argument</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td><code>λt.λf.f</code></td>
+<td>Select the second argument</td>
+</tr>
+<tr>
+<td>ZERO</td>
+<td><code>λs.λz.z</code></td>
+<td>Apply s zero times</td>
+</tr>
+<tr>
+<td>TWO</td>
+<td><code>λs.λz.s (s z)</code></td>
+<td>Apply s twice</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td><code>λn.λm.λs.λz.m s (n s z)</code></td>
+<td>Do n applications, then m more</td>
+</tr>
+<tr>
+<td>ISZERO</td>
+<td><code>λn.n (λignored.FALSE) TRUE</code></td>
+<td>Zero keeps TRUE; any positive number changes it to FALSE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Boolean selection, one contraction at a time:</strong></p>
+<ol>
+<li><code>TRUE a b</code> means <code>((λt.λf.t) a) b</code> because calls associate leftward.</li>
+<li>Substitute a for t: <code>(λf.a) b</code> (choose fresh binder names if a contains free f).</li>
+<li>The body does not use f, so the result is a. The unselected b need not be reduced under normal order.</li>
+</ol>
+<p><strong>Addition, with the numeral applications made visible:</strong></p>
+<ol>
+<li>Apply ADD to ONE and TWO: <code>λs.λz.TWO s (ONE s z)</code>.</li>
+<li>Expand <code>ONE s z</code> to <code>s z</code>.</li>
+<li>TWO applies s twice to that starting expression: <code>s (s (s z))</code>.</li>
+<li>The complete result is <code>λs.λz.s (s (s z))</code>, the encoding of THREE.</li>
+</ol>
+<p>These are equational simplifications to expose the meaning; a strict normal-order reducer may contract a different intermediate redex first and reach the same normal form. The count of s applications explains the answer without pretending that a Church numeral is a host integer.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-09-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-4.svg" width="1047.697265625" height="93.69999694824219" alt="Chapter 9 - Church addition composes repetitions"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart LR
+  accTitle: Chapter 9 - Church addition composes repetitions
+  accDescr: One application of s transforms z into s z, then two further applications produce the encoding of three.
+  Z[&quot;1. Start: z&quot;] --&gt; O[&quot;2. ONE s z: s z&quot;]
+  O --&gt; T[&quot;3. TWO s uses that as its start: s (s (s z))&quot;]
+  T --&gt; R[&quot;4. Abstract s and z: THREE&quot;]
+</code></pre></details></figure></details>
 <aside class="section-checkpoint" data-checkpoint="9.2" aria-label="Checkpoint 9.2"><p><strong>Predict · 9.2</strong> What does the book&#39;s Church-natural translation do with 1−3, and what changes for signed subtraction?</p><details><summary>Reveal reasoning and common trap</summary><p>Natural predecessor-based subtraction yields 0. The optional signed translation uses a pair whose difference represents an integer and requires a different decoder; there 1−3 represents −2.</p><p><strong>Common trap:</strong> The encoding is a semantic choice, not merely a display format.</p><a href="15-lambda.html#encodings-turn-data-into-behavior">Revisit the prerequisite →</a></details></aside>
 <h2 id="9-3-implementation">9.3 Implementation</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=291">Read in the PDF: pp. 291–292</a>. <a href="examples/textbook_lambda.ml" download="">Download the complete reducer and translators</a>. Run <code>ocaml textbook_lambda.ml</code>.</p>
@@ -203,7 +311,7 @@ multiplication = (ac+bd, ad+bc)
 zero test      = a and b represent the same natural number
 </code></pre>
 <p>This extension changes the number representation, so use <code>decode_signed</code>, not the ordinary Church-numeral decoder. It intentionally rejects OCaml's <code>min_int</code> constant because its positive magnitude cannot be represented by the host integer used to build numerals. Large encodings can consume substantial time and memory.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-09-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-4.svg" width="563.1015625" height="714.5999755859375" alt="Chapter 9 - choose and test the intended numeric representation"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-09-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-09-5.svg" width="563.1015625" height="714.5999755859375" alt="Chapter 9 - choose and test the intended numeric representation"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-09-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 9 - choose and test the intended numeric representation
   accDescr: The book example uses Church naturals; signed subtraction requires a different representation and decoder.
   A[&quot;What numeric semantics do you need?&quot;] --&gt; B{&quot;Nonnegative Church numbers or signed integers?&quot;}
@@ -214,6 +322,18 @@ zero test      = a and b represent the same natural number
 </code></pre></details></figure><p><strong>Checks included:</strong> capture avoidance, <a href="glossary.html#shadowing" class="definition-link" title="A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding. — English textbook, PDF p. 105">shadowing</a>, normalization under a lambda, ignoring an unused divergent argument, the book's <code>1+2</code> example, arithmetic, conditionals, procedure calls, factorial via Y, signed subtraction, signed multiplication, and cancellation to zero.</p>
 <p><strong>Final connection:</strong> Chapters 3–7 implement meaning by traversing syntax with <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environments</a> and <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">stores</a>. Chapter 8 traverses syntax to generate logical constraints. This chapter traverses syntax to produce another language. The recurring skill is to identify the constructor, preserve its binding structure, and explain how its children determine its meaning.</p>
 <p><a href="textbook.html">Return to the textbook contents</a> · <a href="homework-map.html">Open the course homework map</a>.</p>
+<details class="textbook-depth" id="depth-9-3" data-depth="9.3">
+<summary>Step by step · Understand one unfolding before using the recursive encoding</summary>
+<p>Source: <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=289">PDF pp. 289–292</a>. Write <code>F = λself.λn.body</code> so the places formerly calling the recursive name now call self. Then use <code>Y F</code>, with <code>Y = λf.(λx.f (x x)) (λx.f (x x))</code>.</p>
+<ol>
+<li>Substitute F for f. Define the abbreviation <code>G = λx.F (x x)</code>.</li>
+<li>Then <code>Y F → G G</code>.</li>
+<li>Contract that application: <code>G G → F (G G)</code>.</li>
+<li>F receives <code>G G</code> as its self argument. A recursive occurrence can therefore perform another unfolding when needed.</li>
+</ol>
+<p>For factorial at 1, one unfolding selects the recursive branch and requests factorial at 0; the next unfolding selects the base branch, yielding 1. The pending multiplication returns 1. Arithmetic and conditionals in this description abbreviate their encodings, rather than introducing extra lambda-calculus primitives.</p>
+<p>The strategy is essential: an eager evaluator keeps trying to evaluate <code>G G</code> before supplying it to F and does not obtain this behavior from Y. Test the translator together with the requested normal-order reducer and the intended numeric decoder. Passing a few arithmetic examples does not check capture avoidance or recursion by itself.</p>
+</details>
 <aside class="section-checkpoint" data-checkpoint="9.3" aria-label="Checkpoint 9.3"><p><strong>Predict · 9.3</strong> Is λx.((λy.y) x) already a full normal form, and does a step-limit prove divergence?</p><details><summary>Reveal reasoning and common trap</summary><p>It is not a full normal form: reduction under the lambda gives λx.x. A step limit only says the chosen computation did not finish within that budget; it is not a proof of divergence.</p><p><strong>Common trap:</strong> Returning as soon as the outer term is a lambda implements a weaker operation than the requested normalizer.</p><a href="glossary.html#normal-form">Revisit the prerequisite →</a></details></aside>
 </article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="textbook-08.html"><small>← Previous</small>8. Static Type Systems</a><a href="setup.html"><small>Next →</small>Your OCaml workbench</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#chapter-cheat-sheet">Chapter cheat sheet</a><a href="#syntax-and-code-companion">Syntax and code companion</a><a href="#before-you-begin">Before you begin</a><a href="#9-1-lambda-calculus">9.1 Lambda Calculus</a><a href="#9-2-converting-to-a-lambda-expression">9.2 Converting to a Lambda Expression</a><a href="#9-3-implementation">9.3 Implementation</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
   <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

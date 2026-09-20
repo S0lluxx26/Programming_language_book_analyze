@@ -1,8 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Chapter 3 - keep an inner binding from leaking out
-  accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.
-  A["Outer environment: x=1, y=2"] --> B["Evaluate new y's right-hand side"]
-  B --> C["Inside that expression only: x=2"]
-  C --> D["Compute x+y = 4"]
-  D --> E["Return to outer scope; bind y=4"]
-  E --> F["x-y = 1-4 = -3"]
+  accTitle: Lecture 5 reasoning route
+  accDescr: Numbered stages for applying expressions and environments.
+  N0["1. Match the AST constructor"]
+  N1["2. Evaluate the rule premises"]
+  N0 --> N1
+  N2["3. Check required value shapes"]
+  N1 --> N2
+  N3["4. Return the rule conclusion"]
+  N2 --> N3

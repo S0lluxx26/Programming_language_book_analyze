@@ -98,3 +98,13 @@ Source snapshot: 20 September 2026.
 - All nine chapter cheat sheets are native details disclosures, closed on ordinary chapter visits. The entire labeled heading is clickable and keyboard operable.
 - Direct cheat-sheet links reveal the content, including initial fragment navigation and repeated clicks. The syntax panel continues to recognize the cheat-sheet section. Printing temporarily opens the sheet and restores its previous state afterward; print-dialog output was not visually reviewed in this change.
 - Verified closed default, mouse expansion, Enter-key collapse, link activation, fragment reload, and dark mobile presentation. At 390 × 844, document and scroll widths both measured 375 px.
+
+## Chapter-by-chapter PDF comparison
+
+- Compared all 48 numbered sections across the nine chapters with the source progression and existing companion explanations. `TEXTBOOK_PDF_REVIEW.md` records the editorial findings and per-section decisions. This is a coverage/readability assessment, not a measured learner study.
+- Visually inspected source PDF pp. 26, 54, 107, 139, 152, 154, 170, 216, 267, and 288 alongside extracted text. Confirmed p.152's list-equality rules and underspecification footnote before changing the explanation and evaluator.
+- Added 25 source-linked, collapsed reasoning supplements and nine Mermaid diagrams. `npm run build` and `npm run check` passed: 36 canonical pages, 115 diagrams, 4,030 links, 460 bounded PDF-page links, nine cheat sheets, 48 checkpoints, and all 25 supplements.
+- Corrected list equality in `textbook_functional.ml`, with eight additional regression cases plus expanded unsupported-operation cases. The Chapter 8 checker remains monomorphic with scalar equality; its narrower coverage is explicitly labeled. No OCaml executable is installed locally; the publishing workflow runs all suites with OCaml 4.14.1 and gates deployment on their success.
+- Browser checks confirmed collapsed defaults, mouse expansion, Enter-key collapse, direct disclosure links, and nested-heading links. Fixed initial fragment navigation that opened a disclosure without scrolling to it. The source-referenced heap diagram loaded successfully; no warnings/errors appeared in the inspected browser logs.
+- Reviewed expanded Chapter 2 basics, Chapter 7 heap, and Chapter 8 equations on desktop in light/dark themes. Reviewed Chapter 6 and Chapter 2 at 390 × 844: document/client width remained 375 px, with wide tables contained in horizontally scrollable regions. Reset the temporary viewport afterward.
+- Printing now includes the new supplements and restores prior disclosure state afterward by the same lifecycle as the cheat sheet. Native print-dialog output was not visually reviewed in this change.

@@ -1,8 +1,7 @@
-flowchart TD
-  accTitle: Chapter 6 - parameter passing is a choice about locations
-  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.
-  A["Caller a is stored at location L1"] --> B{"Call method"}
-  B -->|Value| C["Read a; allocate fresh parameter cell L2"]
-  B -->|Reference| D["Parameter also points to L1"]
-  C --> E["Assign parameter: only L2 changes"]
-  D --> F["Assign parameter: caller's L1 changes"]
+flowchart LR
+  accTitle: Chapter 6 - thread updated memory through a sequence
+  accDescr: Allocation creates a cell, assignment changes that cell, and dereference uses the updated memory to obtain seven.
+  A["1. Empty memory"] --> B["2. Allocate l0 with 1"]
+  B --> C["3. Bind r to l0"]
+  C --> D["4. Store 7 in l0"]
+  D --> E["5. Read l0 from new memory: 7"]

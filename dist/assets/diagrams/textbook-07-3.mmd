@@ -1,13 +1,11 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 9 reasoning route
-  accDescr: Numbered stages for applying records, pointers, and garbage collection.
-  N0["1. Collect every live root"]
-  N1["2. Follow locations inside reachable values"]
-  N0 --> N1
-  N2["3. Repeat until no new location appears"]
-  N1 --> N2
-  N3["4. Retain reachable cells"]
-  N2 --> N3
-  N4["5. Test aliases and cycles"]
-  N3 --> N4
+  accTitle: Chapter 7 - all reference shapes in the textbook heap example
+  accDescr: Roots reach cells one and two; record, pointer, and closure edges reach three, four, and five. An isolated cycle between six and seven is unreachable.
+  X["Root x"] --> L1["l1: integer 0"]
+  Y["Root y"] --> L2["l2: record"]
+  L2 -->|"field b"| L1
+  L2 -->|"field a"| L3["l3: pointer to l4"]
+  L3 --> L4["l4: closure"]
+  L4 -->|"saved binding z"| L5["l5: integer 0"]
+  L6["l6: pointer to l7"] --> L7["l7: pointer to l6"]
+  L7 --> L6

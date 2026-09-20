@@ -1,11 +1,10 @@
-%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Lecture 2 reasoning route
-  accDescr: Numbered stages for applying inductive definitions ii.
-  N0["1. Enumerate every constructor"]
-  N1["2. Prove the base cases"]
-  N0 --> N1
-  N2["3. Assume the property for each recursive child"]
-  N1 --> N2
-  N3["4. Combine the child facts in the constructor case"]
-  N2 --> N3
+  accTitle: A structural proof has a branch for each construction rule
+  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.
+  A["How was the string constructed?"] --> B{"Last rule"}
+  B -->|Base| C["One opening and one closing parenthesis"]
+  B -->|Wrap s| D["Assume equal counts for s; add one to both"]
+  B -->|Join s and t| E["Assume equal counts for each; add their counts"]
+  C --> F["Equal counts for every derivable string"]
+  D --> F
+  E --> F

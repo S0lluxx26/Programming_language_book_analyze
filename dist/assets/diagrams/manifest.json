@@ -17,18 +17,22 @@
   },
   {
     "name": "textbook-01-3",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 1 reasoning route\n  accDescr: Numbered stages for applying inductive definitions i.\n  N0[\"1. List base elements\"]\n  N1[\"2. Apply construction rules\"]\n  N0 --> N1\n  N2[\"3. Build a derivation for membership\"]\n  N1 --> N2\n  N3[\"4. Prove both inclusions for a claimed set equality\"]\n  N2 --> N3\n"
+    "source": "flowchart BT\n  accTitle: Chapter 1 - premises build a list derivation\n  accDescr: The empty list and the integer two justify the singleton; that singleton and one justify the two-element list.\n  E[\"Base: empty list is a list\"] --> S[\"Constructor: 2 :: [] is a list\"]\n  N2[\"2 is an integer\"] --> S\n  S --> L[\"Constructor: 1 :: [2] is a list\"]\n  N1[\"1 is an integer\"] --> L\n"
   },
   {
     "name": "textbook-01-4",
-    "source": "flowchart TD\n  accTitle: From a grammar constructor to an evaluator case\n  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.\n  A[\"Expression node\"] --> B{\"Literal or binary constructor?\"}\n  B -->|Literal| C[\"Return its numeric value\"]\n  B -->|Binary| D[\"Evaluate left child\"]\n  D --> E[\"Evaluate right child\"]\n  E --> F[\"Apply the selected operation\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 1 reasoning route\n  accDescr: Numbered stages for applying inductive definitions i.\n  N0[\"1. List base elements\"]\n  N1[\"2. Apply construction rules\"]\n  N0 --> N1\n  N2[\"3. Build a derivation for membership\"]\n  N1 --> N2\n  N3[\"4. Prove both inclusions for a claimed set equality\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-01-5",
-    "source": "flowchart TD\n  accTitle: A structural proof has a branch for each construction rule\n  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.\n  A[\"How was the string constructed?\"] --> B{\"Last rule\"}\n  B -->|Base| C[\"One opening and one closing parenthesis\"]\n  B -->|Wrap s| D[\"Assume equal counts for s; add one to both\"]\n  B -->|Join s and t| E[\"Assume equal counts for each; add their counts\"]\n  C --> F[\"Equal counts for every derivable string\"]\n  D --> F\n  E --> F\n"
+    "source": "flowchart TD\n  accTitle: From a grammar constructor to an evaluator case\n  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.\n  A[\"Expression node\"] --> B{\"Literal or binary constructor?\"}\n  B -->|Literal| C[\"Return its numeric value\"]\n  B -->|Binary| D[\"Evaluate left child\"]\n  D --> E[\"Evaluate right child\"]\n  E --> F[\"Apply the selected operation\"]\n"
   },
   {
     "name": "textbook-01-6",
+    "source": "flowchart TD\n  accTitle: A structural proof has a branch for each construction rule\n  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.\n  A[\"How was the string constructed?\"] --> B{\"Last rule\"}\n  B -->|Base| C[\"One opening and one closing parenthesis\"]\n  B -->|Wrap s| D[\"Assume equal counts for s; add one to both\"]\n  B -->|Join s and t| E[\"Assume equal counts for each; add their counts\"]\n  C --> F[\"Equal counts for every derivable string\"]\n  D --> F\n  E --> F\n"
+  },
+  {
+    "name": "textbook-01-7",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 2 reasoning route\n  accDescr: Numbered stages for applying inductive definitions ii.\n  N0[\"1. Enumerate every constructor\"]\n  N1[\"2. Prove the base cases\"]\n  N0 --> N1\n  N2[\"3. Assume the property for each recursive child\"]\n  N1 --> N2\n  N3[\"4. Combine the child facts in the constructor case\"]\n  N2 --> N3\n"
   },
   {
@@ -45,10 +49,14 @@
   },
   {
     "name": "textbook-02-4",
-    "source": "flowchart TD\n  accTitle: Choose a fold from the meaning of its accumulator\n  accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.\n  A[\"What does the partial answer represent?\"] --> B{\"Suffix answer or prefix summary?\"}\n  B -->|Suffix| C[\"Right fold: element plus answer for the tail\"]\n  B -->|Prefix| D[\"Left fold: old accumulator plus next element\"]\n  C --> E[\"Choose the empty-list answer\"]\n  D --> E\n  E --> F[\"Expand a three-element example by hand\"]\n"
+    "source": "flowchart TD\n  accTitle: Chapter 2 - insertion sort builds on a sorted recursive result\n  accDescr: Sort the tail first, then insert the removed head into that sorted result, working from the empty list upward.\n  A[\"1. sort [3;1;2]\"] --> B[\"2. sort [1;2]\"]\n  B --> C[\"3. sort [2]\"]\n  C --> D[\"4. sort [] = []\"]\n  D --> E[\"5. insert 2 [] = [2]\"]\n  E --> F[\"6. insert 1 [2] = [1;2]\"]\n  F --> G[\"7. insert 3 [1;2] = [1;2;3]\"]\n"
   },
   {
     "name": "textbook-02-5",
+    "source": "flowchart TD\n  accTitle: Choose a fold from the meaning of its accumulator\n  accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.\n  A[\"What does the partial answer represent?\"] --> B{\"Suffix answer or prefix summary?\"}\n  B -->|Suffix| C[\"Right fold: element plus answer for the tail\"]\n  B -->|Prefix| D[\"Left fold: old accumulator plus next element\"]\n  C --> E[\"Choose the empty-list answer\"]\n  D --> E\n  E --> F[\"Expand a three-element example by hand\"]\n"
+  },
+  {
+    "name": "textbook-02-6",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 4 reasoning route\n  accDescr: Numbered stages for applying recursion and higher-order programming.\n  N0[\"1. Choose the base result\"]\n  N1[\"2. Choose a strictly smaller input\"]\n  N0 --> N1\n  N2[\"3. Combine the recursive result\"]\n  N1 --> N2\n  N3[\"4. Test empty and singleton cases\"]\n  N2 --> N3\n  N4[\"5. Consider an accumulator or fold\"]\n  N3 --> N4\n"
   },
   {
@@ -105,26 +113,34 @@
   },
   {
     "name": "textbook-03-2",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 5 reasoning route\n  accDescr: Numbered stages for applying expressions and environments.\n  N0[\"1. Match the AST constructor\"]\n  N1[\"2. Evaluate the rule premises\"]\n  N0 --> N1\n  N2[\"3. Check required value shapes\"]\n  N1 --> N2\n  N3[\"4. Return the rule conclusion\"]\n  N2 --> N3\n"
+    "source": "flowchart BT\n  accTitle: Chapter 3 - proof dependencies for a let expression\n  accDescr: The initializer determines the extended environment; lookup and numeral premises justify the body and then the entire let judgment.\n  A[\"1. Empty env: 4 evaluates to 4\"] --> L[\"6. Empty env: whole LET evaluates to 6\"]\n  X[\"3. Extended env: x evaluates to 4\"] --> B[\"5. Extended env: x+2 evaluates to 6\"]\n  N[\"4. Extended env: 2 evaluates to 2\"] --> B\n  B --> L\n"
   },
   {
     "name": "textbook-03-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 5 reasoning route\n  accDescr: Numbered stages for applying expressions and environments.\n  N0[\"1. Match the AST constructor\"]\n  N1[\"2. Evaluate the rule premises\"]\n  N0 --> N1\n  N2[\"3. Check required value shapes\"]\n  N1 --> N2\n  N3[\"4. Return the rule conclusion\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "textbook-03-4",
     "source": "flowchart TD\n  accTitle: Chapter 3 - keep an inner binding from leaking out\n  accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.\n  A[\"Outer environment: x=1, y=2\"] --> B[\"Evaluate new y's right-hand side\"]\n  B --> C[\"Inside that expression only: x=2\"]\n  C --> D[\"Compute x+y = 4\"]\n  D --> E[\"Return to outer scope; bind y=4\"]\n  E --> F[\"x-y = 1-4 = -3\"]\n"
   },
   {
     "name": "textbook-04-1",
-    "source": "flowchart TD\n  accTitle: Chapter 4 - choose the environment for a function call\n  accDescr: Both variants evaluate the argument in the caller; static scope extends the definition environment while dynamic scope extends the caller environment.\n  A[\"Evaluate callee and argument in caller environment\"] --> B{\"Scope policy\"}\n  B -->|Static| C[\"Start from closure's saved environment\"]\n  B -->|Dynamic| D[\"Start from current caller environment\"]\n  C --> E[\"Bind parameter to argument value\"]\n  D --> E\n  E --> F[\"Evaluate the body\"]\n"
+    "source": "flowchart TD\n  accTitle: Chapter 4 - a returned closure keeps its definition environment\n  accDescr: Calling make with three creates a closure that remembers x equals three, independently of a later caller binding of one hundred.\n  A[\"1. make 3\"] --> B[\"2. Body creates fun y -> x+y with x=3\"]\n  B --> C[\"3. add_three stores that closure\"]\n  C --> D[\"4. Caller binds x=100\"]\n  D --> E[\"5. add_three 4 uses saved x=3 and y=4\"]\n  E --> F[\"6. Result 7\"]\n"
   },
   {
     "name": "textbook-04-2",
-    "source": "flowchart TD\n  accTitle: Chapter 4 - make recursion available inside its own body\n  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller's binding. Both then bind the argument.\n  A[\"Create recursive closure f, x, body, saved\"] --> B[\"Bind f in the surrounding body\"]\n  B --> C[\"Call f with argument v\"]\n  C --> D{\"Scope policy\"}\n  D -->|Static| E[\"Use saved environment; install f as self\"]\n  D -->|Dynamic| G[\"Use caller environment, including its current f\"]\n  E --> H[\"Install x as v\"]\n  G --> H\n  H --> F[\"Evaluate body; recursive calls repeat this process\"]\n"
+    "source": "flowchart TD\n  accTitle: Chapter 4 - choose the environment for a function call\n  accDescr: Both variants evaluate the argument in the caller; static scope extends the definition environment while dynamic scope extends the caller environment.\n  A[\"Evaluate callee and argument in caller environment\"] --> B{\"Scope policy\"}\n  B -->|Static| C[\"Start from closure's saved environment\"]\n  B -->|Dynamic| D[\"Start from current caller environment\"]\n  C --> E[\"Bind parameter to argument value\"]\n  D --> E\n  E --> F[\"Evaluate the body\"]\n"
   },
   {
     "name": "textbook-04-3",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 6 reasoning route\n  accDescr: Numbered stages for applying procedures and recursive closures.\n  N0[\"1. Evaluate the callee\"]\n  N1[\"2. Evaluate the argument\"]\n  N0 --> N1\n  N2[\"3. Recover the closure environment\"]\n  N1 --> N2\n  N3[\"4. Add recursive bindings and parameter\"]\n  N2 --> N3\n  N4[\"5. Evaluate the body\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 4 - make recursion available inside its own body\n  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller's binding. Both then bind the argument.\n  A[\"Create recursive closure f, x, body, saved\"] --> B[\"Bind f in the surrounding body\"]\n  B --> C[\"Call f with argument v\"]\n  C --> D{\"Scope policy\"}\n  D -->|Static| E[\"Use saved environment; install f as self\"]\n  D -->|Dynamic| G[\"Use caller environment, including its current f\"]\n  E --> H[\"Install x as v\"]\n  G --> H\n  H --> F[\"Evaluate body; recursive calls repeat this process\"]\n"
   },
   {
     "name": "textbook-04-4",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 6 reasoning route\n  accDescr: Numbered stages for applying procedures and recursive closures.\n  N0[\"1. Evaluate the callee\"]\n  N1[\"2. Evaluate the argument\"]\n  N0 --> N1\n  N2[\"3. Recover the closure environment\"]\n  N1 --> N2\n  N3[\"4. Add recursive bindings and parameter\"]\n  N2 --> N3\n  N4[\"5. Evaluate the body\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-04-5",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 7 reasoning route\n  accDescr: Numbered stages for applying lexical addresses and nameless programs.\n  N0[\"1. Maintain the nearest-first binder list\"]\n  N1[\"2. Push a binder on entering its scope\"]\n  N0 --> N1\n  N2[\"3. Replace each use with its position\"]\n  N1 --> N2\n  N3[\"4. Evaluate positions in the matching value list\"]\n  N2 --> N3\n"
   },
   {
@@ -136,19 +152,27 @@
     "source": "flowchart TD\n  accTitle: Chapter 5 - trace mutually recursive parity functions\n  accDescr: Every call sees both functions; decreasing the argument alternates between even and odd until a base case is reached.\n  A[\"Install even and odd together\"] --> B[\"even 3\"]\n  B --> C[\"odd 2\"]\n  C --> D[\"even 1\"]\n  D --> E[\"odd 0\"]\n  E --> F[\"false\"]\n"
   },
   {
+    "name": "textbook-05-3",
+    "source": "flowchart TD\n  accTitle: Chapter 5 - compare lists under the worked evaluator policy\n  accDescr: Validate comparable values first, then compare list lengths and corresponding elements recursively without ever comparing closures.\n  A[\"1. Evaluate both operands\"] --> B{\"2. Any Unit or procedure, even nested?\"}\n  B -->|Yes| X[\"Reject unsupported equality\"]\n  B -->|No| C{\"3. Same top-level family?\"}\n  C -->|No| X\n  C -->|Yes, lists| D{\"4. Same length and all paired elements equal?\"}\n  C -->|Yes, scalars| S[\"Compare integer or boolean values\"]\n  D -->|Yes| T[\"true\"]\n  D -->|No| F[\"false\"]\n"
+  },
+  {
     "name": "textbook-06-1",
     "source": "flowchart TD\n  accTitle: Chapter 6 - explicit reference assignment threads memory\n  accDescr: Evaluate the location expression, then the new value with the updated memory, then update that cell.\n  A[\"SETREF e1 e2 with memory m0\"] --> B[\"Evaluate e1 to location l and memory m1\"]\n  B --> C[\"Evaluate e2 using m1 to value v and memory m2\"]\n  C --> D[\"Update l to v in m2\"]\n  D --> E[\"Return v and the new memory\"]\n"
   },
   {
     "name": "textbook-06-2",
-    "source": "flowchart TD\n  accTitle: Chapter 6 - parameter passing is a choice about locations\n  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.\n  A[\"Caller a is stored at location L1\"] --> B{\"Call method\"}\n  B -->|Value| C[\"Read a; allocate fresh parameter cell L2\"]\n  B -->|Reference| D[\"Parameter also points to L1\"]\n  C --> E[\"Assign parameter: only L2 changes\"]\n  D --> F[\"Assign parameter: caller's L1 changes\"]\n"
+    "source": "flowchart LR\n  accTitle: Chapter 6 - thread updated memory through a sequence\n  accDescr: Allocation creates a cell, assignment changes that cell, and dereference uses the updated memory to obtain seven.\n  A[\"1. Empty memory\"] --> B[\"2. Allocate l0 with 1\"]\n  B --> C[\"3. Bind r to l0\"]\n  C --> D[\"4. Store 7 in l0\"]\n  D --> E[\"5. Read l0 from new memory: 7\"]\n"
   },
   {
     "name": "textbook-06-3",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 6 - parameter passing is a choice about locations\n  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.\n  A[\"Caller a is stored at location L1\"] --> B{\"Call method\"}\n  B -->|Value| C[\"Read a; allocate fresh parameter cell L2\"]\n  B -->|Reference| D[\"Parameter also points to L1\"]\n  C --> E[\"Assign parameter: only L2 changes\"]\n  D --> F[\"Assign parameter: caller's L1 changes\"]\n"
   },
   {
     "name": "textbook-06-4",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-06-5",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 10 reasoning route\n  accDescr: Numbered stages for applying exceptions and continuations.\n  N0[\"1. Push frames for pending work\"]\n  N1[\"2. Install a handler frame for try\"]\n  N0 --> N1\n  N2[\"3. Evaluate the raised payload\"]\n  N1 --> N2\n  N3[\"4. Discard frames to the nearest handler\"]\n  N2 --> N3\n  N4[\"5. Run the handler in its saved environment\"]\n  N3 --> N4\n"
   },
   {
@@ -161,14 +185,18 @@
   },
   {
     "name": "textbook-07-3",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 9 reasoning route\n  accDescr: Numbered stages for applying records, pointers, and garbage collection.\n  N0[\"1. Collect every live root\"]\n  N1[\"2. Follow locations inside reachable values\"]\n  N0 --> N1\n  N2[\"3. Repeat until no new location appears\"]\n  N1 --> N2\n  N3[\"4. Retain reachable cells\"]\n  N2 --> N3\n  N4[\"5. Test aliases and cycles\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 7 - all reference shapes in the textbook heap example\n  accDescr: Roots reach cells one and two; record, pointer, and closure edges reach three, four, and five. An isolated cycle between six and seven is unreachable.\n  X[\"Root x\"] --> L1[\"l1: integer 0\"]\n  Y[\"Root y\"] --> L2[\"l2: record\"]\n  L2 -->|\"field b\"| L1\n  L2 -->|\"field a\"| L3[\"l3: pointer to l4\"]\n  L3 --> L4[\"l4: closure\"]\n  L4 -->|\"saved binding z\"| L5[\"l5: integer 0\"]\n  L6[\"l6: pointer to l7\"] --> L7[\"l7: pointer to l6\"]\n  L7 --> L6\n"
   },
   {
     "name": "textbook-07-4",
-    "source": "flowchart TD\n  accTitle: Chapter 7 - decide whether environment-only collection is safe\n  accDescr: A global continuation condition is stricter than being locally the last expression of a function.\n  A[\"About to evaluate an expression\"] --> B{\"Any surrounding work still pending?\"}\n  B -->|Yes| C[\"Skip environment-only GC\"]\n  B -->|No| D[\"Mark from current environment and sweep\"]\n  C --> E[\"Evaluate with the current store\"]\n  D --> E\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 9 reasoning route\n  accDescr: Numbered stages for applying records, pointers, and garbage collection.\n  N0[\"1. Collect every live root\"]\n  N1[\"2. Follow locations inside reachable values\"]\n  N0 --> N1\n  N2[\"3. Repeat until no new location appears\"]\n  N1 --> N2\n  N3[\"4. Retain reachable cells\"]\n  N2 --> N3\n  N4[\"5. Test aliases and cycles\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-07-5",
+    "source": "flowchart TD\n  accTitle: Chapter 7 - decide whether environment-only collection is safe\n  accDescr: A global continuation condition is stricter than being locally the last expression of a function.\n  A[\"About to evaluate an expression\"] --> B{\"Any surrounding work still pending?\"}\n  B -->|Yes| C[\"Skip environment-only GC\"]\n  B -->|No| D[\"Mark from current environment and sweep\"]\n  C --> E[\"Evaluate with the current store\"]\n  D --> E\n"
+  },
+  {
+    "name": "textbook-07-6",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 11 reasoning route\n  accDescr: Numbered stages for applying classes and objects.\n  N0[\"1. Build class and inheritance tables\"]\n  N1[\"2. Allocate object field locations\"]\n  N0 --> N1\n  N2[\"3. Evaluate receiver and arguments\"]\n  N1 --> N2\n  N3[\"4. Choose method lookup start class\"]\n  N2 --> N3\n  N4[\"5. Run method with fields parameters and self\"]\n  N3 --> N4\n"
   },
   {
@@ -197,26 +225,30 @@
   },
   {
     "name": "textbook-08-7",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 16 reasoning route\n  accDescr: Numbered stages for applying type inference ii: constraint generation.\n  N0[\"1. Receive context expression and target type\"]\n  N1[\"2. Match the expression constructor\"]\n  N0 --> N1\n  N2[\"3. Create fresh child unknowns\"]\n  N1 --> N2\n  N3[\"4. Generate child constraints in proper contexts\"]\n  N2 --> N3\n  N4[\"5. Union the constraints\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 8 - constraints connect distant uses of f\n  accDescr: Two calls constrain the same monomorphic function type, while addition constrains both results, determining the outer function type.\n  A[\"1. f x: alpha = beta -> gamma\"] --> D[\"3. Addition: gamma=int, delta=int\"]\n  B[\"2. f 1: alpha = int -> delta\"] --> D\n  D --> E[\"4. Unify beta -> int with int -> int\"]\n  E --> F[\"5. beta=int; alpha=int -> int\"]\n  F --> G[\"6. Whole type: (int -> int) -> int -> int\"]\n"
   },
   {
     "name": "textbook-08-8",
-    "source": "flowchart TD\n  accTitle: Chapter 8 - unification decision tree\n  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.\n  A[\"Apply current substitution to both sides\"] --> B{\"Same type?\"}\n  B -->|Yes| C[\"Discard equation\"]\n  B -->|No| D{\"One side a variable?\"}\n  D -->|Yes| E{\"Variable occurs in other side?\"}\n  E -->|Yes| F[\"Reject infinite type\"]\n  E -->|No| G[\"Bind variable and update substitution\"]\n  D -->|No| H{\"Matching function or list constructors?\"}\n  H -->|Yes| I[\"Enqueue component equations\"]\n  H -->|No| J[\"Reject constructor mismatch\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 16 reasoning route\n  accDescr: Numbered stages for applying type inference ii: constraint generation.\n  N0[\"1. Receive context expression and target type\"]\n  N1[\"2. Match the expression constructor\"]\n  N0 --> N1\n  N2[\"3. Create fresh child unknowns\"]\n  N1 --> N2\n  N3[\"4. Generate child constraints in proper contexts\"]\n  N2 --> N3\n  N4[\"5. Union the constraints\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-08-9",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 17 reasoning route\n  accDescr: Numbered stages for applying type inference iii: unification.\n  N0[\"1. Apply the current substitution\"]\n  N1[\"2. Discard identical sides\"]\n  N0 --> N1\n  N2[\"3. Decompose matching constructors\"]\n  N1 --> N2\n  N3[\"4. Reject mismatch or occurs-check failure\"]\n  N2 --> N3\n  N4[\"5. Compose and propagate a new binding\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 8 - unification decision tree\n  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.\n  A[\"Apply current substitution to both sides\"] --> B{\"Same type?\"}\n  B -->|Yes| C[\"Discard equation\"]\n  B -->|No| D{\"One side a variable?\"}\n  D -->|Yes| E{\"Variable occurs in other side?\"}\n  E -->|Yes| F[\"Reject infinite type\"]\n  E -->|No| G[\"Bind variable and update substitution\"]\n  D -->|No| H{\"Matching function or list constructors?\"}\n  H -->|Yes| I[\"Enqueue component equations\"]\n  H -->|No| J[\"Reject constructor mismatch\"]\n"
   },
   {
     "name": "textbook-08-10",
-    "source": "flowchart TD\n  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme\n  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.\n  A[\"Infer let-bound identity: alpha to alpha\"] --> B[\"Solve constraints and apply them to the environment\"]\n  B --> C[\"Generalize alpha only if absent from environment free variables\"]\n  C --> D[\"Store scheme: forall alpha, alpha to alpha\"]\n  D --> E[\"Integer use gets fresh beta: beta=int\"]\n  D --> F[\"Boolean use gets fresh gamma: gamma=bool\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 17 reasoning route\n  accDescr: Numbered stages for applying type inference iii: unification.\n  N0[\"1. Apply the current substitution\"]\n  N1[\"2. Discard identical sides\"]\n  N0 --> N1\n  N2[\"3. Decompose matching constructors\"]\n  N1 --> N2\n  N3[\"4. Reject mismatch or occurs-check failure\"]\n  N2 --> N3\n  N4[\"5. Compose and propagate a new binding\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-08-11",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 18 reasoning route\n  accDescr: Numbered stages for applying let-polymorphism.\n  N0[\"1. Infer and solve the let initializer\"]\n  N1[\"2. Apply substitutions to type and context\"]\n  N0 --> N1\n  N2[\"3. Generalize variables absent from the context\"]\n  N1 --> N2\n  N3[\"4. Bind the identifier to its generalized scheme\"]\n  N2 --> N3\n  N4[\"5. Instantiate freshly at every use\"]\n  N3 --> N4\n"
+    "source": "flowchart TD\n  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme\n  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.\n  A[\"Infer let-bound identity: alpha to alpha\"] --> B[\"Solve constraints and apply them to the environment\"]\n  B --> C[\"Generalize alpha only if absent from environment free variables\"]\n  C --> D[\"Store scheme: forall alpha, alpha to alpha\"]\n  D --> E[\"Integer use gets fresh beta: beta=int\"]\n  D --> F[\"Boolean use gets fresh gamma: gamma=bool\"]\n"
   },
   {
     "name": "textbook-08-12",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 18 reasoning route\n  accDescr: Numbered stages for applying let-polymorphism.\n  N0[\"1. Infer and solve the let initializer\"]\n  N1[\"2. Apply substitutions to type and context\"]\n  N0 --> N1\n  N2[\"3. Generalize variables absent from the context\"]\n  N1 --> N2\n  N3[\"4. Bind the identifier to its generalized scheme\"]\n  N2 --> N3\n  N4[\"5. Instantiate freshly at every use\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-08-13",
     "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 19 reasoning route\n  accDescr: Numbered stages for applying typed objects and subtyping.\n  N0[\"1. Build inherited field and method signatures\"]\n  N1[\"2. Check override compatibility\"]\n  N0 --> N1\n  N2[\"3. Check each method body in its context\"]\n  N1 --> N2\n  N3[\"4. Check the main expression\"]\n  N2 --> N3\n  N4[\"5. Use subtyping at permitted compatibility checks\"]\n  N3 --> N4\n"
   },
   {
@@ -233,6 +265,10 @@
   },
   {
     "name": "textbook-09-4",
+    "source": "flowchart LR\n  accTitle: Chapter 9 - Church addition composes repetitions\n  accDescr: One application of s transforms z into s z, then two further applications produce the encoding of three.\n  Z[\"1. Start: z\"] --> O[\"2. ONE s z: s z\"]\n  O --> T[\"3. TWO s uses that as its start: s (s (s z))\"]\n  T --> R[\"4. Abstract s and z: THREE\"]\n"
+  },
+  {
+    "name": "textbook-09-5",
     "source": "flowchart TD\n  accTitle: Chapter 9 - choose and test the intended numeric representation\n  accDescr: The book example uses Church naturals; signed subtraction requires a different representation and decoder.\n  A[\"What numeric semantics do you need?\"] --> B{\"Nonnegative Church numbers or signed integers?\"}\n  B -->|Book's displayed encoding| C[\"translate; subtraction stops at zero\"]\n  B -->|Signed extension| D[\"translate_signed; pair represents positive minus negative\"]\n  C --> E[\"Normalize; decode Church numeral\"]\n  D --> F[\"Normalize pair projections; subtract decoded parts\"]\n"
   },
   {

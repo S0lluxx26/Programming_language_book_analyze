@@ -1,0 +1,11 @@
+flowchart TD
+  accTitle: Chapter 5 - compare lists under the worked evaluator policy
+  accDescr: Validate comparable values first, then compare list lengths and corresponding elements recursively without ever comparing closures.
+  A["1. Evaluate both operands"] --> B{"2. Any Unit or procedure, even nested?"}
+  B -->|Yes| X["Reject unsupported equality"]
+  B -->|No| C{"3. Same top-level family?"}
+  C -->|No| X
+  C -->|Yes, lists| D{"4. Same length and all paired elements equal?"}
+  C -->|Yes, scalars| S["Compare integer or boolean values"]
+  D -->|Yes| T["true"]
+  D -->|No| F["false"]

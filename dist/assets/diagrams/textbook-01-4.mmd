@@ -1,8 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: From a grammar constructor to an evaluator case
-  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.
-  A["Expression node"] --> B{"Literal or binary constructor?"}
-  B -->|Literal| C["Return its numeric value"]
-  B -->|Binary| D["Evaluate left child"]
-  D --> E["Evaluate right child"]
-  E --> F["Apply the selected operation"]
+  accTitle: Lecture 1 reasoning route
+  accDescr: Numbered stages for applying inductive definitions i.
+  N0["1. List base elements"]
+  N1["2. Apply construction rules"]
+  N0 --> N1
+  N2["3. Build a derivation for membership"]
+  N1 --> N2
+  N3["4. Prove both inclusions for a claimed set equality"]
+  N2 --> N3

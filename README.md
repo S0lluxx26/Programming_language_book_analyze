@@ -69,6 +69,8 @@ Author numbered reasoning steps in `book/thinking-routes.json`; the build insert
 
 Author chapters in `book/*.md` and navigation in `book/catalog.json`. Edit `book/definitions.json` and `scripts/references.mjs` for generated glossary/source pages. `npm run build` regenerates references, HTML, search data, Mermaid sources, and SVGs in `dist/`. Never use the partial `--preview` authoring mode for publication.
 
+Author source-comparison walkthroughs in `book/supplements/textbook-01.md` through `textbook-09.md`. Each `## section-number Title` is inserted into the matching chapter section as a collapsed “Step by step” disclosure. Keep the numbered reasoning and exact PDF-page link. Direct links reveal the target automatically; printing includes the walkthroughs and restores the reader's previous open/closed choices afterward.
+
 ## OCaml examples
 
 The official environment targets OCaml 4.14.1. Run the independent teaching examples:
@@ -84,7 +86,7 @@ ocaml examples/textbook_lambda.ml
 
 They test recursion, lexical scope, a small evaluator, stores, type unification, and exception control flow. They do not implement or submit the full homework assignments. Some assignment policies are unstated in the public handouts; the corresponding guides identify them explicitly.
 
-The `textbook_*.ml` files are original worked solutions to the **textbook tasks**, not the separately specified homework submissions. The type-system solution is monomorphic, including its Fun extension; let-polymorphism is explained separately. The lambda solution provides both the textbook's natural-number convention and a signed-pair extension. The GC solution collects only at global no-continuation points, as described in the book. These choices and their limits are explained in the reader.
+The `textbook_*.ml` files are original worked solutions to the **textbook tasks**, not the separately specified homework submissions. The type-system teaching baseline is monomorphic and restricts equality to integers/booleans; let-polymorphism is explained separately. The Fun evaluator also supports list equality as required by PDF p.152, with an explicit policy for nested values; the checker therefore accepts a narrower equality domain. The lambda solution provides both the textbook's natural-number convention and a signed-pair extension. The GC solution collects only at global no-continuation points, as described in the book. These choices and their limits are explained in the reader.
 
 ## Publishing
 
@@ -99,3 +101,5 @@ Course textbooks, slides, homework specifications, and templates belong to their
 ## Content clarity review
 
 The [review plan](CONTENT_REVIEW_PLAN.md) and [section-by-section report](reports/CONTENT_REVIEW.md) document the audit of 493 headings. The reader includes 48 section checkpoints with revealable reasoning, common traps, and prerequisite links. Regenerate the current inventory with `node scripts/audit-content.mjs`; preserve the committed baseline for comparison.
+
+The subsequent [chapter-by-chapter PDF comparison](TEXTBOOK_PDF_REVIEW.md) records all 48 numbered sections, the first-reading gaps, 25 added walkthroughs, and the correction to Fun list equality. It assesses explanatory coverage; it is not a measured learner study or a claim that the website replaces all of the PDF.

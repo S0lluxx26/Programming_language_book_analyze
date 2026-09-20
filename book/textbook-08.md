@@ -149,7 +149,7 @@ The downloadable §8.8 checker deliberately implements the initial **monomorphic
 
 ## 8.8 Implementation
 
-[Read in the PDF: pp. 274–276](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=274). [Download the complete generator, solver, and Fun extension](examples/textbook_types.ml). Run `ocaml textbook_types.ml`.
+[Read in the PDF: pp. 274–276](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=274). [Download the generator, solver, and restricted Fun checker](examples/textbook_types.ml). Run `ocaml textbook_types.ml`.
 
 ### Task 1 — gen_equations
 
@@ -165,7 +165,7 @@ Add Unit and list types. NIL has `list α` for a fresh α; CONS requires a head 
 
 Recursive definitions prebind their function types before checking bodies. Mutual recursion prebinds both function types before either body. All recursive calls within this extension are monomorphic.
 
-**Equality needs more than an ordinary equation.** The evaluator permits int/int and bool/bool equality, not arbitrary list or function equality. The solution adds a scalar restriction and tries these two alternatives with unification. `infer_fun` returns all consistent resulting types. Consequently `fun x -> x=x` has two alternatives, `int -> bool` and `bool -> bool`, rather than an unrestricted `α -> bool`. This straightforward solver can be exponential in unresolved equality constraints; it is intended for small teaching examples.
+**Equality needs more than an ordinary equation.** The PDF and [Chapter 5 evaluator](textbook-05.html#depth-5-2) permit integer, boolean, and list equality, with the nested-list policy stated explicitly. This downloadable checker implements a **narrower scalar-equality baseline**: it tries only int/int and bool/bool with unification and rejects list comparisons. That restriction is an implementation limit, not the PDF's equality rule. `infer_fun` returns all consistent types within that baseline. Thus `fun x -> x=x` has two alternatives, `int -> bool` and `bool -> bool`, rather than an unrestricted `α -> bool`. Supporting list equality requires recursively tracking comparability of element types and excluding procedures; simply accepting equal operand types is insufficient. The current alternative-enumerating solver can be exponential in unresolved scalar constraints and is intended for small teaching examples.
 
 **What successful typing does not establish:** `HEAD NIL` can have a list-element type while failing dynamically, and integer division can still encounter zero. These shape types do not prove nonemptiness, nonzero divisors, termination, or freedom from integer overflow. Stronger refinements would be a separate analysis.
 

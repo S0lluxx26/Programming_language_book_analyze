@@ -1,0 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 2 reasoning route
+  accDescr: Numbered stages for applying inductive definitions ii.
+  N0["1. Enumerate every constructor"]
+  N1["2. Prove the base cases"]
+  N0 --> N1
+  N2["3. Assume the property for each recursive child"]
+  N1 --> N2
+  N3["4. Combine the child facts in the constructor case"]
+  N2 --> N3

@@ -60,3 +60,10 @@
 .section-checkpoint details{margin:12px 0 0;padding:0;border:0;background:transparent}.section-checkpoint summary{color:#38684c;font-weight:650;cursor:pointer;font-size:.9rem}
 .section-checkpoint details p{font-size:.9rem;line-height:1.7}.section-checkpoint details a{font-size:.85rem}
 @media print{.section-checkpoint{break-inside:avoid}.chapter-bridge{background:white}}
+.textbook-depth{border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:6px;background:var(--soft);padding:17px 20px;margin:24px 0;scroll-margin-top:85px}
+.textbook-depth>summary{color:var(--blue);cursor:pointer;font-weight:650;line-height:1.6}
+.textbook-depth>summary:focus-visible{outline:2px solid var(--blue);outline-offset:5px;border-radius:2px}
+.textbook-depth[open]>summary{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.textbook-depth h3{font-size:1.2rem}.textbook-depth>p,.textbook-depth>ol{font-size:15px}
+@media(max-width:800px){.textbook-depth{padding:14px}.textbook-depth table{font-size:13px}}
+@media print{.textbook-depth{background:white;break-inside:auto}.textbook-depth>summary{break-after:avoid}}
