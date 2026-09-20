@@ -1,0 +1,31 @@
+.theme-toggle{border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);padding:6px 9px;white-space:nowrap;font-size:12px}
+.theme-toggle[hidden]{display:none}
+@media(max-width:800px){.topbar{padding:0 12px}.topbar>div{gap:8px}.print-button{padding:5px 0}.theme-toggle{padding:6px}}
+/* Screen-only colors keep the existing light print layout. */
+@media screen {
+  :root[data-theme="dark"]{color-scheme:dark;--ink:#dbe5f0;--muted:#a9bacd;--blue:#8cc9ff;--line:#384b60;--paper:#111c29;--soft:#1c2c3e}
+  [data-theme="dark"] .topbar{background:#111c29f5}
+  [data-theme="dark"] :is(h1,h2,h3,th){color:#e1edfa}
+  [data-theme="dark"] :is(.dek,.reading-meta,footer,.reader-hint,.line-number,.search-result p,.feature-grid small,.flow li>span:last-child,.definition-dialog .definition-connection,.chapter-bridge .checkpoint-hint,.diagram-source summary){color:var(--muted)}
+  [data-theme="dark"] :is(blockquote,.callout,.reader-tools,.worked-solution,.thinking-route,.formula-card,.code-walkthrough summary,.chapter-bridge,.flow li,thead,.decision,.trace,.feature-grid a:hover){background:#1c2c3e;border-color:var(--line)}
+  [data-theme="dark"] :is(.thinking-route>p:first-child,.thinking-route li strong,.thinking-route li::marker,.worked-solution>summary,.code-walkthrough summary,.chapter-bridge>strong,.decision-branches strong){color:#b4d9f8}
+  [data-theme="dark"] .callout.warning{background:#352c1b;border-color:#c99c4e}
+  [data-theme="dark"] :is(p code,li code,td code,.code-cell){background:#223449}
+  [data-theme="dark"] :is(.code-line,.code-walkthrough,.reader-tools,.trace,.diagram-source,.notation-card,.reference-contents){border-color:var(--line)}
+  [data-theme="dark"] :is(dialog,.notation-panel){background:#172637;color:var(--ink);border-color:var(--line)}
+  [data-theme="dark"] :is(input,select,.notation-panel input,.notation-panel select,.trace-controls button){background:#111c29;color:var(--ink);border-color:#526b85}
+  [data-theme="dark"] .search-close{color:var(--ink)}
+  [data-theme="dark"] :is(.notation-toggle,.notation-card pre){background:#223449;color:var(--ink)}
+  [data-theme="dark"] :is(.notation-card summary,.reference-contents summary,.on-this-page .notation-card a,.on-this-page .notation-full){color:var(--blue)}
+  [data-theme="dark"] :is(.on-this-page .notation-card p,.on-this-page .notation-cards>p){color:var(--ink)}
+  [data-theme="dark"] .on-this-page .notation-section{color:var(--muted)}
+  [data-theme="dark"] .definition-link{background:#233e59;color:#a8d6ff;border-color:#8cc9ff}
+  [data-theme="dark"] .definition-link:hover{background:#305575}
+  [data-theme="dark"] .section-checkpoint{background:#192f29;border-color:#446d59}
+  [data-theme="dark"] :is(.section-checkpoint>p>strong,.section-checkpoint summary){color:#a0d9b7}
+  [data-theme="dark"] .mermaid-figure{background:#182638;border-color:var(--line)}
+  /* Preserve SVG labels and line contrast without changing downloadable originals. */
+  [data-theme="dark"] .diagram-link img{background:white;filter:invert(.9) hue-rotate(180deg)}
+  [data-theme="dark"] .mermaid-figure figcaption::after{color:var(--muted)}
+  [data-theme="dark"] .skip-link{background:var(--paper)}
+}

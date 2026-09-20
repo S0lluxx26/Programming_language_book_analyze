@@ -71,3 +71,10 @@ Source snapshot: 20 September 2026.
 - Added 48 individually authored prediction checkpoints covering every numbered textbook section, with collapsed reasoning, a common trap, and a prerequisite link. Automated validation enforces exact section coverage and rendered uniqueness.
 - Added nine chapter transitions and focused comparisons for lexical scope, reference models, and type analysis, plus a complete inference trace. Corrected study-route numbering and the conservative-GC description.
 - Verified Chapter 8 disclosure by mouse and keyboard, desktop layout, and mobile layout at 390 × 844. Document width and scroll width were both 375 px.
+
+## Dark mode
+
+- Added a keyboard-accessible theme toggle to every page. Initial appearance follows the system preference; explicit choices persist across reloads and chapter navigation, with cross-tab synchronization and storage-error fallback.
+- Reviewed dark typography, reference rail, Mermaid diagrams and source code, and the mobile toolbar. Verified light-mode reload persistence and dark-mode navigation persistence using keyboard and mouse. Mobile document width remains 375 px at a 390 × 844 viewport; no console warnings/errors were reported.
+- Theme colors are screen-only, preserving the existing light print stylesheet and unmodified downloadable SVGs.
+- Build and static validation passed for all 58 pages, 106 diagrams, and 6,457 links.
