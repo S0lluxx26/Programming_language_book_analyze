@@ -4,6 +4,15 @@ Write **S <: T** when a value of type S may be used wherever a T is expected. In
 
 If `ColorPoint` extends `Point`, a ColorPoint can be passed to a function expecting a Point. The reverse is not generally safe: a plain Point may lack the color-specific behavior that the function needs.
 
+```mermaid
+flowchart BT
+  accTitle: Class subtyping follows declared inheritance
+  accDescr: ColorPoint is a subtype of Point, and Point is a subtype of object. A ColorPoint can be used at either supertype.
+  C["ColorPoint"] -->|"is a subtype of"| P["Point"]
+  P -->|"is a subtype of"| O["object"]
+  C -. "by transitivity" .-> O
+```
+
 ## Subsumption connects subtyping to expressions
 
 If Γ proves that e has type S and S <: T, **subsumption** allows e to be used at type T. This changes the static view of the value, not its runtime class. Dynamic dispatch still uses the actual receiver object.

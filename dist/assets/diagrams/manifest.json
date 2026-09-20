@@ -45,10 +45,14 @@
   },
   {
     "name": "08-records-1",
-    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate the record expression<br/>Obtain a field-location map and the<br/>resulting store.\"]\n  N1[\"Find the named field<br/>Missing field means no applicable lookup<br/>rule.\"]\n  N0 --> N1\n  N2[\"Read or update its location<br/>Use the current store, including prior<br/>effects.\"]\n  N1 --> N2\n  N3[\"Preserve the rest of memory<br/>Other aliases can still observe this same<br/>cell.\"]\n  N2 --> N3\n"
+    "source": "flowchart LR\n  accTitle: Two records can share one field cell\n  accDescr: Variables a and b have separate cells, but both stored record values refer to the same score location.\n  A[\"Variable a\"] --> LA[\"Cell A<br/>record value\"]\n  B[\"Variable b\"] --> LB[\"Cell B<br/>record value\"]\n  LA -->|\"score field\"| S[\"Shared field location 1<br/>contains 12\"]\n  LB -->|\"score field\"| S\n"
   },
   {
     "name": "08-records-2",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate the record expression<br/>Obtain a field-location map and the<br/>resulting store.\"]\n  N1[\"Find the named field<br/>Missing field means no applicable lookup<br/>rule.\"]\n  N0 --> N1\n  N2[\"Read or update its location<br/>Use the current store, including prior<br/>effects.\"]\n  N1 --> N2\n  N3[\"Preserve the rest of memory<br/>Other aliases can still observe this same<br/>cell.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "08-records-3",
     "source": "flowchart TD\n  accTitle: Is this allocated location reachable from the roots?\n  accDescr: Select the branch that matches the current case.\n  Q{\"Is this allocated location reachable from<br/>the roots?\"}\n  Q -->|\"Yes\"| N0[\"Retain it; follow any outgoing references<br/>not already visited.\"]\n  Q -->|\"No\"| N1[\"It can be reclaimed by a reachability-<br/>based collector.\"]\n"
   },
   {
@@ -64,8 +68,16 @@
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate the receiver<br/>Obtain its runtime class and field-<br/>location map.\"]\n  N1[\"Evaluate the argument<br/>Preserve any memory changes.\"]\n  N0 --> N1\n  N2[\"Look up the method<br/>Search the runtime class, then ancestors.\"]\n  N1 --> N2\n  N3[\"Run its body<br/>Bind parameter, self, fields, and method<br/>host; thread memory.\"]\n  N2 --> N3\n"
   },
   {
+    "name": "10-objects-2",
+    "source": "classDiagram\n  accTitle: Inherited methods retain a subclass receiver\n  accDescr: Child inherits describe from Base and overrides value. The inherited describe method calls the overridden value through self.\n  Base <|-- Child\n  class Base {\n    value()\n    describe()\n  }\n  class Child {\n    value()\n  }\n  note for Base \"describe calls self.value\"\n  note for Child \"self remains the Child receiver\"\n"
+  },
+  {
     "name": "11-types-1",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Read the outer constructor<br/>Addition, variable, conditional,<br/>procedure, call…\"]\n  N1[\"Check the premises<br/>Recursively establish types under the<br/>appropriate context.\"]\n  N0 --> N1\n  N2[\"Enforce relationships<br/>For example, both addition operands must<br/>be integers.\"]\n  N1 --> N2\n  N3[\"Conclude a type<br/>Or reject when no rule can justify the<br/>expression.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "11-types-2",
+    "source": "flowchart TD\n  accTitle: A typing derivation connects premises to a conclusion\n  accDescr: Under x of type int, the guard is bool and both branches are int, so the conditional is int and the outer procedure is int to int.\n  X[\"Assume x : int\"] --> G[\"iszero x : bool\"]\n  X --> E[\"x + 2 : int\"]\n  N[\"7 : int\"] --> I[\"if iszero x then 7 else x + 2 : int\"]\n  G --> I\n  E --> I\n  I --> F[\"proc x (...) : int → int\"]\n"
   },
   {
     "name": "12-inference-1",
@@ -81,6 +93,10 @@
   },
   {
     "name": "14-subtyping-1",
+    "source": "flowchart BT\n  accTitle: Class subtyping follows declared inheritance\n  accDescr: ColorPoint is a subtype of Point, and Point is a subtype of object. A ColorPoint can be used at either supertype.\n  C[\"ColorPoint\"] -->|\"is a subtype of\"| P[\"Point\"]\n  P -->|\"is a subtype of\"| O[\"object\"]\n  C -. \"by transitivity\" .-> O\n"
+  },
+  {
+    "name": "14-subtyping-2",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Infer the actual type<br/>A receiver or argument may have a specific<br/>subclass type.\"]\n  N1[\"Read the required type<br/>A parameter or declared result imposes an<br/>expected type.\"]\n  N0 --> N1\n  N2[\"Check actual <: required<br/>Confirm that the use preserves the<br/>caller’s expectations.\"]\n  N1 --> N2\n  N3[\"Keep the runtime object<br/>Its class still determines ordinary method<br/>dispatch.\"]\n  N2 --> N3\n"
   },
   {

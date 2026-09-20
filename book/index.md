@@ -6,6 +6,8 @@
 
 This notebook follows the [2026 COSE212 course](https://prl.korea.ac.kr/courses/cose212/2026/) taught by Hakjoo Oh. It supplies original explanations, diagrams, worked examples, and homework routes. Read it beside the official slides and book; the original specifications decide assignment behavior.
 
+> **Follow a definition:** click a highlighted term to open its explanation, homework connection, and exact textbook or slide page. Every Mermaid diagram can be opened at full size, and its editable graph source is available underneath.
+
 ```mermaid
 flowchart TD
   accTitle: A step-by-step reasoning flow

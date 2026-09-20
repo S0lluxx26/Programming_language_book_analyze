@@ -36,6 +36,22 @@ A method also records the **host class**, the class where that method was declar
 
 Suppose class `Base` defines methods `value` and `describe`, and `describe` calls `self.value`. Class `Child` overrides `value`. Calling inherited `describe` on a `Child` still calls the child’s `value`. The inherited method is hosted by `Base`, but `self` is a `Child`.
 
+```mermaid
+classDiagram
+  accTitle: Inherited methods retain a subclass receiver
+  accDescr: Child inherits describe from Base and overrides value. The inherited describe method calls the overridden value through self.
+  Base <|-- Child
+  class Base {
+    value()
+    describe()
+  }
+  class Child {
+    value()
+  }
+  note for Base "describe calls self.value"
+  note for Child "self remains the Child receiver"
+```
+
 | Call inside a method | Where lookup starts | Which object supplies fields? |
 |---|---|---|
 | `self.m(...)` | Runtime class of self | The existing receiver |

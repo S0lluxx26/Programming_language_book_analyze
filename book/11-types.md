@@ -34,15 +34,16 @@ Typing both branches of a conditional is useful even though evaluation chooses o
 
 For `proc x (if iszero x then 7 else x + 2)`, the use of `iszero` requires `x : int`. Both branch expressions have type `int`, so the conditional has type `int`. The procedure therefore has type `int → int`.
 
-```text
-Γ, x:int ⊢ x : int
-Γ, x:int ⊢ iszero x : bool
-Γ, x:int ⊢ 7 : int
-Γ, x:int ⊢ x + 2 : int
-----------------------------------------------
-Γ, x:int ⊢ if iszero x then 7 else x + 2 : int
------------------------------------------------------
-Γ ⊢ proc x (if iszero x then 7 else x + 2) : int → int
+```mermaid
+flowchart TD
+  accTitle: A typing derivation connects premises to a conclusion
+  accDescr: Under x of type int, the guard is bool and both branches are int, so the conditional is int and the outer procedure is int to int.
+  X["Assume x : int"] --> G["iszero x : bool"]
+  X --> E["x + 2 : int"]
+  N["7 : int"] --> I["if iszero x then 7 else x + 2 : int"]
+  G --> I
+  E --> I
+  I --> F["proc x (...) : int → int"]
 ```
 
 The diagram is a dependency tree: the conclusion rests on all of its premises. In an annotated language, the parameter type may be supplied. In an unannotated language, the checker must infer it, which motivates [constraint generation](12-inference.html).

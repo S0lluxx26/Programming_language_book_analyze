@@ -14,10 +14,14 @@ Constructing a nonempty record evaluates field initializers in order and allocat
 
 Suppose `a` contains a record with `score ↦ ℓ1`, and a second variable `b` receives that same record value. The cells holding `a` and `b` can be different while their field maps still contain the same `ℓ1`.
 
-```text
-a ↦ ℓA → { score ↦ ℓ1 } ─┐
-                          ├→ ℓ1 contains 12
-b ↦ ℓB → { score ↦ ℓ1 } ─┘
+```mermaid
+flowchart LR
+  accTitle: Two records can share one field cell
+  accDescr: Variables a and b have separate cells, but both stored record values refer to the same score location.
+  A["Variable a"] --> LA["Cell A<br/>record value"]
+  B["Variable b"] --> LB["Cell B<br/>record value"]
+  LA -->|"score field"| S["Shared field location 1<br/>contains 12"]
+  LB -->|"score field"| S
 ```
 
 After `b.score := 20`, reading `a.score` returns `20`. This is aliasing through the record. By contrast, rebinding or assigning a new record to `b` changes what `ℓB` contains; it does not necessarily modify the old record still held by `a`.

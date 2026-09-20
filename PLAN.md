@@ -40,3 +40,5 @@ Source: <https://prl.korea.ac.kr/courses/cose212/2026/>.
 - 2026-09-20: Authored all 24 reading pages, including 15 concept chapters, four homework guides, and the full problem map.
 - 2026-09-20: Incorporated the user's follow-up: replaced card/row diagrams with 30 Mermaid graphs and linked 38 definitions to verified textbook/slide pages (155 first-use links).
 - 2026-09-20: Build, Mermaid rendering, local links, anchors, metadata, homework coverage, and PDF page-bound checks pass. Browser QA and publication are in progress.
+- 2026-09-20: Browser QA completed for desktop/mobile layouts, definition links, search, and all four traces. Expanded the final set to 34 Mermaid graphs, including sharing, inheritance, subtyping, and a typing derivation.
+- 2026-09-20: Created `S0lluxx26/Programming_language_book_analyze`, pushed through the reference SSH identity, and enabled GitHub Pages. Initial CI build, OCaml 4.14.1 examples, and Pages deployment succeeded. Final publication update follows the browser fixes.

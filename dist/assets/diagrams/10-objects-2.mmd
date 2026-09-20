@@ -1,0 +1,13 @@
+classDiagram
+  accTitle: Inherited methods retain a subclass receiver
+  accDescr: Child inherits describe from Base and overrides value. The inherited describe method calls the overridden value through self.
+  Base <|-- Child
+  class Base {
+    value()
+    describe()
+  }
+  class Child {
+    value()
+  }
+  note for Base "describe calls self.value"
+  note for Child "self remains the Child receiver"

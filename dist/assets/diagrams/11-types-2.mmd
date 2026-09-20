@@ -1,0 +1,9 @@
+flowchart TD
+  accTitle: A typing derivation connects premises to a conclusion
+  accDescr: Under x of type int, the guard is bool and both branches are int, so the conditional is int and the outer procedure is int to int.
+  X["Assume x : int"] --> G["iszero x : bool"]
+  X --> E["x + 2 : int"]
+  N["7 : int"] --> I["if iszero x then 7 else x + 2 : int"]
+  G --> I
+  E --> I
+  I --> F["proc x (...) : int → int"]

@@ -11,12 +11,16 @@ let rendered=0;
 try {
   for(let i=0;i<diagrams.length;i++) {
     const d=diagrams[i],target=`dist/assets/diagrams/${d.name}.svg`;
-    const hash=crypto.createHash('sha256').update(d.source+'theme-v2-xml').digest('hex');
+    const hash=crypto.createHash('sha256').update(d.source+'theme-v3-intrinsic-size').digest('hex');
     if(fs.existsSync(target)&&fs.readFileSync(target,'utf8').includes(`source-sha256:${hash}`))continue;
     const svg=await page.evaluate(async ({source,id})=>{
       const result=await mermaid.render(id,source);
       const holder=document.createElement('div');holder.innerHTML=result.svg;
-      return new XMLSerializer().serializeToString(holder.firstElementChild);
+      const svg=holder.firstElementChild;const bounds=svg.getAttribute('viewBox').split(' ').map(Number);
+      svg.setAttribute('width',String(bounds[2]));svg.setAttribute('height',String(bounds[3]));
+      const serialized=new XMLSerializer().serializeToString(svg);
+      if(new DOMParser().parseFromString(serialized,'image/svg+xml').querySelector('parsererror'))throw Error('Invalid standalone SVG XML');
+      return serialized;
     },{source:d.source,id:`diagram${i}`});
     fs.writeFileSync(target,svg+`\n<!-- source-sha256:${hash} -->\n`);rendered++;
   }
