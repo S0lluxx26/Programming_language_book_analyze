@@ -2,6 +2,10 @@ import fs from 'node:fs';import path from 'node:path';import assert from 'node:a
 import {thinkingRoutes} from './thinking-routes.mjs';
 import {lectures,syntax,walkthroughs,lectureSlug} from './learning-aids.mjs';
 const catalog=JSON.parse(fs.readFileSync('book/catalog.json','utf8'));
+const notation=JSON.parse(fs.readFileSync('book/notation-panel.json','utf8'));
+assert.equal(new Set(notation.map(n=>n.id)).size,notation.length);
+for(const n of notation){assert(syntax.some(s=>s.id===n.syntax),'Missing panel source '+n.syntax);assert(n.terms.length&&n.meaning&&n.example,'Incomplete panel entry '+n.id);}
+for(const id of ['mapping','cons','append','recursive','fold'])assert(notation.some(n=>n.id===id),'Required notation '+id);
 const manifest=JSON.parse(fs.readFileSync('sources/manifest.json','utf8'));
 const sources=new Map(manifest.files.map(f=>[f.url,f]));
 let links=0,pdfLinks=0,definitionLinks=0;
@@ -75,6 +79,6 @@ for(const w of walkthroughs){
   assert.equal((html.match(/class="code-line"/g)||[]).length,w.lines.length,'Missing code explanation');
   assert(w.lines.every(([code,note])=>code&&note),'Unexplained code line');
 }
-const report={lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+const report={floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

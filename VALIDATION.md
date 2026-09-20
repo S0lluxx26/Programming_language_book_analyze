@@ -9,7 +9,7 @@ Source snapshot: 20 September 2026.
 - Two PDF links and the OCaml example link return HTTP 404; the manifest and source library report them.
 - All 58 reading pages build successfully, including the source-aligned textbook reader.
 - All 106 Mermaid definitions render successfully to accessible, independently parseable SVG with explicit intrinsic dimensions.
-- Static checks cover 6,202 local/external link references, local target existence and anchors, 422 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
+- Static checks cover 6,269 local/external link references, local target existence and anchors, 424 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
 - 42 glossary definitions and 310 automatically generated definition links connect explanations to exact textbook or lecture PDF pages. Manually authored definition links also open the reading panel.
 - `book/textbook-structure.json` records all 9 textbook chapters, 48 numbered sections, and 12 §2.4 problems. Checks require every section heading/source page and every numbered problem's Mermaid graph and worked solution.
 
@@ -57,3 +57,10 @@ Source snapshot: 20 September 2026.
 - Added 23 syntax-reference entries and nine paired code walkthroughs. All complete examples are generated from the displayed code and executed by CI; evaluator/inference fragments are labeled as requiring surrounding helpers.
 - Static checks enforce lecture numbering, required sheet sections, graphs, source-page bounds, all syntax anchors, and a matching explanation for every code line.
 - Reviewed desktop paired-column code and 390-pixel mobile stacked code with no document overflow. Tested navigation from Chapter 6 syntax to the store reference and its in-place definition dialog. Verified the lecture 18 mobile sheet and loaded Mermaid image.
+
+## Floating section syntax panel
+
+- Added 26 concise reference cards to all 58 reading pages, with section tracking, full-library search, expandable examples, source links, and inline-token activation. Added a fold entry to the full syntax reference (24 groups total).
+- Verified the Chapter 2 problem page follows the active section, distinguishes cons from append, and opens fold_right in place without navigation. Search for ↦ returns its mapping explanation.
+- Reviewed the sticky desktop rail with no overlap of article text, and the collapsed/open panel at 390-pixel mobile width with no document overflow. Hidden panel controls are removed from keyboard navigation through the native hidden attribute.
+- Static validation checks all quick-reference IDs, required user examples, and source targets. Single-letter uppercase notation is matched case-sensitively so a range bound m does not trigger memory M.

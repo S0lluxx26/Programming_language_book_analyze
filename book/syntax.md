@@ -6,7 +6,7 @@ Click a linked inline code token or a chapter’s syntax guide to arrive at its 
 
 ## Find a symbol
 
-[Grammar and AST constructors](#grammar) · [Premises and conclusions](#rule) · [Binding: let x = e1 in e2](#let) · [Functions and application](#function) · [Patterns and recursive cases](#match) · [Lists, cons, and tuples](#list) · [Runtime evaluation judgment](#evaluation) · [Lookup and map extension](#extension) · [Closure and saved environment](#closure) · [Lexical address #i](#address) · [Locations and memory](#store) · [Reference operations and assignment](#reference) · [Records and field locations](#record) · [Reachability and fixed points](#reach) · [Continuation and exception frames](#continuation) · [Class environment, self, and super](#dispatch) · [Static typing judgment](#typing) · [Type constructors and unknowns](#type) · [Constraint generation V](#constraints) · [Type substitution versus term substitution](#substitution) · [Quantified type schemes](#scheme) · [Subtyping and variance](#subtype) · [Lambda binding and beta reduction](#lambda)
+[Grammar and AST constructors](#grammar) · [Premises and conclusions](#rule) · [Binding: let x = e1 in e2](#let) · [Functions and application](#function) · [Patterns and recursive cases](#match) · [Lists, cons, and tuples](#list) · [Runtime evaluation judgment](#evaluation) · [Lookup and map extension](#extension) · [Closure and saved environment](#closure) · [Lexical address #i](#address) · [Locations and memory](#store) · [Reference operations and assignment](#reference) · [Records and field locations](#record) · [Reachability and fixed points](#reach) · [Continuation and exception frames](#continuation) · [Class environment, self, and super](#dispatch) · [Static typing judgment](#typing) · [Type constructors and unknowns](#type) · [Constraint generation V](#constraints) · [Type substitution versus term substitution](#substitution) · [Quantified type schemes](#scheme) · [Subtyping and variance](#subtype) · [Lambda binding and beta reduction](#lambda) · [Folds: combining a list](#fold)
 
 <a id="grammar"></a>
 
@@ -283,4 +283,16 @@ A <: B means values of A may safely be used where B is expected. This is directi
 **Example:** (λx.λy.x) y reduces to λz.y with z fresh; the argument's free y stays free.
 
 [Definition: Capture-avoiding substitution](glossary.html#capture-avoiding-substitution) · [Lecture 20, PDF p. 16](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec20.pdf#page=16) · [Lecture cheat sheet](lecture-20.html) · [Definition source, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
+
+<a id="fold"></a>
+
+## Folds: combining a list
+
+**Look for:** `fold`, `fold_left`, `fold_right`.
+
+A fold replaces list construction with a combining function and a base accumulator. List.fold_left f z [a;b] combines left to right as f (f z a) b. List.fold_right f [a;b] z associates right as f a (f b z). The accumulator and element argument positions differ. A bare fold is a general idea or a locally defined helper; check its signature.
+
+**Example:** List.fold_left (-) 0 [1;2] = -3, while List.fold_right (-) [1;2] 0 = -1.
+
+[Definition: Higher-order function](glossary.html#higher-order-function) · [Lecture 4, PDF p. 25](https://prl.korea.ac.kr/courses/cose212/2026/slides/lec4.pdf#page=25) · [Lecture cheat sheet](lecture-04.html) · [Definition source, PDF p. 81](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81)
 

@@ -26,9 +26,15 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 ## Lecture and syntax reading aids
 
 - [Lecture cheat sheets 0–20](https://s0lluxx26.github.io/Programming_language_book_analyze/lectures.html): main ideas, formulas, syntax, numbered Mermaid routes, worked traces, homework links, and self-checks.
-- [Syntax reference](https://s0lluxx26.github.io/Programming_language_book_analyze/syntax.html): 23 notation groups with definition and source-page links. Exact inline tokens throughout the book link here.
+- [Syntax reference](https://s0lluxx26.github.io/Programming_language_book_analyze/syntax.html): 24 notation groups with definition and source-page links. Exact inline tokens throughout the book link here.
 - All nine textbook chapters include expandable code with an explanation beside each line (stacked on phones). Seven complete examples are generated into `examples/reading_aids.ml`; two interpreter fragments explicitly identify their required helpers.
 - Edit `book/lecture-guides.json`, `book/syntax-reference.json`, and `book/code-walkthroughs.json`. The build generates their reading pages and the complete example file. Do not edit the generated lecture Markdown directly.
+
+## Floating syntax reference
+
+Every reading page has a **Syntax beside you** panel. It follows the current section and explains matching notation, including code inside worked-solution disclosures. Search all 26 quick definitions, switch to All symbols, or click an inline syntax link to open its meaning without leaving the chapter. On smaller screens, use the floating button at the bottom right. The page contents remain available inside the panel.
+
+Edit `book/notation-panel.json` for concise explanations and matching terms. Each entry links to its source-backed syntax reference.
 
 ## Course downloads
 

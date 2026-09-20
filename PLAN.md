@@ -79,3 +79,12 @@ Implemented 37 routes, 18 pinned starter references, and 14 additional Mermaid g
 5. Validate coverage, anchors, source pages, diagrams, responsive behavior, and the executable examples; publish through the existing SSH and GitHub Pages workflow.
 
 Implemented 21 sheets, 23 syntax entries, nine annotated chapter examples, and 21 additional Mermaid graphs. Local build and static checks pass; browser navigation, definition dialogs, and responsive reading have been reviewed.
+
+## Floating section reference
+
+1. Add concise source-linked definitions for OCaml operators, recursion, folds, and formula symbols.
+2. Detect terms per reading section, retaining worked-code context while excluding Mermaid source.
+3. Show a sticky right-side panel with search and inline activation; collapse it to a floating button on smaller screens.
+4. Verify section tracking, source links, desktop layout, and mobile interaction; publish via existing Pages workflow.
+
+Implemented and browser-reviewed across desktop and phone widths.

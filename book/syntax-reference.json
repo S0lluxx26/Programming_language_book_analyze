@@ -317,5 +317,19 @@
     "definition": "capture-avoiding-substitution",
     "lecture": 20,
     "page": 16
+  },
+  {
+    "id": "fold",
+    "label": "Folds: combining a list",
+    "tokens": [
+      "fold",
+      "fold_left",
+      "fold_right"
+    ],
+    "meaning": "A fold replaces list construction with a combining function and a base accumulator. List.fold_left f z [a;b] combines left to right as f (f z a) b. List.fold_right f [a;b] z associates right as f a (f b z). The accumulator and element argument positions differ. A bare fold is a general idea or a locally defined helper; check its signature.",
+    "example": "List.fold_left (-) 0 [1;2] = -3, while List.fold_right (-) [1;2] 0 = -1.",
+    "definition": "higher-order-function",
+    "lecture": 4,
+    "page": 25
   }
 ]

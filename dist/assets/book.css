@@ -19,3 +19,21 @@
 .code-line p { margin: 0; padding: .85rem; font-size: .88rem; line-height: 1.6; }
 @media(max-width:700px) { .code-line { grid-template-columns: minmax(0,1fr); } .code-line p { padding-top: .4rem; } }
 @media print { .code-walkthrough { break-inside: auto; } .code-line { break-inside: avoid; } .formula-card { border: 1px solid #bbb; } }
+/* Sticky reference rail; on smaller screens it opens from a compact floating button. */
+@media(min-width:1201px){.reading-layout{grid-template-columns:minmax(0,760px) 250px;gap:28px;padding-right:24px;padding-left:32px;max-width:1240px}}
+.on-this-page.notation-rail{padding:0;border:0;overflow:visible;max-height:none;z-index:7;top:84px;font-size:13px}
+.notation-panel{background:#fff;border:1px solid #b8ccdd;border-radius:10px;box-shadow:0 5px 24px #142b4814;overflow:hidden}
+.notation-toggle{width:100%;padding:13px 15px;text-align:left;border:0;background:#eaf2fa;color:#244c6a;font-size:14px;font-weight:750}
+#notation-body{padding:12px;max-height:calc(100vh - 155px);overflow-y:auto;overscroll-behavior:contain}
+#notation-body[hidden]{display:none}
+.on-this-page .notation-section{font-size:12px;letter-spacing:0;text-transform:none;line-height:1.5;margin:0 0 12px;color:#536c80}
+.notation-panel label{display:block;font-size:11px;font-weight:600;margin-bottom:4px}
+.notation-panel input,.notation-panel select{width:100%;min-width:0;padding:8px;border:1px solid #bdccd9;border-radius:5px;background:white;color:#172b43;font:inherit;margin-bottom:8px}
+.notation-card{border-top:1px solid #dce5ed;margin:0;padding:10px 0}
+.notation-card summary,.reference-contents summary{cursor:pointer;font-weight:700;line-height:1.55;color:#244c6a}
+.on-this-page .notation-card p,.on-this-page .notation-cards>p{font-size:13px;letter-spacing:0;font-weight:400;line-height:1.65;color:#172b43;margin:8px 0}
+.notation-card pre{font:12px/1.65 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;padding:9px;background:#f1f5fa;color:#172b43;border-radius:4px;margin:8px 0}
+.on-this-page .notation-card a,.on-this-page .notation-full{font-size:12px;color:#1659a5;margin:7px 0;text-decoration:underline}
+.reference-contents{border-top:1px solid #dce5ed;padding-top:10px;margin-top:12px}
+@media(max-width:1200px){.on-this-page.notation-rail{display:block;position:fixed;top:auto;bottom:16px;right:16px;width:300px;max-width:calc(100vw - 32px);z-index:9}.notation-rail #notation-body{max-height:min(65vh,540px)}.notation-panel{box-shadow:0 5px 30px #142b4830}main{padding-bottom:55px}}
+@media print{.on-this-page.notation-rail{display:none!important}}
