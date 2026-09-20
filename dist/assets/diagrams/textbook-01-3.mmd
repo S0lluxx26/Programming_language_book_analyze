@@ -1,10 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: A structural proof has a branch for each construction rule
-  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.
-  A["How was the string constructed?"] --> B{"Last rule"}
-  B -->|Base| C["One opening and one closing parenthesis"]
-  B -->|Wrap s| D["Assume equal counts for s; add one to both"]
-  B -->|Join s and t| E["Assume equal counts for each; add their counts"]
-  C --> F["Equal counts for every derivable string"]
-  D --> F
-  E --> F
+  accTitle: Lecture 1 reasoning route
+  accDescr: Numbered stages for applying inductive definitions i.
+  N0["1. List base elements"]
+  N1["2. Apply construction rules"]
+  N0 --> N1
+  N2["3. Build a derivation for membership"]
+  N1 --> N2
+  N3["4. Prove both inclusions for a claimed set equality"]
+  N2 --> N3

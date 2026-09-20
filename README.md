@@ -19,16 +19,17 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 - 37 numbered thinking routes across the homework guides and textbook exercises, with links to all 18 official OCaml starter files.
 - Mermaid flowcharts and relationship graphs, rendered to accessible static SVG; editable source is included beside each diagram.
 - 42 definition entries with highlighted term links, in-place definition dialogs, and verified textbook/slide PDF page references.
-- 58 reading pages and 106 Mermaid diagrams, with source code available under each graph.
+- 36 reading pages and 106 Mermaid diagrams, with source code available under each graph.
 - Interactive closure, store, exception, and type-inference traces; search; chapter navigation; responsive layout; print styles.
 - A full source inventory with byte sizes, SHA-256 hashes, and PDF page counts.
 
-## Lecture and syntax reading aids
+## Integrated lecture and syntax reading aids
 
-- [Lecture cheat sheets 0–20](https://s0lluxx26.github.io/Programming_language_book_analyze/lectures.html): main ideas, formulas, syntax, numbered Mermaid routes, worked traces, homework links, and self-checks.
+- [Lecture-to-chapter map](https://s0lluxx26.github.io/Programming_language_book_analyze/textbook.html#lecture-to-chapter-map): all 21 lectures are integrated beside the corresponding textbook concepts, with selected highlights and expandable practice. The separate lecture navigation is retired; its 22 URLs redirect to merged destinations.
 - [Syntax reference](https://s0lluxx26.github.io/Programming_language_book_analyze/syntax.html): 24 notation groups with definition and source-page links. Exact inline tokens throughout the book link here.
 - All nine textbook chapters include expandable code with an explanation beside each line (stacked on phones). Seven complete examples are generated into `examples/reading_aids.ml`; two interpreter fragments explicitly identify their required helpers.
-- Edit `book/lecture-guides.json`, `book/syntax-reference.json`, and `book/code-walkthroughs.json`. The build generates their reading pages and the complete example file. Do not edit the generated lecture Markdown directly.
+- Edit `book/lecture-guides.json` for lecture data and `book/lecture-integration.json` for selected points and destination sections. Syntax and code data live in `book/syntax-reference.json` and `book/code-walkthroughs.json`. The build generates integrated practice, redirects, syntax references, and the complete example file.
+- [Consolidation plan and review](LECTURE_MERGE_REVIEW.md) records chapter-level choices and implemented usability improvements.
 
 ## Floating syntax reference
 

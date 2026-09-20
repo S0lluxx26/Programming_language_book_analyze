@@ -36,6 +36,16 @@
 @media(max-width:1200px){.on-this-page.notation-rail{display:block;position:fixed;top:auto;bottom:16px;right:16px;width:300px;max-width:calc(100vw - 32px);z-index:9}.notation-rail #notation-body{max-height:min(65vh,540px)}.notation-panel{box-shadow:0 5px 30px #142b4830}main{padding-bottom:55px}}
 @media print{.on-this-page.notation-rail{display:none!important}}
 /* Section-level active recall without expanding every answer at once. */
+.chapter-route{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;border:1px solid var(--line);padding:14px 18px;border-radius:6px;margin-bottom:18px;font-size:13px;background:var(--soft)}
+.chapter-route strong{flex-basis:100%;color:var(--ink)}
+.lecture-heading{scroll-margin-top:85px;border-top:1px solid var(--line);padding-top:22px;margin-top:34px}
+.lecture-heading small{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:8px}
+.lecture-sources{font-size:12px;color:var(--muted);margin:12px 0}
+.lecture-practice{border-left:3px solid #477e9e;background:var(--soft);padding:16px 20px;margin:16px 0 32px}
+.lecture-practice>summary{line-height:1.6;color:var(--blue)}
+.lecture-practice>p,.lecture-practice>ol{font-size:15px}
+@media(max-width:800px){.lecture-practice{padding:13px}.chapter-route{gap:10px 16px}}
+@media print{.chapter-route{display:none}.lecture-practice{background:white;break-inside:auto}.lecture-heading{break-after:avoid}}
 .chapter-bridge{border-left:4px solid #477e9e;background:#f1f6fb;padding:18px 22px;margin:0 0 28px;border-radius:0 7px 7px 0}
 .chapter-bridge>strong{font-size:1.05rem;color:#244c6a}
 .chapter-bridge p{margin:9px 0}.chapter-bridge .checkpoint-hint{font-size:.85rem;color:#536c80}

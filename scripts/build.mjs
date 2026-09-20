@@ -1,3 +1,4 @@
+import {writeLectureRedirects} from './integrated-lectures.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import MarkdownIt from 'markdown-it';
@@ -114,4 +115,5 @@ fs.copyFileSync('sources/manifest.json','dist/assets/source-manifest.json');
 fs.mkdirSync('dist/assets/diagrams',{recursive:true});
 fs.writeFileSync('dist/assets/diagrams/manifest.json',JSON.stringify(diagrams,null,2));
 for(const d of diagrams)fs.writeFileSync(`dist/assets/diagrams/${d.name}.mmd`,d.source);
+writeLectureRedirects();
 console.log(`Built ${catalog.length} chapters in dist/.`);

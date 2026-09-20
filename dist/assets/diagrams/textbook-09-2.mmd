@@ -1,8 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Chapter 9 - translate and normalize a source expression
-  accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.
-  A["Inspect source AST constructor"] --> B["Translate child expressions"]
-  B --> C["Wrap them in the matching closed encoding"]
-  C --> D["Obtain a lambda term"]
-  D --> E["Contract leftmost outermost redex repeatedly"]
-  E --> F["Decode the resulting numeral or other value"]
+  accTitle: Lecture 20 reasoning route
+  accDescr: Numbered stages for applying lambda calculus.
+  N0["1. Find free and bound occurrences"]
+  N1["2. Choose a redex under the chosen strategy"]
+  N0 --> N1
+  N2["3. Rename binders if capture is possible"]
+  N1 --> N2
+  N3["4. Substitute only free occurrences"]
+  N2 --> N3
+  N4["5. Repeat or identify a normal form"]
+  N3 --> N4

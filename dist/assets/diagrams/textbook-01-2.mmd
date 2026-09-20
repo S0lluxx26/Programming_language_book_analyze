@@ -1,8 +1,10 @@
 flowchart TD
-  accTitle: From a grammar constructor to an evaluator case
-  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.
-  A["Expression node"] --> B{"Literal or binary constructor?"}
-  B -->|Literal| C["Return its numeric value"]
-  B -->|Binary| D["Evaluate left child"]
-  D --> E["Evaluate right child"]
-  E --> F["Apply the selected operation"]
+  accTitle: Decide membership from the rules, not from a few examples
+  accDescr: Derive nine by repeated construction and exclude seven using a preserved divisibility invariant.
+  A["Base: 0 belongs"] --> B["Step: add 3"]
+  B --> C["3, then 6, then 9"]
+  C --> D["9 has a finite derivation"]
+  A --> E["Invariant: every result is divisible by 3"]
+  B --> E
+  E --> F["7 is not divisible by 3"]
+  F --> G["7 cannot have a derivation"]

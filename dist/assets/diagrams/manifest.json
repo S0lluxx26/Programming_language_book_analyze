@@ -9,15 +9,27 @@
   },
   {
     "name": "textbook-01-1",
-    "source": "flowchart TD\n  accTitle: Decide membership from the rules, not from a few examples\n  accDescr: Derive nine by repeated construction and exclude seven using a preserved divisibility invariant.\n  A[\"Base: 0 belongs\"] --> B[\"Step: add 3\"]\n  B --> C[\"3, then 6, then 9\"]\n  C --> D[\"9 has a finite derivation\"]\n  A --> E[\"Invariant: every result is divisible by 3\"]\n  B --> E\n  E --> F[\"7 is not divisible by 3\"]\n  F --> G[\"7 cannot have a derivation\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 0 reasoning route\n  accDescr: Numbered stages for applying course overview.\n  N0[\"1. Identify the language being studied\"]\n  N1[\"2. Read its syntax and semantic rules\"]\n  N0 --> N1\n  N2[\"3. Represent its constructors in OCaml\"]\n  N1 --> N2\n  N3[\"4. Trace a small example before implementing\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-01-2",
-    "source": "flowchart TD\n  accTitle: From a grammar constructor to an evaluator case\n  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.\n  A[\"Expression node\"] --> B{\"Literal or binary constructor?\"}\n  B -->|Literal| C[\"Return its numeric value\"]\n  B -->|Binary| D[\"Evaluate left child\"]\n  D --> E[\"Evaluate right child\"]\n  E --> F[\"Apply the selected operation\"]\n"
+    "source": "flowchart TD\n  accTitle: Decide membership from the rules, not from a few examples\n  accDescr: Derive nine by repeated construction and exclude seven using a preserved divisibility invariant.\n  A[\"Base: 0 belongs\"] --> B[\"Step: add 3\"]\n  B --> C[\"3, then 6, then 9\"]\n  C --> D[\"9 has a finite derivation\"]\n  A --> E[\"Invariant: every result is divisible by 3\"]\n  B --> E\n  E --> F[\"7 is not divisible by 3\"]\n  F --> G[\"7 cannot have a derivation\"]\n"
   },
   {
     "name": "textbook-01-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 1 reasoning route\n  accDescr: Numbered stages for applying inductive definitions i.\n  N0[\"1. List base elements\"]\n  N1[\"2. Apply construction rules\"]\n  N0 --> N1\n  N2[\"3. Build a derivation for membership\"]\n  N1 --> N2\n  N3[\"4. Prove both inclusions for a claimed set equality\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "textbook-01-4",
+    "source": "flowchart TD\n  accTitle: From a grammar constructor to an evaluator case\n  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.\n  A[\"Expression node\"] --> B{\"Literal or binary constructor?\"}\n  B -->|Literal| C[\"Return its numeric value\"]\n  B -->|Binary| D[\"Evaluate left child\"]\n  D --> E[\"Evaluate right child\"]\n  E --> F[\"Apply the selected operation\"]\n"
+  },
+  {
+    "name": "textbook-01-5",
     "source": "flowchart TD\n  accTitle: A structural proof has a branch for each construction rule\n  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.\n  A[\"How was the string constructed?\"] --> B{\"Last rule\"}\n  B -->|Base| C[\"One opening and one closing parenthesis\"]\n  B -->|Wrap s| D[\"Assume equal counts for s; add one to both\"]\n  B -->|Join s and t| E[\"Assume equal counts for each; add their counts\"]\n  C --> F[\"Equal counts for every derivable string\"]\n  D --> F\n  E --> F\n"
+  },
+  {
+    "name": "textbook-01-6",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 2 reasoning route\n  accDescr: Numbered stages for applying inductive definitions ii.\n  N0[\"1. Enumerate every constructor\"]\n  N1[\"2. Prove the base cases\"]\n  N0 --> N1\n  N2[\"3. Assume the property for each recursive child\"]\n  N1 --> N2\n  N3[\"4. Combine the child facts in the constructor case\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-02-1",
@@ -25,11 +37,19 @@
   },
   {
     "name": "textbook-02-2",
-    "source": "flowchart TD\n  accTitle: Derive recursion before writing recursive calls\n  accDescr: Choose the base case, smaller input, and recombination rule, then check termination and cost.\n  A[\"State input and desired result\"] --> B[\"List all constructors or boundary cases\"]\n  B --> C[\"Solve the smallest case directly\"]\n  B --> D[\"Choose a strictly smaller recursive input\"]\n  D --> E[\"Assume its result is correct\"]\n  E --> F[\"Reconstruct this case's result\"]\n  C --> G[\"Check examples, boundary cases, and cost\"]\n  F --> G\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 3 reasoning route\n  accDescr: Numbered stages for applying basics of ocaml.\n  N0[\"1. Determine the input and output types\"]\n  N1[\"2. Read the binding scope\"]\n  N0 --> N1\n  N2[\"3. Match the data constructors\"]\n  N1 --> N2\n  N3[\"4. Check every branch returns a compatible type\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-02-3",
+    "source": "flowchart TD\n  accTitle: Derive recursion before writing recursive calls\n  accDescr: Choose the base case, smaller input, and recombination rule, then check termination and cost.\n  A[\"State input and desired result\"] --> B[\"List all constructors or boundary cases\"]\n  B --> C[\"Solve the smallest case directly\"]\n  B --> D[\"Choose a strictly smaller recursive input\"]\n  D --> E[\"Assume its result is correct\"]\n  E --> F[\"Reconstruct this case's result\"]\n  C --> G[\"Check examples, boundary cases, and cost\"]\n  F --> G\n"
+  },
+  {
+    "name": "textbook-02-4",
     "source": "flowchart TD\n  accTitle: Choose a fold from the meaning of its accumulator\n  accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.\n  A[\"What does the partial answer represent?\"] --> B{\"Suffix answer or prefix summary?\"}\n  B -->|Suffix| C[\"Right fold: element plus answer for the tail\"]\n  B -->|Prefix| D[\"Left fold: old accumulator plus next element\"]\n  C --> E[\"Choose the empty-list answer\"]\n  D --> E\n  E --> F[\"Expand a three-element example by hand\"]\n"
+  },
+  {
+    "name": "textbook-02-5",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 4 reasoning route\n  accDescr: Numbered stages for applying recursion and higher-order programming.\n  N0[\"1. Choose the base result\"]\n  N1[\"2. Choose a strictly smaller input\"]\n  N0 --> N1\n  N2[\"3. Combine the recursive result\"]\n  N1 --> N2\n  N3[\"4. Test empty and singleton cases\"]\n  N2 --> N3\n  N4[\"5. Consider an accumulator or fold\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-02-problems-1",
@@ -85,6 +105,10 @@
   },
   {
     "name": "textbook-03-2",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 5 reasoning route\n  accDescr: Numbered stages for applying expressions and environments.\n  N0[\"1. Match the AST constructor\"]\n  N1[\"2. Evaluate the rule premises\"]\n  N0 --> N1\n  N2[\"3. Check required value shapes\"]\n  N1 --> N2\n  N3[\"4. Return the rule conclusion\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "textbook-03-3",
     "source": "flowchart TD\n  accTitle: Chapter 3 - keep an inner binding from leaking out\n  accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.\n  A[\"Outer environment: x=1, y=2\"] --> B[\"Evaluate new y's right-hand side\"]\n  B --> C[\"Inside that expression only: x=2\"]\n  C --> D[\"Compute x+y = 4\"]\n  D --> E[\"Return to outer scope; bind y=4\"]\n  E --> F[\"x-y = 1-4 = -3\"]\n"
   },
   {
@@ -94,6 +118,14 @@
   {
     "name": "textbook-04-2",
     "source": "flowchart TD\n  accTitle: Chapter 4 - make recursion available inside its own body\n  accDescr: Static scope reinstalls the recursive function from its closure; dynamic scope keeps the caller's binding. Both then bind the argument.\n  A[\"Create recursive closure f, x, body, saved\"] --> B[\"Bind f in the surrounding body\"]\n  B --> C[\"Call f with argument v\"]\n  C --> D{\"Scope policy\"}\n  D -->|Static| E[\"Use saved environment; install f as self\"]\n  D -->|Dynamic| G[\"Use caller environment, including its current f\"]\n  E --> H[\"Install x as v\"]\n  G --> H\n  H --> F[\"Evaluate body; recursive calls repeat this process\"]\n"
+  },
+  {
+    "name": "textbook-04-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 6 reasoning route\n  accDescr: Numbered stages for applying procedures and recursive closures.\n  N0[\"1. Evaluate the callee\"]\n  N1[\"2. Evaluate the argument\"]\n  N0 --> N1\n  N2[\"3. Recover the closure environment\"]\n  N1 --> N2\n  N3[\"4. Add recursive bindings and parameter\"]\n  N2 --> N3\n  N4[\"5. Evaluate the body\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-04-4",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 7 reasoning route\n  accDescr: Numbered stages for applying lexical addresses and nameless programs.\n  N0[\"1. Maintain the nearest-first binder list\"]\n  N1[\"2. Push a binder on entering its scope\"]\n  N0 --> N1\n  N2[\"3. Replace each use with its position\"]\n  N1 --> N2\n  N3[\"4. Evaluate positions in the matching value list\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-05-1",
@@ -112,6 +144,14 @@
     "source": "flowchart TD\n  accTitle: Chapter 6 - parameter passing is a choice about locations\n  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.\n  A[\"Caller a is stored at location L1\"] --> B{\"Call method\"}\n  B -->|Value| C[\"Read a; allocate fresh parameter cell L2\"]\n  B -->|Reference| D[\"Parameter also points to L1\"]\n  C --> E[\"Assign parameter: only L2 changes\"]\n  D --> F[\"Assign parameter: caller's L1 changes\"]\n"
   },
   {
+    "name": "textbook-06-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-06-4",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 10 reasoning route\n  accDescr: Numbered stages for applying exceptions and continuations.\n  N0[\"1. Push frames for pending work\"]\n  N1[\"2. Install a handler frame for try\"]\n  N0 --> N1\n  N2[\"3. Evaluate the raised payload\"]\n  N1 --> N2\n  N3[\"4. Discard frames to the nearest handler\"]\n  N2 --> N3\n  N4[\"5. Run the handler in its saved environment\"]\n  N3 --> N4\n"
+  },
+  {
     "name": "textbook-07-1",
     "source": "flowchart TD\n  accTitle: Chapter 7 - two record values share a field cell\n  accDescr: Separate variable cells hold records whose v fields both point to the same location, so a field update is visible through either name.\n  A[\"Variable a\"] --> LA[\"Variable cell LA\"]\n  B[\"Variable b\"] --> LB[\"Variable cell LB\"]\n  LA --> RA[\"Record: v maps to LV\"]\n  LB --> RB[\"Record: v maps to LV\"]\n  RA --> V[\"Field cell LV: initially 1, then 8\"]\n  RB --> V\n"
   },
@@ -121,23 +161,63 @@
   },
   {
     "name": "textbook-07-3",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 9 reasoning route\n  accDescr: Numbered stages for applying records, pointers, and garbage collection.\n  N0[\"1. Collect every live root\"]\n  N1[\"2. Follow locations inside reachable values\"]\n  N0 --> N1\n  N2[\"3. Repeat until no new location appears\"]\n  N1 --> N2\n  N3[\"4. Retain reachable cells\"]\n  N2 --> N3\n  N4[\"5. Test aliases and cycles\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-07-4",
     "source": "flowchart TD\n  accTitle: Chapter 7 - decide whether environment-only collection is safe\n  accDescr: A global continuation condition is stricter than being locally the last expression of a function.\n  A[\"About to evaluate an expression\"] --> B{\"Any surrounding work still pending?\"}\n  B -->|Yes| C[\"Skip environment-only GC\"]\n  B -->|No| D[\"Mark from current environment and sweep\"]\n  C --> E[\"Evaluate with the current store\"]\n  D --> E\n"
   },
   {
+    "name": "textbook-07-5",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 11 reasoning route\n  accDescr: Numbered stages for applying classes and objects.\n  N0[\"1. Build class and inheritance tables\"]\n  N1[\"2. Allocate object field locations\"]\n  N0 --> N1\n  N2[\"3. Evaluate receiver and arguments\"]\n  N1 --> N2\n  N3[\"4. Choose method lookup start class\"]\n  N2 --> N3\n  N4[\"5. Run method with fields parameters and self\"]\n  N3 --> N4\n"
+  },
+  {
     "name": "textbook-08-1",
-    "source": "flowchart TD\n  accTitle: Chapter 8 - typing a call relates three types\n  accDescr: The function must accept the argument type and return the type requested for the whole call.\n  A[\"CALL f arg has desired result r\"] --> B[\"Choose fresh argument type a\"]\n  B --> C[\"Require f : a to r\"]\n  B --> D[\"Require arg : a\"]\n  C --> E[\"Solve both requirements together\"]\n  D --> E\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 12 reasoning route\n  accDescr: Numbered stages for applying why static types?.\n  N0[\"1. Name the runtime errors being excluded\"]\n  N1[\"2. Choose a tractable typing discipline\"]\n  N0 --> N1\n  N2[\"3. Check before running\"]\n  N1 --> N2\n  N3[\"4. Interpret rejection within the discipline\"]\n  N2 --> N3\n"
   },
   {
     "name": "textbook-08-2",
-    "source": "flowchart TD\n  accTitle: Chapter 8 - derive the type of a higher-order function\n  accDescr: Integer addition constrains x, then application constrains f, and the nested procedures form the final function type.\n  A[\"f has alpha; x has beta\"] --> B[\"x+1 requires beta = int\"]\n  B --> C[\"f applied to int returns gamma\"]\n  C --> D[\"alpha = int to gamma\"]\n  D --> E[\"Whole type: (int to gamma) to int to gamma\"]\n"
+    "source": "flowchart TD\n  accTitle: Chapter 8 - typing a call relates three types\n  accDescr: The function must accept the argument type and return the type requested for the whole call.\n  A[\"CALL f arg has desired result r\"] --> B[\"Choose fresh argument type a\"]\n  B --> C[\"Require f : a to r\"]\n  B --> D[\"Require arg : a\"]\n  C --> E[\"Solve both requirements together\"]\n  D --> E\n"
   },
   {
     "name": "textbook-08-3",
-    "source": "flowchart TD\n  accTitle: Chapter 8 - unification decision tree\n  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.\n  A[\"Apply current substitution to both sides\"] --> B{\"Same type?\"}\n  B -->|Yes| C[\"Discard equation\"]\n  B -->|No| D{\"One side a variable?\"}\n  D -->|Yes| E{\"Variable occurs in other side?\"}\n  E -->|Yes| F[\"Reject infinite type\"]\n  E -->|No| G[\"Bind variable and update substitution\"]\n  D -->|No| H{\"Matching function or list constructors?\"}\n  H -->|Yes| I[\"Enqueue component equations\"]\n  H -->|No| J[\"Reject constructor mismatch\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 13 reasoning route\n  accDescr: Numbered stages for applying designing typing rules.\n  N0[\"1. Choose the rule for the outer constructor\"]\n  N1[\"2. Write its required premise types\"]\n  N0 --> N1\n  N2[\"3. Extend the context for binders\"]\n  N1 --> N2\n  N3[\"4. Derive premises bottom up\"]\n  N2 --> N3\n  N4[\"5. Check the conclusion type\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-08-4",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 14 reasoning route\n  accDescr: Numbered stages for applying manual type annotations.\n  N0[\"1. Read the declared parameter types\"]\n  N1[\"2. Extend the type context\"]\n  N0 --> N1\n  N2[\"3. Check the body recursively\"]\n  N1 --> N2\n  N3[\"4. Compare against required result types\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "textbook-08-5",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 15 reasoning route\n  accDescr: Numbered stages for applying type inference i: the idea.\n  N0[\"1. Assign fresh unknown types\"]\n  N1[\"2. Generate equations from each use\"]\n  N0 --> N1\n  N2[\"3. Solve compatible equalities\"]\n  N1 --> N2\n  N3[\"4. Apply the solution to the result type\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "textbook-08-6",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - derive the type of a higher-order function\n  accDescr: Integer addition constrains x, then application constrains f, and the nested procedures form the final function type.\n  A[\"f has alpha; x has beta\"] --> B[\"x+1 requires beta = int\"]\n  B --> C[\"f applied to int returns gamma\"]\n  C --> D[\"alpha = int to gamma\"]\n  D --> E[\"Whole type: (int to gamma) to int to gamma\"]\n"
+  },
+  {
+    "name": "textbook-08-7",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 16 reasoning route\n  accDescr: Numbered stages for applying type inference ii: constraint generation.\n  N0[\"1. Receive context expression and target type\"]\n  N1[\"2. Match the expression constructor\"]\n  N0 --> N1\n  N2[\"3. Create fresh child unknowns\"]\n  N1 --> N2\n  N3[\"4. Generate child constraints in proper contexts\"]\n  N2 --> N3\n  N4[\"5. Union the constraints\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-08-8",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - unification decision tree\n  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.\n  A[\"Apply current substitution to both sides\"] --> B{\"Same type?\"}\n  B -->|Yes| C[\"Discard equation\"]\n  B -->|No| D{\"One side a variable?\"}\n  D -->|Yes| E{\"Variable occurs in other side?\"}\n  E -->|Yes| F[\"Reject infinite type\"]\n  E -->|No| G[\"Bind variable and update substitution\"]\n  D -->|No| H{\"Matching function or list constructors?\"}\n  H -->|Yes| I[\"Enqueue component equations\"]\n  H -->|No| J[\"Reject constructor mismatch\"]\n"
+  },
+  {
+    "name": "textbook-08-9",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 17 reasoning route\n  accDescr: Numbered stages for applying type inference iii: unification.\n  N0[\"1. Apply the current substitution\"]\n  N1[\"2. Discard identical sides\"]\n  N0 --> N1\n  N2[\"3. Decompose matching constructors\"]\n  N1 --> N2\n  N3[\"4. Reject mismatch or occurs-check failure\"]\n  N2 --> N3\n  N4[\"5. Compose and propagate a new binding\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-08-10",
     "source": "flowchart TD\n  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme\n  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.\n  A[\"Infer let-bound identity: alpha to alpha\"] --> B[\"Solve constraints and apply them to the environment\"]\n  B --> C[\"Generalize alpha only if absent from environment free variables\"]\n  C --> D[\"Store scheme: forall alpha, alpha to alpha\"]\n  D --> E[\"Integer use gets fresh beta: beta=int\"]\n  D --> F[\"Boolean use gets fresh gamma: gamma=bool\"]\n"
+  },
+  {
+    "name": "textbook-08-11",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 18 reasoning route\n  accDescr: Numbered stages for applying let-polymorphism.\n  N0[\"1. Infer and solve the let initializer\"]\n  N1[\"2. Apply substitutions to type and context\"]\n  N0 --> N1\n  N2[\"3. Generalize variables absent from the context\"]\n  N1 --> N2\n  N3[\"4. Bind the identifier to its generalized scheme\"]\n  N2 --> N3\n  N4[\"5. Instantiate freshly at every use\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "textbook-08-12",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 19 reasoning route\n  accDescr: Numbered stages for applying typed objects and subtyping.\n  N0[\"1. Build inherited field and method signatures\"]\n  N1[\"2. Check override compatibility\"]\n  N0 --> N1\n  N2[\"3. Check each method body in its context\"]\n  N1 --> N2\n  N3[\"4. Check the main expression\"]\n  N2 --> N3\n  N4[\"5. Use subtyping at permitted compatibility checks\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-09-1",
@@ -145,10 +225,14 @@
   },
   {
     "name": "textbook-09-2",
-    "source": "flowchart TD\n  accTitle: Chapter 9 - translate and normalize a source expression\n  accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.\n  A[\"Inspect source AST constructor\"] --> B[\"Translate child expressions\"]\n  B --> C[\"Wrap them in the matching closed encoding\"]\n  C --> D[\"Obtain a lambda term\"]\n  D --> E[\"Contract leftmost outermost redex repeatedly\"]\n  E --> F[\"Decode the resulting numeral or other value\"]\n"
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 20 reasoning route\n  accDescr: Numbered stages for applying lambda calculus.\n  N0[\"1. Find free and bound occurrences\"]\n  N1[\"2. Choose a redex under the chosen strategy\"]\n  N0 --> N1\n  N2[\"3. Rename binders if capture is possible\"]\n  N1 --> N2\n  N3[\"4. Substitute only free occurrences\"]\n  N2 --> N3\n  N4[\"5. Repeat or identify a normal form\"]\n  N3 --> N4\n"
   },
   {
     "name": "textbook-09-3",
+    "source": "flowchart TD\n  accTitle: Chapter 9 - translate and normalize a source expression\n  accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.\n  A[\"Inspect source AST constructor\"] --> B[\"Translate child expressions\"]\n  B --> C[\"Wrap them in the matching closed encoding\"]\n  C --> D[\"Obtain a lambda term\"]\n  D --> E[\"Contract leftmost outermost redex repeatedly\"]\n  E --> F[\"Decode the resulting numeral or other value\"]\n"
+  },
+  {
+    "name": "textbook-09-4",
     "source": "flowchart TD\n  accTitle: Chapter 9 - choose and test the intended numeric representation\n  accDescr: The book example uses Church naturals; signed subtraction requires a different representation and decoder.\n  A[\"What numeric semantics do you need?\"] --> B{\"Nonnegative Church numbers or signed integers?\"}\n  B -->|Book's displayed encoding| C[\"translate; subtraction stops at zero\"]\n  B -->|Signed extension| D[\"translate_signed; pair represents positive minus negative\"]\n  C --> E[\"Normalize; decode Church numeral\"]\n  D --> F[\"Normalize pair projections; subtract decoded parts\"]\n"
   },
   {
@@ -250,90 +334,6 @@
   {
     "name": "15-lambda-1",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Identify the binder being applied<br/>Substitute only for occurrences bound by<br/>this abstraction.\"]\n  N1[\"Inspect free variables of the argument<br/>Determine which names must remain free.\"]\n  N0 --> N1\n  N2[\"Rename conflicting inner binders<br/>Use fresh names and rename their bound<br/>occurrences consistently.\"]\n  N1 --> N2\n  N3[\"Substitute and continue<br/>Preserve the binding structure of the<br/>original term.\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-00-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 0 reasoning route\n  accDescr: Numbered stages for applying course overview.\n  N0[\"1. Identify the language being studied\"]\n  N1[\"2. Read its syntax and semantic rules\"]\n  N0 --> N1\n  N2[\"3. Represent its constructors in OCaml\"]\n  N1 --> N2\n  N3[\"4. Trace a small example before implementing\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-01-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 1 reasoning route\n  accDescr: Numbered stages for applying inductive definitions i.\n  N0[\"1. List base elements\"]\n  N1[\"2. Apply construction rules\"]\n  N0 --> N1\n  N2[\"3. Build a derivation for membership\"]\n  N1 --> N2\n  N3[\"4. Prove both inclusions for a claimed set equality\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-02-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 2 reasoning route\n  accDescr: Numbered stages for applying inductive definitions ii.\n  N0[\"1. Enumerate every constructor\"]\n  N1[\"2. Prove the base cases\"]\n  N0 --> N1\n  N2[\"3. Assume the property for each recursive child\"]\n  N1 --> N2\n  N3[\"4. Combine the child facts in the constructor case\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-03-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 3 reasoning route\n  accDescr: Numbered stages for applying basics of ocaml.\n  N0[\"1. Determine the input and output types\"]\n  N1[\"2. Read the binding scope\"]\n  N0 --> N1\n  N2[\"3. Match the data constructors\"]\n  N1 --> N2\n  N3[\"4. Check every branch returns a compatible type\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-04-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 4 reasoning route\n  accDescr: Numbered stages for applying recursion and higher-order programming.\n  N0[\"1. Choose the base result\"]\n  N1[\"2. Choose a strictly smaller input\"]\n  N0 --> N1\n  N2[\"3. Combine the recursive result\"]\n  N1 --> N2\n  N3[\"4. Test empty and singleton cases\"]\n  N2 --> N3\n  N4[\"5. Consider an accumulator or fold\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-05-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 5 reasoning route\n  accDescr: Numbered stages for applying expressions and environments.\n  N0[\"1. Match the AST constructor\"]\n  N1[\"2. Evaluate the rule premises\"]\n  N0 --> N1\n  N2[\"3. Check required value shapes\"]\n  N1 --> N2\n  N3[\"4. Return the rule conclusion\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-06-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 6 reasoning route\n  accDescr: Numbered stages for applying procedures and recursive closures.\n  N0[\"1. Evaluate the callee\"]\n  N1[\"2. Evaluate the argument\"]\n  N0 --> N1\n  N2[\"3. Recover the closure environment\"]\n  N1 --> N2\n  N3[\"4. Add recursive bindings and parameter\"]\n  N2 --> N3\n  N4[\"5. Evaluate the body\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-07-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 7 reasoning route\n  accDescr: Numbered stages for applying lexical addresses and nameless programs.\n  N0[\"1. Maintain the nearest-first binder list\"]\n  N1[\"2. Push a binder on entering its scope\"]\n  N0 --> N1\n  N2[\"3. Replace each use with its position\"]\n  N1 --> N2\n  N3[\"4. Evaluate positions in the matching value list\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-08-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-09-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 9 reasoning route\n  accDescr: Numbered stages for applying records, pointers, and garbage collection.\n  N0[\"1. Collect every live root\"]\n  N1[\"2. Follow locations inside reachable values\"]\n  N0 --> N1\n  N2[\"3. Repeat until no new location appears\"]\n  N1 --> N2\n  N3[\"4. Retain reachable cells\"]\n  N2 --> N3\n  N4[\"5. Test aliases and cycles\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-10-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 10 reasoning route\n  accDescr: Numbered stages for applying exceptions and continuations.\n  N0[\"1. Push frames for pending work\"]\n  N1[\"2. Install a handler frame for try\"]\n  N0 --> N1\n  N2[\"3. Evaluate the raised payload\"]\n  N1 --> N2\n  N3[\"4. Discard frames to the nearest handler\"]\n  N2 --> N3\n  N4[\"5. Run the handler in its saved environment\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-11-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 11 reasoning route\n  accDescr: Numbered stages for applying classes and objects.\n  N0[\"1. Build class and inheritance tables\"]\n  N1[\"2. Allocate object field locations\"]\n  N0 --> N1\n  N2[\"3. Evaluate receiver and arguments\"]\n  N1 --> N2\n  N3[\"4. Choose method lookup start class\"]\n  N2 --> N3\n  N4[\"5. Run method with fields parameters and self\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-12-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 12 reasoning route\n  accDescr: Numbered stages for applying why static types?.\n  N0[\"1. Name the runtime errors being excluded\"]\n  N1[\"2. Choose a tractable typing discipline\"]\n  N0 --> N1\n  N2[\"3. Check before running\"]\n  N1 --> N2\n  N3[\"4. Interpret rejection within the discipline\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-13-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 13 reasoning route\n  accDescr: Numbered stages for applying designing typing rules.\n  N0[\"1. Choose the rule for the outer constructor\"]\n  N1[\"2. Write its required premise types\"]\n  N0 --> N1\n  N2[\"3. Extend the context for binders\"]\n  N1 --> N2\n  N3[\"4. Derive premises bottom up\"]\n  N2 --> N3\n  N4[\"5. Check the conclusion type\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-14-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 14 reasoning route\n  accDescr: Numbered stages for applying manual type annotations.\n  N0[\"1. Read the declared parameter types\"]\n  N1[\"2. Extend the type context\"]\n  N0 --> N1\n  N2[\"3. Check the body recursively\"]\n  N1 --> N2\n  N3[\"4. Compare against required result types\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-15-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 15 reasoning route\n  accDescr: Numbered stages for applying type inference i: the idea.\n  N0[\"1. Assign fresh unknown types\"]\n  N1[\"2. Generate equations from each use\"]\n  N0 --> N1\n  N2[\"3. Solve compatible equalities\"]\n  N1 --> N2\n  N3[\"4. Apply the solution to the result type\"]\n  N2 --> N3\n"
-  },
-  {
-    "name": "lecture-16-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 16 reasoning route\n  accDescr: Numbered stages for applying type inference ii: constraint generation.\n  N0[\"1. Receive context expression and target type\"]\n  N1[\"2. Match the expression constructor\"]\n  N0 --> N1\n  N2[\"3. Create fresh child unknowns\"]\n  N1 --> N2\n  N3[\"4. Generate child constraints in proper contexts\"]\n  N2 --> N3\n  N4[\"5. Union the constraints\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-17-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 17 reasoning route\n  accDescr: Numbered stages for applying type inference iii: unification.\n  N0[\"1. Apply the current substitution\"]\n  N1[\"2. Discard identical sides\"]\n  N0 --> N1\n  N2[\"3. Decompose matching constructors\"]\n  N1 --> N2\n  N3[\"4. Reject mismatch or occurs-check failure\"]\n  N2 --> N3\n  N4[\"5. Compose and propagate a new binding\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-18-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 18 reasoning route\n  accDescr: Numbered stages for applying let-polymorphism.\n  N0[\"1. Infer and solve the let initializer\"]\n  N1[\"2. Apply substitutions to type and context\"]\n  N0 --> N1\n  N2[\"3. Generalize variables absent from the context\"]\n  N1 --> N2\n  N3[\"4. Bind the identifier to its generalized scheme\"]\n  N2 --> N3\n  N4[\"5. Instantiate freshly at every use\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-19-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 19 reasoning route\n  accDescr: Numbered stages for applying typed objects and subtyping.\n  N0[\"1. Build inherited field and method signatures\"]\n  N1[\"2. Check override compatibility\"]\n  N0 --> N1\n  N2[\"3. Check each method body in its context\"]\n  N1 --> N2\n  N3[\"4. Check the main expression\"]\n  N2 --> N3\n  N4[\"5. Use subtyping at permitted compatibility checks\"]\n  N3 --> N4\n"
-  },
-  {
-    "name": "lecture-20-1",
-    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 20 reasoning route\n  accDescr: Numbered stages for applying lambda calculus.\n  N0[\"1. Find free and bound occurrences\"]\n  N1[\"2. Choose a redex under the chosen strategy\"]\n  N0 --> N1\n  N2[\"3. Rename binders if capture is possible\"]\n  N1 --> N2\n  N3[\"4. Substitute only free occurrences\"]\n  N2 --> N3\n  N4[\"5. Repeat or identify a normal form\"]\n  N3 --> N4\n"
   },
   {
     "name": "homework-map-1",

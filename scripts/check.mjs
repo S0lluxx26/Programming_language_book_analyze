@@ -1,3 +1,4 @@
+import {lecturePlacements, lectureTarget} from './integrated-lectures.mjs';
 import {chapterSheets} from './chapter-cheatsheets.mjs';
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
@@ -71,16 +72,32 @@ for(const p of structure.problems){
   assert(body.includes('worked-solution'),`Problem ${p.number}: missing solution`);
   assert(body.includes(`#page=${p.page})`),`Problem ${p.number}: missing PDF page`);
 }
-assert.equal(catalog.length,58);
+assert.equal(catalog.length,36);
+assert(!catalog.some(p=>p.part==='Lecture revision'||/^lectures?$|^lecture-/.test(p.slug)), 'Retired lecture navigation must be absent');
+assert.deepEqual(lecturePlacements.map(p=>p.lecture),Array.from({length:21},(_,i)=>i));
 assert.deepEqual(lectures.map(l=>l.n),Array.from({length:21},(_,i)=>i));
 assert.equal(new Set(syntax.map(s=>s.id)).size,syntax.length);
 for(const l of lectures){
-  const html=fs.readFileSync('dist/'+lectureSlug(l.n)+'.html','utf8');
-  for(const heading of ['The whole picture','Focus points','Formula and syntax','Problem-solving route','Worked trace','Homework connection','Check your understanding'])assert(html.includes(heading),'Lecture '+l.n+': '+heading);
-  assert(l.steps.length>=4 && l.pages.length>=3,'Incomplete lecture '+l.n);
-  assert(html.includes('mermaid-figure') && html.includes('Reveal the explanation'),'Missing lecture diagram or answer');
+  const target=lectureTarget(l.n),[page,anchor]=target.split('#');
+  const html=fs.readFileSync('dist/'+page,'utf8');
+  assert.equal(html.split('data-lecture="'+l.n+'"').length-1,1,'Lecture must have one integrated destination');
+  assert(html.includes('id="'+anchor+'"'),'Missing lecture anchor');
+  assert(html.includes('Practice with Lecture '+l.n+' ·'),'Missing practice disclosure');
+  const placement=lecturePlacements.find(p=>p.lecture===l.n);
+  assert(placement.points.length>=2&&placement.points.every(i=>l.points[i]),'Invalid selection');
+  if(!placement.section)assert(html.includes('Lecture extension: '+placement.title),'Unlabeled extension');
+  const legacy=fs.readFileSync('dist/'+lectureSlug(l.n)+'.html','utf8');
+  assert(legacy.includes('content="0;url='+target+'"')&&!legacy.includes('class="sidebar"'),'Legacy page must redirect');
+  assert(diagrams.some(d=>d.name.startsWith(page.replace('.html','')+'-')&&d.source.includes('accTitle: Lecture '+l.n+' reasoning route')),'Missing merged Mermaid route');
   for(const id of l.syntax)assert(syntax.some(s=>s.id===id),'Unknown syntax '+id);
 }
+for(const page of catalog){
+ const html=fs.readFileSync('dist/'+page.slug+'.html','utf8');
+ assert(!html.includes('Lecture revision'),'Removed navigation section remains');
+ assert(!/href="lectures?(-\d\d)?\.html/.test(html),'Internal links should use integrated destinations');
+}
+assert(fs.readFileSync('dist/lectures.html','utf8').includes('content="0;url=textbook.html#lecture-to-chapter-map"'),'Missing lecture-index redirect');
+assert(!/"url":"lectures?(-\d\d)?\.html"/.test(fs.readFileSync('dist/assets/search-index.js','utf8')),'Retired lectures remain in search');
 assert.deepEqual(walkthroughs.map(w=>w.chapter),[1,2,3,4,5,6,7,8,9]);
 for(const w of walkthroughs){
   const html=fs.readFileSync('dist/textbook-'+String(w.chapter).padStart(2,'0')+'.html','utf8');
@@ -94,6 +111,6 @@ for(const sheet of chapterSheets){
  assert(html.includes(`id="chapter-cheat-sheet"`),"Missing chapter cheat sheet");
  assert(sheet.terms.length>=5 && sheet.steps.length>=4 && sheet.meaning && sheet.formula && sheet.example && sheet.trap,"Incomplete chapter cheat sheet");
 }
-const report={chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+const report={chapterCheatSheets:chapterSheets.length,sectionCheckpoints:checkpoints.length,floatingDefinitions:notation.length,integratedLectures:lectures.length,legacyLectureRedirects:lectures.length+1,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

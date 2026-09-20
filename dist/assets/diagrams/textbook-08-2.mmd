@@ -1,7 +1,8 @@
 flowchart TD
-  accTitle: Chapter 8 - derive the type of a higher-order function
-  accDescr: Integer addition constrains x, then application constrains f, and the nested procedures form the final function type.
-  A["f has alpha; x has beta"] --> B["x+1 requires beta = int"]
-  B --> C["f applied to int returns gamma"]
-  C --> D["alpha = int to gamma"]
-  D --> E["Whole type: (int to gamma) to int to gamma"]
+  accTitle: Chapter 8 - typing a call relates three types
+  accDescr: The function must accept the argument type and return the type requested for the whole call.
+  A["CALL f arg has desired result r"] --> B["Choose fresh argument type a"]
+  B --> C["Require f : a to r"]
+  B --> D["Require arg : a"]
+  C --> E["Solve both requirements together"]
+  D --> E

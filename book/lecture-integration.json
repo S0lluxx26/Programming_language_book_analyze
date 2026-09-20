@@ -1,0 +1,212 @@
+[
+  {
+    "lecture": 0,
+    "chapter": 1,
+    "section": "Before you begin",
+    "points": [
+      0,
+      1
+    ],
+    "title": "Course orientation"
+  },
+  {
+    "lecture": 1,
+    "chapter": 1,
+    "section": "1.1",
+    "points": [
+      0,
+      2
+    ],
+    "title": "Prove exactly which values belong"
+  },
+  {
+    "lecture": 2,
+    "chapter": 1,
+    "section": "1.3",
+    "points": [
+      0,
+      2
+    ],
+    "title": "Turn constructor cases into proof cases"
+  },
+  {
+    "lecture": 3,
+    "chapter": 2,
+    "section": "2.1",
+    "points": [
+      1,
+      3
+    ],
+    "title": "Read curried functions and assignment constraints"
+  },
+  {
+    "lecture": 4,
+    "chapter": 2,
+    "section": "2.3",
+    "points": [
+      1,
+      3
+    ],
+    "title": "Choose fold direction deliberately"
+  },
+  {
+    "lecture": 5,
+    "chapter": 3,
+    "section": "3.2.2",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Follow the premises of the evaluation rule"
+  },
+  {
+    "lecture": 6,
+    "chapter": 4,
+    "section": "4.2.3",
+    "points": [
+      1,
+      3
+    ],
+    "title": "Restore the right bindings at each call"
+  },
+  {
+    "lecture": 7,
+    "chapter": 4,
+    "section": null,
+    "points": [
+      1,
+      2
+    ],
+    "title": "Lexical addresses and nameless programs"
+  },
+  {
+    "lecture": 8,
+    "chapter": 6,
+    "section": "6.2.3",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Distinguish aliasing from delayed evaluation"
+  },
+  {
+    "lecture": 9,
+    "chapter": 7,
+    "section": "7.3.2",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Trace every live root"
+  },
+  {
+    "lecture": 10,
+    "chapter": 6,
+    "section": null,
+    "points": [
+      0,
+      3
+    ],
+    "title": "Exceptions and continuations"
+  },
+  {
+    "lecture": 11,
+    "chapter": 7,
+    "section": null,
+    "points": [
+      1,
+      3
+    ],
+    "title": "Classes, objects, and method lookup"
+  },
+  {
+    "lecture": 12,
+    "chapter": 8,
+    "section": "8.1",
+    "points": [
+      0,
+      2
+    ],
+    "title": "Understand the limits of static checking"
+  },
+  {
+    "lecture": 13,
+    "chapter": 8,
+    "section": "8.4",
+    "points": [
+      1,
+      3
+    ],
+    "title": "Read a typing rule as a derivation"
+  },
+  {
+    "lecture": 14,
+    "chapter": 8,
+    "section": "8.5",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Treat annotations as claims to verify"
+  },
+  {
+    "lecture": 15,
+    "chapter": 8,
+    "section": "8.6",
+    "points": [
+      0,
+      3
+    ],
+    "title": "Separate inference from runtime prediction"
+  },
+  {
+    "lecture": 16,
+    "chapter": 8,
+    "section": "8.6.1",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Share binder types and keep fresh unknowns distinct"
+  },
+  {
+    "lecture": 17,
+    "chapter": 8,
+    "section": "8.6.2",
+    "points": [
+      0,
+      3
+    ],
+    "title": "Normalize before solving and after solving"
+  },
+  {
+    "lecture": 18,
+    "chapter": 8,
+    "section": "8.7",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Keep polymorphism within its assumptions"
+  },
+  {
+    "lecture": 19,
+    "chapter": 8,
+    "section": null,
+    "points": [
+      2,
+      3
+    ],
+    "title": "Typed objects and safe subtyping"
+  },
+  {
+    "lecture": 20,
+    "chapter": 9,
+    "section": "9.1",
+    "points": [
+      2,
+      3
+    ],
+    "title": "Choose a reduction strategy before encoding recursion"
+  }
+]

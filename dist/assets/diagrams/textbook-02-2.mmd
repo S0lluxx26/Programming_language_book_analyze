@@ -1,10 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Derive recursion before writing recursive calls
-  accDescr: Choose the base case, smaller input, and recombination rule, then check termination and cost.
-  A["State input and desired result"] --> B["List all constructors or boundary cases"]
-  B --> C["Solve the smallest case directly"]
-  B --> D["Choose a strictly smaller recursive input"]
-  D --> E["Assume its result is correct"]
-  E --> F["Reconstruct this case's result"]
-  C --> G["Check examples, boundary cases, and cost"]
-  F --> G
+  accTitle: Lecture 3 reasoning route
+  accDescr: Numbered stages for applying basics of ocaml.
+  N0["1. Determine the input and output types"]
+  N1["2. Read the binding scope"]
+  N0 --> N1
+  N2["3. Match the data constructors"]
+  N1 --> N2
+  N3["4. Check every branch returns a compatible type"]
+  N2 --> N3

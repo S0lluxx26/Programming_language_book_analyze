@@ -1,7 +1,21 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>8. Static Type Systems · The Programming Languages Notebook</title><meta name="description" content="Read typing rules, generate and solve equations, and implement the Fun extension."><meta name="theme-color" content="#142b48"><meta property="og:title" content="8. Static Type Systems"><meta property="og:description" content="Read typing rules, generate and solve equations, and implement the Fun extension."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><script src="assets/theme.js"></script><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/theme.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script><script src="assets/notation.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" aria-current="page">8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">Start here</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Lecture revision</p><a href="lectures.html" >Lecture cheat sheets · 0–20</a><a href="lecture-00.html" >L0 · Course overview</a><a href="lecture-01.html" >L1 · Inductive definitions I</a><a href="lecture-02.html" >L2 · Inductive definitions II</a><a href="lecture-03.html" >L3 · Basics of OCaml</a><a href="lecture-04.html" >L4 · Recursion and higher-order programming</a><a href="lecture-05.html" >L5 · Expressions and environments</a><a href="lecture-06.html" >L6 · Procedures and recursive closures</a><a href="lecture-07.html" >L7 · Lexical addresses and nameless programs</a><a href="lecture-08.html" >L8 · State and parameter passing</a><a href="lecture-09.html" >L9 · Records, pointers, and garbage collection</a><a href="lecture-10.html" >L10 · Exceptions and continuations</a><a href="lecture-11.html" >L11 · Classes and objects</a><a href="lecture-12.html" >L12 · Why static types?</a><a href="lecture-13.html" >L13 · Designing typing rules</a><a href="lecture-14.html" >L14 · Manual type annotations</a><a href="lecture-15.html" >L15 · Type inference I: the idea</a><a href="lecture-16.html" >L16 · Type inference II: constraint generation</a><a href="lecture-17.html" >L17 · Type inference III: unification</a><a href="lecture-18.html" >L18 · Let-polymorphism</a><a href="lecture-19.html" >L19 · Typed objects and subtyping</a><a href="lecture-20.html" >L20 · Lambda calculus</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 8 · PDF pp. 223–276</p><h1>8. Static Type Systems</h1><p class="dek">Read typing rules, generate and solve equations, and implement the Fun extension.</p><p class="reading-meta">16 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223" target="_blank" rel="noopener">Original PDF · pp. 223–276 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><aside class="chapter-bridge"><strong>Running a program → reasoning before execution</strong><p>Walk the same kind of syntax tree, but carry types and equations instead of concrete values and mutable memory. An accepted type has a precise, limited safety claim.</p><a href="textbook-04.html#4-1-syntactic-structure">Before this chapter: Procedures and calls →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" aria-current="page">8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">OCaml setup</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">Extra explanations · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">Extra explanations · Interpreters</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">Extra explanations · Types</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="syntax.html" >Syntax · Meaning and sources</a><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>Dark mode</button><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Textbook chapter 8 · PDF pp. 223–276</p><h1>8. Static Type Systems</h1><p class="dek">Read typing rules, generate and solve equations, and implement the Fun extension.</p><p class="reading-meta">27 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223" target="_blank" rel="noopener">Original PDF · pp. 223–276 ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p><nav class="chapter-route" aria-label="Chapter reading route"><strong>Read this chapter</strong><a href="#chapter-cheat-sheet">1. Cheat sheet</a><a href="#8-1-target-language">2. Detailed sections</a><a href="#syntax-and-code-companion">3. Code walkthrough</a><a href="textbook.html#lecture-to-chapter-map">Lecture map</a></nav>
+<details class="lecture-index"><summary>Find lecture practice in this chapter (8)</summary>
+<ul>
+<li><a href="#lecture-12">L12 · Understand the limits of static checking</a></li>
+<li><a href="#lecture-13">L13 · Read a typing rule as a derivation</a></li>
+<li><a href="#lecture-14">L14 · Treat annotations as claims to verify</a></li>
+<li><a href="#lecture-15">L15 · Separate inference from runtime prediction</a></li>
+<li><a href="#lecture-16">L16 · Share binder types and keep fresh unknowns distinct</a></li>
+<li><a href="#lecture-17">L17 · Normalize before solving and after solving</a></li>
+<li><a href="#lecture-18">L18 · Keep polymorphism within its assumptions</a></li>
+<li><a href="#lecture-19">L19 · Typed objects and safe subtyping</a></li>
+</ul>
+<p>Expand a practice panel for its example, Mermaid flow, and self-check.</p>
+</details>
+<aside class="chapter-bridge"><strong>Running a program → reasoning before execution</strong><p>Walk the same kind of syntax tree, but carry types and equations instead of concrete values and mutable memory. An accepted type has a precise, limited safety claim.</p><a href="textbook-04.html#4-1-syntactic-structure">Before this chapter: Procedures and calls →</a><p class="checkpoint-hint">At each section’s end, predict the answer before revealing the reasoning. These are original practice checks, separate from the textbook’s numbered exercises.</p></aside>
 <h2 id="chapter-cheat-sheet">Chapter cheat sheet</h2>
 <p><strong>The main idea:</strong> Predict permitted operations without running the program by generating and solving <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> constraints.</p>
 <table>
@@ -50,7 +64,7 @@
 <p><strong>Common trap:</strong> A type checker checks both IF branches. Successful typing does not prove termination or that HEAD NIL and division by zero are safe.</p>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=225">Read the chapter in the original PDF</a> · <a href="#before-you-begin">Continue to the detailed sections</a></p>
 <h2 id="syntax-and-code-companion">Syntax and code companion</h2>
-<p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source. Related cheat sheets: <a href="lecture-12.html">Lecture 12</a> · <a href="lecture-13.html">Lecture 13</a> · <a href="lecture-14.html">Lecture 14</a> · <a href="lecture-15.html">Lecture 15</a> · <a href="lecture-16.html">Lecture 16</a> · <a href="lecture-17.html">Lecture 17</a> · <a href="lecture-18.html">Lecture 18</a>.</p>
+<p>Use the <a href="syntax.html">syntax reference</a> to trace a symbol to its meaning and source.</p>
 <p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#constraints">Constraint generation V</a> · <a href="syntax.html#substitution">Type substitution versus term substitution</a> · <a href="syntax.html#type">Type constructors and unknowns</a></p>
 <details class="code-walkthrough"><summary>Line-by-line code · The stages of type inference</summary><p class="code-kind">OCaml algorithm fragment; gen, solve, apply, empty_context, and fresh_tyvar are interpreter-specific helpers</p><div class="code-lines" role="list" aria-label="Code with line explanations"><div class="code-line" role="listitem"><div class="code-cell"><span class="line-number" aria-label="Line 1">1</span><code>let typeof expression =</code></div><p>Analyze syntax without executing it.</p></div><div class="code-line" role="listitem"><div class="code-cell"><span class="line-number" aria-label="Line 2">2</span><code>  let target = fresh_tyvar () in</code></div><p>Create an unknown result type.</p></div><div class="code-line" role="listitem"><div class="code-cell"><span class="line-number" aria-label="Line 3">3</span><code>  let equations = gen empty_context expression target in</code></div><p>Generate constraints in an empty type context.</p></div><div class="code-line" role="listitem"><div class="code-cell"><span class="line-number" aria-label="Line 4">4</span><code>  let substitution = solve equations in</code></div><p>Unify; mismatch or an occurs-check failure raises TypeError.</p></div><div class="code-line" role="listitem"><div class="code-cell"><span class="line-number" aria-label="Line 5">5</span><code>  apply substitution target</code></div><p>Normalize the result using the complete solution.</p></div></div><p class="code-result"><strong>Trace result:</strong> For identity applied to 1, constraints force int. These helper names describe a design, not provided HW4 functions.</p></details>
 <h2 id="before-you-begin">Before you begin</h2>
@@ -91,6 +105,41 @@
 </table>
 <p>A runtime test and a typing derivation answer different questions; one cannot substitute for the other.</p>
 <aside class="section-checkpoint" data-checkpoint="8.1" aria-label="Checkpoint 8.1"><p><strong>Predict · 8.1</strong> Does a simple type checker ignore the else branch of if true then 1 else false?</p><details><summary>Reveal reasoning and common trap</summary><p>No. It checks both branch types and rejects int versus bool under the ordinary same-result-type rule, even though this particular execution chooses 1.</p><p><strong>Common trap:</strong> A known guard value does not change the stated syntax-directed typing rule.</p><a href="glossary.html#typing-judgment">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-12" data-lecture="12">Understand the limits of static checking <small>Lecture 12</small></h3>
+<ul>
+<li>Perfect automatic prediction of arbitrary program behavior is undecidable; useful restricted analyses remain possible.</li>
+<li>A <a href="glossary.html#soundness" class="definition-link" title="The guarantee that accepted programs satisfy the safety property established for a particular language and its typing rules. It does not by itself prove termination or absence of every runtime failure. — English textbook, PDF p. 241">sound type system</a> may reject some programs that would execute safely.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=3">p. 3</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=6">p. 6</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=7">p. 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=8">p. 8</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=9">p. 9</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 12 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> accepted ⇒ no specified runtime type error; safe ⇏ necessarily accepted</p>
+<p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#type">Type constructors and unknowns</a></p>
+<p><strong>Worked example:</strong> A checker that requires both IF branches to have one type rejects if true then 1 else false even though this particular execution selects the integer branch.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Name the runtime errors being excluded.</li>
+<li>Choose a tractable typing discipline.</li>
+<li>Check before running.</li>
+<li>Interpret rejection within the discipline.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-1.svg" width="418.234375" height="387" alt="Lecture 12 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 12 reasoning route
+  accDescr: Numbered stages for applying why static types?.
+  N0[&quot;1. Name the runtime errors being excluded&quot;]
+  N1[&quot;2. Choose a tractable typing discipline&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Check before running&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Interpret rejection within the discipline&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: understand what successful typeof promises and why an untypable expression raises TypeError.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Does a sound type checker prove a program terminates?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>No. A well-typed recursive program may diverge.</p>
+</details>
+</details>
 <h2 id="8-2-type">8.2 Type</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226">Read in the PDF: p. 226</a>.</p>
 <p>Types include <code>int</code>, <code>bool</code>, and function types <code>a -&gt; b</code>. An unknown type variable α represents a type to be determined, not an arbitrary runtime value. The type of a function describes the relation between acceptable argument types and returned result types.</p>
@@ -104,7 +153,7 @@
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=232">Read in the PDF: p. 232</a>.</p>
 <p>The judgment <code>Γ ⊢ e : t</code> means e has type t under Γ. Addition requires two integer operands and returns int. A conditional requires a boolean condition and equal branch types. A call requires a function whose parameter type matches the argument type.</p>
 <p>Both branches of IF are checked even though evaluation runs only one. Typing is a static structural analysis; it normally does not use a concrete condition value to excuse a mistyped branch.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-1.svg" width="447.2900390625" height="443.0999755859375" alt="Chapter 8 - typing a call relates three types"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-2.svg" width="447.2900390625" height="443.0999755859375" alt="Chapter 8 - typing a call relates three types"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 8 - typing a call relates three types
   accDescr: The function must accept the argument type and return the type requested for the whole call.
   A[&quot;CALL f arg has desired result r&quot;] --&gt; B[&quot;Choose fresh argument type a&quot;]
@@ -113,11 +162,84 @@
   C --&gt; E[&quot;Solve both requirements together&quot;]
   D --&gt; E
 </code></pre></details></figure><aside class="section-checkpoint" data-checkpoint="8.4" aria-label="Checkpoint 8.4"><p><strong>Predict · 8.4</strong> If Γ proves f:int→bool, what type must a have for f a, and what is the call&#39;s type?</p><details><summary>Reveal reasoning and common trap</summary><p>a must have int; the result has bool. The application rule connects the argument to the function&#39;s domain and the whole expression to its codomain.</p><p><strong>Common trap:</strong> Do not unify the argument with the function&#39;s entire arrow type.</p><a href="syntax.html#function">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-13" data-lecture="13">Read a typing rule as a derivation <small>Lecture 13</small></h3>
+<ul>
+<li>The context Γ maps variables to types, not runtime values.</li>
+<li>The declarative rules may permit multiple types for one expression.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=4">p. 4</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=7">p. 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=9">p. 9</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=12">p. 12</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=14">p. 14</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=15">p. 15</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 13 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> Γ,x:α ⊢ e:β ⇒ Γ ⊢ proc x e:α→β; Γ ⊢ f:α→β and Γ ⊢ a:α ⇒ Γ ⊢ f a:β</p>
+<p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#type">Type constructors and unknowns</a> · <a href="syntax.html#extension">Lookup and map extension</a></p>
+<p><strong>Worked example:</strong> proc x (if x then 11 else 22) has bool → int: the guard forces x to bool and both branches have int.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Choose the rule for the outer constructor.</li>
+<li>Write its required premise types.</li>
+<li>Extend the context for binders.</li>
+<li>Derive premises bottom up.</li>
+<li>Check the conclusion type.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-3.svg" width="421.45947265625" height="491" alt="Lecture 13 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 13 reasoning route
+  accDescr: Numbered stages for applying designing typing rules.
+  N0[&quot;1. Choose the rule for the outer constructor&quot;]
+  N1[&quot;2. Write its required premise types&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Extend the context for binders&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Derive premises bottom up&quot;]
+  N2 --&gt; N3
+  N4[&quot;5. Check the conclusion type&quot;]
+  N3 --&gt; N4
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: derive one rule per <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> constructor before implementing inference.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Why cannot Γ simply contain runtime values?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>Typing runs before execution and tracks types; values belong to the runtime environment.</p>
+</details>
+</details>
 <h2 id="8-5-type-checker-implementation-approach">8.5 Type Checker Implementation Approach</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=243">Read in the PDF: p. 243</a>.</p>
 <p>An evaluator often computes children and combines concrete values immediately. A checker cannot always know a procedure parameter's type before it examines the body and its uses. One approach asks the programmer for annotations. Automatic inference instead introduces unknowns and collects equations to solve later.</p>
 <p>This separation avoids guessing types or trying every possible function type. The syntax determines constraints; the solver propagates consequences across distant uses of the same unknown.</p>
 <aside class="section-checkpoint" data-checkpoint="8.5" aria-label="Checkpoint 8.5"><p><strong>Predict · 8.5</strong> Why introduce a fresh α for an unannotated parameter instead of immediately choosing int?</p><details><summary>Reveal reasoning and common trap</summary><p>The body may require bool, an arrow, a list, or no concrete type at all. A fresh unknown preserves possibilities until constraints justify a choice.</p><p><strong>Common trap:</strong> A successful example with integer inputs does not justify hard-coding int.</p><a href="glossary.html#type-variable">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-14" data-lecture="14">Treat annotations as claims to verify <small>Lecture 14</small></h3>
+<ul>
+<li>Recursive functions need an assumed signature while checking their own bodies.</li>
+<li>The body must agree with the declared result; an annotation is a claim to verify.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=3">p. 3</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=4">p. 4</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=7">p. 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=8">p. 8</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 14 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> check(proc (x:α) e, Γ) = α → check(e, Γ[x ↦ α])</p>
+<p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#type">Type constructors and unknowns</a> · <a href="syntax.html#function">Functions and application</a></p>
+<p><strong>Worked example:</strong> proc (x:int) (x + 1) checks as int → int. proc (x:bool) (x + 1) is rejected because arithmetic requires int.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Read the declared parameter types.</li>
+<li>Extend the type context.</li>
+<li>Check the body recursively.</li>
+<li>Compare against required result types.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-4.svg" width="403.60400390625" height="387" alt="Lecture 14 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 14 reasoning route
+  accDescr: Numbered stages for applying manual type annotations.
+  N0[&quot;1. Read the declared parameter types&quot;]
+  N1[&quot;2. Extend the type context&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Check the body recursively&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Compare against required result types&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p><strong>Homework connection:</strong> Preparation for HW4, whose unannotated expressions require fresh unknowns and constraints instead of asking the user for annotations.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Can the checker trust an annotation without checking the body?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>No. Otherwise inconsistent annotations could admit unsafe operations.</p>
+</details>
+</details>
 <h2 id="8-6-automatic-type-inference-algorithm">8.6 Automatic Type Inference Algorithm</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248">Read in the PDF: p. 248</a>.</p>
 <p>The pipeline is: allocate a fresh type for the whole expression, generate equations, solve them, then apply the resulting substitution to the requested type. A substitution maps type variables to types and must act recursively inside function and list types.</p>
@@ -165,6 +287,41 @@
 </table>
 <p>The next two subsections separate how these equations are generated from how they are solved.</p>
 <aside class="section-checkpoint" data-checkpoint="8.6" aria-label="Checkpoint 8.6"><p><strong>Predict · 8.6</strong> The root type is α, and solving gives α=β and β=int. What must typeof return?</p><details><summary>Reveal reasoning and common trap</summary><p>int. Generate constraints, solve them, and recursively apply the resulting substitution to the root. Returning α or stopping at β leaves solved information unused.</p><p><strong>Common trap:</strong> The last discovered binding alone is not the full substitution.</p><a href="syntax.html#substitution">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-15" data-lecture="15">Separate inference from runtime prediction <small>Lecture 15</small></h3>
+<ul>
+<li>Use fresh type variables for unknown parameter and expression types.</li>
+<li>Soundness/completeness of inference relative to a type system is different from completeness for all runtime-safe programs.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=2">p. 2</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=3">p. 3</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=4">p. 4</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=7">p. 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=9">p. 9</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=10">p. 10</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 15 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> f a : β contributes type(f) = type(a) → β</p>
+<p><a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#type">Type constructors and unknowns</a> · <a href="syntax.html#substitution">Type substitution versus term substitution</a></p>
+<p><strong>Worked example:</strong> proc f (proc x (f (x + 1))) forces x:int and f:int→β, giving (int→β)→int→β.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Assign fresh unknown types.</li>
+<li>Generate equations from each use.</li>
+<li>Solve compatible equalities.</li>
+<li>Apply the solution to the result type.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-5.svg" width="379.1123046875" height="387" alt="Lecture 15 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 15 reasoning route
+  accDescr: Numbered stages for applying type inference i: the idea.
+  N0[&quot;1. Assign fresh unknown types&quot;]
+  N1[&quot;2. Generate equations from each use&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Solve compatible equalities&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Apply the solution to the result type&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: plan fresh_tyvar use and expected constraints for each constructor.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Is a type variable a variable in the interpreted program?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>No. It is an unknown in the checker's description of types.</p>
+</details>
+</details>
 <h2 id="8-6-1-generating-type-equations">8.6.1 Generating Type Equations</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248">Read in the PDF: p. 248</a>.</p>
 <p>Let <code>G(Γ,e,t)</code> produce the conditions for e to have expected type t. A constant adds <code>t = int</code>. A variable adds <code>t = Γ(x)</code>. A procedure introduces fresh a and b, adds <code>t = a -&gt; b</code>, and generates the body at b under <code>Γ[x ↦ a]</code>. A monomorphic let introduces one fresh type shared by the definition and all uses in its body.</p>
@@ -175,7 +332,7 @@
 <li>Give the call result type γ; application requires α = int → γ.</li>
 <li>The outer result is <code>(int → γ) → int → γ</code>.</li>
 </ol>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-2.svg" width="280.81396484375" height="528.3999633789062" alt="Chapter 8 - derive the type of a higher-order function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-6.svg" width="280.81396484375" height="528.3999633789062" alt="Chapter 8 - derive the type of a higher-order function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 8 - derive the type of a higher-order function
   accDescr: Integer addition constrains x, then application constrains f, and the nested procedures form the final function type.
   A[&quot;f has alpha; x has beta&quot;] --&gt; B[&quot;x+1 requires beta = int&quot;]
@@ -183,11 +340,49 @@
   C --&gt; D[&quot;alpha = int to gamma&quot;]
   D --&gt; E[&quot;Whole type: (int to gamma) to int to gamma&quot;]
 </code></pre></details></figure><aside class="section-checkpoint" data-checkpoint="8.6.1" aria-label="Checkpoint 8.6.1"><p><strong>Predict · 8.6.1</strong> For f 1 with expected result β, which constraint must the callee satisfy?</p><details><summary>Reveal reasoning and common trap</summary><p>f must have int→β. A general call rule introduces a fresh argument type α, constrains f:α→β and the argument:α, then the literal forces α=int.</p><p><strong>Common trap:</strong> Repeated uses of one monomorphic binder must share its context type.</p><a href="syntax.html#constraints">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-16" data-lecture="16">Share binder types and keep fresh unknowns distinct <small>Lecture 16</small></h3>
+<ul>
+<li>Binder occurrences share the type recorded in Γ; do not invent a new type for every use of the same monomorphic variable.</li>
+<li>Generation can succeed even when the resulting equations are inconsistent.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=4">p. 4</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=6">p. 6</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=7">p. 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=8">p. 8</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=9">p. 9</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=10">p. 10</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 16 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> V(Γ, f a, t) = V(Γ,f,α→t) ∪ V(Γ,a,α), with fresh α</p>
+<p><a href="syntax.html#constraints">Constraint generation V</a> · <a href="syntax.html#typing">Static typing judgment</a> · <a href="syntax.html#type">Type constructors and unknowns</a></p>
+<p><strong>Worked example:</strong> For (proc x x) 1 with target β, generate the procedure's parameter/result equality and int for the argument. Solving forces β=int.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Receive context expression and target type.</li>
+<li>Match the expression constructor.</li>
+<li>Create fresh child unknowns.</li>
+<li>Generate child constraints in proper contexts.</li>
+<li>Union the constraints.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-7.svg" width="452.74462890625" height="491" alt="Lecture 16 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 16 reasoning route
+  accDescr: Numbered stages for applying type inference ii: constraint generation.
+  N0[&quot;1. Receive context expression and target type&quot;]
+  N1[&quot;2. Match the expression constructor&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Create fresh child unknowns&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Generate child constraints in proper contexts&quot;]
+  N2 --&gt; N3
+  N4[&quot;5. Union the constraints&quot;]
+  N3 --&gt; N4
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: implement a constraint generator before <a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">unification</a>; add the starter's list and recursive-function cases.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Should two independent procedure parameters receive the same fresh type variable?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>No. They become equal only if a constraint requires it.</p>
+</details>
+</details>
 <h2 id="8-6-2-solving-type-equations">8.6.2 Solving Type Equations</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=259">Read in the PDF: p. 259</a>.</p>
-<p><a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">Unification</a> repeatedly normalizes both sides under the current substitution. Equal types need no work. Function types decompose into parameter and result equations. A variable can be bound to a type if it does not occur inside that type. Different concrete constructors, such as int and bool, fail.</p>
+<p>Unification repeatedly normalizes both sides under the current substitution. Equal types need no work. Function types decompose into parameter and result equations. A variable can be bound to a type if it does not occur inside that type. Different concrete constructors, such as int and bool, fail.</p>
 <p>The <a href="glossary.html#occurs-check" class="definition-link" title="Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar. — English textbook, PDF p. 269">occurs check</a> rejects <code>α = α -&gt; β</code>, which would require an infinite type in this finite simple-type system. Self-application <code>fun x -&gt; x x</code> produces precisely this kind of equation.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-3.svg" width="1064.64501953125" height="1042.5037841796875" alt="Chapter 8 - unification decision tree"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-8.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-8.svg" width="1064.64501953125" height="1042.5037841796875" alt="Chapter 8 - unification decision tree"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-8.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 8 - unification decision tree
   accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.
   A[&quot;Apply current substitution to both sides&quot;] --&gt; B{&quot;Same type?&quot;}
@@ -201,11 +396,49 @@
   H --&gt;|No| J[&quot;Reject constructor mismatch&quot;]
 </code></pre></details></figure><p><strong>Worked substitution:</strong> from <code>α = β</code> and <code>β = int</code>, the final answer must make α int too. Keeping the first association without recursively applying or composing later substitutions would leave a stale variable. The solution file both normalizes existing entries and recursively applies substitutions.</p>
 <aside class="section-checkpoint" data-checkpoint="8.6.2" aria-label="Checkpoint 8.6.2"><p><strong>Predict · 8.6.2</strong> After α=β→int, can you safely add β=α?</p><details><summary>Reveal reasoning and common trap</summary><p>No. Applying the current substitution turns β=α into β=β→int, so β occurs inside its proposed replacement. Reject before extending the substitution.</p><p><strong>Common trap:</strong> An occurs check on unresolved names alone misses indirect cycles.</p><a href="glossary.html#occurs-check">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-17" data-lecture="17">Normalize before solving and after solving <small>Lecture 17</small></h3>
+<ul>
+<li>Normalize both sides using the current substitution before comparing.</li>
+<li>Apply the final substitution to the provisional result type, not just to the remaining constraints.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=13">p. 13</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=15">p. 15</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=16">p. 16</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=21">p. 21</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=23">p. 23</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=25">p. 25</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=26">p. 26</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 17 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> unify(α, int) gives [α↦int]; unify(α, α→β) fails; S(t1→t2)=S(t1)→S(t2)</p>
+<p><a href="syntax.html#substitution">Type substitution versus term substitution</a> · <a href="syntax.html#constraints">Constraint generation V</a> · <a href="syntax.html#type">Type constructors and unknowns</a></p>
+<p><strong>Worked example:</strong> α=β→β and β=int give α=int→int. For proc f (f f), the equation α=α→β fails the occurs check under finite simple types.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Apply the current substitution.</li>
+<li>Discard identical sides.</li>
+<li>Decompose matching constructors.</li>
+<li>Reject mismatch or occurs-check failure.</li>
+<li>Compose and propagate a new binding.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-9.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-9.svg" width="416.814453125" height="491" alt="Lecture 17 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-9.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 17 reasoning route
+  accDescr: Numbered stages for applying type inference iii: unification.
+  N0[&quot;1. Apply the current substitution&quot;]
+  N1[&quot;2. Discard identical sides&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Decompose matching constructors&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Reject mismatch or occurs-check failure&quot;]
+  N2 --&gt; N3
+  N4[&quot;5. Compose and propagate a new binding&quot;]
+  N3 --&gt; N4
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4: substitution, unification, occurs check, final result normalization, and TypeError tests.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Why is α=α harmless but α=α→β rejected?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>The first is identity. The second requires an infinite type in this finite-type system.</p>
+</details>
+</details>
 <h2 id="8-7-polymorphic-type-systems">8.7 Polymorphic Type Systems</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=271">Read in the PDF: p. 271</a>.</p>
 <p>A single monomorphic unknown is shared by all uses of a binding. Thus using the same identity function on both an integer and a boolean can force an inconsistent equation. <a href="glossary.html#let-polymorphism" class="definition-link" title="Giving an eligible let-bound value a type scheme whose quantified variables are freshly instantiated at each use. Variables fixed by the surrounding environment must remain shared. — English textbook, PDF p. 273">Let-polymorphism</a> instead associates the binding with a type scheme and creates fresh instances at each use.</p>
 <p>The key rule is <code>generalize(Γ,t) = ∀(FTV(t) − FTV(Γ)).t</code>. Only variables independent of the surrounding type environment may be generalized. Ordinary procedure parameters remain monomorphic. At lookup, instantiate the quantified variables with fresh unknowns; do not freshen the unquantified environment-dependent variables.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-4.svg" width="549.390625" height="621.9000244140625" alt="Chapter 8 - distinguish a shared unknown from a polymorphic scheme"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-10.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-10.svg" width="549.390625" height="621.9000244140625" alt="Chapter 8 - distinguish a shared unknown from a polymorphic scheme"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-10.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme
   accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.
   A[&quot;Infer let-bound identity: alpha to alpha&quot;] --&gt; B[&quot;Solve constraints and apply them to the environment&quot;]
@@ -215,6 +448,44 @@
   D --&gt; F[&quot;Boolean use gets fresh gamma: gamma=bool&quot;]
 </code></pre></details></figure><p>The downloadable §8.8 checker deliberately implements the initial <strong>monomorphic</strong> equation system and a monomorphic Fun extension. This section explains the separate let-polymorphic extension; the file is not presented as an OCaml-equivalent polymorphic type checker. See <a href="13-polymorphism.html">the detailed polymorphism chapter</a> for further worked cases.</p>
 <aside class="section-checkpoint" data-checkpoint="8.7" aria-label="Checkpoint 8.7"><p><strong>Predict · 8.7</strong> If f has α→β and β is free in Γ but α is not, what scheme may be assigned at let?</p><details><summary>Reveal reasoning and common trap</summary><p>∀α.α→β. Each use gets a fresh input type, but β remains tied to the surrounding environment. Quantifying β would invent independence that the program does not have.</p><p><strong>Common trap:</strong> Ordinary procedure parameters are not generalized like let-bound identifiers.</p><a href="syntax.html#scheme">Revisit the prerequisite →</a></details></aside>
+<h3 class="lecture-heading" id="lecture-18" data-lecture="18">Keep polymorphism within its assumptions <small>Lecture 18</small></h3>
+<ul>
+<li>Procedure parameters remain monomorphic in the presented let-polymorphic system.</li>
+<li>The pure-language rule cannot be transferred blindly to mutable references; practical OCaml uses a value restriction.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=2">p. 2</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=6">p. 6</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=8">p. 8</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=11">p. 11</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=12">p. 12</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=13">p. 13</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=14">p. 14</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 18 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> Gen(Γ,t)=∀(FTV(t)−FTV(Γ)).t; Inst(∀α.t)=t[α↦fresh β]</p>
+<p><a href="syntax.html#scheme">Quantified type schemes</a> · <a href="syntax.html#substitution">Type substitution versus term substitution</a> · <a href="syntax.html#typing">Static typing judgment</a></p>
+<p><strong>Worked example:</strong> let id = proc x x in if id true then id 11 else id 22 uses independent bool→bool and int→int instances. A monomorphic id would force bool=int and fail.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Infer and solve the let initializer.</li>
+<li>Apply substitutions to type and context.</li>
+<li>Generalize variables absent from the context.</li>
+<li>Bind the identifier to its generalized scheme.</li>
+<li>Instantiate freshly at every use.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-11.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-11.svg" width="452.521484375" height="491" alt="Lecture 18 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-11.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 18 reasoning route
+  accDescr: Numbered stages for applying let-polymorphism.
+  N0[&quot;1. Infer and solve the let initializer&quot;]
+  N1[&quot;2. Apply substitutions to type and context&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Generalize variables absent from the context&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Bind the identifier to its generalized scheme&quot;]
+  N2 --&gt; N3
+  N4[&quot;5. Instantiate freshly at every use&quot;]
+  N3 --&gt; N4
+</code></pre></details></figure><p><strong>Homework connection:</strong> HW4 handout does not settle every polymorphism policy. Implement the required policy explicitly; this lecture explains the extension rather than silently changing the assignment contract.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> Can a type variable free in Γ be quantified at this let?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>No. It represents a dependency on the surrounding context.</p>
+</details>
+</details>
 <h2 id="8-8-implementation">8.8 Implementation</h2>
 <p><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=274">Read in the PDF: pp. 274–276</a>. <a href="examples/textbook_types.ml" download="">Download the complete generator, solver, and Fun extension</a>. Run <code>ocaml textbook_types.ml</code>.</p>
 <h3 id="task-1-gen-equations">Task 1 — gen_equations</h3>
@@ -228,5 +499,46 @@
 <p><strong>What successful typing does not establish:</strong> <code>HEAD NIL</code> can have a list-element type while failing dynamically, and integer division can still encounter zero. These shape types do not prove nonemptiness, nonzero divisors, termination, or freedom from integer overflow. Stronger refinements would be a separate analysis.</p>
 <p><strong>Homework connection:</strong> <a href="hw4.html">HW4</a> asks for a related checker but has its own interface and policy questions. Next: <a href="textbook-09.html">Chapter 9</a>.</p>
 <aside class="section-checkpoint" data-checkpoint="8.8" aria-label="Checkpoint 8.8"><p><strong>Predict · 8.8</strong> Does giving HEAD NIL a list-element result type prove that it executes successfully?</p><details><summary>Reveal reasoning and common trap</summary><p>No. A homogeneous-list type records element shape, not nonemptiness. The evaluator may still reject the empty list; stronger guarantees need a different analysis or specification.</p><p><strong>Common trap:</strong> Do not turn simple type safety into a promise of no division errors, empty-list errors, or divergence.</p><a href="hw4.html#soundness-and-partial-operations">Revisit the prerequisite →</a></details></aside>
-</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="textbook-07.html"><small>← Previous</small>7. Pointers and Memory Management</a><a href="textbook-09.html"><small>Next →</small>9. Lambda Calculus</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#chapter-cheat-sheet">Chapter cheat sheet</a><a href="#syntax-and-code-companion">Syntax and code companion</a><a href="#before-you-begin">Before you begin</a><a href="#8-1-target-language">8.1 Target Language</a><a href="#8-2-type">8.2 Type</a><a href="#8-3-type-environment">8.3 Type Environment</a><a href="#8-4-type-inference-rules">8.4 Type Inference Rules</a><a href="#8-5-type-checker-implementation-approach">8.5 Type Checker Implementation Approach</a><a href="#8-6-automatic-type-inference-algorithm">8.6 Automatic Type Inference Algorithm</a><a href="#8-6-1-generating-type-equations">8.6.1 Generating Type Equations</a><a href="#8-6-2-solving-type-equations">8.6.2 Solving Type Equations</a><a href="#8-7-polymorphic-type-systems">8.7 Polymorphic Type Systems</a><a href="#8-8-implementation">8.8 Implementation</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+<h2 id="lecture-extension-typed-objects-and-safe-subtyping">Lecture extension: Typed objects and safe subtyping</h2>
+<p>This slide topic extends the chapter’s model; it is not a numbered section of the supplied textbook. Check class programs using safe substitutability, with contravariant method inputs and covariant outputs.</p>
+<h3 class="lecture-heading" id="lecture-19" data-lecture="19">Typed objects and safe subtyping <small>Lecture 19</small></h3>
+<ul>
+<li>Build class signatures and validate overrides before checking method bodies and the main expression.</li>
+<li>The receiver's static type controls available members; runtime dispatch still selects the implementation.</li>
+</ul>
+<p class="lecture-sources">Source slides: <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=5">p. 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=8">p. 8</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=10">p. 10</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=11">p. 11</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=13">p. 13</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=18">p. 18</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=20">p. 20</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=22">p. 22</a></p>
+<details class="lecture-practice"><summary>Practice with Lecture 19 · example, thinking flow, and self-check</summary>
+<p><strong>Rule in context:</strong> A2 &lt;: A1 and B1 &lt;: B2 ⇒ (A1→B1) &lt;: (A2→B2)</p>
+<p><a href="syntax.html#subtype">Subtyping and variance</a> · <a href="syntax.html#dispatch">Class environment, self, and super</a> · <a href="syntax.html#typing">Static typing judgment</a></p>
+<p><strong>Worked example:</strong> If ColorPoint &lt;: Point, a replacement for Point→Point may accept every Point and return ColorPoint. Restricting its input to ColorPoint is unsafe for callers supplying an ordinary Point.</p>
+<p><strong>Thinking steps:</strong></p>
+<ol>
+<li>Build inherited field and method signatures.</li>
+<li>Check override compatibility.</li>
+<li>Check each method body in its context.</li>
+<li>Check the main expression.</li>
+<li>Use <a href="glossary.html#subtyping" class="definition-link" title="A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system. — Course slides, PDF p. 8">subtyping</a> at permitted compatibility checks.</li>
+</ol>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-08-12.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-08-12.svg" width="473.5048828125" height="491" alt="Lecture 19 reasoning route"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-08-12.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>%%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 600}}}%%
+flowchart TD
+  accTitle: Lecture 19 reasoning route
+  accDescr: Numbered stages for applying typed objects and subtyping.
+  N0[&quot;1. Build inherited field and method signatures&quot;]
+  N1[&quot;2. Check override compatibility&quot;]
+  N0 --&gt; N1
+  N2[&quot;3. Check each method body in its context&quot;]
+  N1 --&gt; N2
+  N3[&quot;4. Check the main expression&quot;]
+  N2 --&gt; N3
+  N4[&quot;5. Use subtyping at permitted compatibility checks&quot;]
+  N3 --&gt; N4
+</code></pre></details></figure><p><strong>Homework connection:</strong> An extension beyond HW4's simple type checker; do not replace equality unification with subtyping in HW4 without a specification change.</p>
+<p><a href="hw4.html">HW4 thinking guide</a> · <a href="homework-map.html">Full homework map</a></p>
+<p><strong>Try it:</strong> May an override demand a narrower argument type?</p>
+<details class="worked-solution"><summary>Reveal the explanation</summary>
+<p>Not under the lecture's substitutability rule: old callers must still be accepted.</p>
+</details>
+</details>
+<p><a href="14-subtyping.html">Continue with the detailed companion explanation</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="textbook-07.html"><small>← Previous</small>7. Pointers and Memory Management</a><a href="textbook-09.html"><small>Next →</small>9. Lambda Calculus</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#chapter-cheat-sheet">Chapter cheat sheet</a><a href="#syntax-and-code-companion">Syntax and code companion</a><a href="#before-you-begin">Before you begin</a><a href="#8-1-target-language">8.1 Target Language</a><a href="#8-2-type">8.2 Type</a><a href="#8-3-type-environment">8.3 Type Environment</a><a href="#8-4-type-inference-rules">8.4 Type Inference Rules</a><a href="#8-5-type-checker-implementation-approach">8.5 Type Checker Implementation Approach</a><a href="#8-6-automatic-type-inference-algorithm">8.6 Automatic Type Inference Algorithm</a><a href="#8-6-1-generating-type-equations">8.6.1 Generating Type Equations</a><a href="#8-6-2-solving-type-equations">8.6.2 Solving Type Equations</a><a href="#8-7-polymorphic-type-systems">8.7 Polymorphic Type Systems</a><a href="#8-8-implementation">8.8 Implementation</a><a href="#lecture-extension-typed-objects-and-safe-subtyping">Lecture extension: Typed objects and safe subtyping</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
   <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

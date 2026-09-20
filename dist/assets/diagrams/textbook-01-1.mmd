@@ -1,10 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
 flowchart TD
-  accTitle: Decide membership from the rules, not from a few examples
-  accDescr: Derive nine by repeated construction and exclude seven using a preserved divisibility invariant.
-  A["Base: 0 belongs"] --> B["Step: add 3"]
-  B --> C["3, then 6, then 9"]
-  C --> D["9 has a finite derivation"]
-  A --> E["Invariant: every result is divisible by 3"]
-  B --> E
-  E --> F["7 is not divisible by 3"]
-  F --> G["7 cannot have a derivation"]
+  accTitle: Lecture 0 reasoning route
+  accDescr: Numbered stages for applying course overview.
+  N0["1. Identify the language being studied"]
+  N1["2. Read its syntax and semantic rules"]
+  N0 --> N1
+  N2["3. Represent its constructors in OCaml"]
+  N1 --> N2
+  N3["4. Trace a small example before implementing"]
+  N2 --> N3

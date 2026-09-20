@@ -84,3 +84,11 @@ Source snapshot: 20 September 2026.
 - Added nine concise chapter summaries with definitions, main meaning, a key rule, a worked micro-example, four solving steps, and a common trap. Existing glossary linking and the section-aware syntax rail also apply to these summaries.
 - Added direct links from the textbook contents. Static validation enforces all nine chapter sheets and required content, and checks their source and navigation links.
 - Reviewed Chapter 4 on desktop and at 390 × 844 in dark mode; document width and scroll width both measured 375 px.
+
+## Integrated lecture/textbook reading
+
+- Consolidated 21 lecture summaries into selected highlights and expandable practice at matching textbook sections. Four topics are explicitly marked as lecture extensions. Chapter 5 links to the relevant earlier practice instead of duplicating it.
+- Removed 22 separate lecture entries from the catalog, sidebar, pagination, and search. All 22 old URLs redirect to the map or a precise integrated lecture anchor; internal links use the destinations directly.
+- Added chapter reading routes, collapsible lecture indexes, and the complete lecture-to-chapter map. Relabeled supporting guides as Extra explanations and the workbench as OCaml setup. Decisions are documented in LECTURE_MERGE_REVIEW.md.
+- Checked the Lecture 2 redirect, nested answer, and keyboard disclosure. Checked Chapter 8 index-to-extension navigation and retained homework-scope caveats. Reviewed dark desktop and light mobile layouts; at 390 × 844, content width and scroll width both measured 375 px.
+- Static validation covers 36 canonical pages, 21 integrated destinations, 22 redirects, 106 diagrams, 9 cheat sheets, and 48 checkpoints. Existing OCaml checks remain in the deployment workflow.
