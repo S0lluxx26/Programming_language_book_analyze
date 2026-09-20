@@ -1,9 +1,10 @@
 flowchart TD
   accTitle: The HW4 type-inference pipeline
   accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.
-  A["AST + empty type environment"] --> B["Generate provisional type<br/>and equations"]
-  B --> C["Unify equations<br/>with occurs checks"]
-  C --> D{"All operator restrictions valid?"}
-  D -->|"yes"| E["Apply final substitution<br/>Return type"]
+  A["1. Preserve the supplied interfaces"] --> A2["2. Introduce fresh unknowns"]
+  A2 --> B["3. Generate equations and restrictions"]
+  B --> C["4. Unify with occurs checks"]
+  C --> D{"5. All operator restrictions valid?"}
+  D -->|"yes"| E["6. Substitute and return type"]
   D -->|"no"| F["TypeError"]
   C -->|"contradiction or cycle"| F

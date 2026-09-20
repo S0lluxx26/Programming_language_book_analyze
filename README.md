@@ -16,9 +16,10 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 - A source-aligned reader following all 9 English textbook chapters and 48 numbered sections, plus the complete 12-problem §2.4 walkthrough.
 - Worked solutions to the implementation tasks in Chapters 4–9, with five executable OCaml files and explicit assumptions where the draft leaves gaps.
 - 4 assignment guides, including all 15 HW1 problems and constructor maps for HW2–HW4.
+- 37 numbered thinking routes across the homework guides and textbook exercises, with links to all 18 official OCaml starter files.
 - Mermaid flowcharts and relationship graphs, rendered to accessible static SVG; editable source is included beside each diagram.
 - 42 definition entries with highlighted term links, in-place definition dialogs, and verified textbook/slide PDF page references.
-- 35 reading pages and 71 Mermaid diagrams, with source code available under each graph.
+- 35 reading pages and 85 Mermaid diagrams, with source code available under each graph.
 - Interactive closure, store, exception, and type-inference traces; search; chapter navigation; responsive layout; print styles.
 - A full source inventory with byte sizes, SHA-256 hashes, and PDF page counts.
 
@@ -49,6 +50,8 @@ npm run serve
 ```
 
 Preview at <http://127.0.0.1:4173/>. On Windows the renderer defaults to installed Chrome; set `BOOK_BROWSER_CHANNEL=msedge` to use Edge. On CI it uses Playwright Chromium. For a local Playwright-managed Chromium, set `CI=1` for the build. The published book itself requires no Node server, CDN, or Mermaid runtime.
+
+Author numbered reasoning steps in `book/thinking-routes.json`; the build inserts them into their matching sections and generates the associated HW1 Mermaid plans. Official starter provenance is recorded in `sources/professor-templates.json`.
 
 Author chapters in `book/*.md` and navigation in `book/catalog.json`. Edit `book/definitions.json` and `scripts/references.mjs` for generated glossary/source pages. `npm run build` regenerates references, HTML, search data, Mermaid sources, and SVGs in `dist/`. Never use the partial `--preview` authoring mode for publication.
 

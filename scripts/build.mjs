@@ -4,6 +4,7 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js/lib/core';
 import ocaml from 'highlight.js/lib/languages/ocaml';
 import bash from 'highlight.js/lib/languages/bash';
+import {addThinkingRoutes} from './thinking-routes.mjs';
 hljs.registerLanguage('ocaml', ocaml); hljs.registerLanguage('bash', bash);
 const root = process.cwd();
 const catalog = JSON.parse(fs.readFileSync('book/catalog.json', 'utf8')).filter(p=>!process.argv.includes('--preview')||fs.existsSync(`book/${p.slug}.md`));
@@ -76,7 +77,7 @@ for (let n=0;n<catalog.length;n++) {
   const page=catalog[n], file=`book/${page.slug}.md`;
   currentPage=page.slug;diagramCount=0;
   if(!fs.existsSync(file)) throw Error(`Missing chapter: ${file}`);
-  const source=fs.readFileSync(file,'utf8');
+  const source=addThinkingRoutes(page.slug,fs.readFileSync(file,'utf8'));
   const tokens=md.parse(source,{}), headings=[], ids=new Map();
   for(let i=0;i<tokens.length;i++) if(tokens[i].type==='heading_open') {
     const label=tokens[i+1].content,base=slugify(label),count=ids.get(base)||0; ids.set(base,count+1);

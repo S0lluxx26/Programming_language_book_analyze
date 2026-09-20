@@ -1,19 +1,23 @@
 ## A plan for all 15 problems
 
+The professor's [HW1 starter folder](https://github.com/kupl-courses/COSE212-2026fall/tree/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1) contains one `.ml` file per problem. Each problem below links to its exact file and public function type. These are TODO templates, not official completed solutions. In particular, `mem.ml` and `mirror.ml` define **different** types with the same name `btree`; work in the appropriate file.
+
+Read each numbered **Thinking steps** list first, then follow the matching diagram and use the explanation below it to check your assumptions. In a decision diagram, follow the applicable branch; do not execute mutually exclusive branches in sequence.
+
 The [official handout](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf) is six PDF pages. Read the supplied type before coding. First decide what information each helper needs, then choose base cases and recursive steps. The examples below are small independent checks and derivation strategies; preserve the provided template interfaces.
 
 ```mermaid
 flowchart TD
   accTitle: Deriving a recursive homework function
   accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.
-  A["Read the function type"] --> B{"What is the input shape?"}
+  A["1. Read the function type"] --> B{"2. What is the input shape?"}
   B -->|"integer or interval"| C["Choose a decreasing numeric measure"]
   B -->|"list or tree"| D["Match every constructor"]
   B -->|"expression with bindings"| E["Carry a lexical context"]
-  C --> F["Write base case and recursive step"]
+  C --> F["3. Write base case and recursive step"]
   D --> F
   E --> F
-  F --> G["Test ordinary, boundary, and adversarial cases"]
+  F --> G["4. Test ordinary, boundary, and adversarial cases"]
 ```
 
 ## P1 · Primality
@@ -123,12 +127,12 @@ Traverse with the names bound along the current path. A variable is valid if its
 flowchart TD
   accTitle: Checking free variables by lexical path
   accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.
-  A["check helper: context + expression"] --> B{"Outer constructor?"}
-  B -->|"V x"| C{"Is x in context?"}
+  A["1. Start helper with empty context"] --> B{"Match the outer constructor"}
+  B -->|"V x"| C{"2. Is x in context?"}
   C -->|"yes"| T["true"]
   C -->|"no"| F["false"]
-  B -->|"P x body"| D["Check body with x added"]
-  B -->|"C left right"| E["Check both with the same incoming context"]
+  B -->|"P x body"| D["3. Check body with x added"]
+  B -->|"C left right"| E["4. Check both with the same incoming context"]
   E --> G["Combine with AND"]
 ```
 

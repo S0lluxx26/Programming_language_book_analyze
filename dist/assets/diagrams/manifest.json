@@ -257,19 +257,75 @@
   },
   {
     "name": "hw1-1",
-    "source": "flowchart TD\n  accTitle: Deriving a recursive homework function\n  accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.\n  A[\"Read the function type\"] --> B{\"What is the input shape?\"}\n  B -->|\"integer or interval\"| C[\"Choose a decreasing numeric measure\"]\n  B -->|\"list or tree\"| D[\"Match every constructor\"]\n  B -->|\"expression with bindings\"| E[\"Carry a lexical context\"]\n  C --> F[\"Write base case and recursive step\"]\n  D --> F\n  E --> F\n  F --> G[\"Test ordinary, boundary, and adversarial cases\"]\n"
+    "source": "flowchart TD\n  accTitle: Deriving a recursive homework function\n  accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.\n  A[\"1. Read the function type\"] --> B{\"2. What is the input shape?\"}\n  B -->|\"integer or interval\"| C[\"Choose a decreasing numeric measure\"]\n  B -->|\"list or tree\"| D[\"Match every constructor\"]\n  B -->|\"expression with bindings\"| E[\"Carry a lexical context\"]\n  C --> F[\"3. Write base case and recursive step\"]\n  D --> F\n  E --> F\n  F --> G[\"4. Test ordinary, boundary, and adversarial cases\"]\n"
   },
   {
     "name": "hw1-2",
-    "source": "flowchart TD\n  accTitle: Checking free variables by lexical path\n  accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.\n  A[\"check helper: context + expression\"] --> B{\"Outer constructor?\"}\n  B -->|\"V x\"| C{\"Is x in context?\"}\n  C -->|\"yes\"| T[\"true\"]\n  C -->|\"no\"| F[\"false\"]\n  B -->|\"P x body\"| D[\"Check body with x added\"]\n  B -->|\"C left right\"| E[\"Check both with the same incoming context\"]\n  E --> G[\"Combine with AND\"]\n"
+    "source": "flowchart TD\n  accTitle: HW1 P1 · Primality - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. State the boundary\"]\n  S2[\"2. Choose a candidate\"]\n  S3[\"3. Check whether search is complete\"]\n  S4[\"4. Test and advance\"]\n  S5[\"5. Check the reasoning\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-3",
+    "source": "flowchart TD\n  accTitle: HW1 P2 · Range - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Compare the bounds\"]\n  S2[\"2. Stop at one element\"]\n  S3[\"3. Build the front\"]\n  S4[\"4. Solve the smaller interval\"]\n  S5[\"5. Verify order and endpoints\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-4",
+    "source": "flowchart TD\n  accTitle: HW1 P3 · Sum of lists - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Solve one inner list\"]\n  S2[\"2. Handle the outer base case\"]\n  S3[\"3. Combine two results\"]\n  S4[\"4. Check nested emptiness\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-5",
+    "source": "flowchart TD\n  accTitle: HW1 P4 · Drop a prefix - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Check the count\"]\n  S2[\"2. Check exhaustion\"]\n  S3[\"3. Discard one element\"]\n  S4[\"4. Preserve the suffix\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-6",
+    "source": "flowchart TD\n  accTitle: HW1 P5 · Maximum and minimum - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Separate empty input\"]\n  S2[\"2. Initialize from real data\"]\n  S3[\"3. Update the candidate\"]\n  S4[\"4. Advance through the tail\"]\n  S5[\"5. Return and challenge the result\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-7",
+    "source": "flowchart TD\n  accTitle: HW1 P6 · Sigma - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Choose the empty-sum convention\"]\n  S2[\"2. Compute the current contribution\"]\n  S3[\"3. Stop or shrink\"]\n  S4[\"4. Add the contributions\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-8",
+    "source": "flowchart TD\n  accTitle: HW1 P7 · Universal predicate - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Choose the empty-list answer\"]\n  S2[\"2. Test the head\"]\n  S3[\"3. Stop on failure\"]\n  S4[\"4. Continue on success\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-9",
+    "source": "flowchart TD\n  accTitle: HW1 P8 · Double a function - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Read the types\"]\n  S2[\"2. Name the incoming value\"]\n  S3[\"3. Compose twice\"]\n  S4[\"4. Expand higher-order uses\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-10",
+    "source": "flowchart TD\n  accTitle: HW1 P9 - numbered reasoning for tree membership\n  accDescr: Match Empty or Node, test the node value, then search the children with logical OR. No binary-search-tree ordering is assumed.\n  A[\"1. Match Empty or Node\"] --> B{\"2. Empty?\"}\n  B -->|Yes| F[\"Return false\"]\n  B -->|No| C{\"3. Node value equals target?\"}\n  C -->|Yes| T[\"Return true\"]\n  C -->|No| D[\"4a. Search left child\"]\n  D --> E{\"Found on left?\"}\n  E -->|Yes| T\n  E -->|No| G[\"4b. Search right child\"]\n  G --> H[\"5. Return the OR result\"]\n"
+  },
+  {
+    "name": "hw1-11",
+    "source": "flowchart TD\n  accTitle: HW1 P10 · Mirror a tree - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Read this file's constructors\"]\n  S2[\"2. Keep leaf values\"]\n  S3[\"3. Swap one-sided branches\"]\n  S4[\"4. Swap two-sided branches\"]\n  S5[\"5. Check the whole structure\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-12",
+    "source": "flowchart TD\n  accTitle: HW1 P11 · Peano arithmetic - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Recurse over one natural\"]\n  S2[\"2. Derive addition\"]\n  S3[\"3. Reuse addition for multiplication\"]\n  S4[\"4. Check constructor arithmetic\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n"
+  },
+  {
+    "name": "hw1-13",
+    "source": "flowchart TD\n  accTitle: HW1 P12 · Formulas and arithmetic - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Separate the two result types\"]\n  S2[\"2. Evaluate arithmetic structurally\"]\n  S3[\"3. Evaluate logical constructors\"]\n  S4[\"4. Connect the domains at Equal\"]\n  S5[\"5. Check implication carefully\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-14",
+    "source": "flowchart TD\n  accTitle: HW1 P13 · Symbolic differentiation - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Keep the differentiation variable fixed\"]\n  S2[\"2. Handle atomic cases\"]\n  S3[\"3. Distribute over a sum\"]\n  S4[\"4. Apply the product rule\"]\n  S5[\"5. Separate simplification from correctness\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-15",
+    "source": "flowchart TD\n  accTitle: HW1 P14 · Sigma calculator - numbered reasoning plan\n  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.\n  S1[\"1. Introduce a private context\"]\n  S2[\"2. Interpret ordinary expressions\"]\n  S3[\"3. Evaluate the summation bounds\"]\n  S4[\"4. Evaluate each summand\"]\n  S5[\"5. Keep nested bindings local\"]\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n"
+  },
+  {
+    "name": "hw1-16",
+    "source": "flowchart TD\n  accTitle: Checking free variables by lexical path\n  accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.\n  A[\"1. Start helper with empty context\"] --> B{\"Match the outer constructor\"}\n  B -->|\"V x\"| C{\"2. Is x in context?\"}\n  C -->|\"yes\"| T[\"true\"]\n  C -->|\"no\"| F[\"false\"]\n  B -->|\"P x body\"| D[\"3. Check body with x added\"]\n  B -->|\"C left right\"| E[\"4. Check both with the same incoming context\"]\n  E --> G[\"Combine with AND\"]\n"
   },
   {
     "name": "hw2-1",
-    "source": "flowchart TD\n  accTitle: A staged plan for the ML-minus interpreter\n  accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.\n  A[\"1. Tagged values and environment lookup\"] --> B[\"2. Constants, arithmetic, comparisons\"]\n  B --> C[\"3. IF, LET, and lists\"]\n  C --> D[\"4. PROC and lexical CALL\"]\n  D --> E[\"5. LETREC and LETMREC\"]\n  E --> F[\"6. PRINT, SEQ, and undefined cases\"]\n  F --> G[\"7. Run official examples and distinguishing tests\"]\n"
+    "source": "flowchart TD\n  accTitle: A staged plan for the ML-minus interpreter\n  accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.\n  A[\"1. Preserve the supplied interface\"] --> B[\"2. Tagged values and lookup\"]\n  B --> C[\"3. Scalar and list rules\"]\n  C --> D[\"4. IF and LET\"]\n  D --> E[\"5. Closures and recursion\"]\n  E --> F[\"6. Effect order and undefined cases\"]\n  F --> G[\"7. Run official examples and distinguishing tests\"]\n"
   },
   {
     "name": "hw2-2",
-    "source": "flowchart TD\n  accTitle: Choosing the environment for a procedure call\n  accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure's saved context plus recursive and parameter bindings.\n  A[\"Evaluate function and argument in caller\"] --> B{\"Procedure value form?\"}\n  B -->|\"ordinary\"| C[\"Saved environment + parameter\"]\n  B -->|\"recursive\"| D[\"Saved environment + self + parameter\"]\n  B -->|\"mutually recursive\"| E[\"Saved environment + both procedures + parameter\"]\n  B -->|\"not a procedure\"| X[\"UndefinedSemantics\"]\n  C --> F[\"Evaluate the stored body\"]\n  D --> F\n  E --> F\n"
+    "source": "flowchart TD\n  accTitle: Choosing the environment for a procedure call\n  accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure's saved context plus recursive and parameter bindings.\n  A[\"1. Evaluate function in caller\"] --> A2[\"2. Evaluate argument in caller\"]\n  A2 --> B{\"3. Select the procedure's saved environment\"}\n  B -->|\"ordinary\"| C[\"4. No recursive binding needed\"]\n  B -->|\"recursive\"| D[\"4. Restore self binding\"]\n  B -->|\"mutually recursive\"| E[\"4. Restore both procedure bindings\"]\n  B -->|\"not a procedure\"| X[\"UndefinedSemantics\"]\n  C --> F[\"5. Bind parameter; evaluate stored body\"]\n  D --> F\n  E --> F\n"
   },
   {
     "name": "hw3-1",
@@ -281,6 +337,6 @@
   },
   {
     "name": "hw4-1",
-    "source": "flowchart TD\n  accTitle: The HW4 type-inference pipeline\n  accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.\n  A[\"AST + empty type environment\"] --> B[\"Generate provisional type<br/>and equations\"]\n  B --> C[\"Unify equations<br/>with occurs checks\"]\n  C --> D{\"All operator restrictions valid?\"}\n  D -->|\"yes\"| E[\"Apply final substitution<br/>Return type\"]\n  D -->|\"no\"| F[\"TypeError\"]\n  C -->|\"contradiction or cycle\"| F\n"
+    "source": "flowchart TD\n  accTitle: The HW4 type-inference pipeline\n  accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.\n  A[\"1. Preserve the supplied interfaces\"] --> A2[\"2. Introduce fresh unknowns\"]\n  A2 --> B[\"3. Generate equations and restrictions\"]\n  B --> C[\"4. Unify with occurs checks\"]\n  C --> D{\"5. All operator restrictions valid?\"}\n  D -->|\"yes\"| E[\"6. Substitute and return type\"]\n  D -->|\"no\"| F[\"TypeError\"]\n  C -->|\"contradiction or cycle\"| F\n"
   }
 ]

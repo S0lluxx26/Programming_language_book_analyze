@@ -1,18 +1,33 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HW2 · Build the ML− interpreter · The Programming Languages Notebook</title><meta name="description" content="A staged implementation guide for lists, closures, recursive procedures, and undefined semantics."><meta name="theme-color" content="#142b48"><meta property="og:title" content="HW2 · Build the ML− interpreter"><meta property="og:description" content="A staged implementation guide for lists, closures, recursive procedures, and undefined semantics."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">Start here</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" aria-current="page">HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Rules → recursive evaluation</p><h1>HW2 · Build the ML− interpreter</h1><p class="dek">A staged implementation guide for lists, closures, recursive procedures, and undefined semantics.</p><p class="reading-meta">6 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="the-contract">The contract</h2>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Rules → recursive evaluation</p><h1>HW2 · Build the ML− interpreter</h1><p class="dek">A staged implementation guide for lists, closures, recursive procedures, and undefined semantics.</p><p class="reading-meta">8 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="the-contract">The contract</h2>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw2/ml_minus.ml"><code>hw2/ml_minus.ml</code></a>. The file supplies syntax, values, <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environments</a>, printing, sample programs, and the <code>runml</code> wrapper. Its evaluator still has TODO cases, so it is a starting point rather than an official solution.</p>
+<p><strong>Template constraint:</strong> the first comment says “Do not use any module.” Use the supplied standalone <code>fold_left</code> and <code>map</code>, or your own recursive helpers; do not paste <code>List.*</code> calls or module-based helpers from the independent textbook examples into this assignment. Keep <code>eval : exp -&gt; env -&gt; value</code> in the template's argument order. Its lookup helper currently raises <code>Failure</code> for an unbound name; adapt relevant failures to the handout's <code>UndefinedSemantics</code> contract when implementing the missing behavior.</p>
 <p>Implement <code>runml : program -&gt; value</code> for the ML− language in the <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf">official handout</a>. Raise <code>UndefinedSemantics</code> whenever no dynamic rule applies. The official <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> and value constructors appear on PDF pp. 4–5; the semantic rules are on pp. 2–4.</p>
-<p>The public entry point can start a recursive helper under an empty <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a>. That helper has the conceptual form <code>eval : env -&gt; exp -&gt; value</code>. The interface’s simplicity does not remove the need for environments internally.</p>
+<p>The supplied public entry point already starts <code>eval</code> under <code>empty_env</code>. Follow its actual order, <code>eval expression environment</code>. The interface’s simplicity does not remove the need for environments internally.</p>
 <h2 id="build-in-layers">Build in layers</h2>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw2-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw2-1.svg" width="295.71533203125" height="811.2000122070312" alt="A staged plan for the ML-minus interpreter"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw2-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw2/ml_minus.ml"><code>hw2/ml_minus.ml</code></a> · Interface: <code>eval : exp -&gt; env -&gt; value; runml : program -&gt; value</code>.</p>
+<ol>
+<li><strong>Preserve the supplied interface.</strong> Use the provided constructors and the existing runml wrapper; the template helper takes expression before environment.</li>
+<li><strong>Implement tagged values and lookup.</strong> Distinguish integers, booleans, Unit, lists, and the three procedure forms.</li>
+<li><strong>Add scalar and list rules.</strong> Check each operation's required value shapes and undefined cases.</li>
+<li><strong>Add IF and LET.</strong> Choose one branch; evaluate a let definition before extending the environment for its body.</li>
+<li><strong>Add procedures and recursion.</strong> Capture lexical environments and reinstall the appropriate self/peer bindings on calls.</li>
+<li><strong>Preserve effects and errors.</strong> Keep PRINT and SEQ ordering; translate relevant helper failures into the required UndefinedSemantics behavior.</li>
+<li><strong>Run targeted checks.</strong> Test official examples and cases that distinguish incorrect environments or invalid value shapes.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw2-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw2-1.svg" width="293.7265625" height="773.800048828125" alt="A staged plan for the ML-minus interpreter"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw2-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: A staged plan for the ML-minus interpreter
   accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.
-  A[&quot;1. Tagged values and environment lookup&quot;] --&gt; B[&quot;2. Constants, arithmetic, comparisons&quot;]
-  B --&gt; C[&quot;3. IF, LET, and lists&quot;]
-  C --&gt; D[&quot;4. PROC and lexical CALL&quot;]
-  D --&gt; E[&quot;5. LETREC and LETMREC&quot;]
-  E --&gt; F[&quot;6. PRINT, SEQ, and undefined cases&quot;]
+  A[&quot;1. Preserve the supplied interface&quot;] --&gt; B[&quot;2. Tagged values and lookup&quot;]
+  B --&gt; C[&quot;3. Scalar and list rules&quot;]
+  C --&gt; D[&quot;4. IF and LET&quot;]
+  D --&gt; E[&quot;5. Closures and recursion&quot;]
+  E --&gt; F[&quot;6. Effect order and undefined cases&quot;]
   F --&gt; G[&quot;7. Run official examples and distinguishing tests&quot;]
 </code></pre></details></figure><p>Do not postpone all error cases until the end: each layer should reject wrong value shapes as soon as its rule requires a particular shape.</p>
 <h2 id="map-every-constructor-family">Map every constructor family</h2>
@@ -109,23 +124,43 @@
 </table>
 <p>ML−’s dynamic list domain allows sequences of arbitrary values. A homogeneous static list <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> in HW4 can conservatively reject heterogeneous lists; do not accidentally impose a type-checker restriction inside the HW2 evaluator unless its dynamic rules require it.</p>
 <h2 id="closures-and-recursion">Closures and recursion</h2>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<ol>
+<li><strong>Evaluate the callee.</strong> Use the caller's environment to obtain a procedure value.</li>
+<li><strong>Evaluate the argument.</strong> Still use the caller's environment, exactly once.</li>
+<li><strong>Choose the saved environment.</strong> Use the closure's definition context, not the caller's shadowing bindings.</li>
+<li><strong>Restore recursive names.</strong> Ordinary procedures need no self binding; recursive ones need self; mutual ones need both definitions.</li>
+<li><strong>Bind the parameter and evaluate.</strong> Extend according to the rule's binding order, then evaluate the selected body.</li>
+</ol>
+</div>
 <p>The three procedure value forms are not interchangeable. For <code>Procedure</code>, save parameter, body, and creation environment. For <code>RecProcedure</code>, also save the function’s name. For <code>MRecProcedure</code>, save both definitions and their shared creation environment.</p>
 <p>At a call, evaluate the function expression and argument in the caller. Then branch on the procedure value form and construct the body environment from the saved lexical environment. Reintroduce all recursive names required by that form, then the appropriate argument binding according to the rule’s binding convention.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw2-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw2-2.svg" width="1152.1240234375" height="619.3999633789062" alt="Choosing the environment for a procedure call"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw2-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw2-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw2-2.svg" width="1167.8046875" height="799.7500610351562" alt="Choosing the environment for a procedure call"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw2-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Choosing the environment for a procedure call
   accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure&#39;s saved context plus recursive and parameter bindings.
-  A[&quot;Evaluate function and argument in caller&quot;] --&gt; B{&quot;Procedure value form?&quot;}
-  B --&gt;|&quot;ordinary&quot;| C[&quot;Saved environment + parameter&quot;]
-  B --&gt;|&quot;recursive&quot;| D[&quot;Saved environment + self + parameter&quot;]
-  B --&gt;|&quot;mutually recursive&quot;| E[&quot;Saved environment + both procedures + parameter&quot;]
+  A[&quot;1. Evaluate function in caller&quot;] --&gt; A2[&quot;2. Evaluate argument in caller&quot;]
+  A2 --&gt; B{&quot;3. Select the procedure&#39;s saved environment&quot;}
+  B --&gt;|&quot;ordinary&quot;| C[&quot;4. No recursive binding needed&quot;]
+  B --&gt;|&quot;recursive&quot;| D[&quot;4. Restore self binding&quot;]
+  B --&gt;|&quot;mutually recursive&quot;| E[&quot;4. Restore both procedure bindings&quot;]
   B --&gt;|&quot;not a procedure&quot;| X[&quot;UndefinedSemantics&quot;]
-  C --&gt; F[&quot;Evaluate the stored body&quot;]
+  C --&gt; F[&quot;5. Bind parameter; evaluate stored body&quot;]
   D --&gt; F
   E --&gt; F
 </code></pre></details></figure><p>Avoid assuming that a host OCaml <code>let rec</code> automatically gives object-language names their meaning. The object-language recursion lives in your value representation and environment construction.</p>
 <h2 id="make-evaluation-order-visible">Make evaluation order visible</h2>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<ol>
+<li><strong>Name the first result.</strong> Evaluate the left operand with an explicit let binding.</li>
+<li><strong>Name the second result.</strong> Evaluate the right operand after the first computation completes.</li>
+<li><strong>Perform the operation.</strong> Check value shapes and combine the results only after both required evaluations.</li>
+<li><strong>Check effect traces.</strong> Two PRINT expressions should appear in the specified order; an unchosen IF branch should print nothing.</li>
+</ol>
+</div>
 <p>OCaml does not promise the left-to-right argument evaluation order that you might assume from another language. Use sequential <code>let</code> bindings to express required ordering. For example, evaluate the first sequence expression, discard only its value, and then evaluate the second. Printing makes an otherwise invisible ordering mistake observable.</p>
-<p>The handout’s print <a href="glossary.html#inference-rule" class="definition-link" title="A rule that derives a conclusion when all its premises and side conditions hold. A rule with no premises is an axiom. — English textbook, PDF p. 13">inference rule</a> omits the operand-evaluation premise, but the prose says to print the operand’s value. Handle this as a schematic rule, not a request to skip evaluation. Exact formatting for every non-integer printed value is not specified in the short rule; consult any later course guidance before treating your printer format as authoritative.</p>
+<p>The handout’s print <a href="glossary.html#inference-rule" class="definition-link" title="A rule that derives a conclusion when all its premises and side conditions hold. A rule with no premises is an axiom. — English textbook, PDF p. 13">inference rule</a> omits the operand-evaluation premise, but the prose says to print the operand’s value. Handle this as a schematic rule, not a request to skip evaluation. The official starter already implements PRINT with <code>string_of_value</code> and supplies that formatter; retain its formatting rather than substituting the independent textbook solution's printer unless the instructor directs otherwise.</p>
 <h2 id="tests-that-distinguish-wrong-models">Tests that distinguish wrong models</h2>
 <table>
 <thead>

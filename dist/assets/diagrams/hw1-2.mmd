@@ -1,10 +1,12 @@
 flowchart TD
-  accTitle: Checking free variables by lexical path
-  accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.
-  A["check helper: context + expression"] --> B{"Outer constructor?"}
-  B -->|"V x"| C{"Is x in context?"}
-  C -->|"yes"| T["true"]
-  C -->|"no"| F["false"]
-  B -->|"P x body"| D["Check body with x added"]
-  B -->|"C left right"| E["Check both with the same incoming context"]
-  E --> G["Combine with AND"]
+  accTitle: HW1 P1 · Primality - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1["1. State the boundary"]
+  S2["2. Choose a candidate"]
+  S3["3. Check whether search is complete"]
+  S4["4. Test and advance"]
+  S5["5. Check the reasoning"]
+  S1 --> S2
+  S2 --> S3
+  S3 --> S4
+  S4 --> S5

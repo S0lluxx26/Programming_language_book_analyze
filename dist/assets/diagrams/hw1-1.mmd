@@ -1,11 +1,11 @@
 flowchart TD
   accTitle: Deriving a recursive homework function
   accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.
-  A["Read the function type"] --> B{"What is the input shape?"}
+  A["1. Read the function type"] --> B{"2. What is the input shape?"}
   B -->|"integer or interval"| C["Choose a decreasing numeric measure"]
   B -->|"list or tree"| D["Match every constructor"]
   B -->|"expression with bindings"| E["Carry a lexical context"]
-  C --> F["Write base case and recursive step"]
+  C --> F["3. Write base case and recursive step"]
   D --> F
   E --> F
-  F --> G["Test ordinary, boundary, and adversarial cases"]
+  F --> G["4. Test ordinary, boundary, and adversarial cases"]

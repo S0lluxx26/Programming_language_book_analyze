@@ -1,0 +1,898 @@
+[
+  {
+    "page": "hw1",
+    "heading": "P1 · Primality",
+    "template": "hw1/prime.ml",
+    "signature": "prime : int -> bool",
+    "diagram": true,
+    "steps": [
+      [
+        "State the boundary",
+        "Return false for n below 2 before starting divisor search."
+      ],
+      [
+        "Choose a candidate",
+        "Start d at 2; maintain that no smaller candidate divides n."
+      ],
+      [
+        "Check whether search is complete",
+        "If d > n / d, no possible small factor remains, so return true."
+      ],
+      [
+        "Test and advance",
+        "If n mod d is zero return false; otherwise continue with d + 1."
+      ],
+      [
+        "Check the reasoning",
+        "Try 2, a square such as 25, a prime such as 29, and the boundary inputs."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P2 · Range",
+    "template": "hw1/range.ml",
+    "signature": "range : int -> int -> int list",
+    "diagram": true,
+    "steps": [
+      [
+        "Compare the bounds",
+        "If the lower bound exceeds the upper bound, return an empty list."
+      ],
+      [
+        "Stop at one element",
+        "Equal bounds produce a singleton; do not increment past max_int."
+      ],
+      [
+        "Build the front",
+        "For a longer interval, emit the lower bound using cons."
+      ],
+      [
+        "Solve the smaller interval",
+        "Recursively start one higher and retain the same upper bound."
+      ],
+      [
+        "Verify order and endpoints",
+        "Both endpoints occur exactly once and the result is increasing."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P3 · Sum of lists",
+    "template": "hw1/suml.ml",
+    "signature": "suml : int list list -> int",
+    "diagram": true,
+    "steps": [
+      [
+        "Solve one inner list",
+        "An empty list sums to 0; otherwise add its head to the sum of its tail."
+      ],
+      [
+        "Handle the outer base case",
+        "An empty outer list also contributes 0."
+      ],
+      [
+        "Combine two results",
+        "Add the first inner list's sum to the recursively computed sum of the remaining lists."
+      ],
+      [
+        "Check nested emptiness",
+        "An empty inner list contributes zero without stopping the outer traversal."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P4 · Drop a prefix",
+    "template": "hw1/drop.ml",
+    "signature": "drop : 'a list -> int -> 'a list",
+    "diagram": true,
+    "steps": [
+      [
+        "Check the count",
+        "When the requested count reaches zero, return the current list."
+      ],
+      [
+        "Check exhaustion",
+        "If no elements remain, return empty even if more were requested."
+      ],
+      [
+        "Discard one element",
+        "Recurse on the tail with a count smaller by one."
+      ],
+      [
+        "Preserve the suffix",
+        "Return that recursive result directly; do not reconstruct discarded heads. State a policy for negative counts."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P5 · Maximum and minimum",
+    "template": "hw1/maxmin.ml",
+    "signature": "max : int list -> int; min : int list -> int",
+    "diagram": true,
+    "steps": [
+      [
+        "Separate empty input",
+        "The starter leaves the empty-list policy unspecified; make that assumption explicit."
+      ],
+      [
+        "Initialize from real data",
+        "Use the first element as the current candidate for a nonempty list."
+      ],
+      [
+        "Update the candidate",
+        "For max keep the greater value; for min keep the smaller value."
+      ],
+      [
+        "Advance through the tail",
+        "After each element, the candidate is the extreme of the processed prefix."
+      ],
+      [
+        "Return and challenge the result",
+        "Check singleton, all-negative maximum, and all-positive minimum cases."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P6 · Sigma",
+    "template": "hw1/sigma.ml",
+    "signature": "sigma : (int -> int) -> int -> int -> int",
+    "diagram": true,
+    "steps": [
+      [
+        "Choose the empty-sum convention",
+        "For reversed bounds, the mathematical empty sum is 0."
+      ],
+      [
+        "Compute the current contribution",
+        "Apply f to the lower endpoint exactly once."
+      ],
+      [
+        "Stop or shrink",
+        "If endpoints are equal, return that contribution; otherwise recurse from the next integer."
+      ],
+      [
+        "Add the contributions",
+        "Combine the current term with the recursive sum, keeping the upper endpoint included."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P7 · Universal predicate",
+    "template": "hw1/forall.ml",
+    "signature": "forall : ('a -> bool) -> 'a list -> bool",
+    "diagram": true,
+    "steps": [
+      [
+        "Choose the empty-list answer",
+        "Return true: an empty list contains no counterexample."
+      ],
+      [
+        "Test the head",
+        "Apply the predicate to the first element."
+      ],
+      [
+        "Stop on failure",
+        "A false result already disproves the universal claim."
+      ],
+      [
+        "Continue on success",
+        "Check the tail and return its result; all elements must pass."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P8 · Double a function",
+    "template": "hw1/double.ml",
+    "signature": "double : ('a -> 'a) -> 'a -> 'a",
+    "diagram": true,
+    "steps": [
+      [
+        "Read the types",
+        "The first input is a function; the result is another function of the same input/output type."
+      ],
+      [
+        "Name the incoming value",
+        "Return a function waiting for a value x."
+      ],
+      [
+        "Compose twice",
+        "Compute f x, then feed that result to f again."
+      ],
+      [
+        "Expand higher-order uses",
+        "When double itself is an argument, substitute its function meaning before simplifying numeric examples."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P9 · Tree membership",
+    "template": "hw1/mem.ml",
+    "signature": "mem : int -> btree -> bool",
+    "diagram": "tree-membership",
+    "steps": [
+      [
+        "Match the actual datatype",
+        "The starter declares Empty or Node(value, left, right). Match those two constructors."
+      ],
+      [
+        "Solve Empty",
+        "An empty tree contains no value, so its answer is false."
+      ],
+      [
+        "Check the current node",
+        "If its stored value equals the target, return true immediately."
+      ],
+      [
+        "Search the children",
+        "If the root does not match, recursively search the left child, then the right child if needed. No ordering is promised."
+      ],
+      [
+        "Combine and verify",
+        "Use logical OR. Check a match only in the right subtree and a missing target."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P10 · Mirror a tree",
+    "template": "hw1/mirror.ml",
+    "signature": "mirror : btree -> btree",
+    "diagram": true,
+    "steps": [
+      [
+        "Read this file's constructors",
+        "This btree is Leaf, Left, Right, or LeftRight; it is different from P9's btree."
+      ],
+      [
+        "Keep leaf values",
+        "A Leaf stays a Leaf containing the same integer."
+      ],
+      [
+        "Swap one-sided branches",
+        "Left becomes Right and Right becomes Left, with a recursively mirrored child."
+      ],
+      [
+        "Swap two-sided branches",
+        "Mirror both children and exchange their positions inside LeftRight."
+      ],
+      [
+        "Check the whole structure",
+        "Mirroring twice should recover the input, including nested asymmetric branches."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P11 · Peano arithmetic",
+    "template": "hw1/nat.ml",
+    "signature": "natadd : nat -> nat -> nat; natmul : nat -> nat -> nat",
+    "diagram": true,
+    "steps": [
+      [
+        "Recurse over one natural",
+        "Choose the first argument and match ZERO or SUCC."
+      ],
+      [
+        "Derive addition",
+        "ZERO adds nothing; SUCC adds one constructor around the smaller sum."
+      ],
+      [
+        "Reuse addition for multiplication",
+        "ZERO times anything is ZERO; each SUCC contributes one more copy of the second operand."
+      ],
+      [
+        "Check constructor arithmetic",
+        "Test zero, one, and small products without converting to host integers in the implementation."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P12 · Formulas and arithmetic",
+    "template": "hw1/eval.ml",
+    "signature": "eval : formula -> bool",
+    "diagram": true,
+    "steps": [
+      [
+        "Separate the two result types",
+        "Use a formula helper returning bool and an arithmetic helper returning int."
+      ],
+      [
+        "Evaluate arithmetic structurally",
+        "Num is a base case; Plus and Minus combine recursively computed integers."
+      ],
+      [
+        "Evaluate logical constructors",
+        "Handle True, False, Not, AndAlso, OrElse, and Imply with their truth functions."
+      ],
+      [
+        "Connect the domains at Equal",
+        "Evaluate both arithmetic children, then compare their integer results."
+      ],
+      [
+        "Check implication carefully",
+        "Only true implying false is false; exercise all four input combinations."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P13 · Symbolic differentiation",
+    "template": "hw1/diff.ml",
+    "signature": "diff : aexp * string -> aexp",
+    "diagram": true,
+    "steps": [
+      [
+        "Keep the differentiation variable fixed",
+        "Carry the requested variable name through every recursive call."
+      ],
+      [
+        "Handle atomic cases",
+        "Constants and unrelated variables produce zero; the matching variable produces one. Treat exponent zero before decrementing."
+      ],
+      [
+        "Distribute over a sum",
+        "Differentiate each summand while retaining the Sum structure."
+      ],
+      [
+        "Apply the product rule",
+        "Create one term for each factor position: differentiate that factor and preserve the others."
+      ],
+      [
+        "Separate simplification from correctness",
+        "Check the derivative's mathematical meaning; the handout allows different equivalent result trees."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P14 · Sigma calculator",
+    "template": "hw1/calculator.ml",
+    "signature": "calculator : exp -> int",
+    "diagram": true,
+    "steps": [
+      [
+        "Introduce a private context",
+        "The public signature has no X argument; a helper carries the current binding of X."
+      ],
+      [
+        "Interpret ordinary expressions",
+        "Handle INT, X, and arithmetic using that current context."
+      ],
+      [
+        "Evaluate the summation bounds",
+        "Compute both bounds in the surrounding context before binding the loop variable."
+      ],
+      [
+        "Evaluate each summand",
+        "For each interval value, evaluate the body with X bound to that value and add its result."
+      ],
+      [
+        "Keep nested bindings local",
+        "A nested SIGMA must not overwrite the X used by its sibling expressions. Document unspecified boundary policies."
+      ]
+    ]
+  },
+  {
+    "page": "hw1",
+    "heading": "P15 · Free-variable checker",
+    "template": "hw1/check.ml",
+    "signature": "check : exp -> bool",
+    "steps": [
+      [
+        "Begin with no bound names",
+        "Use a private helper that takes the current lexical context and an expression."
+      ],
+      [
+        "Handle V",
+        "A variable passes exactly when its name appears in that context."
+      ],
+      [
+        "Handle P",
+        "Add the parameter only while checking the procedure's body."
+      ],
+      [
+        "Handle C",
+        "Check both children independently under the same incoming context, then combine with AND."
+      ],
+      [
+        "Test scope isolation",
+        "A binder in the left child must not make a free name in the right child appear bound."
+      ]
+    ]
+  },
+  {
+    "page": "hw2",
+    "heading": "Build in layers",
+    "template": "hw2/ml_minus.ml",
+    "signature": "eval : exp -> env -> value; runml : program -> value",
+    "steps": [
+      [
+        "Preserve the supplied interface",
+        "Use the provided constructors and the existing runml wrapper; the template helper takes expression before environment."
+      ],
+      [
+        "Implement tagged values and lookup",
+        "Distinguish integers, booleans, Unit, lists, and the three procedure forms."
+      ],
+      [
+        "Add scalar and list rules",
+        "Check each operation's required value shapes and undefined cases."
+      ],
+      [
+        "Add IF and LET",
+        "Choose one branch; evaluate a let definition before extending the environment for its body."
+      ],
+      [
+        "Add procedures and recursion",
+        "Capture lexical environments and reinstall the appropriate self/peer bindings on calls."
+      ],
+      [
+        "Preserve effects and errors",
+        "Keep PRINT and SEQ ordering; translate relevant helper failures into the required UndefinedSemantics behavior."
+      ],
+      [
+        "Run targeted checks",
+        "Test official examples and cases that distinguish incorrect environments or invalid value shapes."
+      ]
+    ]
+  },
+  {
+    "page": "hw2",
+    "heading": "Closures and recursion",
+    "steps": [
+      [
+        "Evaluate the callee",
+        "Use the caller's environment to obtain a procedure value."
+      ],
+      [
+        "Evaluate the argument",
+        "Still use the caller's environment, exactly once."
+      ],
+      [
+        "Choose the saved environment",
+        "Use the closure's definition context, not the caller's shadowing bindings."
+      ],
+      [
+        "Restore recursive names",
+        "Ordinary procedures need no self binding; recursive ones need self; mutual ones need both definitions."
+      ],
+      [
+        "Bind the parameter and evaluate",
+        "Extend according to the rule's binding order, then evaluate the selected body."
+      ]
+    ]
+  },
+  {
+    "page": "hw2",
+    "heading": "Make evaluation order visible",
+    "steps": [
+      [
+        "Name the first result",
+        "Evaluate the left operand with an explicit let binding."
+      ],
+      [
+        "Name the second result",
+        "Evaluate the right operand after the first computation completes."
+      ],
+      [
+        "Perform the operation",
+        "Check value shapes and combine the results only after both required evaluations."
+      ],
+      [
+        "Check effect traces",
+        "Two PRINT expressions should appear in the specified order; an unchosen IF branch should print nothing."
+      ]
+    ]
+  },
+  {
+    "page": "hw3",
+    "heading": "Design the helpers first",
+    "template": "hw3/b.ml",
+    "signature": "eval : env -> memory -> exp -> value * memory; runb : exp -> value",
+    "steps": [
+      [
+        "Separate bindings and stored values",
+        "Use LocBind for variables and ProcBind for procedures; procedures are not members of this value datatype."
+      ],
+      [
+        "Follow the supplied lookup conventions",
+        "lookup_loc_env skips procedure bindings; lookup_proc_env skips location bindings. Preserve the template's separate searches."
+      ],
+      [
+        "Read and update memory",
+        "Lookup uses the newest matching location entry; updates retain unrelated cells."
+      ],
+      [
+        "Use the allocation helper",
+        "new_location returns distinct locations; do not replace it with a guess based on memory-list order."
+      ],
+      [
+        "Thread memory through evaluation",
+        "Each child consumes the memory returned by the previous child; return the final value-memory pair."
+      ]
+    ]
+  },
+  {
+    "page": "hw3",
+    "heading": "Call by value versus reference",
+    "steps": [
+      [
+        "Find the procedure in the caller",
+        "Obtain its formal names, body, and captured environment."
+      ],
+      [
+        "Check arity",
+        "Match actuals to formals; handle length mismatch according to the language's error contract."
+      ],
+      [
+        "Prepare argument bindings",
+        "CALLV evaluates actual expressions left to right and allocates fresh parameter cells; CALLR looks up caller locations and reuses them."
+      ],
+      [
+        "Prepare the body environment",
+        "Extend the captured environment with the required recursive procedure binding and parameter bindings."
+      ],
+      [
+        "Evaluate and return both results",
+        "Pass the latest memory into the body and return its value and final memory to the caller."
+      ]
+    ]
+  },
+  {
+    "page": "hw3",
+    "heading": "Records and aliasing",
+    "steps": [
+      [
+        "Distinguish the empty record",
+        "Follow the handout's special empty-record result, Unit."
+      ],
+      [
+        "Evaluate field initializers in order",
+        "Carry each updated memory into the next initializer."
+      ],
+      [
+        "Allocate field cells",
+        "Build a field-name-to-location record with fresh locations."
+      ],
+      [
+        "Follow the receiver's result",
+        "FIELD reads the selected cell using the receiver's returned memory; ASSIGNF evaluates the RHS next and updates that cell."
+      ],
+      [
+        "Test sharing",
+        "Copy a record value, mutate a field through one name, and observe the shared field through the other."
+      ]
+    ]
+  },
+  {
+    "page": "hw3",
+    "heading": "Loops are recursive state transitions",
+    "steps": [
+      [
+        "Evaluate the condition",
+        "Keep both its boolean result and its updated memory."
+      ],
+      [
+        "Stop on false",
+        "Return the loop's specified result with the condition's latest memory."
+      ],
+      [
+        "Run the body on true",
+        "Evaluate the body in the memory produced by the condition."
+      ],
+      [
+        "Repeat with the new memory",
+        "Reevaluate the condition after the body; never restart from the loop's original memory."
+      ]
+    ]
+  },
+  {
+    "page": "hw4",
+    "heading": "Design the pipeline",
+    "template": "hw4/typeof.ml",
+    "signature": "typeof : exp -> typ",
+    "steps": [
+      [
+        "Preserve the public contract",
+        "Keep the supplied exp, typ, TypeError, and fresh_tyvar interfaces."
+      ],
+      [
+        "Introduce fresh unknowns",
+        "Assign provisional types while traversing the AST under a type environment."
+      ],
+      [
+        "Generate equations and restrictions",
+        "Each constructor contributes type relationships; equality also needs its allowed-operand policy."
+      ],
+      [
+        "Unify the equations",
+        "Apply the current substitution, decompose compound types, and perform occurs checks before binding variables."
+      ],
+      [
+        "Check remaining restrictions",
+        "Validate operator restrictions under the solved substitution and reject invalid or unsupported cases."
+      ],
+      [
+        "Return the solved result",
+        "Apply the final substitution to the provisional root type; report rejected programs with TypeError."
+      ]
+    ]
+  },
+  {
+    "page": "hw4",
+    "heading": "Equality needs more than ordinary unification",
+    "steps": [
+      [
+        "Infer both operand types",
+        "Generate the usual constraints for both expressions."
+      ],
+      [
+        "Require matching operand types",
+        "Add an equation connecting those types."
+      ],
+      [
+        "Retain the scalar restriction",
+        "The dynamic rules allow int/int or bool/bool, not arbitrary values."
+      ],
+      [
+        "Resolve after unification",
+        "Check the substituted operand type. State a policy for unresolved restrictions rather than inventing an official requirement."
+      ]
+    ]
+  },
+  {
+    "page": "hw4",
+    "heading": "Monomorphic let versus polymorphic let",
+    "steps": [
+      [
+        "Choose the declared type system",
+        "The starter supplies types and fresh variables but no complete polymorphism policy."
+      ],
+      [
+        "For a monomorphic baseline, share the type",
+        "All uses of the let-bound name refer to the same inferred unknowns."
+      ],
+      [
+        "For a let-polymorphic extension, generalize carefully",
+        "Quantify only solved type variables absent from the updated surrounding environment."
+      ],
+      [
+        "Instantiate at lookup",
+        "Freshen quantified variables for each use; keep procedure parameters and environment-dependent variables shared."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 1 — Inclusive range",
+    "steps": [
+      [
+        "Compare bounds",
+        "Reversed bounds give empty; equal bounds give one element."
+      ],
+      [
+        "Emit the lower endpoint",
+        "Cons it onto the result for the next interval."
+      ],
+      [
+        "Check termination",
+        "The remaining interval shrinks; do not increment past the final endpoint."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 2 — Flatten one list level",
+    "steps": [
+      [
+        "Identify the outer list",
+        "Each element is itself a list."
+      ],
+      [
+        "Choose the empty answer",
+        "No inner lists means no output elements."
+      ],
+      [
+        "Combine with append",
+        "Append the current inner list to the flattened tail, preserving order."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 3 — Interleave two lists",
+    "steps": [
+      [
+        "Inspect both shapes",
+        "If either list is empty, retain the other as the remaining suffix."
+      ],
+      [
+        "Emit one pair of heads",
+        "Take the first list head before the second list head."
+      ],
+      [
+        "Recurse on both tails",
+        "Keep the same alternating rule until one input ends."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 4 — Unzip pairs",
+    "steps": [
+      [
+        "Choose the base pair",
+        "Empty input returns two empty lists."
+      ],
+      [
+        "Unzip the tail once",
+        "Name its two component lists."
+      ],
+      [
+        "Prepend each component",
+        "Add the current first component to the first output and the second to the second output."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 5 — Drop a prefix",
+    "steps": [
+      [
+        "Check the two stopping cases",
+        "Stop when the count reaches zero or the input list is empty."
+      ],
+      [
+        "Discard a head",
+        "Decrease the count while moving to the tail."
+      ],
+      [
+        "Return the remaining suffix",
+        "No rebuilding or element inspection is needed."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 6 — Generalized summation",
+    "steps": [
+      [
+        "Determine the interval",
+        "Identify its bounds and the function providing each term."
+      ],
+      [
+        "Handle the empty or singleton case",
+        "Use zero for an empty sum and one function application for a singleton."
+      ],
+      [
+        "Add the current term",
+        "Combine it with the sum over the smaller interval."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 7 — Repeated function application",
+    "steps": [
+      [
+        "Separate construction from application",
+        "iter receives n and f, then returns a function waiting for x."
+      ],
+      [
+        "Use identity at zero",
+        "Return x unchanged when no applications remain."
+      ],
+      [
+        "Apply and decrease",
+        "Replace x with f x and decrease the count until zero."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 8 — Universal predicate with a right fold",
+    "steps": [
+      [
+        "Choose the identity",
+        "The empty-list answer is true."
+      ],
+      [
+        "Describe the combining rule",
+        "Combine the current predicate result with the suffix result using AND."
+      ],
+      [
+        "Use the required fold",
+        "Implement that rule with fold_right; strict folding still computes the suffix."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 9 — Digits to a number",
+    "steps": [
+      [
+        "Define the accumulator",
+        "It denotes the number represented by the processed prefix."
+      ],
+      [
+        "Read the next digit",
+        "Multiply the accumulator by ten, then add that digit."
+      ],
+      [
+        "Fold from the left",
+        "Start at zero and verify the intermediate values for a three-digit example."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 10 — Rewrite five functions with folds",
+    "steps": [
+      [
+        "Name the partial result",
+        "Choose a count, boolean, reversed prefix, or processed suffix as appropriate."
+      ],
+      [
+        "Choose an identity",
+        "Use zero, true, or an empty list according to the result type."
+      ],
+      [
+        "Write both combination directions",
+        "Right folds receive element then suffix; left folds receive accumulator then element."
+      ],
+      [
+        "Restore order if needed",
+        "Reverse the accumulated result for left-fold map and filter; test all five functions."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 11 — Peano addition and multiplication",
+    "steps": [
+      [
+        "Match ZERO or SUCC",
+        "Recurse structurally on the first natural-number operand."
+      ],
+      [
+        "Define addition first",
+        "ZERO contributes nothing; SUCC adds one constructor around the smaller sum."
+      ],
+      [
+        "Define multiplication with addition",
+        "Each SUCC contributes one more copy of the second operand."
+      ]
+    ]
+  },
+  {
+    "page": "textbook-02-problems",
+    "heading": "Problem 12 — Symbolic differentiation",
+    "steps": [
+      [
+        "Keep the variable name fixed",
+        "The input expression changes during recursion; the chosen variable does not."
+      ],
+      [
+        "Select the constructor rule",
+        "Handle constants, variables, powers, sums, and products separately."
+      ],
+      [
+        "Apply the product rule one factor at a time",
+        "Differentiate one factor in each output term and keep all other factors."
+      ],
+      [
+        "Simplify and validate",
+        "Remove neutral terms if desired, then check boundary cases and the worked polynomial."
+      ]
+    ]
+  }
+]

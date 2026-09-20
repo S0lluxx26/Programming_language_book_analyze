@@ -1,4 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
+import {thinkingRoutes} from './thinking-routes.mjs';
 const catalog=JSON.parse(fs.readFileSync('book/catalog.json','utf8'));
 const manifest=JSON.parse(fs.readFileSync('sources/manifest.json','utf8'));
 const sources=new Map(manifest.files.map(f=>[f.url,f]));
@@ -40,6 +41,16 @@ for(const section of structure.sections){
   assert(markdown.includes(`#page=${section.page})`),`Missing source page for ${section.section}`);
 }
 const exercises=fs.readFileSync('book/textbook-02-problems.md','utf8');
+const templates=JSON.parse(fs.readFileSync('sources/professor-templates.json','utf8'));
+assert.equal(templates.files.length,18,'Expected all 18 official OCaml starter files');
+assert.equal(thinkingRoutes.filter(r=>r.page==='hw1').length,15,'Every HW1 problem needs numbered thinking steps');
+assert.equal(thinkingRoutes.filter(r=>r.page==='textbook-02-problems').length,12,'Every textbook exercise needs numbered thinking steps');
+for(const route of thinkingRoutes){
+  const html=fs.readFileSync(`dist/${route.page}.html`,'utf8');
+  assert(route.steps.length>=3,`${route.heading}: incomplete reasoning route`);
+  for(const [title] of route.steps)assert(html.replace(/<[^>]*>/g,'').includes(`${title}.`),`${route.heading}: missing rendered step ${title}`);
+  if(route.template)assert(templates.files.some(f=>f.path===route.template)&&html.includes(`/blob/${templates.commit}/${route.template}`),`${route.heading}: unverified template link`);
+}
 for(const p of structure.problems){
   const body=exercises.split(`## Problem ${p.number} —`)[1]?.split('\n## ')[0];
   assert(body?.includes('```mermaid'),`Problem ${p.number}: missing diagram`);
@@ -47,6 +58,6 @@ for(const p of structure.problems){
   assert(body.includes(`#page=${p.page})`),`Problem ${p.number}: missing PDF page`);
 }
 assert.equal(catalog.length,35);
-const report={chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length};
+const report={chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

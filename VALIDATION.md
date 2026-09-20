@@ -8,9 +8,9 @@ Source snapshot: 20 September 2026.
 - 27 PDFs downloaded, totaling 1,030 PDF pages. File signatures, byte lengths, SHA-256 checksums, and page counts verified by `scripts/check_sources.py`.
 - Two PDF links and the OCaml example link return HTTP 404; the manifest and source library report them.
 - All 35 reading pages build successfully, including the source-aligned textbook reader.
-- All 71 Mermaid definitions render successfully to accessible, independently parseable SVG with explicit intrinsic dimensions.
-- Static checks cover 2,819 local/external link references, local target existence and anchors, 221 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
-- 42 glossary definitions and 226 automatically generated definition links connect explanations to exact textbook or lecture PDF pages. Manually authored definition links also open the reading panel.
+- All 85 Mermaid definitions render successfully to accessible, independently parseable SVG with explicit intrinsic dimensions.
+- Static checks cover 2,885 local/external link references, local target existence and anchors, 221 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
+- 42 glossary definitions and 228 automatically generated definition links connect explanations to exact textbook or lecture PDF pages. Manually authored definition links also open the reading panel.
 - `book/textbook-structure.json` records all 9 textbook chapters, 48 numbered sections, and 12 §2.4 problems. Checks require every section heading/source page and every numbered problem's Mermaid graph and worked solution.
 
 ## Content verification
@@ -42,3 +42,10 @@ Source snapshot: 20 September 2026.
 - CI run 35493232185 successfully executed all five original textbook solution files on OCaml 4.14.1: 114 exercise checks, 16 functional-language checks, 18 state/GC checks, 19 type-system checks, and 16 lambda checks (183 total).
 - Final review added two regression checks distinguishing static self-binding from a caller-rebound recursive name under dynamic scope. The suite now has 185 checks; the publishing workflow reruns all five files and blocks deployment on any failure.
 - Temporary mobile viewport settings were reset after review. New solution links offer direct `.ml` downloads.
+
+## Official starter alignment and numbered reasoning
+
+- Reviewed all 18 OCaml starter files at professor repository commit b0c917f0e648907ef0460522ff8f3e686b64d2fb. These contain TODOs, not official completed solutions; pinned links and SHA-256 hashes are recorded in the source manifest.
+- Added 37 numbered thinking routes: 15 HW1 problems, 10 major HW2–HW4 reasoning sections, and all 12 textbook section 2.4 exercises. Automated checks enforce route coverage, rendered step titles, and pinned starter links.
+- Corrected HW2 argument order and no-module guidance, HW3 namespace lookup behavior, and documented template/handout differences without treating starter TODOs as specifications.
+- Reviewed the tree-membership panel on desktop and numbered panels at 390-pixel mobile width. All 15 HW1 panels and all diagram images loaded; document width remained 375 pixels with no page overflow.

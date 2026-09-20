@@ -1,8 +1,12 @@
 ## The contract
 
+**Official starter:** [`hw2/ml_minus.ml`](https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw2/ml_minus.ml). The file supplies syntax, values, environments, printing, sample programs, and the `runml` wrapper. Its evaluator still has TODO cases, so it is a starting point rather than an official solution.
+
+**Template constraint:** the first comment says “Do not use any module.” Use the supplied standalone `fold_left` and `map`, or your own recursive helpers; do not paste `List.*` calls or module-based helpers from the independent textbook examples into this assignment. Keep `eval : exp -> env -> value` in the template's argument order. Its lookup helper currently raises `Failure` for an unbound name; adapt relevant failures to the handout's `UndefinedSemantics` contract when implementing the missing behavior.
+
 Implement `runml : program -> value` for the ML− language in the [official handout](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf). Raise `UndefinedSemantics` whenever no dynamic rule applies. The official AST and value constructors appear on PDF pp. 4–5; the semantic rules are on pp. 2–4.
 
-The public entry point can start a recursive helper under an empty environment. That helper has the conceptual form `eval : env -> exp -> value`. The interface’s simplicity does not remove the need for environments internally.
+The supplied public entry point already starts `eval` under `empty_env`. Follow its actual order, `eval expression environment`. The interface’s simplicity does not remove the need for environments internally.
 
 ## Build in layers
 
@@ -10,11 +14,11 @@ The public entry point can start a recursive helper under an empty environment. 
 flowchart TD
   accTitle: A staged plan for the ML-minus interpreter
   accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.
-  A["1. Tagged values and environment lookup"] --> B["2. Constants, arithmetic, comparisons"]
-  B --> C["3. IF, LET, and lists"]
-  C --> D["4. PROC and lexical CALL"]
-  D --> E["5. LETREC and LETMREC"]
-  E --> F["6. PRINT, SEQ, and undefined cases"]
+  A["1. Preserve the supplied interface"] --> B["2. Tagged values and lookup"]
+  B --> C["3. Scalar and list rules"]
+  C --> D["4. IF and LET"]
+  D --> E["5. Closures and recursion"]
+  E --> F["6. Effect order and undefined cases"]
   F --> G["7. Run official examples and distinguishing tests"]
 ```
 
@@ -53,12 +57,13 @@ At a call, evaluate the function expression and argument in the caller. Then bra
 flowchart TD
   accTitle: Choosing the environment for a procedure call
   accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure's saved context plus recursive and parameter bindings.
-  A["Evaluate function and argument in caller"] --> B{"Procedure value form?"}
-  B -->|"ordinary"| C["Saved environment + parameter"]
-  B -->|"recursive"| D["Saved environment + self + parameter"]
-  B -->|"mutually recursive"| E["Saved environment + both procedures + parameter"]
+  A["1. Evaluate function in caller"] --> A2["2. Evaluate argument in caller"]
+  A2 --> B{"3. Select the procedure's saved environment"}
+  B -->|"ordinary"| C["4. No recursive binding needed"]
+  B -->|"recursive"| D["4. Restore self binding"]
+  B -->|"mutually recursive"| E["4. Restore both procedure bindings"]
   B -->|"not a procedure"| X["UndefinedSemantics"]
-  C --> F["Evaluate the stored body"]
+  C --> F["5. Bind parameter; evaluate stored body"]
   D --> F
   E --> F
 ```
@@ -69,7 +74,7 @@ Avoid assuming that a host OCaml `let rec` automatically gives object-language n
 
 OCaml does not promise the left-to-right argument evaluation order that you might assume from another language. Use sequential `let` bindings to express required ordering. For example, evaluate the first sequence expression, discard only its value, and then evaluate the second. Printing makes an otherwise invisible ordering mistake observable.
 
-The handout’s print inference rule omits the operand-evaluation premise, but the prose says to print the operand’s value. Handle this as a schematic rule, not a request to skip evaluation. Exact formatting for every non-integer printed value is not specified in the short rule; consult any later course guidance before treating your printer format as authoritative.
+The handout’s print inference rule omits the operand-evaluation premise, but the prose says to print the operand’s value. Handle this as a schematic rule, not a request to skip evaluation. The official starter already implements PRINT with `string_of_value` and supplies that formatter; retain its formatting rather than substituting the independent textbook solution's printer unless the instructor directs otherwise.
 
 ## Tests that distinguish wrong models
 

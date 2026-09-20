@@ -1,5 +1,9 @@
 ## The contract
 
+**Official starter:** [`hw3/b.ml`](https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw3/b.ml). Start from its `LocBind`/`ProcBind` environment, memory and record helpers, `new_location`, `eval_aop`, and `runb`. The recursive helper's exact order is `eval environment memory expression`; its result is a value-memory pair. The evaluator still contains a TODO.
+
+The two supplied environment lookups search their own binding kind: variable lookup skips `ProcBind`, and procedure lookup skips `LocBind`. Preserve that template behavior instead of replacing both with one generic first-name lookup. Some starter helpers raise `Failure`, and the supplied WRITE branch formats any value; the handout's integer-only WRITE rule and undefined-case contract still need to be respected in the completed interpreter. Starter code is not evidence that every required check is already implemented.
+
 Implement `runb : exp -> value` for B, the imperative language in the [official handout](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf). The public result is just a value, but the internal evaluator needs to return both the value and memory. Start from empty environment and memory, and let `runb` project the final value.
 
 B’s environment contains **location bindings or procedure bindings**. Its store contains integers, booleans, Unit, or records. Procedures are not first-class stored values in this assignment. Reusing HW2’s value datatype unchanged would therefore implement a different language.
@@ -8,8 +12,8 @@ B’s environment contains **location bindings or procedure bindings**. Its stor
 
 | Helper responsibility | Invariant |
 |---|---|
-| Lookup a variable location | Find the nearest relevant binding; reject wrong binding kinds |
-| Lookup a procedure | Obtain formal parameters, body, and captured environment |
+| Lookup a variable location | Find the nearest matching LocBind, skipping ProcBind as the starter does |
+| Lookup a procedure | Find the matching ProcBind, skipping LocBind; obtain formals, body, and captured environment |
 | Read memory | A referenced location must be allocated |
 | Update memory | The latest value wins without discarding unrelated cells |
 | Allocate | Return a fresh location; repeated allocations are distinct |
@@ -79,7 +83,7 @@ The loop’s condition is re-evaluated on every iteration. Keeping an old Boolea
 
 ## Undefined cases and review tests
 
-Check unbound identifiers, wrong binding kinds, missing fields, wrong arity, non-Boolean guards, non-integer arithmetic or WRITE arguments, and division by zero. Use the required `UndefinedSemantics`, not leaked `Not_found`, `Match_failure`, or host division exceptions. If a specification leaves a collision or formatting policy unstated, document the issue separately from defined behavior.
+Check missing bindings of the requested kind, missing fields, wrong arity, non-Boolean guards, non-integer arithmetic or WRITE arguments, and division by zero. A same-named binding of the other kind is skipped by the supplied lookup helper, not immediately treated as an error. Use the required `UndefinedSemantics`, not leaked `Not_found`, `Match_failure`, or host division exceptions. If a specification leaves a collision or formatting policy unstated, document the issue separately from defined behavior.
 
 Run the official examples: factorial produces `120`, the reference call updates both caller variables so their sum is `6`, and the scalar field swap by value leaves the first field at `10`. Add a call with repeated reference arguments, nested shadowing, and a record copied into a second variable. Inspect the store after each step on paper before comparing your implementation’s result.
 

@@ -21,7 +21,7 @@ try {
       const serialized=new XMLSerializer().serializeToString(svg);
       if(new DOMParser().parseFromString(serialized,'image/svg+xml').querySelector('parsererror'))throw Error('Invalid standalone SVG XML');
       return serialized;
-    },{source:d.source,id:`diagram${i}`});
+    },{source:d.source,id:`diagram${i}`}).catch(error=>{throw new Error(`Mermaid diagram ${d.name}: ${error.message}`,{cause:error});});
     fs.writeFileSync(target,svg+`\n<!-- source-sha256:${hash} -->\n`);rendered++;
   }
 } finally {await browser.close();}

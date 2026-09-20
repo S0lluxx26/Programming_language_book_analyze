@@ -1,0 +1,12 @@
+flowchart TD
+  accTitle: HW1 P9 - numbered reasoning for tree membership
+  accDescr: Match Empty or Node, test the node value, then search the children with logical OR. No binary-search-tree ordering is assumed.
+  A["1. Match Empty or Node"] --> B{"2. Empty?"}
+  B -->|Yes| F["Return false"]
+  B -->|No| C{"3. Node value equals target?"}
+  C -->|Yes| T["Return true"]
+  C -->|No| D["4a. Search left child"]
+  D --> E{"Found on left?"}
+  E -->|Yes| T
+  E -->|No| G["4b. Search right child"]
+  G --> H["5. Return the OR result"]

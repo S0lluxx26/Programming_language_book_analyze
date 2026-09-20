@@ -1,9 +1,9 @@
 flowchart TD
   accTitle: A staged plan for the ML-minus interpreter
   accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.
-  A["1. Tagged values and environment lookup"] --> B["2. Constants, arithmetic, comparisons"]
-  B --> C["3. IF, LET, and lists"]
-  C --> D["4. PROC and lexical CALL"]
-  D --> E["5. LETREC and LETMREC"]
-  E --> F["6. PRINT, SEQ, and undefined cases"]
+  A["1. Preserve the supplied interface"] --> B["2. Tagged values and lookup"]
+  B --> C["3. Scalar and list rules"]
+  C --> D["4. IF and LET"]
+  D --> E["5. Closures and recursion"]
+  E --> F["6. Effect order and undefined cases"]
   F --> G["7. Run official examples and distinguishing tests"]

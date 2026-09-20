@@ -60,3 +60,12 @@ User follow-up: follow the PDF's actual chapters and sections, highlight/link de
 6. **Publication:** push through the existing SSH configuration, wait for successful CI and Pages deployment, and verify the public reader.
 
 Implementation complete: 11 new reading pages, 37 new diagrams, five executable solution files, and four additional definition entries. The 35-page build and 2,819 link checks pass. Desktop/mobile reading, definition dialogs, solution disclosures, and search have been reviewed. The first expansion deployment passed 183 OCaml checks on 4.14.1; final review added two dynamic-scope regression checks. Every subsequent publication is gated on the complete solution suite. The public reader is at `/textbook.html`.
+
+## Numbered homework thinking routes
+
+1. Inspect the professor's hw1–hw4 OCaml templates and record a pinned source snapshot.
+2. Align explanations with actual signatures, constructors, helper behavior, and assignment restrictions.
+3. Add native numbered lists with a concrete action and explanation for each thinking step; connect HW1 lists to numbered Mermaid plans and decision branches.
+4. Apply the same format to all twelve textbook exercises, validate coverage and links, review desktop/mobile reading, and publish through existing SSH/Pages configuration.
+
+Implemented 37 routes, 18 pinned starter references, and 14 additional Mermaid graphs (85 total). The official files are starter templates, not solution files. Local build, static validation, and browser layout checks pass.

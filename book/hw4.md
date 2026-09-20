@@ -1,5 +1,7 @@
 ## The contract and the missing details
 
+**Official starter:** [`hw4/typeof.ml`](https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw4/typeof.ml). It supplies `exp`, `typ`, `TypeError`, and `fresh_tyvar`; the body of `typeof` is a TODO. Keep that interface while adding private inference helpers. Its type-variable constructor and TODO do not by themselves specify a let-polymorphism or equality policy.
+
 Implement `typeof : exp -> typ`, returning a type for an accepted ML− program and raising `TypeError` for a rejected one. The [two-page handout](https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf) provides the expression and type datatypes, but not a complete set of extended typing rules. The language matches HW2; the reference to “ML− from HW3” is inconsistent with the published assignment sequence.
 
 The guide below derives a **monomorphic constraint-based baseline** from lectures 13–17. It explicitly identifies equality, partial-operation safety, and polymorphism decisions rather than claiming that unpublished grading requirements are known.
@@ -10,10 +12,11 @@ The guide below derives a **monomorphic constraint-based baseline** from lecture
 flowchart TD
   accTitle: The HW4 type-inference pipeline
   accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.
-  A["AST + empty type environment"] --> B["Generate provisional type<br/>and equations"]
-  B --> C["Unify equations<br/>with occurs checks"]
-  C --> D{"All operator restrictions valid?"}
-  D -->|"yes"| E["Apply final substitution<br/>Return type"]
+  A["1. Preserve the supplied interfaces"] --> A2["2. Introduce fresh unknowns"]
+  A2 --> B["3. Generate equations and restrictions"]
+  B --> C["4. Unify with occurs checks"]
+  C --> D{"5. All operator restrictions valid?"}
+  D -->|"yes"| E["6. Substitute and return type"]
   D -->|"no"| F["TypeError"]
   C -->|"contradiction or cycle"| F
 ```

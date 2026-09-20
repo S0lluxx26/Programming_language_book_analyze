@@ -1,0 +1,116 @@
+{
+  "repository": "https://github.com/kupl-courses/COSE212-2026fall",
+  "commit": "b0c917f0e648907ef0460522ff8f3e686b64d2fb",
+  "checked": "2026-09-20",
+  "kind": "Official starter templates, not completed solutions",
+  "files": [
+    {
+      "path": "hw1/calculator.ml",
+      "sha256": "d757bf5e42150242317e1b083530fad1dc552631a82ced5e3c627fb1b96c8315",
+      "lines": 12,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/calculator.ml"
+    },
+    {
+      "path": "hw1/check.ml",
+      "sha256": "4f5d27f32fa4b2acd5b6125cf64d387808e644b2c12943ae706ec5ab73e5a01b",
+      "lines": 11,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/check.ml"
+    },
+    {
+      "path": "hw1/diff.ml",
+      "sha256": "42900f3fafe5ed579ee2777f50daf1e0c8a45c0bbf938c8e57f86cd64b287d9a",
+      "lines": 11,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/diff.ml"
+    },
+    {
+      "path": "hw1/double.ml",
+      "sha256": "146fd1e0268dfbaef6cf17371d72f6f08225f8b9d0ce69852e4c60e5d3da4921",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/double.ml"
+    },
+    {
+      "path": "hw1/drop.ml",
+      "sha256": "b378e3ffd63819e462055019e47798d263020a7a7240cfd653dd79e4f6cf4852",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/drop.ml"
+    },
+    {
+      "path": "hw1/eval.ml",
+      "sha256": "76707a64ecf5ff9d7c9375c4ccef398f708b8c8d6f86526340e50bcd26720634",
+      "lines": 19,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/eval.ml"
+    },
+    {
+      "path": "hw1/forall.ml",
+      "sha256": "0d6823a1ee28c2b62e158b491b3673bad3991ba56f57a8681498768a9c80408a",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/forall.ml"
+    },
+    {
+      "path": "hw1/maxmin.ml",
+      "sha256": "8f20a204a0d76e166effd467281e2b46bec98335a9c0785b01f6da501fdbe0f3",
+      "lines": 7,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/maxmin.ml"
+    },
+    {
+      "path": "hw1/mem.ml",
+      "sha256": "26d7a567afc5d11bad19dfe9fbe0589003ee1f3a10d7d962c21d96533dd7054f",
+      "lines": 7,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/mem.ml"
+    },
+    {
+      "path": "hw1/mirror.ml",
+      "sha256": "11c7e5c9296481b4dd1c342e2cbcaf9bff8c45ecd4f3fcea9b76df5a24d04590",
+      "lines": 10,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/mirror.ml"
+    },
+    {
+      "path": "hw1/nat.ml",
+      "sha256": "11dd77ec36698d7b7f33d402fed57e37a090f36292d381c634c01ef96d57175c",
+      "lines": 9,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/nat.ml"
+    },
+    {
+      "path": "hw1/prime.ml",
+      "sha256": "d7cdb411d55fdf58b530b8e2c246d39080af842ce212df6cfca2738a3c1b5a48",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/prime.ml"
+    },
+    {
+      "path": "hw1/range.ml",
+      "sha256": "50d3375120edff0614ad6b093b6439b0e3a9e5a83f76d848ab785322358e2632",
+      "lines": 5,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/range.ml"
+    },
+    {
+      "path": "hw1/sigma.ml",
+      "sha256": "e9b4786f418a1ea9c297048a0e84fefd3fbe709692dab4df1238479fc339544f",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/sigma.ml"
+    },
+    {
+      "path": "hw1/suml.ml",
+      "sha256": "4828262f44e4ebc5dc6f66bd3ee61106d9b363fb061f3f48bf2ecc5b4a1dc135",
+      "lines": 4,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/suml.ml"
+    },
+    {
+      "path": "hw2/ml_minus.ml",
+      "sha256": "ef1f601a3bd036f2efb541713c2e70875e77462fae20362792d75707a22af832",
+      "lines": 199,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw2/ml_minus.ml"
+    },
+    {
+      "path": "hw3/b.ml",
+      "sha256": "adc26439733c89b7c7bbebe3949b9e47ab8da8ae1d6b8d2a1d0941a6b01e9bfc",
+      "lines": 146,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw3/b.ml"
+    },
+    {
+      "path": "hw4/typeof.ml",
+      "sha256": "64dbe3466b3c84ef3e962fc308097494999b86952d57decf06bf93b403474cfb",
+      "lines": 50,
+      "url": "https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw4/typeof.ml"
+    }
+  ]
+}

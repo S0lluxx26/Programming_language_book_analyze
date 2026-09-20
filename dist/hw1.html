@@ -1,58 +1,341 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HW1 · Learn to think recursively · The Programming Languages Notebook</title><meta name="description" content="Problem-by-problem strategies, connections, and boundary tests for functional programming."><meta name="theme-color" content="#142b48"><meta property="og:title" content="HW1 · Learn to think recursively"><meta property="og:description" content="Problem-by-problem strategies, connections, and boundary tests for functional programming."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
   <a class="skip-link" href="#main">Skip to content</a>
   <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" >Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">Start here</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" aria-current="page">HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
-  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">15 problem guides</p><h1>HW1 · Learn to think recursively</h1><p class="dek">Problem-by-problem strategies, connections, and boundary tests for functional programming.</p><p class="reading-meta">7 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-plan-for-all-15-problems">A plan for all 15 problems</h2>
-<p>The <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf">official handout</a> is six PDF pages. Read the supplied <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> before coding. First decide what information each helper needs, then choose base cases and recursive steps. The examples below are small independent checks and derivation strategies; preserve the provided template interfaces.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-1.svg" width="836.958984375" height="758.2406616210938" alt="Deriving a recursive homework function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">15 problem guides</p><h1>HW1 · Learn to think recursively</h1><p class="dek">Problem-by-problem strategies, connections, and boundary tests for functional programming.</p><p class="reading-meta">21 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-plan-for-all-15-problems">A plan for all 15 problems</h2>
+<p>The professor's <a href="https://github.com/kupl-courses/COSE212-2026fall/tree/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1">HW1 starter folder</a> contains one <code>.ml</code> file per problem. Each problem below links to its exact file and public function <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a>. These are TODO templates, not official completed solutions. In particular, <code>mem.ml</code> and <code>mirror.ml</code> define <strong>different</strong> types with the same name <code>btree</code>; work in the appropriate file.</p>
+<p>Read each numbered <strong>Thinking steps</strong> list first, then follow the matching diagram and use the explanation below it to check your assumptions. In a decision diagram, follow the applicable branch; do not execute mutually exclusive branches in sequence.</p>
+<p>The <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf">official handout</a> is six PDF pages. Read the supplied type before coding. First decide what information each helper needs, then choose base cases and recursive steps. The examples below are small independent checks and derivation strategies; preserve the provided template interfaces.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-1.svg" width="836.958984375" height="785.907958984375" alt="Deriving a recursive homework function"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Deriving a recursive homework function
   accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.
-  A[&quot;Read the function type&quot;] --&gt; B{&quot;What is the input shape?&quot;}
+  A[&quot;1. Read the function type&quot;] --&gt; B{&quot;2. What is the input shape?&quot;}
   B --&gt;|&quot;integer or interval&quot;| C[&quot;Choose a decreasing numeric measure&quot;]
   B --&gt;|&quot;list or tree&quot;| D[&quot;Match every constructor&quot;]
   B --&gt;|&quot;expression with bindings&quot;| E[&quot;Carry a lexical context&quot;]
-  C --&gt; F[&quot;Write base case and recursive step&quot;]
+  C --&gt; F[&quot;3. Write base case and recursive step&quot;]
   D --&gt; F
   E --&gt; F
-  F --&gt; G[&quot;Test ordinary, boundary, and adversarial cases&quot;]
+  F --&gt; G[&quot;4. Test ordinary, boundary, and adversarial cases&quot;]
 </code></pre></details></figure><h2 id="p1-primality">P1 · Primality</h2>
-<p><strong>Connection:</strong> decreasing search, <a href="03-recursion.html">recursion</a>. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/prime.ml"><code>hw1/prime.ml</code></a> · Interface: <code>prime : int -&gt; bool</code>.</p>
+<ol>
+<li><strong>State the boundary.</strong> Return false for n below 2 before starting divisor search.</li>
+<li><strong>Choose a candidate.</strong> Start d at 2; maintain that no smaller candidate divides n.</li>
+<li><strong>Check whether search is complete.</strong> If d &gt; n / d, no possible small factor remains, so return true.</li>
+<li><strong>Test and advance.</strong> If n mod d is zero return false; otherwise continue with d + 1.</li>
+<li><strong>Check the reasoning.</strong> Try 2, a square such as 25, a prime such as 29, and the boundary inputs.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-2.svg" width="292.546875" height="509.70001220703125" alt="HW1 P1 · Primality - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P1 · Primality - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. State the boundary&quot;]
+  S2[&quot;2. Choose a candidate&quot;]
+  S3[&quot;3. Check whether search is complete&quot;]
+  S4[&quot;4. Test and advance&quot;]
+  S5[&quot;5. Check the reasoning&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> decreasing search, <a href="03-recursion.html">recursion</a>. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
 <p>For mathematical primality, numbers below 2 are not prime. For n ≥ 2, look for a divisor starting at 2. If a divisor is found, return false. If no divisor at most √n exists, n is prime because any composite has a factor no larger than its square root. To avoid overflow from <code>d * d</code>, a positive-integer stopping test can compare <code>d &gt; n / d</code>.</p>
 <p><strong>Invariant:</strong> all candidates below d have been tested and do not divide n. <strong>Checks:</strong> 0 and 1 are false; 2 is true; 25 is false; 29 is true. Guard n &lt; 2 before using positive-number division reasoning. The handout does not detail a negative-input policy; the mathematical extension is false.</p>
 <h2 id="p2-range">P2 · Range</h2>
-<p><strong>Connection:</strong> list construction and interval recursion. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/range.ml"><code>hw1/range.ml</code></a> · Interface: <code>range : int -&gt; int -&gt; int list</code>.</p>
+<ol>
+<li><strong>Compare the bounds.</strong> If the lower bound exceeds the upper bound, return an empty list.</li>
+<li><strong>Stop at one element.</strong> Equal bounds produce a singleton; do not increment past max_int.</li>
+<li><strong>Build the front.</strong> For a longer interval, emit the lower bound using cons.</li>
+<li><strong>Solve the smaller interval.</strong> Recursively start one higher and retain the same upper bound.</li>
+<li><strong>Verify order and endpoints.</strong> Both endpoints occur exactly once and the result is increasing.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-3.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-3.svg" width="292.0830078125" height="528.3999633789062" alt="HW1 P2 · Range - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-3.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P2 · Range - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Compare the bounds&quot;]
+  S2[&quot;2. Stop at one element&quot;]
+  S3[&quot;3. Build the front&quot;]
+  S4[&quot;4. Solve the smaller interval&quot;]
+  S5[&quot;5. Verify order and endpoints&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> list construction and interval recursion. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
 <p>When the lower bound exceeds the upper, the answer is empty. Otherwise, the first output element is the lower bound and the remaining problem starts one higher. Preserve increasing order. <strong>Checks:</strong> <code>range 2 4</code> gives <code>[2;3;4]</code>; equal endpoints give one element; reversed endpoints give <code>[]</code>. A robust finite-integer implementation handles the equal-endpoint case before incrementing, avoiding overflow when the upper bound is <code>max_int</code>.</p>
 <h2 id="p3-sum-of-lists">P3 · Sum of lists</h2>
-<p><strong>Connection:</strong> two structural traversals. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/suml.ml"><code>hw1/suml.ml</code></a> · Interface: <code>suml : int list list -&gt; int</code>.</p>
+<ol>
+<li><strong>Solve one inner list.</strong> An empty list sums to 0; otherwise add its head to the sum of its tail.</li>
+<li><strong>Handle the outer base case.</strong> An empty outer list also contributes 0.</li>
+<li><strong>Combine two results.</strong> Add the first inner list's sum to the recursively computed sum of the remaining lists.</li>
+<li><strong>Check nested emptiness.</strong> An empty inner list contributes zero without stopping the outer traversal.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-4.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-4.svg" width="295.90966796875" height="424.39996337890625" alt="HW1 P3 · Sum of lists - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-4.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P3 · Sum of lists - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Solve one inner list&quot;]
+  S2[&quot;2. Handle the outer base case&quot;]
+  S3[&quot;3. Combine two results&quot;]
+  S4[&quot;4. Check nested emptiness&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> two structural traversals. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
 <p>Define the meaning of an inner list sum first: empty contributes 0, and a cons contributes its head plus the tail sum. The outer list uses the same pattern, adding each inner result. Flattening is unnecessary. <strong>Checks:</strong> <code>[]</code> and <code>[[];[]]</code> both give 0; <code>[[2;-5];[4]]</code> gives 1. Empty inner lists must not stop the outer traversal.</p>
 <h2 id="p4-drop-a-prefix">P4 · Drop a prefix</h2>
-<p><strong>Connection:</strong> polymorphic lists and two stopping conditions. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/drop.ml"><code>hw1/drop.ml</code></a> · Interface: <code>drop : 'a list -&gt; int -&gt; 'a list</code>.</p>
+<ol>
+<li><strong>Check the count.</strong> When the requested count reaches zero, return the current list.</li>
+<li><strong>Check exhaustion.</strong> If no elements remain, return empty even if more were requested.</li>
+<li><strong>Discard one element.</strong> Recurse on the tail with a count smaller by one.</li>
+<li><strong>Preserve the suffix.</strong> Return that recursive result directly; do not reconstruct discarded heads. State a policy for negative counts.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-5.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-5.svg" width="271.09130859375" height="387" alt="HW1 P4 · Drop a prefix - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-5.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P4 · Drop a prefix - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Check the count&quot;]
+  S2[&quot;2. Check exhaustion&quot;]
+  S3[&quot;3. Discard one element&quot;]
+  S4[&quot;4. Preserve the suffix&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> polymorphic lists and two stopping conditions. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=1">p. 1</a>.</p>
 <p>When the remaining count is zero, return the current suffix. When the list is empty, return empty even if the count is still positive. Otherwise discard one head and decrease the count. The elements need no inspection, which explains <code>'a list</code> in the type. <strong>Checks:</strong> dropping 0 preserves the list; dropping beyond its length gives <code>[]</code>; strings work like integers. The PDF does not specify negative counts; document a chosen policy or confirm it against course guidance rather than inventing a grading rule.</p>
 <h2 id="p5-maximum-and-minimum">P5 · Maximum and minimum</h2>
-<p><strong>Connection:</strong> reduction with a valid initial candidate. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/maxmin.ml"><code>hw1/maxmin.ml</code></a> · Interface: <code>max : int list -&gt; int; min : int list -&gt; int</code>.</p>
+<ol>
+<li><strong>Separate empty input.</strong> The starter leaves the empty-list policy unspecified; make that assumption explicit.</li>
+<li><strong>Initialize from real data.</strong> Use the first element as the current candidate for a nonempty list.</li>
+<li><strong>Update the candidate.</strong> For max keep the greater value; for min keep the smaller value.</li>
+<li><strong>Advance through the tail.</strong> After each element, the candidate is the extreme of the processed prefix.</li>
+<li><strong>Return and challenge the result.</strong> Check singleton, all-negative maximum, and all-positive minimum cases.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-6.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-6.svg" width="295.421875" height="528.3999633789062" alt="HW1 P5 · Maximum and minimum - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-6.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P5 · Maximum and minimum - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Separate empty input&quot;]
+  S2[&quot;2. Initialize from real data&quot;]
+  S3[&quot;3. Update the candidate&quot;]
+  S4[&quot;4. Advance through the tail&quot;]
+  S5[&quot;5. Return and challenge the result&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> reduction with a valid initial candidate. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
 <p>For a nonempty list, initialize the current best from the first element, then compare every remaining element. Starting at zero fails for all-negative maximum inputs and all-positive minimum inputs. <strong>Checks:</strong> a singleton returns its element; maximum of <code>[-8;-3;-10]</code> is -3; minimum of <code>[6;2;9]</code> is 2. There is no integer result that is the maximum of <code>[]</code>; the empty-list behavior is unspecified in the handout and template.</p>
 <h2 id="p6-sigma">P6 · Sigma</h2>
-<p><strong>Connection:</strong> a <a href="glossary.html#higher-order-function" class="definition-link" title="A function that accepts a function as an argument or returns one as its result. — English textbook, PDF p. 81">higher-order function</a> separates traversal from calculation. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/sigma.ml"><code>hw1/sigma.ml</code></a> · Interface: <code>sigma : (int -&gt; int) -&gt; int -&gt; int -&gt; int</code>.</p>
+<ol>
+<li><strong>Choose the empty-sum convention.</strong> For reversed bounds, the mathematical empty sum is 0.</li>
+<li><strong>Compute the current contribution.</strong> Apply f to the lower endpoint exactly once.</li>
+<li><strong>Stop or shrink.</strong> If endpoints are equal, return that contribution; otherwise recurse from the next integer.</li>
+<li><strong>Add the contributions.</strong> Combine the current term with the recursive sum, keeping the upper endpoint included.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-7.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-7.svg" width="295.375" height="424.3999938964844" alt="HW1 P6 · Sigma - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-7.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P6 · Sigma - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Choose the empty-sum convention&quot;]
+  S2[&quot;2. Compute the current contribution&quot;]
+  S3[&quot;3. Stop or shrink&quot;]
+  S4[&quot;4. Add the contributions&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> a <a href="glossary.html#higher-order-function" class="definition-link" title="A function that accepts a function as an argument or returns one as its result. — English textbook, PDF p. 81">higher-order function</a> separates traversal from calculation. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
 <p>The interval logic visits each integer and the supplied function decides its contribution. For a nonempty interval, combine <code>f a</code> with the sum over the remaining interval. The natural empty-sum extension is 0. <strong>Check:</strong> summing <code>fun x -&gt; 2*x</code> from 1 through 3 gives 12; equal endpoints give exactly one application. Do not stop before including the upper bound.</p>
 <h2 id="p7-universal-predicate">P7 · Universal predicate</h2>
-<p><strong>Connection:</strong> a predicate returns bool; universal quantification combines with conjunction. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/forall.ml"><code>hw1/forall.ml</code></a> · Interface: <code>forall : ('a -&gt; bool) -&gt; 'a list -&gt; bool</code>.</p>
+<ol>
+<li><strong>Choose the empty-list answer.</strong> Return true: an empty list contains no counterexample.</li>
+<li><strong>Test the head.</strong> Apply the predicate to the first element.</li>
+<li><strong>Stop on failure.</strong> A false result already disproves the universal claim.</li>
+<li><strong>Continue on success.</strong> Check the tail and return its result; all elements must pass.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-8.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-8.svg" width="294.029296875" height="405.70001220703125" alt="HW1 P7 · Universal predicate - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-8.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P7 · Universal predicate - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Choose the empty-list answer&quot;]
+  S2[&quot;2. Test the head&quot;]
+  S3[&quot;3. Stop on failure&quot;]
+  S4[&quot;4. Continue on success&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> a predicate returns bool; universal quantification combines with conjunction. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">p. 2</a>.</p>
 <p>The empty list satisfies “every element passes” because it has no counterexample. For a cons, both the head predicate and the recursive tail condition must hold. Short-circuit on the first false result. <strong>Checks:</strong> all-positive <code>[2;5]</code> passes a positivity predicate, <code>[2;-1]</code> fails, and <code>[]</code> returns true. Returning false for the empty list makes every finite all-true list eventually fail.</p>
 <h2 id="p8-double-a-function">P8 · Double a function</h2>
-<p><strong>Connection:</strong> function composition and currying. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">pp. 2–3</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/double.ml"><code>hw1/double.ml</code></a> · Interface: <code>double : ('a -&gt; 'a) -&gt; 'a -&gt; 'a</code>.</p>
+<ol>
+<li><strong>Read the types.</strong> The first input is a function; the result is another function of the same input/output type.</li>
+<li><strong>Name the incoming value.</strong> Return a function waiting for a value x.</li>
+<li><strong>Compose twice.</strong> Compute f x, then feed that result to f again.</li>
+<li><strong>Expand higher-order uses.</strong> When double itself is an argument, substitute its function meaning before simplifying numeric examples.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-9.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-9.svg" width="293.0625" height="424.39996337890625" alt="HW1 P8 · Double a function - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-9.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P8 · Double a function - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Read the types&quot;]
+  S2[&quot;2. Name the incoming value&quot;]
+  S3[&quot;3. Compose twice&quot;]
+  S4[&quot;4. Expand higher-order uses&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> function composition and currying. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=2">pp. 2–3</a>.</p>
 <p>Let D be the transformation that sends a function f to the composition f ∘ f. Thus <code>(D f) x</code> is <code>f (f x)</code>. No numeric multiplication is involved in the definition. If f adds 3, applying D f to 1 gives 7. When D is itself passed as an argument, it acts on functions: <code>D D</code> applies D twice, turning f into four compositions of f. Write intermediate types and expansions before evaluating nested uses.</p>
 <h2 id="p9-tree-membership">P9 · Tree membership</h2>
-<p><strong>Connection:</strong> an inductive tree and Boolean combination. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=3">p. 3</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/mem.ml"><code>hw1/mem.ml</code></a> · Interface: <code>mem : int -&gt; btree -&gt; bool</code>.</p>
+<ol>
+<li><strong>Match the actual datatype.</strong> The starter declares Empty or Node(value, left, right). Match those two constructors.</li>
+<li><strong>Solve Empty.</strong> An empty tree contains no value, so its answer is false.</li>
+<li><strong>Check the current node.</strong> If its stored value equals the target, return true immediately.</li>
+<li><strong>Search the children.</strong> If the root does not match, recursively search the left child, then the right child if needed. No ordering is promised.</li>
+<li><strong>Combine and verify.</strong> Use logical OR. Check a match only in the right subtree and a missing target.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-10.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-10.svg" width="605.29931640625" height="1188.699951171875" alt="HW1 P9 - numbered reasoning for tree membership"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-10.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P9 - numbered reasoning for tree membership
+  accDescr: Match Empty or Node, test the node value, then search the children with logical OR. No binary-search-tree ordering is assumed.
+  A[&quot;1. Match Empty or Node&quot;] --&gt; B{&quot;2. Empty?&quot;}
+  B --&gt;|Yes| F[&quot;Return false&quot;]
+  B --&gt;|No| C{&quot;3. Node value equals target?&quot;}
+  C --&gt;|Yes| T[&quot;Return true&quot;]
+  C --&gt;|No| D[&quot;4a. Search left child&quot;]
+  D --&gt; E{&quot;Found on left?&quot;}
+  E --&gt;|Yes| T
+  E --&gt;|No| G[&quot;4b. Search right child&quot;]
+  G --&gt; H[&quot;5. Return the OR result&quot;]
+</code></pre></details></figure><p><strong>Connection:</strong> an inductive tree and Boolean combination. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=3">p. 3</a>.</p>
 <p>An empty tree contains no target. At a node, compare the stored integer and search both children as necessary. There is no binary-search-tree ordering promise. <strong>Checks:</strong> empty tree, match at root, match only in the right subtree, and a missing value. Construct a tree where a smaller number appears on the right to expose an unjustified ordering assumption.</p>
 <h2 id="p10-mirror-a-tree">P10 · Mirror a tree</h2>
-<p><strong>Connection:</strong> a structure-preserving <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> transformation. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=3">pp. 3–4</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/mirror.ml"><code>hw1/mirror.ml</code></a> · Interface: <code>mirror : btree -&gt; btree</code>.</p>
+<ol>
+<li><strong>Read this file's constructors.</strong> This btree is Leaf, Left, Right, or LeftRight; it is different from P9's btree.</li>
+<li><strong>Keep leaf values.</strong> A Leaf stays a Leaf containing the same integer.</li>
+<li><strong>Swap one-sided branches.</strong> Left becomes Right and Right becomes Left, with a recursively mirrored child.</li>
+<li><strong>Swap two-sided branches.</strong> Mirror both children and exchange their positions inside LeftRight.</li>
+<li><strong>Check the whole structure.</strong> Mirroring twice should recover the input, including nested asymmetric branches.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-11.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-11.svg" width="294.390625" height="565.7999877929688" alt="HW1 P10 · Mirror a tree - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-11.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P10 · Mirror a tree - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Read this file&#39;s constructors&quot;]
+  S2[&quot;2. Keep leaf values&quot;]
+  S3[&quot;3. Swap one-sided branches&quot;]
+  S4[&quot;4. Swap two-sided branches&quot;]
+  S5[&quot;5. Check the whole structure&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> a structure-preserving <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> transformation. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=3">pp. 3–4</a>.</p>
 <p>This problem uses a different tree datatype from P9. A leaf keeps its value. A left-only constructor becomes right-only with a recursively mirrored child; right-only becomes left-only. A two-child node swaps its recursively mirrored children. <strong>Property check:</strong> mirroring twice gives the original tree. A root-only swap passes shallow examples but fails this property on nested asymmetrical trees.</p>
 <h2 id="p11-peano-arithmetic">P11 · Peano arithmetic</h2>
-<p><strong>Connection:</strong> naturals defined by ZERO and SUCC. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=4">p. 4</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/nat.ml"><code>hw1/nat.ml</code></a> · Interface: <code>natadd : nat -&gt; nat -&gt; nat; natmul : nat -&gt; nat -&gt; nat</code>.</p>
+<ol>
+<li><strong>Recurse over one natural.</strong> Choose the first argument and match ZERO or SUCC.</li>
+<li><strong>Derive addition.</strong> ZERO adds nothing; SUCC adds one constructor around the smaller sum.</li>
+<li><strong>Reuse addition for multiplication.</strong> ZERO times anything is ZERO; each SUCC contributes one more copy of the second operand.</li>
+<li><strong>Check constructor arithmetic.</strong> Test zero, one, and small products without converting to host integers in the implementation.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-12.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-12.svg" width="293.89306640625" height="443.0999755859375" alt="HW1 P11 · Peano arithmetic - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-12.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P11 · Peano arithmetic - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Recurse over one natural&quot;]
+  S2[&quot;2. Derive addition&quot;]
+  S3[&quot;3. Reuse addition for multiplication&quot;]
+  S4[&quot;4. Check constructor arithmetic&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+</code></pre></details></figure><p><strong>Connection:</strong> naturals defined by ZERO and SUCC. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=4">p. 4</a>.</p>
 <p>Choose one operand for <a href="glossary.html#structural-recursion" class="definition-link" title="Computing over an inductively built value by recursively processing its smaller components and combining their results. — English textbook, PDF p. 70">structural recursion</a>. Addition satisfies <code>add ZERO b = b</code> and <code>add (SUCC a) b = SUCC (add a b)</code>. Multiplication satisfies <code>mul ZERO b = ZERO</code> and <code>mul (SUCC a) b = add b (mul a b)</code>. These equations directly specify the constructor cases. <strong>Checks:</strong> zero on either side, one on either side, and commutativity on small inputs. Integer conversion is unnecessary for defining the operations.</p>
 <h2 id="p12-formulas-and-arithmetic">P12 · Formulas and arithmetic</h2>
-<p><strong>Connection:</strong> syntax-directed interpretation with two result domains. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=4">pp. 4–5</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/eval.ml"><code>hw1/eval.ml</code></a> · Interface: <code>eval : formula -&gt; bool</code>.</p>
+<ol>
+<li><strong>Separate the two result types.</strong> Use a formula helper returning bool and an arithmetic helper returning int.</li>
+<li><strong>Evaluate arithmetic structurally.</strong> Num is a base case; Plus and Minus combine recursively computed integers.</li>
+<li><strong>Evaluate logical constructors.</strong> Handle True, False, Not, AndAlso, OrElse, and Imply with their truth functions.</li>
+<li><strong>Connect the domains at Equal.</strong> Evaluate both arithmetic children, then compare their integer results.</li>
+<li><strong>Check implication carefully.</strong> Only true implying false is false; exercise all four input combinations.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-13.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-13.svg" width="299.1875" height="584.4999389648438" alt="HW1 P12 · Formulas and arithmetic - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-13.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P12 · Formulas and arithmetic - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Separate the two result types&quot;]
+  S2[&quot;2. Evaluate arithmetic structurally&quot;]
+  S3[&quot;3. Evaluate logical constructors&quot;]
+  S4[&quot;4. Connect the domains at Equal&quot;]
+  S5[&quot;5. Check implication carefully&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> syntax-directed interpretation with two result domains. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=4">pp. 4–5</a>.</p>
 <p>Use a Boolean formula evaluator and an integer arithmetic evaluator. <code>Equal</code> asks the arithmetic evaluator for two numbers, then compares them. Implication is false only when its premise is true and its conclusion is false, so its truth function is <code>(not a) || b</code>. <strong>Checks:</strong> all four implication input pairs, nested negation, and equality between differently structured arithmetic expressions producing the same value.</p>
 <h2 id="p13-symbolic-differentiation">P13 · Symbolic differentiation</h2>
-<p><strong>Connection:</strong> recursive syntax transformation and the product rule. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=5">p. 5</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/diff.ml"><code>hw1/diff.ml</code></a> · Interface: <code>diff : aexp * string -&gt; aexp</code>.</p>
+<ol>
+<li><strong>Keep the differentiation variable fixed.</strong> Carry the requested variable name through every recursive call.</li>
+<li><strong>Handle atomic cases.</strong> Constants and unrelated variables produce zero; the matching variable produces one. Treat exponent zero before decrementing.</li>
+<li><strong>Distribute over a sum.</strong> Differentiate each summand while retaining the Sum structure.</li>
+<li><strong>Apply the product rule.</strong> Create one term for each factor position: differentiate that factor and preserve the others.</li>
+<li><strong>Separate simplification from correctness.</strong> Check the derivative's mathematical meaning; the handout allows different equivalent result trees.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-14.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-14.svg" width="296.6533203125" height="528.3999633789062" alt="HW1 P13 · Symbolic differentiation - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-14.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P13 · Symbolic differentiation - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Keep the differentiation variable fixed&quot;]
+  S2[&quot;2. Handle atomic cases&quot;]
+  S3[&quot;3. Distribute over a sum&quot;]
+  S4[&quot;4. Apply the product rule&quot;]
+  S5[&quot;5. Separate simplification from correctness&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> recursive syntax transformation and the product rule. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=5">p. 5</a>.</p>
 <p>Distinguish the expression being traversed from the variable you differentiate with respect to. Constants differentiate to zero; a matching variable to one; a different variable to zero. A sum differentiates each summand. For a product of n factors, build a sum of n terms: in term i, differentiate factor i and leave all other factors unchanged.</p>
 <pre><code class="language-text">D(f1 × f2 × f3)
   = D(f1) × f2 × f3
@@ -61,21 +344,55 @@
 </code></pre>
 <p>Differentiating every factor and multiplying the derivatives is wrong. For powers in the polynomial case, handle exponent zero before forming exponent minus one. The handout uses an integer exponent representation but does not spell out its admissible domain or all empty-list conventions; preserve the provided language’s intended algebra and document assumptions. It explicitly allows nonunique result representations, so simplification is separate from correctness. <strong>Checks:</strong> a constant, a variable unrelated to the chosen one, a zero power, and a three-factor product. Numeric evaluation of original and derivative expressions at sample points can support testing, but is not a proof of symbolic equivalence.</p>
 <h2 id="p14-sigma-calculator">P14 · Sigma calculator</h2>
-<p><strong>Connection:</strong> an evaluator carrying a binding. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=5">pp. 5–6</a>.</p>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/calculator.ml"><code>hw1/calculator.ml</code></a> · Interface: <code>calculator : exp -&gt; int</code>.</p>
+<ol>
+<li><strong>Introduce a private context.</strong> The public signature has no X argument; a helper carries the current binding of X.</li>
+<li><strong>Interpret ordinary expressions.</strong> Handle INT, X, and arithmetic using that current context.</li>
+<li><strong>Evaluate the summation bounds.</strong> Compute both bounds in the surrounding context before binding the loop variable.</li>
+<li><strong>Evaluate each summand.</strong> For each interval value, evaluate the body with X bound to that value and add its result.</li>
+<li><strong>Keep nested bindings local.</strong> A nested SIGMA must not overwrite the X used by its sibling expressions. Document unspecified boundary policies.</li>
+</ol>
+</div>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-15.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-15.svg" width="292.83935546875" height="584.4999389648438" alt="HW1 P14 · Sigma calculator - numbered reasoning plan"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-15.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: HW1 P14 · Sigma calculator - numbered reasoning plan
+  accDescr: Follow the numbered reasoning stages; conditional stopping cases are explained in the matching list.
+  S1[&quot;1. Introduce a private context&quot;]
+  S2[&quot;2. Interpret ordinary expressions&quot;]
+  S3[&quot;3. Evaluate the summation bounds&quot;]
+  S4[&quot;4. Evaluate each summand&quot;]
+  S5[&quot;5. Keep nested bindings local&quot;]
+  S1 --&gt; S2
+  S2 --&gt; S3
+  S3 --&gt; S4
+  S4 --&gt; S5
+</code></pre></details></figure><p><strong>Connection:</strong> an evaluator carrying a binding. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=5">pp. 5–6</a>.</p>
 <p>The public function takes only an expression, but a private evaluator needs the current value of X while evaluating the body of a summation. Evaluate bounds in the surrounding context; for each integer in the interval, evaluate the body with X bound to that integer and add the results. A nested SIGMA naturally introduces its own body binding while its bounds can use the outer context. That scoping interpretation and behavior for an unbound X, reversed bounds, and zero division are not fully detailed in the brief handout: keep your policy explicit.</p>
 <p><strong>Original check:</strong> summing X + 2 from 1 through 3 gives 12. A nested example distinguishes using the current binding from keeping one global mutable X that leaks between subexpressions.</p>
 <h2 id="p15-free-variable-checker">P15 · Free-variable checker</h2>
+<div class="thinking-route">
+<p><strong>Thinking steps</strong></p>
+<p><strong>Official starter:</strong> <a href="https://github.com/kupl-courses/COSE212-2026fall/blob/b0c917f0e648907ef0460522ff8f3e686b64d2fb/hw1/check.ml"><code>hw1/check.ml</code></a> · Interface: <code>check : exp -&gt; bool</code>.</p>
+<ol>
+<li><strong>Begin with no bound names.</strong> Use a private helper that takes the current lexical context and an expression.</li>
+<li><strong>Handle V.</strong> A variable passes exactly when its name appears in that context.</li>
+<li><strong>Handle P.</strong> Add the parameter only while checking the procedure's body.</li>
+<li><strong>Handle C.</strong> Check both children independently under the same incoming context, then combine with AND.</li>
+<li><strong>Test scope isolation.</strong> A binder in the left child must not make a free name in the right child appear bound.</li>
+</ol>
+</div>
 <p><strong>Connection:</strong> <a href="glossary.html#lexical-scope" class="definition-link" title="A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers. — English textbook, PDF p. 128">lexical scope</a> and <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environments</a>. <strong>Source:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf#page=6">p. 6</a>.</p>
 <p>Traverse with the names bound along the current path. A variable is valid if its name is in that context. A procedure adds its parameter while checking its body. An application checks both children under the same incoming context; declarations inside one child do not leak into its sibling. Start with no bound names.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-2.svg" width="848.3629150390625" height="705.9343872070312" alt="Checking free variables by lexical path"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw1-16.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw1-16.svg" width="863.0098876953125" height="722.1632080078125" alt="Checking free variables by lexical path"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw1-16.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Checking free variables by lexical path
   accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.
-  A[&quot;check helper: context + expression&quot;] --&gt; B{&quot;Outer constructor?&quot;}
-  B --&gt;|&quot;V x&quot;| C{&quot;Is x in context?&quot;}
+  A[&quot;1. Start helper with empty context&quot;] --&gt; B{&quot;Match the outer constructor&quot;}
+  B --&gt;|&quot;V x&quot;| C{&quot;2. Is x in context?&quot;}
   C --&gt;|&quot;yes&quot;| T[&quot;true&quot;]
   C --&gt;|&quot;no&quot;| F[&quot;false&quot;]
-  B --&gt;|&quot;P x body&quot;| D[&quot;Check body with x added&quot;]
-  B --&gt;|&quot;C left right&quot;| E[&quot;Check both with the same incoming context&quot;]
+  B --&gt;|&quot;P x body&quot;| D[&quot;3. Check body with x added&quot;]
+  B --&gt;|&quot;C left right&quot;| E[&quot;4. Check both with the same incoming context&quot;]
   E --&gt; G[&quot;Combine with AND&quot;]
 </code></pre></details></figure><p><strong>Checks:</strong> a single <a href="glossary.html#free-variable" class="definition-link" title="A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context. — English textbook, PDF p. 124">free variable</a> fails; a procedure returning its own parameter passes; repeated parameter names are allowed; an application whose left child binds a name and whose right child uses that name freely must fail. A global bag of all binder names cannot implement this rule.</p>
 <h2 id="review-before-moving-to-hw2">Review before moving to HW2</h2>
