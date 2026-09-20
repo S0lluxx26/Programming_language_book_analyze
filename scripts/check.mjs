@@ -1,5 +1,6 @@
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {thinkingRoutes} from './thinking-routes.mjs';
+import {lectures,syntax,walkthroughs,lectureSlug} from './learning-aids.mjs';
 const catalog=JSON.parse(fs.readFileSync('book/catalog.json','utf8'));
 const manifest=JSON.parse(fs.readFileSync('sources/manifest.json','utf8'));
 const sources=new Map(manifest.files.map(f=>[f.url,f]));
@@ -57,7 +58,23 @@ for(const p of structure.problems){
   assert(body.includes('worked-solution'),`Problem ${p.number}: missing solution`);
   assert(body.includes(`#page=${p.page})`),`Problem ${p.number}: missing PDF page`);
 }
-assert.equal(catalog.length,35);
-const report={chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
+assert.equal(catalog.length,58);
+assert.deepEqual(lectures.map(l=>l.n),Array.from({length:21},(_,i)=>i));
+assert.equal(new Set(syntax.map(s=>s.id)).size,syntax.length);
+for(const l of lectures){
+  const html=fs.readFileSync('dist/'+lectureSlug(l.n)+'.html','utf8');
+  for(const heading of ['The whole picture','Focus points','Formula and syntax','Problem-solving route','Worked trace','Homework connection','Check your understanding'])assert(html.includes(heading),'Lecture '+l.n+': '+heading);
+  assert(l.steps.length>=4 && l.pages.length>=3,'Incomplete lecture '+l.n);
+  assert(html.includes('mermaid-figure') && html.includes('Reveal the explanation'),'Missing lecture diagram or answer');
+  for(const id of l.syntax)assert(syntax.some(s=>s.id===id),'Unknown syntax '+id);
+}
+assert.deepEqual(walkthroughs.map(w=>w.chapter),[1,2,3,4,5,6,7,8,9]);
+for(const w of walkthroughs){
+  const html=fs.readFileSync('dist/textbook-'+String(w.chapter).padStart(2,'0')+'.html','utf8');
+  assert(html.includes('class="code-walkthrough"'),'Missing walkthrough '+w.chapter);
+  assert.equal((html.match(/class="code-line"/g)||[]).length,w.lines.length,'Missing code explanation');
+  assert(w.lines.every(([code,note])=>code&&note),'Unexplained code line');
+}
+const report={lectureCheatSheets:lectures.length,syntaxEntries:syntax.length,annotatedChapters:walkthroughs.length,chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length,numberedThinkingRoutes:thinkingRoutes.length,officialStarterFiles:templates.files.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

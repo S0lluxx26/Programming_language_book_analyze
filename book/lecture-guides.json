@@ -1,0 +1,821 @@
+[
+  {
+    "n": 0,
+    "title": "Course overview",
+    "chapter": 1,
+    "pages": [
+      6,
+      7,
+      8,
+      9,
+      12
+    ],
+    "focus": "Learn language concepts by defining a small language and implementing its interpreter. OCaml is the implementation tool; the interpreted language is a separate object of study.",
+    "points": [
+      "The course connects inductive definitions, functional programming, interpreters, and static analysis.",
+      "Syntax describes programs; semantics describes their meaning; an implementation must preserve that meaning.",
+      "Use the official course page for current logistics. This sheet concentrates on the technical learning path."
+    ],
+    "formula": "program → syntax tree → interpreter → value; program → type checker → type or rejection",
+    "syntax": [
+      "grammar",
+      "evaluation",
+      "typing"
+    ],
+    "steps": [
+      "Identify the language being studied",
+      "Read its syntax and semantic rules",
+      "Represent its constructors in OCaml",
+      "Trace a small example before implementing"
+    ],
+    "example": "A course expression such as proc x (x + 1) becomes an AST value; the OCaml evaluator then interprets that value. Writing an OCaml function and interpreting a function in the toy language are different tasks.",
+    "homework": "All four assignments follow this progression.",
+    "hw": 1,
+    "check": "What is the difference between the language of the interpreter and the language it interprets?",
+    "answer": "The interpreter is written in OCaml. Its input represents a program in the specified course language."
+  },
+  {
+    "n": 1,
+    "title": "Inductive definitions I",
+    "chapter": 1,
+    "pages": [
+      2,
+      3,
+      6,
+      7,
+      9
+    ],
+    "focus": "Define an infinite set using finite base and construction rules, with no extra elements.",
+    "points": [
+      "Top-down, bottom-up, and inference-rule presentations describe the same generated set when their rules agree.",
+      "An axiom starts a derivation; a rule builds a larger derivation from premises.",
+      "Membership requires a finite derivation. Showing a property is preserved only proves one direction of set equality."
+    ],
+    "formula": "0 ∈ S; n ∈ S ⇒ n + 3 ∈ S; therefore S = {3k | k ≥ 0}",
+    "syntax": [
+      "grammar",
+      "rule"
+    ],
+    "steps": [
+      "List base elements",
+      "Apply construction rules",
+      "Build a derivation for membership",
+      "Prove both inclusions for a claimed set equality"
+    ],
+    "example": "To derive 6 ∈ S, derive 0 first, then 3, then 6. To prove S contains exactly the nonnegative multiples of 3, prove generated elements are multiples and every such multiple can be generated.",
+    "homework": "HW1 P11: ZERO and SUCC are the base and constructor of Peano naturals.",
+    "hw": 1,
+    "check": "Does closure under adding 3 alone exclude 1 from S?",
+    "answer": "No. The least-set requirement excludes elements not generated from the bases."
+  },
+  {
+    "n": 2,
+    "title": "Inductive definitions II",
+    "chapter": 1,
+    "pages": [
+      6,
+      8,
+      11,
+      13,
+      15,
+      19
+    ],
+    "focus": "The shape of a datatype determines the cases of its recursive functions and structural proofs.",
+    "points": [
+      "Lists and trees need distinct rules for each constructor.",
+      "Expression grammar describes syntax; an evaluator separately assigns meanings.",
+      "A structural induction hypothesis applies to the immediate recursive components, not an arbitrary larger object."
+    ],
+    "formula": "P(base); P(a) ∧ P(b) ⇒ P(Node(a,b)); hence P(t) for every generated tree t",
+    "syntax": [
+      "grammar",
+      "rule",
+      "match"
+    ],
+    "steps": [
+      "Enumerate every constructor",
+      "Prove the base cases",
+      "Assume the property for each recursive child",
+      "Combine the child facts in the constructor case"
+    ],
+    "example": "For a full binary tree with Leaf and Fork(left,right), prove leaves = forks + 1: Leaf gives 1 = 0 + 1; Fork combines the two hypotheses and adds one fork.",
+    "homework": "HW1 P9–P13: match the exact tree, natural-number, formula, or expression constructors.",
+    "hw": 1,
+    "check": "Can the same tree cases be copied from mem.ml to mirror.ml?",
+    "answer": "No. The official files use different tree datatypes; inspect each constructor list."
+  },
+  {
+    "n": 3,
+    "title": "Basics of OCaml",
+    "chapter": 2,
+    "pages": [
+      19,
+      20,
+      24,
+      28,
+      37,
+      40,
+      44,
+      45,
+      47
+    ],
+    "focus": "Read OCaml as expressions built from bindings, functions, patterns, and typed values.",
+    "points": [
+      "let binds a value; let ... in limits the binding to a body. Ordinary bindings are not assignments.",
+      "Function application uses spaces; curried functions return functions when partially applied.",
+      "Lists are homogeneous; tuples may mix types. Pattern matching decomposes constructors.",
+      "Exceptions and modules are language tools, but the homework may restrict their use: HW2 forbids modules."
+    ],
+    "formula": "fun x -> e : α -> β when x : α and e : β; h :: t : α list when h : α and t : α list",
+    "syntax": [
+      "let",
+      "function",
+      "match",
+      "list"
+    ],
+    "steps": [
+      "Determine the input and output types",
+      "Read the binding scope",
+      "Match the data constructors",
+      "Check every branch returns a compatible type"
+    ],
+    "example": "let add x y = x + y defines int -> int -> int. add 2 returns an int -> int function; add 2 3 evaluates to 5.",
+    "homework": "All HW1 signatures; HW2–HW4 AST pattern matches.",
+    "hw": 1,
+    "check": "Why is [1; true] rejected while (1, true) is allowed?",
+    "answer": "List elements share one type; tuple positions have independently specified types."
+  },
+  {
+    "n": 4,
+    "title": "Recursion and higher-order programming",
+    "chapter": 2,
+    "pages": [
+      4,
+      5,
+      14,
+      16,
+      19,
+      22,
+      24,
+      25
+    ],
+    "focus": "Solve a smaller instance, then combine its result; abstract repeated traversal with functions.",
+    "points": [
+      "A recursive call must move toward a base case.",
+      "Tail recursion leaves no pending computation after the recursive call; an accumulator needs an invariant.",
+      "map transforms elements, filter selects them, and folds combine them.",
+      "Fold direction changes association and argument order, especially for subtraction and list construction."
+    ],
+    "formula": "fold_right f [a;b] z = f a (f b z); fold_left f z [a;b] = f (f z a) b",
+    "syntax": [
+      "match",
+      "list",
+      "function"
+    ],
+    "steps": [
+      "Choose the base result",
+      "Choose a strictly smaller input",
+      "Combine the recursive result",
+      "Test empty and singleton cases",
+      "Consider an accumulator or fold"
+    ],
+    "example": "fold_right (-) [1;2] 0 = 1 - (2 - 0) = -1; fold_left (-) 0 [1;2] = (0 - 1) - 2 = -3.",
+    "homework": "HW1 P2–P8 and P9–P15; textbook §2.4 especially Problems 8–10.",
+    "hw": 1,
+    "check": "Is 1 + length tail a tail call?",
+    "answer": "No. Addition remains after length returns."
+  },
+  {
+    "n": 5,
+    "title": "Expressions and environments",
+    "chapter": 3,
+    "pages": [
+      5,
+      8,
+      10,
+      11,
+      19,
+      22,
+      23
+    ],
+    "focus": "Translate each evaluation rule into a matching AST case and keep the environment explicit.",
+    "points": [
+      "Syntax, semantic domains, and evaluation rules serve different roles.",
+      "The environment maps identifiers to runtime values; nearest bindings shadow older ones.",
+      "A let initializer uses the old environment; only its body uses the extension.",
+      "A conditional evaluates its guard and one selected branch."
+    ],
+    "formula": "ρ ⊢ e1 ⇒ v1; ρ[x ↦ v1] ⊢ e2 ⇒ v2; therefore ρ ⊢ let x = e1 in e2 ⇒ v2",
+    "syntax": [
+      "grammar",
+      "evaluation",
+      "extension",
+      "let"
+    ],
+    "steps": [
+      "Match the AST constructor",
+      "Evaluate the rule premises",
+      "Check required value shapes",
+      "Return the rule conclusion"
+    ],
+    "example": "let x = 2 in let x = x + 1 in x evaluates to 3. The inner initializer sees the outer x; the final x sees the inner binding.",
+    "homework": "HW2: constants, arithmetic, variables, IF, and LET. HW1 P12 provides a smaller evaluator.",
+    "hw": 2,
+    "check": "Should both branches of IF be evaluated?",
+    "answer": "No. Doing so can introduce errors or effects that the language does not require."
+  },
+  {
+    "n": 6,
+    "title": "Procedures and recursive closures",
+    "chapter": 4,
+    "pages": [
+      4,
+      6,
+      7,
+      10,
+      13,
+      20,
+      24
+    ],
+    "focus": "A lexical procedure carries the environment where it was defined; a call extends that saved environment.",
+    "points": [
+      "A closure contains parameter, body, and definition environment.",
+      "Evaluate the callee and argument in the caller environment, but run the body in the captured environment.",
+      "Dynamic scope instead uses the caller environment; it is a different semantics.",
+      "Recursive and mutually recursive closures must restore the appropriate function bindings at invocation."
+    ],
+    "formula": "closure = (x, body, ρdef); call body in ρdef[x ↦ varg] (plus recursive bindings when required)",
+    "syntax": [
+      "closure",
+      "evaluation",
+      "extension",
+      "function"
+    ],
+    "steps": [
+      "Evaluate the callee",
+      "Evaluate the argument",
+      "Recover the closure environment",
+      "Add recursive bindings and parameter",
+      "Evaluate the body"
+    ],
+    "example": "let x = 10 in let f = proc y (x + y) in let x = 100 in f 3 returns 13 under lexical scope and 103 under dynamic scope.",
+    "homework": "HW2 PROC, CALL, LETREC, LETMREC; textbook Chapter 4 scope exercises and Chapter 5 Fun implementation.",
+    "hw": 2,
+    "check": "Which environment supplies free x in a lexical closure body?",
+    "answer": "The definition environment saved in the closure, extended by the call's bindings."
+  },
+  {
+    "n": 7,
+    "title": "Lexical addresses and nameless programs",
+    "chapter": 4,
+    "pages": [
+      3,
+      6,
+      8,
+      10,
+      11,
+      12,
+      14
+    ],
+    "focus": "Resolve a variable to its binder statically and replace names with positions.",
+    "points": [
+      "A declaration introduces a binder; a reference is a use of a name.",
+      "Search outward from the nearest binder, so shadowing changes the address.",
+      "Translation uses a name context; evaluation uses a value environment with the same layout.",
+      "An unbound name cannot be assigned a valid lexical address."
+    ],
+    "formula": "index(x, [x0; x1; ...]) = least i such that xi = x; #0 denotes the nearest binder",
+    "syntax": [
+      "address",
+      "closure",
+      "extension"
+    ],
+    "steps": [
+      "Maintain the nearest-first binder list",
+      "Push a binder on entering its scope",
+      "Replace each use with its position",
+      "Evaluate positions in the matching value list"
+    ],
+    "example": "proc x (proc y (x - y)) becomes proc (proc (#1 - #0)). At the subtraction, y is nearest and x is one level farther out.",
+    "homework": "Conceptual support for HW1 P15 binding checks and HW2 lexical environments; no separate nameless-language homework is specified.",
+    "hw": 2,
+    "check": "In let x = e1 in e2, does x enter the context for e1?",
+    "answer": "Not for an ordinary nonrecursive let. Extend the context only for e2."
+  },
+  {
+    "n": 8,
+    "title": "State and parameter passing",
+    "chapter": 6,
+    "pages": [
+      9,
+      14,
+      16,
+      20,
+      25,
+      26,
+      33,
+      37,
+      38
+    ],
+    "focus": "Separate the binding map from mutable memory and carry the updated store through every evaluation step.",
+    "points": [
+      "Explicit references make locations values; implicit references make variables denote locations.",
+      "Allocation chooses a fresh location; assignment updates an existing location.",
+      "Call by value uses a fresh parameter cell; call by reference aliases a caller cell.",
+      "Lazy evaluation delays argument computation; it is distinct from passing a location."
+    ],
+    "formula": "ρ : Var → Loc, M : Loc → Value; variable value = M(ρ(x)); eval returns (v, M′)",
+    "syntax": [
+      "store",
+      "evaluation",
+      "reference",
+      "extension"
+    ],
+    "steps": [
+      "Identify explicit or implicit references",
+      "Find or allocate the location",
+      "Evaluate operands while threading memory",
+      "Update or read the selected cell",
+      "Return value and final memory"
+    ],
+    "example": "If a is stored at L0 with value 3, passing a by reference to a procedure that assigns 4 changes L0. Passing by value creates a different parameter cell and leaves a at 3.",
+    "homework": "HW3 variables, assignment, SEQ, CALLV, CALLR, and loops; textbook Chapter 6.",
+    "hw": 3,
+    "check": "Can the right operand start with the original memory?",
+    "answer": "No. It must receive the memory produced by the left operand when the specified order is left to right."
+  },
+  {
+    "n": 9,
+    "title": "Records, pointers, and garbage collection",
+    "chapter": 7,
+    "pages": [
+      5,
+      6,
+      7,
+      8,
+      10,
+      14,
+      17,
+      19,
+      20
+    ],
+    "focus": "Follow locations through structured values and distinguish unreachable memory from memory that merely looks unused.",
+    "points": [
+      "A record maps field names to locations, allowing field updates and shared records.",
+      "First-class pointers let locations themselves be stored and passed.",
+      "Manual freeing can create dangling references; automatic collection retains reachable cells.",
+      "Reachability is a conservative approximation to future use. Runtime roots may include pending computation as well as environments."
+    ],
+    "formula": "R0 = roots; R(i+1) = Ri ∪ successors(Ri); stop at a fixed point and retain M restricted to R",
+    "syntax": [
+      "record",
+      "store",
+      "reach"
+    ],
+    "steps": [
+      "Collect every live root",
+      "Follow locations inside reachable values",
+      "Repeat until no new location appears",
+      "Retain reachable cells",
+      "Test aliases and cycles"
+    ],
+    "example": "Two variables can point to the same record field cell. Updating the field through one alias is visible through the other. A visited set prevents a cyclic pointer graph from making traversal loop forever.",
+    "homework": "HW3 RECORD, FIELD, ASSIGNF; the GC exercises belong to textbook Chapter 7, not the HW3 required AST.",
+    "hw": 3,
+    "check": "Does reachable imply the cell will definitely be read again?",
+    "answer": "No. Keeping all reachable cells is safe but can retain cells that are never used again."
+  },
+  {
+    "n": 10,
+    "title": "Exceptions and continuations",
+    "chapter": null,
+    "reading": "09-exceptions",
+    "pages": [
+      7,
+      9,
+      10,
+      11,
+      18,
+      19,
+      20,
+      21
+    ],
+    "focus": "Make pending computation explicit so a raised exception can discard frames up to the nearest handler.",
+    "points": [
+      "A continuation represents the computation that remains after the current expression.",
+      "Ordinary evaluation applies a continuation to a value.",
+      "try installs a handler with its environment; raise evaluates a payload then searches outward.",
+      "The handler runs outside the handled continuation segment; discarded arithmetic does not resume."
+    ],
+    "formula": "try (1 + raise 5) catch x x ⇒ 5; the waiting addition frame is discarded",
+    "syntax": [
+      "continuation",
+      "evaluation"
+    ],
+    "steps": [
+      "Push frames for pending work",
+      "Install a handler frame for try",
+      "Evaluate the raised payload",
+      "Discard frames to the nearest handler",
+      "Run the handler in its saved environment"
+    ],
+    "example": "try (5 + raise 9) catch x (x + 2) returns 11, not 16. An unhandled raise has no matching handler and cannot produce an ordinary result.",
+    "homework": "An extension of the HW2 interpreter model; exceptions are not required constructors in that starter. Use the companion exception trace for practice.",
+    "hw": 2,
+    "check": "Does the handler resume the abandoned addition?",
+    "answer": "No. The continuation frames above the handler have been removed."
+  },
+  {
+    "n": 11,
+    "title": "Classes and objects",
+    "chapter": null,
+    "reading": "10-objects",
+    "pages": [
+      6,
+      10,
+      16,
+      17,
+      18,
+      20,
+      24,
+      25,
+      26
+    ],
+    "focus": "An object combines mutable field locations with a class identity used for method lookup.",
+    "points": [
+      "Build the class environment before evaluating the main expression.",
+      "Inherited field locations persist in each object; field shadowing requires distinct identities.",
+      "A normal message send dispatches from the receiver's runtime class.",
+      "super begins lookup at the parent of the method's host class while retaining the same receiver."
+    ],
+    "formula": "object = (runtime class, field environment); method lookup walks the class chain",
+    "syntax": [
+      "dispatch",
+      "store",
+      "extension"
+    ],
+    "steps": [
+      "Build class and inheritance tables",
+      "Allocate object field locations",
+      "Evaluate receiver and arguments",
+      "Choose method lookup start class",
+      "Run method with fields parameters and self"
+    ],
+    "example": "If a child overrides m, self.m() can choose the override. A super.m() in a method starts from the host class's parent and does not allocate a new parent object.",
+    "homework": "Extends HW3 environments and memory. No class-language implementation is specified in HW1–HW4.",
+    "hw": 3,
+    "check": "Is self always an object of the method's declaring class?",
+    "answer": "No. An inherited method may run with a receiver whose runtime class is a subclass."
+  },
+  {
+    "n": 12,
+    "title": "Why static types?",
+    "chapter": 8,
+    "pages": [
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "focus": "Use a computable static approximation to prevent a specified class of runtime type errors.",
+    "points": [
+      "Perfect automatic prediction of arbitrary program behavior is undecidable; useful restricted analyses remain possible.",
+      "Sound acceptance guarantees the intended safety property, under the language's assumptions.",
+      "A sound type system may reject some programs that would execute safely.",
+      "Type safety does not imply termination or the absence of every possible software bug."
+    ],
+    "formula": "accepted ⇒ no specified runtime type error; safe ⇏ necessarily accepted",
+    "syntax": [
+      "typing",
+      "type"
+    ],
+    "steps": [
+      "Name the runtime errors being excluded",
+      "Choose a tractable typing discipline",
+      "Check before running",
+      "Interpret rejection within the discipline"
+    ],
+    "example": "A checker that requires both IF branches to have one type rejects if true then 1 else false even though this particular execution selects the integer branch.",
+    "homework": "HW4: understand what successful typeof promises and why an untypable expression raises TypeError.",
+    "hw": 4,
+    "check": "Does a sound type checker prove a program terminates?",
+    "answer": "No. A well-typed recursive program may diverge."
+  },
+  {
+    "n": 13,
+    "title": "Designing typing rules",
+    "chapter": 8,
+    "pages": [
+      4,
+      5,
+      7,
+      9,
+      12,
+      14,
+      15
+    ],
+    "focus": "Build typing derivations using a type environment instead of executing the program.",
+    "points": [
+      "Types are inductively built from base and function types.",
+      "The context Γ maps variables to types, not runtime values.",
+      "A procedure extends Γ with its parameter type; application matches argument and domain.",
+      "The declarative rules may permit multiple types for one expression."
+    ],
+    "formula": "Γ,x:α ⊢ e:β ⇒ Γ ⊢ proc x e:α→β; Γ ⊢ f:α→β and Γ ⊢ a:α ⇒ Γ ⊢ f a:β",
+    "syntax": [
+      "typing",
+      "type",
+      "extension"
+    ],
+    "steps": [
+      "Choose the rule for the outer constructor",
+      "Write its required premise types",
+      "Extend the context for binders",
+      "Derive premises bottom up",
+      "Check the conclusion type"
+    ],
+    "example": "proc x (if x then 11 else 22) has bool → int: the guard forces x to bool and both branches have int.",
+    "homework": "HW4: derive one rule per AST constructor before implementing inference.",
+    "hw": 4,
+    "check": "Why cannot Γ simply contain runtime values?",
+    "answer": "Typing runs before execution and tracks types; values belong to the runtime environment."
+  },
+  {
+    "n": 14,
+    "title": "Manual type annotations",
+    "chapter": 8,
+    "pages": [
+      3,
+      4,
+      5,
+      7,
+      8
+    ],
+    "focus": "Explicit procedure annotations make syntax-directed checking possible without guessing parameter types.",
+    "points": [
+      "A recursive type checker follows the AST and compares inferred child types.",
+      "Annotated parameters supply information missing from an unannotated procedure.",
+      "Recursive functions need an assumed signature while checking their own bodies.",
+      "The body must agree with the declared result; an annotation is a claim to verify."
+    ],
+    "formula": "check(proc (x:α) e, Γ) = α → check(e, Γ[x ↦ α])",
+    "syntax": [
+      "typing",
+      "type",
+      "function"
+    ],
+    "steps": [
+      "Read the declared parameter types",
+      "Extend the type context",
+      "Check the body recursively",
+      "Compare against required result types"
+    ],
+    "example": "proc (x:int) (x + 1) checks as int → int. proc (x:bool) (x + 1) is rejected because arithmetic requires int.",
+    "homework": "Preparation for HW4, whose unannotated expressions require fresh unknowns and constraints instead of asking the user for annotations.",
+    "hw": 4,
+    "check": "Can the checker trust an annotation without checking the body?",
+    "answer": "No. Otherwise inconsistent annotations could admit unsafe operations."
+  },
+  {
+    "n": 15,
+    "title": "Type inference I: the idea",
+    "chapter": 8,
+    "pages": [
+      2,
+      3,
+      4,
+      5,
+      7,
+      9,
+      10
+    ],
+    "focus": "Infer unknown types from how expressions are used, by turning typing rules into equations.",
+    "points": [
+      "Use fresh type variables for unknown parameter and expression types.",
+      "Arithmetic forces int; a guard forces bool; branch results must agree.",
+      "A call forces the callee type to argument type → result type.",
+      "Soundness/completeness of inference relative to a type system is different from completeness for all runtime-safe programs."
+    ],
+    "formula": "f a : β contributes type(f) = type(a) → β",
+    "syntax": [
+      "typing",
+      "type",
+      "substitution"
+    ],
+    "steps": [
+      "Assign fresh unknown types",
+      "Generate equations from each use",
+      "Solve compatible equalities",
+      "Apply the solution to the result type"
+    ],
+    "example": "proc f (proc x (f (x + 1))) forces x:int and f:int→β, giving (int→β)→int→β.",
+    "homework": "HW4: plan fresh_tyvar use and expected constraints for each constructor.",
+    "hw": 4,
+    "check": "Is a type variable a variable in the interpreted program?",
+    "answer": "No. It is an unknown in the checker's description of types."
+  },
+  {
+    "n": 16,
+    "title": "Type inference II: constraint generation",
+    "chapter": 8,
+    "pages": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "focus": "Define V(Γ,e,t) to generate the equalities required for expression e to have target type t.",
+    "points": [
+      "The generator is recursive on syntax and produces constraints rather than runtime values.",
+      "Allocate fresh variables locally for unknown child types.",
+      "Binder occurrences share the type recorded in Γ; do not invent a new type for every use of the same monomorphic variable.",
+      "Generation can succeed even when the resulting equations are inconsistent."
+    ],
+    "formula": "V(Γ, f a, t) = V(Γ,f,α→t) ∪ V(Γ,a,α), with fresh α",
+    "syntax": [
+      "constraints",
+      "typing",
+      "type"
+    ],
+    "steps": [
+      "Receive context expression and target type",
+      "Match the expression constructor",
+      "Create fresh child unknowns",
+      "Generate child constraints in proper contexts",
+      "Union the constraints"
+    ],
+    "example": "For (proc x x) 1 with target β, generate the procedure's parameter/result equality and int for the argument. Solving forces β=int.",
+    "homework": "HW4: implement a constraint generator before unification; add the starter's list and recursive-function cases.",
+    "hw": 4,
+    "check": "Should two independent procedure parameters receive the same fresh type variable?",
+    "answer": "No. They become equal only if a constraint requires it."
+  },
+  {
+    "n": 17,
+    "title": "Type inference III: unification",
+    "chapter": 8,
+    "pages": [
+      13,
+      15,
+      16,
+      21,
+      23,
+      25,
+      26
+    ],
+    "focus": "Solve type equations by substitution, decomposition, mismatch rejection, and the occurs check.",
+    "points": [
+      "Normalize both sides using the current substitution before comparing.",
+      "Function equality decomposes into domain and codomain equality; lists decompose by element type.",
+      "Bind a variable only if it does not occur inside its proposed replacement.",
+      "Apply the final substitution to the provisional result type, not just to the remaining constraints."
+    ],
+    "formula": "unify(α, int) gives [α↦int]; unify(α, α→β) fails; S(t1→t2)=S(t1)→S(t2)",
+    "syntax": [
+      "substitution",
+      "constraints",
+      "type"
+    ],
+    "steps": [
+      "Apply the current substitution",
+      "Discard identical sides",
+      "Decompose matching constructors",
+      "Reject mismatch or occurs-check failure",
+      "Compose and propagate a new binding"
+    ],
+    "example": "α=β→β and β=int give α=int→int. For proc f (f f), the equation α=α→β fails the occurs check under finite simple types.",
+    "homework": "HW4: substitution, unification, occurs check, final result normalization, and TypeError tests.",
+    "hw": 4,
+    "check": "Why is α=α harmless but α=α→β rejected?",
+    "answer": "The first is identity. The second requires an infinite type in this finite-type system."
+  },
+  {
+    "n": 18,
+    "title": "Let-polymorphism",
+    "chapter": 8,
+    "pages": [
+      2,
+      6,
+      8,
+      11,
+      12,
+      13,
+      14
+    ],
+    "focus": "Generalize independent type variables at let bindings and instantiate them freshly at each use.",
+    "points": [
+      "A scheme ∀α.t represents a family of instances, not a single shared unknown.",
+      "Never generalize variables constrained by the environment.",
+      "Procedure parameters remain monomorphic in the presented let-polymorphic system.",
+      "The pure-language rule cannot be transferred blindly to mutable references; practical OCaml uses a value restriction."
+    ],
+    "formula": "Gen(Γ,t)=∀(FTV(t)−FTV(Γ)).t; Inst(∀α.t)=t[α↦fresh β]",
+    "syntax": [
+      "scheme",
+      "substitution",
+      "typing"
+    ],
+    "steps": [
+      "Infer and solve the let initializer",
+      "Apply substitutions to type and context",
+      "Generalize variables absent from the context",
+      "Bind the identifier to its generalized scheme",
+      "Instantiate freshly at every use"
+    ],
+    "example": "let id = proc x x in if id true then id 11 else id 22 uses independent bool→bool and int→int instances. A monomorphic id would force bool=int and fail.",
+    "homework": "HW4 handout does not settle every polymorphism policy. Implement the required policy explicitly; this lecture explains the extension rather than silently changing the assignment contract.",
+    "hw": 4,
+    "check": "Can a type variable free in Γ be quantified at this let?",
+    "answer": "No. It represents a dependency on the surrounding context."
+  },
+  {
+    "n": 19,
+    "title": "Typed objects and subtyping",
+    "chapter": null,
+    "reading": "14-subtyping",
+    "pages": [
+      5,
+      8,
+      10,
+      11,
+      13,
+      18,
+      20,
+      22
+    ],
+    "focus": "Check class programs using safe substitutability, with contravariant method inputs and covariant outputs.",
+    "points": [
+      "Class inheritance establishes the nominal subtype relation in this lecture language.",
+      "Subsumption permits an expression of a subtype where a supertype is required.",
+      "Build class signatures and validate overrides before checking method bodies and the main expression.",
+      "The receiver's static type controls available members; runtime dispatch still selects the implementation."
+    ],
+    "formula": "A2 <: A1 and B1 <: B2 ⇒ (A1→B1) <: (A2→B2)",
+    "syntax": [
+      "subtype",
+      "dispatch",
+      "typing"
+    ],
+    "steps": [
+      "Build inherited field and method signatures",
+      "Check override compatibility",
+      "Check each method body in its context",
+      "Check the main expression",
+      "Use subtyping at permitted compatibility checks"
+    ],
+    "example": "If ColorPoint <: Point, a replacement for Point→Point may accept every Point and return ColorPoint. Restricting its input to ColorPoint is unsafe for callers supplying an ordinary Point.",
+    "homework": "An extension beyond HW4's simple type checker; do not replace equality unification with subtyping in HW4 without a specification change.",
+    "hw": 4,
+    "check": "May an override demand a narrower argument type?",
+    "answer": "Not under the lecture's substitutability rule: old callers must still be accepted."
+  },
+  {
+    "n": 20,
+    "title": "Lambda calculus",
+    "chapter": 9,
+    "pages": [
+      6,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      29
+    ],
+    "focus": "Understand functions and application as a small core, then make binding and reduction strategy precise.",
+    "points": [
+      "Terms consist only of variables, abstraction, and application.",
+      "Beta reduction substitutes an argument without capturing its free variables; alpha-renaming may be necessary.",
+      "Normal order reduces leftmost outermost redexes and may reduce under lambdas; call by name does not reduce under lambdas.",
+      "Church encodings represent booleans and natural numbers as functions; fixed points express recursion, with evaluation-strategy caveats."
+    ],
+    "formula": "(λx.e) a →β e[x:=a], using capture-avoiding substitution",
+    "syntax": [
+      "lambda",
+      "substitution",
+      "function"
+    ],
+    "steps": [
+      "Find free and bound occurrences",
+      "Choose a redex under the chosen strategy",
+      "Rename binders if capture is possible",
+      "Substitute only free occurrences",
+      "Repeat or identify a normal form"
+    ],
+    "example": "(λx.λy.x) y must become λz.y after renaming the inner y. The incorrect λy.y captures the formerly free argument variable.",
+    "homework": "HW2's fixed-point discussion and textbook Chapter 9 encoding tasks; this is not OCaml surface syntax.",
+    "hw": 2,
+    "check": "Does the usual Y combinator directly terminate under eager call by value?",
+    "answer": "No. Its self-application unfolds eagerly; use a strategy-appropriate delayed fixed-point construction."
+  }
+]

@@ -246,6 +246,160 @@
     "description": "Connect substitution, evaluation strategies, encodings, and fixed points."
   },
   {
+    "slug": "lectures",
+    "title": "Lecture cheat sheets · 0–20",
+    "part": "Lecture revision",
+    "tag": "One connected course",
+    "description": "Review each lecture’s focus, formulas, syntax, reasoning flow, textbook connection, and homework."
+  },
+  {
+    "slug": "lecture-00",
+    "title": "L0 · Course overview",
+    "part": "Lecture revision",
+    "tag": "Lecture 0 · Cheat sheet",
+    "description": "Learn language concepts by defining a small language and implementing its interpreter. OCaml is the implementation tool; the interpreted language is a separate object of study."
+  },
+  {
+    "slug": "lecture-01",
+    "title": "L1 · Inductive definitions I",
+    "part": "Lecture revision",
+    "tag": "Lecture 1 · Cheat sheet",
+    "description": "Define an infinite set using finite base and construction rules, with no extra elements."
+  },
+  {
+    "slug": "lecture-02",
+    "title": "L2 · Inductive definitions II",
+    "part": "Lecture revision",
+    "tag": "Lecture 2 · Cheat sheet",
+    "description": "The shape of a datatype determines the cases of its recursive functions and structural proofs."
+  },
+  {
+    "slug": "lecture-03",
+    "title": "L3 · Basics of OCaml",
+    "part": "Lecture revision",
+    "tag": "Lecture 3 · Cheat sheet",
+    "description": "Read OCaml as expressions built from bindings, functions, patterns, and typed values."
+  },
+  {
+    "slug": "lecture-04",
+    "title": "L4 · Recursion and higher-order programming",
+    "part": "Lecture revision",
+    "tag": "Lecture 4 · Cheat sheet",
+    "description": "Solve a smaller instance, then combine its result; abstract repeated traversal with functions."
+  },
+  {
+    "slug": "lecture-05",
+    "title": "L5 · Expressions and environments",
+    "part": "Lecture revision",
+    "tag": "Lecture 5 · Cheat sheet",
+    "description": "Translate each evaluation rule into a matching AST case and keep the environment explicit."
+  },
+  {
+    "slug": "lecture-06",
+    "title": "L6 · Procedures and recursive closures",
+    "part": "Lecture revision",
+    "tag": "Lecture 6 · Cheat sheet",
+    "description": "A lexical procedure carries the environment where it was defined; a call extends that saved environment."
+  },
+  {
+    "slug": "lecture-07",
+    "title": "L7 · Lexical addresses and nameless programs",
+    "part": "Lecture revision",
+    "tag": "Lecture 7 · Cheat sheet",
+    "description": "Resolve a variable to its binder statically and replace names with positions."
+  },
+  {
+    "slug": "lecture-08",
+    "title": "L8 · State and parameter passing",
+    "part": "Lecture revision",
+    "tag": "Lecture 8 · Cheat sheet",
+    "description": "Separate the binding map from mutable memory and carry the updated store through every evaluation step."
+  },
+  {
+    "slug": "lecture-09",
+    "title": "L9 · Records, pointers, and garbage collection",
+    "part": "Lecture revision",
+    "tag": "Lecture 9 · Cheat sheet",
+    "description": "Follow locations through structured values and distinguish unreachable memory from memory that merely looks unused."
+  },
+  {
+    "slug": "lecture-10",
+    "title": "L10 · Exceptions and continuations",
+    "part": "Lecture revision",
+    "tag": "Lecture 10 · Cheat sheet",
+    "description": "Make pending computation explicit so a raised exception can discard frames up to the nearest handler."
+  },
+  {
+    "slug": "lecture-11",
+    "title": "L11 · Classes and objects",
+    "part": "Lecture revision",
+    "tag": "Lecture 11 · Cheat sheet",
+    "description": "An object combines mutable field locations with a class identity used for method lookup."
+  },
+  {
+    "slug": "lecture-12",
+    "title": "L12 · Why static types?",
+    "part": "Lecture revision",
+    "tag": "Lecture 12 · Cheat sheet",
+    "description": "Use a computable static approximation to prevent a specified class of runtime type errors."
+  },
+  {
+    "slug": "lecture-13",
+    "title": "L13 · Designing typing rules",
+    "part": "Lecture revision",
+    "tag": "Lecture 13 · Cheat sheet",
+    "description": "Build typing derivations using a type environment instead of executing the program."
+  },
+  {
+    "slug": "lecture-14",
+    "title": "L14 · Manual type annotations",
+    "part": "Lecture revision",
+    "tag": "Lecture 14 · Cheat sheet",
+    "description": "Explicit procedure annotations make syntax-directed checking possible without guessing parameter types."
+  },
+  {
+    "slug": "lecture-15",
+    "title": "L15 · Type inference I: the idea",
+    "part": "Lecture revision",
+    "tag": "Lecture 15 · Cheat sheet",
+    "description": "Infer unknown types from how expressions are used, by turning typing rules into equations."
+  },
+  {
+    "slug": "lecture-16",
+    "title": "L16 · Type inference II: constraint generation",
+    "part": "Lecture revision",
+    "tag": "Lecture 16 · Cheat sheet",
+    "description": "Define V(Γ,e,t) to generate the equalities required for expression e to have target type t."
+  },
+  {
+    "slug": "lecture-17",
+    "title": "L17 · Type inference III: unification",
+    "part": "Lecture revision",
+    "tag": "Lecture 17 · Cheat sheet",
+    "description": "Solve type equations by substitution, decomposition, mismatch rejection, and the occurs check."
+  },
+  {
+    "slug": "lecture-18",
+    "title": "L18 · Let-polymorphism",
+    "part": "Lecture revision",
+    "tag": "Lecture 18 · Cheat sheet",
+    "description": "Generalize independent type variables at let bindings and instantiate them freshly at each use."
+  },
+  {
+    "slug": "lecture-19",
+    "title": "L19 · Typed objects and subtyping",
+    "part": "Lecture revision",
+    "tag": "Lecture 19 · Cheat sheet",
+    "description": "Check class programs using safe substitutability, with contravariant method inputs and covariant outputs."
+  },
+  {
+    "slug": "lecture-20",
+    "title": "L20 · Lambda calculus",
+    "part": "Lecture revision",
+    "tag": "Lecture 20 · Cheat sheet",
+    "description": "Understand functions and application as a small core, then make binding and reduction strategy precise."
+  },
+  {
     "slug": "homework-map",
     "title": "Definitions → homework",
     "part": "Practice atlas",
@@ -279,6 +433,13 @@
     "part": "Practice atlas",
     "tag": "Rules → constraints → types",
     "description": "A precise design guide for a sound checker, including underspecified cases in the assignment."
+  },
+  {
+    "slug": "syntax",
+    "title": "Syntax · Meaning and sources",
+    "part": "Reference",
+    "tag": "Trace every symbol",
+    "description": "Connect OCaml tokens, language syntax, evaluation judgments, and type notation to definitions and source pages."
   },
   {
     "slug": "glossary",

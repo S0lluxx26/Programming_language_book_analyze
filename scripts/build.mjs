@@ -5,6 +5,7 @@ import hljs from 'highlight.js/lib/core';
 import ocaml from 'highlight.js/lib/languages/ocaml';
 import bash from 'highlight.js/lib/languages/bash';
 import {addThinkingRoutes} from './thinking-routes.mjs';
+import {addLearningAids,syntax} from './learning-aids.mjs';
 hljs.registerLanguage('ocaml', ocaml); hljs.registerLanguage('bash', bash);
 const root = process.cwd();
 const catalog = JSON.parse(fs.readFileSync('book/catalog.json', 'utf8')).filter(p=>!process.argv.includes('--preview')||fs.existsSync(`book/${p.slug}.md`));
@@ -40,6 +41,13 @@ md.core.ruler.after('inline','definition-links',state=>{
   }
 });
 const fallback = md.renderer.rules.fence;
+const inlineCode=md.renderer.rules.code_inline;
+const syntaxTokens=new Map(syntax.flatMap(s=>s.tokens.map(t=>[t,s])));
+md.renderer.rules.code_inline=(tokens,idx,options,env,self)=>{
+  const html=inlineCode(tokens,idx,options,env,self),entry=syntaxTokens.get(tokens[idx].content);
+  let depth=0;for(let i=0;i<idx;i++){if(tokens[i].type==='link_open')depth++;if(tokens[i].type==='link_close')depth--;}
+  return entry&&currentPage!=='syntax'&&!depth?'<a class="syntax-link" href="syntax.html#'+entry.id+'" title="'+esc(entry.label)+' — syntax meaning and source">'+html+'</a>':html;
+};
 const originalLink = md.renderer.rules.link_open || ((tokens,idx,options,env,self)=>self.renderToken(tokens,idx,options));
 md.renderer.rules.link_open=(tokens,idx,options,env,self)=>{
   if(/^examples\/[^/]+\.ml$/.test(tokens[idx].attrGet('href')||''))tokens[idx].attrSet('download','');
@@ -77,7 +85,7 @@ for (let n=0;n<catalog.length;n++) {
   const page=catalog[n], file=`book/${page.slug}.md`;
   currentPage=page.slug;diagramCount=0;
   if(!fs.existsSync(file)) throw Error(`Missing chapter: ${file}`);
-  const source=addThinkingRoutes(page.slug,fs.readFileSync(file,'utf8'));
+  const source=addLearningAids(page.slug,addThinkingRoutes(page.slug,fs.readFileSync(file,'utf8')));
   const tokens=md.parse(source,{}), headings=[], ids=new Map();
   for(let i=0;i<tokens.length;i++) if(tokens[i].type==='heading_open') {
     const label=tokens[i+1].content,base=slugify(label),count=ids.get(base)||0; ids.set(base,count+1);

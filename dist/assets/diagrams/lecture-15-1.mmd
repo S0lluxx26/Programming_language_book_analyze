@@ -1,0 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 15 reasoning route
+  accDescr: Numbered stages for applying type inference i: the idea.
+  N0["1. Assign fresh unknown types"]
+  N1["2. Generate equations from each use"]
+  N0 --> N1
+  N2["3. Solve compatible equalities"]
+  N1 --> N2
+  N3["4. Apply the solution to the result type"]
+  N2 --> N3

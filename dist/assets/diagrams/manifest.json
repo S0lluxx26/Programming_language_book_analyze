@@ -252,6 +252,90 @@
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Identify the binder being applied<br/>Substitute only for occurrences bound by<br/>this abstraction.\"]\n  N1[\"Inspect free variables of the argument<br/>Determine which names must remain free.\"]\n  N0 --> N1\n  N2[\"Rename conflicting inner binders<br/>Use fresh names and rename their bound<br/>occurrences consistently.\"]\n  N1 --> N2\n  N3[\"Substitute and continue<br/>Preserve the binding structure of the<br/>original term.\"]\n  N2 --> N3\n"
   },
   {
+    "name": "lecture-00-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 0 reasoning route\n  accDescr: Numbered stages for applying course overview.\n  N0[\"1. Identify the language being studied\"]\n  N1[\"2. Read its syntax and semantic rules\"]\n  N0 --> N1\n  N2[\"3. Represent its constructors in OCaml\"]\n  N1 --> N2\n  N3[\"4. Trace a small example before implementing\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-01-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 1 reasoning route\n  accDescr: Numbered stages for applying inductive definitions i.\n  N0[\"1. List base elements\"]\n  N1[\"2. Apply construction rules\"]\n  N0 --> N1\n  N2[\"3. Build a derivation for membership\"]\n  N1 --> N2\n  N3[\"4. Prove both inclusions for a claimed set equality\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-02-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 2 reasoning route\n  accDescr: Numbered stages for applying inductive definitions ii.\n  N0[\"1. Enumerate every constructor\"]\n  N1[\"2. Prove the base cases\"]\n  N0 --> N1\n  N2[\"3. Assume the property for each recursive child\"]\n  N1 --> N2\n  N3[\"4. Combine the child facts in the constructor case\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-03-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 3 reasoning route\n  accDescr: Numbered stages for applying basics of ocaml.\n  N0[\"1. Determine the input and output types\"]\n  N1[\"2. Read the binding scope\"]\n  N0 --> N1\n  N2[\"3. Match the data constructors\"]\n  N1 --> N2\n  N3[\"4. Check every branch returns a compatible type\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-04-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 4 reasoning route\n  accDescr: Numbered stages for applying recursion and higher-order programming.\n  N0[\"1. Choose the base result\"]\n  N1[\"2. Choose a strictly smaller input\"]\n  N0 --> N1\n  N2[\"3. Combine the recursive result\"]\n  N1 --> N2\n  N3[\"4. Test empty and singleton cases\"]\n  N2 --> N3\n  N4[\"5. Consider an accumulator or fold\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-05-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 5 reasoning route\n  accDescr: Numbered stages for applying expressions and environments.\n  N0[\"1. Match the AST constructor\"]\n  N1[\"2. Evaluate the rule premises\"]\n  N0 --> N1\n  N2[\"3. Check required value shapes\"]\n  N1 --> N2\n  N3[\"4. Return the rule conclusion\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-06-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 6 reasoning route\n  accDescr: Numbered stages for applying procedures and recursive closures.\n  N0[\"1. Evaluate the callee\"]\n  N1[\"2. Evaluate the argument\"]\n  N0 --> N1\n  N2[\"3. Recover the closure environment\"]\n  N1 --> N2\n  N3[\"4. Add recursive bindings and parameter\"]\n  N2 --> N3\n  N4[\"5. Evaluate the body\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-07-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 7 reasoning route\n  accDescr: Numbered stages for applying lexical addresses and nameless programs.\n  N0[\"1. Maintain the nearest-first binder list\"]\n  N1[\"2. Push a binder on entering its scope\"]\n  N0 --> N1\n  N2[\"3. Replace each use with its position\"]\n  N1 --> N2\n  N3[\"4. Evaluate positions in the matching value list\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-08-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 8 reasoning route\n  accDescr: Numbered stages for applying state and parameter passing.\n  N0[\"1. Identify explicit or implicit references\"]\n  N1[\"2. Find or allocate the location\"]\n  N0 --> N1\n  N2[\"3. Evaluate operands while threading memory\"]\n  N1 --> N2\n  N3[\"4. Update or read the selected cell\"]\n  N2 --> N3\n  N4[\"5. Return value and final memory\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-09-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 9 reasoning route\n  accDescr: Numbered stages for applying records, pointers, and garbage collection.\n  N0[\"1. Collect every live root\"]\n  N1[\"2. Follow locations inside reachable values\"]\n  N0 --> N1\n  N2[\"3. Repeat until no new location appears\"]\n  N1 --> N2\n  N3[\"4. Retain reachable cells\"]\n  N2 --> N3\n  N4[\"5. Test aliases and cycles\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-10-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 10 reasoning route\n  accDescr: Numbered stages for applying exceptions and continuations.\n  N0[\"1. Push frames for pending work\"]\n  N1[\"2. Install a handler frame for try\"]\n  N0 --> N1\n  N2[\"3. Evaluate the raised payload\"]\n  N1 --> N2\n  N3[\"4. Discard frames to the nearest handler\"]\n  N2 --> N3\n  N4[\"5. Run the handler in its saved environment\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-11-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 11 reasoning route\n  accDescr: Numbered stages for applying classes and objects.\n  N0[\"1. Build class and inheritance tables\"]\n  N1[\"2. Allocate object field locations\"]\n  N0 --> N1\n  N2[\"3. Evaluate receiver and arguments\"]\n  N1 --> N2\n  N3[\"4. Choose method lookup start class\"]\n  N2 --> N3\n  N4[\"5. Run method with fields parameters and self\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-12-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 12 reasoning route\n  accDescr: Numbered stages for applying why static types?.\n  N0[\"1. Name the runtime errors being excluded\"]\n  N1[\"2. Choose a tractable typing discipline\"]\n  N0 --> N1\n  N2[\"3. Check before running\"]\n  N1 --> N2\n  N3[\"4. Interpret rejection within the discipline\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-13-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 13 reasoning route\n  accDescr: Numbered stages for applying designing typing rules.\n  N0[\"1. Choose the rule for the outer constructor\"]\n  N1[\"2. Write its required premise types\"]\n  N0 --> N1\n  N2[\"3. Extend the context for binders\"]\n  N1 --> N2\n  N3[\"4. Derive premises bottom up\"]\n  N2 --> N3\n  N4[\"5. Check the conclusion type\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-14-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 14 reasoning route\n  accDescr: Numbered stages for applying manual type annotations.\n  N0[\"1. Read the declared parameter types\"]\n  N1[\"2. Extend the type context\"]\n  N0 --> N1\n  N2[\"3. Check the body recursively\"]\n  N1 --> N2\n  N3[\"4. Compare against required result types\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-15-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 15 reasoning route\n  accDescr: Numbered stages for applying type inference i: the idea.\n  N0[\"1. Assign fresh unknown types\"]\n  N1[\"2. Generate equations from each use\"]\n  N0 --> N1\n  N2[\"3. Solve compatible equalities\"]\n  N1 --> N2\n  N3[\"4. Apply the solution to the result type\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "lecture-16-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 16 reasoning route\n  accDescr: Numbered stages for applying type inference ii: constraint generation.\n  N0[\"1. Receive context expression and target type\"]\n  N1[\"2. Match the expression constructor\"]\n  N0 --> N1\n  N2[\"3. Create fresh child unknowns\"]\n  N1 --> N2\n  N3[\"4. Generate child constraints in proper contexts\"]\n  N2 --> N3\n  N4[\"5. Union the constraints\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-17-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 17 reasoning route\n  accDescr: Numbered stages for applying type inference iii: unification.\n  N0[\"1. Apply the current substitution\"]\n  N1[\"2. Discard identical sides\"]\n  N0 --> N1\n  N2[\"3. Decompose matching constructors\"]\n  N1 --> N2\n  N3[\"4. Reject mismatch or occurs-check failure\"]\n  N2 --> N3\n  N4[\"5. Compose and propagate a new binding\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-18-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 18 reasoning route\n  accDescr: Numbered stages for applying let-polymorphism.\n  N0[\"1. Infer and solve the let initializer\"]\n  N1[\"2. Apply substitutions to type and context\"]\n  N0 --> N1\n  N2[\"3. Generalize variables absent from the context\"]\n  N1 --> N2\n  N3[\"4. Bind the identifier to its generalized scheme\"]\n  N2 --> N3\n  N4[\"5. Instantiate freshly at every use\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-19-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 19 reasoning route\n  accDescr: Numbered stages for applying typed objects and subtyping.\n  N0[\"1. Build inherited field and method signatures\"]\n  N1[\"2. Check override compatibility\"]\n  N0 --> N1\n  N2[\"3. Check each method body in its context\"]\n  N1 --> N2\n  N3[\"4. Check the main expression\"]\n  N2 --> N3\n  N4[\"5. Use subtyping at permitted compatibility checks\"]\n  N3 --> N4\n"
+  },
+  {
+    "name": "lecture-20-1",
+    "source": "%%{init: {\"flowchart\": {\"wrappingWidth\": 600}}}%%\nflowchart TD\n  accTitle: Lecture 20 reasoning route\n  accDescr: Numbered stages for applying lambda calculus.\n  N0[\"1. Find free and bound occurrences\"]\n  N1[\"2. Choose a redex under the chosen strategy\"]\n  N0 --> N1\n  N2[\"3. Rename binders if capture is possible\"]\n  N1 --> N2\n  N3[\"4. Substitute only free occurrences\"]\n  N2 --> N3\n  N4[\"5. Repeat or identify a normal form\"]\n  N3 --> N4\n"
+  },
+  {
     "name": "homework-map-1",
     "source": "flowchart TD\n  accTitle: Concepts leading to the four homework assignments\n  accDescr: Induction and OCaml lead to HW1, environments and closures to HW2, stores and records to HW3, and typing and unification to HW4.\n  I[\"Inductive definitions<br/>Constructors and structural recursion\"] --> O[\"OCaml<br/>Patterns and higher-order functions\"]\n  O --> H1[\"HW1<br/>15 functional-programming exercises\"]\n  H1 --> E[\"Semantic rules<br/>Environments and closures\"]\n  E --> H2[\"HW2<br/>ML− interpreter\"]\n  H2 --> S[\"State<br/>Locations, stores, and records\"]\n  S --> H3[\"HW3<br/>B interpreter\"]\n  E --> T[\"Typing rules<br/>Constraints and unification\"]\n  T --> H4[\"HW4<br/>ML− type checker\"]\n  H2 -. \"same AST, different meaning\" .-> H4\n"
   },

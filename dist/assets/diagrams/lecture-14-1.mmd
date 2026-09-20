@@ -1,0 +1,11 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 14 reasoning route
+  accDescr: Numbered stages for applying manual type annotations.
+  N0["1. Read the declared parameter types"]
+  N1["2. Extend the type context"]
+  N0 --> N1
+  N2["3. Check the body recursively"]
+  N1 --> N2
+  N3["4. Compare against required result types"]
+  N2 --> N3

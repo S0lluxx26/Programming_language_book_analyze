@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 16 reasoning route
+  accDescr: Numbered stages for applying type inference ii: constraint generation.
+  N0["1. Receive context expression and target type"]
+  N1["2. Match the expression constructor"]
+  N0 --> N1
+  N2["3. Create fresh child unknowns"]
+  N1 --> N2
+  N3["4. Generate child constraints in proper contexts"]
+  N2 --> N3
+  N4["5. Union the constraints"]
+  N3 --> N4

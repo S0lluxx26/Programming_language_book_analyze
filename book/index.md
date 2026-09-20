@@ -1,3 +1,7 @@
+## New reading tools
+
+[Lecture cheat sheets 0–20](lectures.html) · [Syntax and notation reference](syntax.html). Each textbook chapter now has an expandable, numbered code walkthrough with an explanation beside every line.
+
 <div class="study-stats"><div><strong>15</strong><span>Concept chapters</span></div><div><strong>4</strong><span>Homework guides</span></div><div><strong>27</strong><span>Downloaded PDFs</span></div></div>
 
 ## Read the textbook in its own order

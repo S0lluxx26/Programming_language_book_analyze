@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 11 reasoning route
+  accDescr: Numbered stages for applying classes and objects.
+  N0["1. Build class and inheritance tables"]
+  N1["2. Allocate object field locations"]
+  N0 --> N1
+  N2["3. Evaluate receiver and arguments"]
+  N1 --> N2
+  N3["4. Choose method lookup start class"]
+  N2 --> N3
+  N4["5. Run method with fields parameters and self"]
+  N3 --> N4

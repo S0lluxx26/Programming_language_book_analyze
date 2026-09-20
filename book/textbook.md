@@ -1,3 +1,7 @@
+## New reading tools
+
+[Lecture cheat sheets 0–20](lectures.html) · [Syntax and notation reference](syntax.html). Each textbook chapter now has an expandable, numbered code walkthrough with an explanation beside every line.
+
 ## Read the textbook with a guide beside you
 
 This reader follows **Hakjoo Oh’s _Principles of Programming Languages_ (English draft, 31 August 2026)** in its own nine-chapter order. Section numbers and PDF page links match the downloaded book. Explanations, Mermaid diagrams, and worked solutions here are original companion material; use the linked PDF whenever you want the author's exact wording, figures, or notation.

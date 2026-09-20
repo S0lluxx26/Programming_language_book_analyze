@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 19 reasoning route
+  accDescr: Numbered stages for applying typed objects and subtyping.
+  N0["1. Build inherited field and method signatures"]
+  N1["2. Check override compatibility"]
+  N0 --> N1
+  N2["3. Check each method body in its context"]
+  N1 --> N2
+  N3["4. Check the main expression"]
+  N2 --> N3
+  N4["5. Use subtyping at permitted compatibility checks"]
+  N3 --> N4

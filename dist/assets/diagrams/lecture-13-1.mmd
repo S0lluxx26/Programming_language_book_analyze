@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 13 reasoning route
+  accDescr: Numbered stages for applying designing typing rules.
+  N0["1. Choose the rule for the outer constructor"]
+  N1["2. Write its required premise types"]
+  N0 --> N1
+  N2["3. Extend the context for binders"]
+  N1 --> N2
+  N3["4. Derive premises bottom up"]
+  N2 --> N3
+  N4["5. Check the conclusion type"]
+  N3 --> N4

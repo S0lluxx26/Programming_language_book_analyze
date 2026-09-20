@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 8 reasoning route
+  accDescr: Numbered stages for applying state and parameter passing.
+  N0["1. Identify explicit or implicit references"]
+  N1["2. Find or allocate the location"]
+  N0 --> N1
+  N2["3. Evaluate operands while threading memory"]
+  N1 --> N2
+  N3["4. Update or read the selected cell"]
+  N2 --> N3
+  N4["5. Return value and final memory"]
+  N3 --> N4

@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 20 reasoning route
+  accDescr: Numbered stages for applying lambda calculus.
+  N0["1. Find free and bound occurrences"]
+  N1["2. Choose a redex under the chosen strategy"]
+  N0 --> N1
+  N2["3. Rename binders if capture is possible"]
+  N1 --> N2
+  N3["4. Substitute only free occurrences"]
+  N2 --> N3
+  N4["5. Repeat or identify a normal form"]
+  N3 --> N4

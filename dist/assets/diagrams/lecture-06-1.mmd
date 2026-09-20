@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 6 reasoning route
+  accDescr: Numbered stages for applying procedures and recursive closures.
+  N0["1. Evaluate the callee"]
+  N1["2. Evaluate the argument"]
+  N0 --> N1
+  N2["3. Recover the closure environment"]
+  N1 --> N2
+  N3["4. Add recursive bindings and parameter"]
+  N2 --> N3
+  N4["5. Evaluate the body"]
+  N3 --> N4

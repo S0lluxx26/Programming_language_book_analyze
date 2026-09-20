@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 4 reasoning route
+  accDescr: Numbered stages for applying recursion and higher-order programming.
+  N0["1. Choose the base result"]
+  N1["2. Choose a strictly smaller input"]
+  N0 --> N1
+  N2["3. Combine the recursive result"]
+  N1 --> N2
+  N3["4. Test empty and singleton cases"]
+  N2 --> N3
+  N4["5. Consider an accumulator or fold"]
+  N3 --> N4

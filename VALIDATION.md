@@ -7,10 +7,10 @@ Source snapshot: 20 September 2026.
 - All 30 links discovered on the source page are accounted for: 29 unique PDFs and one OCaml file.
 - 27 PDFs downloaded, totaling 1,030 PDF pages. File signatures, byte lengths, SHA-256 checksums, and page counts verified by `scripts/check_sources.py`.
 - Two PDF links and the OCaml example link return HTTP 404; the manifest and source library report them.
-- All 35 reading pages build successfully, including the source-aligned textbook reader.
-- All 85 Mermaid definitions render successfully to accessible, independently parseable SVG with explicit intrinsic dimensions.
-- Static checks cover 2,885 local/external link references, local target existence and anchors, 221 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
-- 42 glossary definitions and 228 automatically generated definition links connect explanations to exact textbook or lecture PDF pages. Manually authored definition links also open the reading panel.
+- All 58 reading pages build successfully, including the source-aligned textbook reader.
+- All 106 Mermaid definitions render successfully to accessible, independently parseable SVG with explicit intrinsic dimensions.
+- Static checks cover 6,202 local/external link references, local target existence and anchors, 422 PDF page references within verified source page counts, unique HTML IDs, page metadata, and all 15 HW1 problem sections.
+- 42 glossary definitions and 310 automatically generated definition links connect explanations to exact textbook or lecture PDF pages. Manually authored definition links also open the reading panel.
 - `book/textbook-structure.json` records all 9 textbook chapters, 48 numbered sections, and 12 §2.4 problems. Checks require every section heading/source page and every numbered problem's Mermaid graph and worked solution.
 
 ## Content verification
@@ -49,3 +49,11 @@ Source snapshot: 20 September 2026.
 - Added 37 numbered thinking routes: 15 HW1 problems, 10 major HW2–HW4 reasoning sections, and all 12 textbook section 2.4 exercises. Automated checks enforce route coverage, rendered step titles, and pinned starter links.
 - Corrected HW2 argument order and no-module guidance, HW3 namespace lookup behavior, and documented template/handout differences without treating starter TODOs as specifications.
 - Reviewed the tree-membership panel on desktop and numbered panels at 390-pixel mobile width. All 15 HW1 panels and all diagram images loaded; document width remained 375 pixels with no page overflow.
+
+## Lecture cheat sheets and syntax aids
+
+- Reviewed the downloaded text and slide-page outlines for lectures 0–20, and rechecked constraint generation, generalization, and override rules. Visually rechecked the lecture 18 typing-rule slide; its existing parameter-symbol discrepancy remains documented.
+- Added 21 original lecture summaries with source-page links, textbook connections, focus points, a formula, syntax links, a numbered Mermaid route, a worked trace, homework scope, and a revealable self-check. Topics not assigned in HW1–HW4 are explicitly identified as extensions.
+- Added 23 syntax-reference entries and nine paired code walkthroughs. All complete examples are generated from the displayed code and executed by CI; evaluator/inference fragments are labeled as requiring surrounding helpers.
+- Static checks enforce lecture numbering, required sheet sections, graphs, source-page bounds, all syntax anchors, and a matching explanation for every code line.
+- Reviewed desktop paired-column code and 390-pixel mobile stacked code with no document overflow. Tested navigation from Chapter 6 syntax to the store reference and its in-place definition dialog. Verified the lecture 18 mobile sheet and loaded Mermaid image.

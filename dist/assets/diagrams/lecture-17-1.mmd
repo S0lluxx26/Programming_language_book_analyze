@@ -1,0 +1,13 @@
+%%{init: {"flowchart": {"wrappingWidth": 600}}}%%
+flowchart TD
+  accTitle: Lecture 17 reasoning route
+  accDescr: Numbered stages for applying type inference iii: unification.
+  N0["1. Apply the current substitution"]
+  N1["2. Discard identical sides"]
+  N0 --> N1
+  N2["3. Decompose matching constructors"]
+  N1 --> N2
+  N3["4. Reject mismatch or occurs-check failure"]
+  N2 --> N3
+  N4["5. Compose and propagate a new binding"]
+  N3 --> N4

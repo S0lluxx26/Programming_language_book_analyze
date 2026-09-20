@@ -69,3 +69,13 @@ Implementation complete: 11 new reading pages, 37 new diagrams, five executable 
 4. Apply the same format to all twelve textbook exercises, validate coverage and links, review desktop/mobile reading, and publish through existing SSH/Pages configuration.
 
 Implemented 37 routes, 18 pinned starter references, and 14 additional Mermaid graphs (85 total). The official files are starter templates, not solution files. Local build, static validation, and browser layout checks pass.
+
+## Lecture revision and traceable syntax
+
+1. Map all 21 lecture PDFs to textbook chapters, distinguishing slide-only topics.
+2. Author a cheat sheet per lecture: big picture, focus points, formula and syntax, numbered solution route and Mermaid graph, worked trace, homework link, and self-check.
+3. Create a source-linked syntax reference and link matching inline tokens throughout the reader.
+4. Add a nine-chapter set of expandable code walkthroughs with explanations beside every line and a stacked mobile layout.
+5. Validate coverage, anchors, source pages, diagrams, responsive behavior, and the executable examples; publish through the existing SSH and GitHub Pages workflow.
+
+Implemented 21 sheets, 23 syntax entries, nine annotated chapter examples, and 21 additional Mermaid graphs. Local build and static checks pass; browser navigation, definition dialogs, and responsive reading have been reviewed.

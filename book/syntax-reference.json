@@ -1,0 +1,321 @@
+[
+  {
+    "id": "grammar",
+    "label": "Grammar and AST constructors",
+    "tokens": [
+      "AST"
+    ],
+    "meaning": "A grammar lists allowed expression shapes. Its vertical bar separates alternatives, not logical OR. Metavariables such as e range over syntax trees.",
+    "example": "E ::= n | x | E + E describes numbers, variables, and additions; an OCaml datatype assigns a constructor to each form.",
+    "definition": "abstract-syntax-tree",
+    "lecture": 5,
+    "page": 5
+  },
+  {
+    "id": "rule",
+    "label": "Premises and conclusions",
+    "tokens": [
+      "∈"
+    ],
+    "meaning": "An inference rule licenses its conclusion when every premise and side condition holds. A rule without premises is an axiom. The meaning of an arrow depends on its surrounding judgment.",
+    "example": "From n ∈ S derive n+3 ∈ S only when that construction rule is present.",
+    "definition": "inference-rule",
+    "lecture": 1,
+    "page": 7
+  },
+  {
+    "id": "let",
+    "label": "Binding: let x = e1 in e2",
+    "tokens": [
+      "let",
+      "LET"
+    ],
+    "meaning": "Evaluate the initializer in the original environment, then bind x for the body. Ordinary binding is not assignment. Recursive binding has different visibility rules.",
+    "example": "let x = 2 in let x = x + 1 in x returns 3; the inner initializer sees the outer x.",
+    "definition": "environment",
+    "lecture": 5,
+    "page": 11
+  },
+  {
+    "id": "function",
+    "label": "Functions and application",
+    "tokens": [
+      "fun",
+      "proc",
+      "PROC",
+      "CALL",
+      "->"
+    ],
+    "meaning": "OCaml fun x -> e and course proc x e introduce parameter and body. f a applies a function. In a type, α -> β means a function taking α and returning β. Type arrows associate to the right; applications associate to the left.",
+    "example": "int -> int -> int means int -> (int -> int); f a b means (f a) b.",
+    "definition": "higher-order-function",
+    "lecture": 3,
+    "page": 24
+  },
+  {
+    "id": "match",
+    "label": "Patterns and recursive cases",
+    "tokens": [
+      "match",
+      "with",
+      "let rec"
+    ],
+    "meaning": "match inspects a value's constructor and binds its components. Cases are tried in order. Patterns describe shapes, not Boolean tests. Recursive calls usually follow recursive components.",
+    "example": "match xs with [] -> 0 | h :: t -> 1 + length t covers empty and nonempty lists.",
+    "definition": "pattern-matching",
+    "lecture": 3,
+    "page": 28
+  },
+  {
+    "id": "list",
+    "label": "Lists, cons, and tuples",
+    "tokens": [
+      "::",
+      "[]",
+      "@"
+    ],
+    "meaning": "[] is an empty list; h :: t constructs a list from a head and list tail; @ appends two lists. Tuple positions may have different types. [] can also denote an empty environment in mathematics: inspect the domain.",
+    "example": "1 :: [2;3] and [1] @ [2;3] have the same value but use different operations.",
+    "definition": "structural-recursion",
+    "lecture": 3,
+    "page": 39
+  },
+  {
+    "id": "evaluation",
+    "label": "Runtime evaluation judgment",
+    "tokens": [
+      "ρ",
+      "ρ ⊢ e ⇒ v",
+      "eval"
+    ],
+    "meaning": "ρ ⊢ e ⇒ v says expression e evaluates to v under runtime environment ρ. With state, ρ,M ⊢ e ⇒ v,M′ also reports changed memory. This describes execution, not typing.",
+    "example": "If ρ(x)=3, then ρ ⊢ x+1 ⇒ 4.",
+    "definition": "semantics",
+    "lecture": 5,
+    "page": 10
+  },
+  {
+    "id": "extension",
+    "label": "Lookup and map extension",
+    "tokens": [
+      "↦",
+      "ρ(x)",
+      "Γ(x)"
+    ],
+    "meaning": "x ↦ v is a binding. ρ[x ↦ v] or [x ↦ v]ρ extends a map with a shadowing binding. ρ(x) means lookup. The map's codomain determines whether the result is a value, location, or type.",
+    "example": "In a nearest-first association list, (x,v)::env shadows an older x entry.",
+    "definition": "shadowing",
+    "lecture": 5,
+    "page": 8
+  },
+  {
+    "id": "closure",
+    "label": "Closure and saved environment",
+    "tokens": [
+      "Closure",
+      "ρdef"
+    ],
+    "meaning": "A closure packages parameter, body, and definition environment. A lexical call extends that saved environment rather than using the caller environment for the body. Recursive variants also retain function identity.",
+    "example": "The closure (x,x+y,ρdef) obtains free y from ρdef and x from the actual argument.",
+    "definition": "closure",
+    "lecture": 6,
+    "page": 10
+  },
+  {
+    "id": "address",
+    "label": "Lexical address #i",
+    "tokens": [
+      "#0",
+      "#1"
+    ],
+    "meaning": "A nameless variable refers to a position in a nearest-first environment. #0 is the nearest binder. Static translation and runtime environment layout must agree.",
+    "example": "proc x (proc y (x-y)) becomes proc (proc (#1-#0)).",
+    "definition": "lexical-scope",
+    "lecture": 7,
+    "page": 10
+  },
+  {
+    "id": "store",
+    "label": "Locations and memory",
+    "tokens": [
+      "M",
+      "σ",
+      "NEWREF",
+      "DEREF",
+      "SETREF",
+      "SEQ",
+      "SET"
+    ],
+    "meaning": "A location identifies a cell; memory maps locations to current values. Implicit-reference environments map variables to locations. Explicit-reference values can themselves be locations. The letter σ is not universal: HW3 uses it for the environment and M for memory. NEWREF evaluates and allocates a cell; DEREF reads it; SETREF writes through a reference expression. SET assigns a named variable in the implicit model. SEQ evaluates its first expression, then its second with the resulting memory.",
+    "example": "ρ(x)=L0 and M(L0)=4 means x reads as 4. Assignment changes M(L0), not the binding of x.",
+    "definition": "store",
+    "lecture": 8,
+    "page": 25
+  },
+  {
+    "id": "reference",
+    "label": "Reference operations and assignment",
+    "tokens": [
+      "ref",
+      "!",
+      ":=",
+      "CALLV",
+      "CALLR",
+      "CALLREF"
+    ],
+    "meaning": "OCaml ref allocates, ! reads, and := writes a reference cell. OCaml assignment returns unit; course assignment may return the assigned value. CALLV uses a fresh parameter cell; CALLR reuses a caller location.",
+    "example": "let r = ref 0 in r := 2; !r returns 2, but the assignment subexpression returns ().",
+    "definition": "call-by-reference",
+    "lecture": 8,
+    "page": 33
+  },
+  {
+    "id": "record",
+    "label": "Records and field locations",
+    "tokens": [
+      "RECORD",
+      "FIELD",
+      "ASSIGNF"
+    ],
+    "meaning": "A record in the course state language maps field names to locations. Reading follows the location into memory; writing changes that cell. Shared records can expose shared field locations.",
+    "example": "If r.f and s.f identify one cell, a write through r.f is visible through s.f.",
+    "definition": "record",
+    "lecture": 9,
+    "page": 7
+  },
+  {
+    "id": "reach",
+    "label": "Reachability and fixed points",
+    "tokens": [
+      "reach",
+      "Dom(M)"
+    ],
+    "meaning": "Dom(M) is the allocated-location set. Reachability repeatedly follows locations from live roots until no new location appears. Fresh allocation uses a location outside Dom(M); collection retains the reachable region.",
+    "example": "A reachable L0 pointing to L1 makes L1 reachable even without a variable directly naming L1.",
+    "definition": "reachability",
+    "lecture": 9,
+    "page": 19
+  },
+  {
+    "id": "continuation",
+    "label": "Continuation and exception frames",
+    "tokens": [
+      "k",
+      "raise",
+      "try"
+    ],
+    "meaning": "k describes pending computation. A handler frame saves its body and environment. Raising discards ordinary frames up to the nearest handler. OCaml's exception syntax differs from the course try/catch notation.",
+    "example": "try (1 + raise 5) catch x x returns 5 because the waiting addition is discarded.",
+    "definition": "continuation",
+    "lecture": 10,
+    "page": 9
+  },
+  {
+    "id": "dispatch",
+    "label": "Class environment, self, and super",
+    "tokens": [
+      "ζ",
+      "self",
+      "super"
+    ],
+    "meaning": "ζ holds class information. self denotes the receiver. Normal lookup starts at the receiver's runtime class; super starts at the parent of the method's host class, keeping the same receiver.",
+    "example": "An inherited method can dispatch through self to a child override. super is not a second object.",
+    "definition": "dynamic-dispatch",
+    "lecture": 11,
+    "page": 26
+  },
+  {
+    "id": "typing",
+    "label": "Static typing judgment",
+    "tokens": [
+      "Γ",
+      "Γ ⊢ e : T",
+      "typeof"
+    ],
+    "meaning": "Γ ⊢ e : T says e has type T under type context Γ. Γ holds types or schemes, not runtime values. The turnstile separates assumptions from the judgment; the colon connects expression and type.",
+    "example": "Γ(x)=int licenses Γ ⊢ x+1:int without executing x+1.",
+    "definition": "typing-judgment",
+    "lecture": 13,
+    "page": 5
+  },
+  {
+    "id": "type",
+    "label": "Type constructors and unknowns",
+    "tokens": [
+      "α",
+      "β",
+      "TyVar",
+      "TyFun",
+      "TyList"
+    ],
+    "meaning": "A type variable is an unknown type, not a program variable. Function and list types are recursive structures; unification compares their constructors and solves unknowns.",
+    "example": "α list = int list requires α=int; int and bool cannot unify.",
+    "definition": "type-variable",
+    "lecture": 16,
+    "page": 4
+  },
+  {
+    "id": "constraints",
+    "label": "Constraint generation V",
+    "tokens": [
+      "V(Γ,e,t)"
+    ],
+    "meaning": "V(Γ,e,t) generates equations whose solutions give e target type t in Γ. It does not run e or necessarily solve the equations. Fresh variables describe unknown child types.",
+    "example": "For f a with target β, constrain f to α→β and a to fresh α.",
+    "definition": "unification",
+    "lecture": 16,
+    "page": 6
+  },
+  {
+    "id": "substitution",
+    "label": "Type substitution versus term substitution",
+    "tokens": [
+      "S(T)",
+      "FTV"
+    ],
+    "meaning": "A type substitution replaces unknown type variables throughout types, contexts, and equations. FTV collects free type variables. Term substitution instead replaces free program-variable occurrences and must avoid capture.",
+    "example": "S={α↦int} gives S(α→α)=int→int; e[x:=a] substitutes a term rather than a type.",
+    "definition": "substitution",
+    "lecture": 17,
+    "page": 21
+  },
+  {
+    "id": "scheme",
+    "label": "Quantified type schemes",
+    "tokens": [
+      "∀",
+      "Gen",
+      "Inst"
+    ],
+    "meaning": "∀α.t quantifies variables that can be replaced freshly at every use. Generalization excludes variables free in the surrounding context. A procedure parameter is not generalized like a let binding.",
+    "example": "∀α.α→α independently instantiates to int→int and bool→bool.",
+    "definition": "type-scheme",
+    "lecture": 18,
+    "page": 12
+  },
+  {
+    "id": "subtype",
+    "label": "Subtyping and variance",
+    "tokens": [
+      "<:"
+    ],
+    "meaning": "A <: B means values of A may safely be used where B is expected. This is directional compatibility, not equality. Function parameters vary contravariantly and results covariantly.",
+    "example": "If ColorPoint <: Point, Point→ColorPoint can stand where Point→Point is expected.",
+    "definition": "subtyping",
+    "lecture": 19,
+    "page": 10
+  },
+  {
+    "id": "lambda",
+    "label": "Lambda binding and beta reduction",
+    "tokens": [
+      "λ",
+      "→β"
+    ],
+    "meaning": "λx.e binds x in e. Beta reduction (λx.e) a →β e[x:=a] uses capture-avoiding substitution. Rename conflicting binders before substituting.",
+    "example": "(λx.λy.x) y reduces to λz.y with z fresh; the argument's free y stays free.",
+    "definition": "capture-avoiding-substitution",
+    "lecture": 20,
+    "page": 16
+  }
+]
