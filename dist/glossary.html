@@ -1,0 +1,222 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Notation &amp; glossary · The Programming Languages Notebook</title><meta name="description" content="Translate mathematical notation into the data and functions you implement in OCaml."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Notation &amp; glossary"><meta property="og:description" content="Translate mathematical notation into the data and functions you implement in OCaml."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" aria-current="page">Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Reference</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Keep this page nearby</p><h1>Notation &amp; glossary</h1><p class="dek">Translate mathematical notation into the data and functions you implement in OCaml.</p><p class="reading-meta">10 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="how-to-read-the-links">How to read the links</h2>
+<p>Highlighted terms throughout the notebook link here. Every entry gives an original plain-language definition, its connection to homework, and a direct link to the relevant <strong>PDF page</strong>. Most references point to the downloaded English textbook; topics added in the 2026 slides point to those slides explicitly.</p>
+<h2 id="notation-at-a-glance">Notation at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Read it as</th>
+<th>In an implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ρ ⊢ e ⇒ v</td>
+<td>Under runtime environment ρ, e evaluates to v</td>
+<td>eval env expression</td>
+</tr>
+<tr>
+<td>ρ, M ⊢ e ⇒ v, M′</td>
+<td>Evaluation also transforms memory</td>
+<td>eval env memory expression returns a pair</td>
+</tr>
+<tr>
+<td>Γ ⊢ e : T</td>
+<td>Under type context Γ, e has type T</td>
+<td>infer type_env expression</td>
+</tr>
+<tr>
+<td>x ↦ v</td>
+<td>A mapping from x to v</td>
+<td>A lookup-table entry</td>
+</tr>
+<tr>
+<td>Dom(M)</td>
+<td>The allocated locations in memory M</td>
+<td>Used to decide freshness</td>
+</tr>
+<tr>
+<td>[x ↦ v]ρ</td>
+<td>Extend or shadow x in environment ρ</td>
+<td>Prepend a binding when lookup chooses the first</td>
+</tr>
+<tr>
+<td>S(T)</td>
+<td>Apply a type substitution throughout T</td>
+<td>Recursive substitution helper</td>
+</tr>
+<tr>
+<td>FTV(T)</td>
+<td>Free type variables of T</td>
+<td>A set computed by traversing the type</td>
+</tr>
+<tr>
+<td>∀α. T</td>
+<td>A scheme universally quantifying α</td>
+<td>Freshly instantiate α at each use</td>
+</tr>
+<tr>
+<td>S &lt;: T</td>
+<td>S can safely be used where T is expected</td>
+<td>A subtype check, not unification</td>
+</tr>
+</tbody>
+</table>
+<p>The course uses different letters for environments and memory in different documents. In HW3, σ is the environment and M is memory. A symbol’s domain and codomain identify its role.</p>
+<h2 id="inductive-definition">Inductive definition</h2>
+<p>A specification of the smallest set containing its base elements and closed under its construction rules.</p>
+<p><strong>Use it in:</strong> HW1 P9–P13; every AST in HW2–HW4.</p>
+<p><a href="01-induction.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=12">English textbook, PDF p. 12</a></p>
+<h2 id="inference-rule">Inference rule</h2>
+<p>A rule that derives a conclusion when all its premises and side conditions hold. A rule with no premises is an axiom.</p>
+<p><strong>Use it in:</strong> HW2 and HW3 semantic rules; HW4 typing rules.</p>
+<p><a href="01-induction.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=13">English textbook, PDF p. 13</a></p>
+<h2 id="abstract-syntax-tree">Abstract syntax tree</h2>
+<p>A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes.</p>
+<p><strong>Use it in:</strong> HW1 P12–P15; HW2–HW4 exp datatypes.</p>
+<p><a href="04-expressions.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=23">English textbook, PDF p. 23</a></p>
+<h2 id="semantics">Semantics</h2>
+<p>The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules.</p>
+<p><strong>Use it in:</strong> HW2 runml; HW3 runb.</p>
+<p><a href="04-expressions.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=25">English textbook, PDF p. 25</a></p>
+<h2 id="structural-induction">Structural induction</h2>
+<p>A proof method with a base case for each base constructor and an inductive case that assumes the property for immediate recursive components.</p>
+<p><strong>Use it in:</strong> HW1 P9–P13 correctness reasoning.</p>
+<p><a href="01-induction.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=28">English textbook, PDF p. 28</a></p>
+<h2 id="pattern-matching">Pattern matching</h2>
+<p>Selecting a case by the constructor and components of a value, binding names to the matched components.</p>
+<p><strong>Use it in:</strong> All HW1 recursive datatypes; interpreter and checker branches.</p>
+<p><a href="02-ocaml.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=54">English textbook, PDF p. 54</a></p>
+<h2 id="structural-recursion">Structural recursion</h2>
+<p>Computing over an inductively built value by recursively processing its smaller components and combining their results.</p>
+<p><strong>Use it in:</strong> HW1 lists, trees, formulas, and symbolic differentiation.</p>
+<p><a href="03-recursion.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=70">English textbook, PDF p. 70</a></p>
+<h2 id="tail-recursion">Tail recursion</h2>
+<p>Recursion in which the recursive call is the final computation in its branch. An accumulator can carry work that would otherwise remain on the stack.</p>
+<p><strong>Use it in:</strong> HW1 long list and interval traversals.</p>
+<p><a href="03-recursion.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=79">English textbook, PDF p. 79</a></p>
+<h2 id="higher-order-function">Higher-order function</h2>
+<p>A function that accepts a function as an argument or returns one as its result.</p>
+<p><strong>Use it in:</strong> HW1 P6 sigma, P7 forall, P8 double.</p>
+<p><a href="03-recursion.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=81">English textbook, PDF p. 81</a></p>
+<h2 id="environment">Environment</h2>
+<p>A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B.</p>
+<p><strong>Use it in:</strong> HW1 P15 context; HW2 values; HW3 locations and procedures.</p>
+<p><a href="04-expressions.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=102">English textbook, PDF p. 102</a></p>
+<h2 id="syntactic-sugar">Syntactic sugar</h2>
+<p>A convenient language form expressible by a translation into more basic forms while preserving its intended behavior.</p>
+<p><strong>Use it in:</strong> HW2 fixed-point examples; let and multiargument encodings.</p>
+<p><a href="15-lambda.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=123">English textbook, PDF p. 123</a></p>
+<h2 id="free-variable">Free variable</h2>
+<p>A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context.</p>
+<p><strong>Use it in:</strong> HW1 P15; HW2 closures.</p>
+<p><a href="06-scope-recursion.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=124">English textbook, PDF p. 124</a></p>
+<h2 id="lexical-scope">Lexical scope</h2>
+<p>A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers.</p>
+<p><strong>Use it in:</strong> HW1 P15; HW2 and HW3 procedure bodies.</p>
+<p><a href="05-closures.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=128">English textbook, PDF p. 128</a></p>
+<h2 id="closure">Closure</h2>
+<p>A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called.</p>
+<p><strong>Use it in:</strong> HW2 Procedure, RecProcedure, and MRecProcedure.</p>
+<p><a href="05-closures.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=129">English textbook, PDF p. 129</a></p>
+<h2 id="dynamic-scope">Dynamic scope</h2>
+<p>Resolving nonlocal names through runtime calling environments. This differs from the lexical scope required by the posted interpreters.</p>
+<p><strong>Use it in:</strong> A useful negative test for HW2 and HW3.</p>
+<p><a href="05-closures.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=134">English textbook, PDF p. 134</a></p>
+<h2 id="store">Store</h2>
+<p>A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory.</p>
+<p><strong>Use it in:</strong> HW3 every stateful evaluation case.</p>
+<p><a href="07-state.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=165">English textbook, PDF p. 165</a></p>
+<h2 id="call-by-value">Call by value</h2>
+<p>Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value.</p>
+<p><strong>Use it in:</strong> HW2 CALL; HW3 CALLV.</p>
+<p><a href="07-state.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=183">English textbook, PDF p. 183</a></p>
+<h2 id="call-by-reference">Call by reference</h2>
+<p>Bind a formal parameter to the caller's existing variable location so assignments through the parameter affect that shared cell.</p>
+<p><strong>Use it in:</strong> HW3 CALLR.</p>
+<p><a href="07-state.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=184">English textbook, PDF p. 184</a></p>
+<h2 id="record">Record</h2>
+<p>In the imperative course language, a collection mapping field names to locations. Field contents are found in the store.</p>
+<p><strong>Use it in:</strong> HW3 RECORD, FIELD, ASSIGNF.</p>
+<p><a href="08-records.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=194">English textbook, PDF p. 194</a></p>
+<h2 id="reachability">Reachability</h2>
+<p>Whether a location can be reached by following references from the current roots. Tracing garbage collection retains reachable cells conservatively.</p>
+<p><strong>Use it in:</strong> Reasoning extension to HW3 sharing; no GC implementation requested.</p>
+<p><a href="08-records.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=217">English textbook, PDF p. 217</a></p>
+<h2 id="garbage-collection">Garbage collection</h2>
+<p>Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots.</p>
+<p><strong>Use it in:</strong> Lecture extension beyond HW3.</p>
+<p><a href="08-records.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=218">English textbook, PDF p. 218</a></p>
+<h2 id="type">Type</h2>
+<p>An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships.</p>
+<p><strong>Use it in:</strong> HW4 typ datatype and typeof.</p>
+<p><a href="11-types.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=226">English textbook, PDF p. 226</a></p>
+<h2 id="type-environment">Type environment</h2>
+<p>A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation.</p>
+<p><strong>Use it in:</strong> HW4 variable lookup, bindings, procedures, recursion.</p>
+<p><a href="11-types.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=230">English textbook, PDF p. 230</a></p>
+<h2 id="typing-judgment">Typing judgment</h2>
+<p>A statement Γ ⊢ e : T asserting that expression e has type T under the assumptions in Γ.</p>
+<p><strong>Use it in:</strong> HW4 all constraint rules.</p>
+<p><a href="11-types.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=232">English textbook, PDF p. 232</a></p>
+<h2 id="soundness">Soundness</h2>
+<p>The guarantee that accepted programs satisfy the safety property established for a particular language and its typing rules. It does not by itself prove termination or absence of every runtime failure.</p>
+<p><strong>Use it in:</strong> HW4 checker contract and partial-operation caveat.</p>
+<p><a href="11-types.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=241">English textbook, PDF p. 241</a></p>
+<h2 id="type-variable">Type variable</h2>
+<p>An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable.</p>
+<p><strong>Use it in:</strong> HW4 fresh_tyvar.</p>
+<p><a href="12-inference.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=254">English textbook, PDF p. 254</a></p>
+<h2 id="unification">Unification</h2>
+<p>Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints.</p>
+<p><strong>Use it in:</strong> HW4 constraint solver.</p>
+<p><a href="12-inference.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=259">English textbook, PDF p. 259</a></p>
+<h2 id="occurs-check">Occurs check</h2>
+<p>Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar.</p>
+<p><strong>Use it in:</strong> HW4 self-application and indirect cyclic constraints.</p>
+<p><a href="12-inference.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=269">English textbook, PDF p. 269</a></p>
+<h2 id="substitution">Substitution</h2>
+<p>A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture.</p>
+<p><strong>Use it in:</strong> HW4 composed substitutions; lambda calculus term substitution.</p>
+<p><a href="12-inference.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=266">English textbook, PDF p. 266</a></p>
+<h2 id="let-polymorphism">Let-polymorphism</h2>
+<p>Giving an eligible let-bound value a type scheme whose quantified variables are freshly instantiated at each use. Variables fixed by the surrounding environment must remain shared.</p>
+<p><strong>Use it in:</strong> HW4 extension if required by the instructor.</p>
+<p><a href="13-polymorphism.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=273">English textbook, PDF p. 273</a></p>
+<h2 id="type-scheme">Type scheme</h2>
+<p>A type together with explicitly universally quantified variables, such as ∀α. α → α. Instantiation replaces only those quantified variables with fresh unknowns.</p>
+<p><strong>Use it in:</strong> Polymorphic let inference.</p>
+<p><a href="13-polymorphism.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf#page=12">Lecture 18, PDF p. 12</a></p>
+<h2 id="continuation">Continuation</h2>
+<p>An explicit representation of the work waiting for a computation's result. Exception handling can inspect and discard these pending frames.</p>
+<p><strong>Use it in:</strong> Lecture 10 extension; not a posted interpreter constructor.</p>
+<p><a href="09-exceptions.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf#page=9">Lecture 10, PDF p. 9</a></p>
+<h2 id="dynamic-dispatch">Dynamic dispatch</h2>
+<p>Choosing a method implementation by searching from the receiver's runtime class through its ancestors.</p>
+<p><strong>Use it in:</strong> Builds on HW3 state and records.</p>
+<p><a href="10-objects.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf#page=25">Lecture 11, PDF p. 25</a></p>
+<h2 id="subtyping">Subtyping</h2>
+<p>A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system.</p>
+<p><strong>Use it in:</strong> Typed class extension, not ML− HW4.</p>
+<p><a href="14-subtyping.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=8">Lecture 19, PDF p. 8</a></p>
+<h2 id="lambda-calculus">Lambda calculus</h2>
+<p>A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings.</p>
+<p><strong>Use it in:</strong> HW1 P15; HW2 fixed-point examples.</p>
+<p><a href="15-lambda.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=279">English textbook, PDF p. 279</a></p>
+<h2 id="beta-reduction">Beta reduction</h2>
+<p>Reducing an applied abstraction by substituting its argument for the parameter's free occurrences in the body, without capturing variables.</p>
+<p><strong>Use it in:</strong> Understanding the fixed-point tests in HW2.</p>
+<p><a href="15-lambda.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281">English textbook, PDF p. 281</a></p>
+<h2 id="alpha-renaming">Alpha-renaming</h2>
+<p>Consistently changing a binder and the occurrences it binds while preserving the program's binding structure.</p>
+<p><strong>Use it in:</strong> HW1 P15 scope reasoning and capture-avoiding substitution.</p>
+<p><a href="15-lambda.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=283">English textbook, PDF p. 283</a></p>
+<h2 id="normal-order">Normal order</h2>
+<p>Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form.</p>
+<p><strong>Use it in:</strong> Lecture 20 evaluation-strategy comparison.</p>
+<p><a href="15-lambda.html">See the explanation</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=284">English textbook, PDF p. 284</a></p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="hw4.html"><small>← Previous</small>HW4 · Build the type checker</a><a href="sources.html"><small>Next →</small>Course sources &amp; reading list</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#how-to-read-the-links">How to read the links</a><a href="#notation-at-a-glance">Notation at a glance</a><a href="#inductive-definition">Inductive definition</a><a href="#inference-rule">Inference rule</a><a href="#abstract-syntax-tree">Abstract syntax tree</a><a href="#semantics">Semantics</a><a href="#structural-induction">Structural induction</a><a href="#pattern-matching">Pattern matching</a><a href="#structural-recursion">Structural recursion</a><a href="#tail-recursion">Tail recursion</a><a href="#higher-order-function">Higher-order function</a><a href="#environment">Environment</a><a href="#syntactic-sugar">Syntactic sugar</a><a href="#free-variable">Free variable</a><a href="#lexical-scope">Lexical scope</a><a href="#closure">Closure</a><a href="#dynamic-scope">Dynamic scope</a><a href="#store">Store</a><a href="#call-by-value">Call by value</a><a href="#call-by-reference">Call by reference</a><a href="#record">Record</a><a href="#reachability">Reachability</a><a href="#garbage-collection">Garbage collection</a><a href="#type">Type</a><a href="#type-environment">Type environment</a><a href="#typing-judgment">Typing judgment</a><a href="#soundness">Soundness</a><a href="#type-variable">Type variable</a><a href="#unification">Unification</a><a href="#occurs-check">Occurs check</a><a href="#substitution">Substitution</a><a href="#let-polymorphism">Let-polymorphism</a><a href="#type-scheme">Type scheme</a><a href="#continuation">Continuation</a><a href="#dynamic-dispatch">Dynamic dispatch</a><a href="#subtyping">Subtyping</a><a href="#lambda-calculus">Lambda calculus</a><a href="#beta-reduction">Beta reduction</a><a href="#alpha-renaming">Alpha-renaming</a><a href="#normal-order">Normal order</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

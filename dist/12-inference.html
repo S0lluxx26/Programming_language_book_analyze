@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Turn types into equations · The Programming Languages Notebook</title><meta name="description" content="Generate constraints, solve them with substitutions, and understand the occurs check."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Turn types into equations"><meta property="og:description" content="Generate constraints, solve them with substitutions, and understand the occurs check."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" aria-current="page">Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>III · Types &amp; foundations</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">12 · Inference &amp; unification</p><h1>Turn types into equations</h1><p class="dek">Generate constraints, solve them with substitutions, and understand the occurs check.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="unknown-types-can-be-solved">Unknown types can be solved</h2>
+<p>In an unannotated procedure, the parameter <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> is not initially known. Assign a fresh <a href="glossary.html#type-variable" class="definition-link" title="An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable. — English textbook, PDF p. 254">type variable</a>, inspect how the parameter is used, and collect equations describing what must be true. This separates <strong>constraint generation</strong> from <strong>constraint solving</strong>.</p>
+<p>For example, <code>proc x (x + 1)</code> begins with <code>x : α</code>. Addition generates <code>α = int</code>; the result is <code>int</code>, so the whole procedure is <code>int → int</code>.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/12-inference-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/12-inference-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/12-inference-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Invent fresh unknowns&lt;br/&gt;Give unconstrained parameters and results&lt;br/&gt;type variables.&quot;]
+  N1[&quot;Walk the AST&lt;br/&gt;Translate each typing rule into equations.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Unify the equations&lt;br/&gt;Find a substitution satisfying all&lt;br/&gt;relationships.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Apply the substitution&lt;br/&gt;Resolve the provisional result type&lt;br/&gt;everywhere.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><h2 id="a-complete-worked-example">A complete worked example</h2>
+<p>Consider <code>proc f (proc x (f (x + 1)))</code>. Give <code>f</code> type α, <code>x</code> type β, and the call result type γ.</p>
+<table>
+<thead>
+<tr>
+<th>Source of constraint</th>
+<th>Equation</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x + 1</code></td>
+<td>β = int</td>
+<td>Addition consumes integers</td>
+</tr>
+<tr>
+<td><code>f (x + 1)</code></td>
+<td>α = int → γ</td>
+<td>f accepts the addition result</td>
+</tr>
+<tr>
+<td>Outer structure</td>
+<td>provisional type α → β → γ</td>
+<td>Two nested procedures</td>
+</tr>
+</tbody>
+</table>
+<p>Substituting the solved equations gives <strong>(int → γ) → int → γ</strong>. γ remains free because no operation constrains f’s result. Different fresh variable names denote the same type structure.</p>
+<div class="trace" data-trace="unify" data-title="Solve the type equations"><p>Assign α to f and β to x. Addition forces β = int. The call forces α = int → γ. The result is (int → γ) → int → γ.</p></div>
+<h2 id="unification-is-a-worklist-algorithm">Unification is a worklist algorithm</h2>
+<p>At each step inspect one equation after applying <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitutions</a> already learned.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/12-inference-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/12-inference-2.svg" alt="What shapes appear on the two sides?" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/12-inference-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: What shapes appear on the two sides?
+  accDescr: Select the branch that matches the current case.
+  Q{&quot;What shapes appear on the two sides?&quot;}
+  Q --&gt;|&quot;Identical types&quot;| N0[&quot;Discard the equation; it is already&lt;br/&gt;satisfied.&quot;]
+  Q --&gt;|&quot;Same type constructor&quot;| N1[&quot;Decompose functions into domain/result&lt;br/&gt;equations and lists into element&lt;br/&gt;equations.&quot;]
+  Q --&gt;|&quot;Variable versus type&quot;| N2[&quot;Bind the variable only if it does not&lt;br/&gt;occur inside the other type.&quot;]
+  Q --&gt;|&quot;Different constructors&quot;| N3[&quot;Reject: no substitution can make int and&lt;br/&gt;bool equal.&quot;]
+</code></pre></details></figure><p>For function types, <code>(A → B) = (C → D)</code> creates two equations, <code>A = C</code> and <code>B = D</code>. For list types, <code>List A = List B</code> creates <code>A = B</code>. Do not confuse type equations with <a href="glossary.html#subtyping" class="definition-link" title="A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system. — Course slides, PDF p. 8">subtyping</a>; this chapter’s <a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">unification</a> requires equality.</p>
+<h2 id="the-occurs-check-prevents-infinite-simple-types">The occurs check prevents infinite simple types</h2>
+<p>Trying to solve <code>α = α → β</code> would make α contain itself. No finite type in the course’s simple type grammar can satisfy this equation. The <strong><a href="glossary.html#occurs-check" class="definition-link" title="Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar. — English textbook, PDF p. 269">occurs check</a></strong> detects the occurrence of α inside the proposed replacement and rejects it.</p>
+<p>The expression <code>proc x (x x)</code> produces exactly this kind of problem: x must be both an argument and a function accepting that same argument type. Untyped <a href="glossary.html#lambda-calculus" class="definition-link" title="A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings. — English textbook, PDF p. 279">lambda calculus</a> can represent the expression; this simple type system rejects it.</p>
+<h2 id="substitution-must-reach-inside-types">Substitution must reach inside types</h2>
+<p>If <code>S1 = {α ↦ β}</code> and <code>S2 = {β ↦ int}</code>, applying S2 after S1 maps α to int. Merely concatenating maps and looking up α once may leave β unresolved. Define substitution application recursively through function and list constructors, and define composition consistently.</p>
+<pre><code class="language-text">apply S (A → B) = apply S A → apply S B
+apply S (List A) = List (apply S A)
+apply (S2 after S1) T = apply S2 (apply S1 T)
+</code></pre>
+<p>Choose one direction for composition and document it in helper names. The final type must receive the fully composed substitution, not just the last binding discovered.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw4.html">HW4</a> needs fresh variables, equations for every <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> constructor, and a unifier over unit, integers, booleans, arrows, lists, and variables. Recursive procedures require assuming provisional function types while checking their bodies; mutual recursion requires both provisional bindings at once.</p>
+<p><strong>Useful tests:</strong> a valid higher-order call, a mismatched function argument, an inconsistent branch pair, a list with incompatible element types, a substitution chain, and self-application. The assignment’s equality operator also needs an admissible-type check beyond ordinary unification.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>Why must you apply the current substitution before performing a later occurs check?</p>
+<details><summary>Reveal the reasoning</summary><p>A variable may already expand to a type containing another variable. For example, after α = β → int, the proposed binding β = α contains β indirectly. Looking only at the unreplaced name α would miss the cycle.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf#page=4">lecture 15, pp. 4–10</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf#page=4">lecture 16, pp. 4–7</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=16">lecture 17, pp. 16 and 21–26</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=248">English book, §8.6</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="11-types.html"><small>← Previous</small>Reason before running</a><a href="13-polymorphism.html"><small>Next →</small>One definition, many types</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#unknown-types-can-be-solved">Unknown types can be solved</a><a href="#a-complete-worked-example">A complete worked example</a><a href="#unification-is-a-worklist-algorithm">Unification is a worklist algorithm</a><a href="#the-occurs-check-prevents-infinite-simple-types">The occurs check prevents infinite simple types</a><a href="#substitution-must-reach-inside-types">Substitution must reach inside types</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

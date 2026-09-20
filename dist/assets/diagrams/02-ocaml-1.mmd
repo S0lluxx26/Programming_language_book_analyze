@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["add<br/>int → (int → int)"]
+  N1["add 7<br/>int → int; remembers the first argument"]
+  N0 --> N1
+  N2["add 7 4<br/>int; produces 11"]
+  N1 --> N2

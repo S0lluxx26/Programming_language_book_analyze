@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Invent fresh unknowns<br/>Give unconstrained parameters and results<br/>type variables."]
+  N1["Walk the AST<br/>Translate each typing rule into equations."]
+  N0 --> N1
+  N2["Unify the equations<br/>Find a substitution satisfying all<br/>relationships."]
+  N1 --> N2
+  N3["Apply the substitution<br/>Resolve the provisional result type<br/>everywhere."]
+  N2 --> N3

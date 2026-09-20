@@ -1,0 +1,122 @@
+[
+  {
+    "name": "index-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Define the shape<br/>A grammar describes the programs you can<br/>write.\"]\n  N1[\"Define the meaning<br/>Inference rules describe what those<br/>programs do.\"]\n  N0 --> N1\n  N2[\"Build the machine<br/>An OCaml interpreter implements the rules.\"]\n  N1 --> N2\n  N3[\"Check before running<br/>A type checker reasons about the program’s<br/>structure.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "setup-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Predict<br/>Write the result and type before running.\"]\n  N1[\"Trace<br/>Follow constructors, environments, or<br/>memory on paper.\"]\n  N0 --> N1\n  N2[\"Run<br/>Test one small expression in the official<br/>environment.\"]\n  N1 --> N2\n  N3[\"Explain<br/>If the result differs, identify the exact<br/>rule you misunderstood.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "01-induction-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Choose a constructor<br/>Is this a base case or a recursive case?\"]\n  N1[\"List its premises<br/>What smaller objects must already exist?\"]\n  N0 --> N1\n  N2[\"Establish each premise<br/>Construct them, evaluate them, or use an<br/>induction hypothesis.\"]\n  N1 --> N2\n  N3[\"Apply the rule<br/>Combine the results into the conclusion.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "01-induction-2",
+    "source": "flowchart TD\n  accTitle: What constructor built this shape?\n  accDescr: Select the branch that matches the current case.\n  Q{\"What constructor built this shape?\"}\n  Q -->|\"Tip\"| N0[\"Return 1 immediately. There are no<br/>recursive premises.\"]\n  Q -->|\"Fork (l, r)\"| N1[\"Count l, count r, then add the two<br/>results.\"]\n"
+  },
+  {
+    "name": "02-ocaml-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"add<br/>int → (int → int)\"]\n  N1[\"add 7<br/>int → int; remembers the first argument\"]\n  N0 --> N1\n  N2[\"add 7 4<br/>int; produces 11\"]\n  N1 --> N2\n"
+  },
+  {
+    "name": "03-recursion-1",
+    "source": "flowchart TD\n  accTitle: Can I answer from the current constructor alone?\n  accDescr: Select the branch that matches the current case.\n  Q{\"Can I answer from the current constructor<br/>alone?\"}\n  Q -->|\"Base case\"| N0[\"Return the identity or direct result that<br/>the specification requires.\"]\n  Q -->|\"Recursive case\"| N1[\"Solve the immediate smaller pieces and<br/>combine their answers.\"]\n"
+  },
+  {
+    "name": "04-expressions-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate e1 in ρ<br/>The old scope determines the definition’s<br/>meaning.\"]\n  N1[\"Extend with x ↦ v1<br/>Place the newest binding before older<br/>bindings.\"]\n  N0 --> N1\n  N2[\"Evaluate e2 in the extension<br/>Lookups now see the new x.\"]\n  N1 --> N2\n  N3[\"Return the body’s value<br/>Outer scopes remain available to their own<br/>computations.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "05-closures-1",
+    "source": "flowchart TD\n  accTitle: Closure creation and lexical application\n  accDescr: The caller supplies the argument while the closure supplies the environment for the body.\n  A[\"Caller environment<br/>x = 90\"] -->|\"evaluate argument 3\"| D[\"Argument value: 3\"]\n  A -->|\"lookup f\"| B[\"Closure<br/>parameter y; body x + y\"]\n  B -->|\"captures at creation\"| C[\"Saved environment<br/>x = 10\"]\n  C --> E[\"Body environment<br/>y = 3, x = 10\"]\n  D --> E\n  E --> F[\"10 + 3 = 13\"]\n"
+  },
+  {
+    "name": "06-scope-recursion-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Find the recursive closure<br/>Obtain function name f, parameter x, body,<br/>and saved environment.\"]\n  N1[\"Evaluate the argument<br/>Use the caller environment.\"]\n  N0 --> N1\n  N2[\"Extend the saved environment<br/>Add f bound to the recursive closure and x<br/>bound to the argument.\"]\n  N1 --> N2\n  N3[\"Evaluate the body<br/>A lookup of f can now produce another<br/>recursive call.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "07-state-1",
+    "source": "flowchart LR\n  accTitle: A variable lookup has two stages\n  accDescr: The environment maps x to location zero, and memory maps that location to a value. Assignment changes memory only.\n  X[\"Name x\"] -->|\"environment lookup\"| L[\"Location 0\"]\n  L -->|\"memory before\"| V[\"Value 4\"]\n  L -->|\"memory after x := 6\"| W[\"Value 6\"]\n"
+  },
+  {
+    "name": "07-state-2",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"e1 with M0<br/>Produce v1 and M1.\"]\n  N1[\"e2 with M1<br/>Observe all effects from e1; produce v2<br/>and M2.\"]\n  N0 --> N1\n  N2[\"Combine v1 and v2<br/>Check the operation’s required value<br/>shapes.\"]\n  N1 --> N2\n  N3[\"Return result with M2<br/>Preserve the latest state.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "08-records-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate the record expression<br/>Obtain a field-location map and the<br/>resulting store.\"]\n  N1[\"Find the named field<br/>Missing field means no applicable lookup<br/>rule.\"]\n  N0 --> N1\n  N2[\"Read or update its location<br/>Use the current store, including prior<br/>effects.\"]\n  N1 --> N2\n  N3[\"Preserve the rest of memory<br/>Other aliases can still observe this same<br/>cell.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "08-records-2",
+    "source": "flowchart TD\n  accTitle: Is this allocated location reachable from the roots?\n  accDescr: Select the branch that matches the current case.\n  Q{\"Is this allocated location reachable from<br/>the roots?\"}\n  Q -->|\"Yes\"| N0[\"Retain it; follow any outgoing references<br/>not already visited.\"]\n  Q -->|\"No\"| N1[\"It can be reclaimed by a reachability-<br/>based collector.\"]\n"
+  },
+  {
+    "name": "09-exceptions-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate an expression<br/>Descend into a child and push a frame for<br/>the unfinished work.\"]\n  N1[\"Produce a value<br/>An atomic expression has no more internal<br/>work.\"]\n  N0 --> N1\n  N2[\"Apply the continuation<br/>Inspect the top frame to decide what<br/>happens next.\"]\n  N1 --> N2\n  N3[\"Continue or finish<br/>Evaluate another expression, combine<br/>values, or return at End.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "09-exceptions-2",
+    "source": "flowchart TD\n  accTitle: What frame does handler search encounter?\n  accDescr: Select the branch that matches the current case.\n  Q{\"What frame does handler search encounter?\"}\n  Q -->|\"Ordinary frame\"| N0[\"Discard it and keep searching outward.\"]\n  Q -->|\"Handler frame\"| N1[\"Bind the payload and evaluate the handler<br/>with the outer continuation.\"]\n  Q -->|\"End\"| N2[\"No enclosing handler exists; the exception<br/>is uncaught.\"]\n"
+  },
+  {
+    "name": "10-objects-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Evaluate the receiver<br/>Obtain its runtime class and field-<br/>location map.\"]\n  N1[\"Evaluate the argument<br/>Preserve any memory changes.\"]\n  N0 --> N1\n  N2[\"Look up the method<br/>Search the runtime class, then ancestors.\"]\n  N1 --> N2\n  N3[\"Run its body<br/>Bind parameter, self, fields, and method<br/>host; thread memory.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "11-types-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Read the outer constructor<br/>Addition, variable, conditional,<br/>procedure, call…\"]\n  N1[\"Check the premises<br/>Recursively establish types under the<br/>appropriate context.\"]\n  N0 --> N1\n  N2[\"Enforce relationships<br/>For example, both addition operands must<br/>be integers.\"]\n  N1 --> N2\n  N3[\"Conclude a type<br/>Or reject when no rule can justify the<br/>expression.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "12-inference-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Invent fresh unknowns<br/>Give unconstrained parameters and results<br/>type variables.\"]\n  N1[\"Walk the AST<br/>Translate each typing rule into equations.\"]\n  N0 --> N1\n  N2[\"Unify the equations<br/>Find a substitution satisfying all<br/>relationships.\"]\n  N1 --> N2\n  N3[\"Apply the substitution<br/>Resolve the provisional result type<br/>everywhere.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "12-inference-2",
+    "source": "flowchart TD\n  accTitle: What shapes appear on the two sides?\n  accDescr: Select the branch that matches the current case.\n  Q{\"What shapes appear on the two sides?\"}\n  Q -->|\"Identical types\"| N0[\"Discard the equation; it is already<br/>satisfied.\"]\n  Q -->|\"Same type constructor\"| N1[\"Decompose functions into domain/result<br/>equations and lists into element<br/>equations.\"]\n  Q -->|\"Variable versus type\"| N2[\"Bind the variable only if it does not<br/>occur inside the other type.\"]\n  Q -->|\"Different constructors\"| N3[\"Reject: no substitution can make int and<br/>bool equal.\"]\n"
+  },
+  {
+    "name": "13-polymorphism-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Infer the definition<br/>Solve its constraints, including<br/>constraints on the environment.\"]\n  N1[\"Generalize independent variables<br/>Exclude variables free in the updated<br/>environment.\"]\n  N0 --> N1\n  N2[\"Bind a type scheme<br/>Record which variables may be freshly<br/>chosen at use sites.\"]\n  N1 --> N2\n  N3[\"Instantiate each use<br/>Replace quantified variables with new<br/>unknowns every time.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "14-subtyping-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Infer the actual type<br/>A receiver or argument may have a specific<br/>subclass type.\"]\n  N1[\"Read the required type<br/>A parameter or declared result imposes an<br/>expected type.\"]\n  N0 --> N1\n  N2[\"Check actual <: required<br/>Confirm that the use preserves the<br/>caller’s expectations.\"]\n  N1 --> N2\n  N3[\"Keep the runtime object<br/>Its class still determines ordinary method<br/>dispatch.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "15-lambda-1",
+    "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Identify the binder being applied<br/>Substitute only for occurrences bound by<br/>this abstraction.\"]\n  N1[\"Inspect free variables of the argument<br/>Determine which names must remain free.\"]\n  N0 --> N1\n  N2[\"Rename conflicting inner binders<br/>Use fresh names and rename their bound<br/>occurrences consistently.\"]\n  N1 --> N2\n  N3[\"Substitute and continue<br/>Preserve the binding structure of the<br/>original term.\"]\n  N2 --> N3\n"
+  },
+  {
+    "name": "homework-map-1",
+    "source": "flowchart TD\n  accTitle: Concepts leading to the four homework assignments\n  accDescr: Induction and OCaml lead to HW1, environments and closures to HW2, stores and records to HW3, and typing and unification to HW4.\n  I[\"Inductive definitions<br/>Constructors and structural recursion\"] --> O[\"OCaml<br/>Patterns and higher-order functions\"]\n  O --> H1[\"HW1<br/>15 functional-programming exercises\"]\n  H1 --> E[\"Semantic rules<br/>Environments and closures\"]\n  E --> H2[\"HW2<br/>ML− interpreter\"]\n  H2 --> S[\"State<br/>Locations, stores, and records\"]\n  S --> H3[\"HW3<br/>B interpreter\"]\n  E --> T[\"Typing rules<br/>Constraints and unification\"]\n  T --> H4[\"HW4<br/>ML− type checker\"]\n  H2 -. \"same AST, different meaning\" .-> H4\n"
+  },
+  {
+    "name": "hw1-1",
+    "source": "flowchart TD\n  accTitle: Deriving a recursive homework function\n  accDescr: Start from the signature, choose cases from the data, ensure the input decreases, combine recursive results, and test the invariant.\n  A[\"Read the function type\"] --> B{\"What is the input shape?\"}\n  B -->|\"integer or interval\"| C[\"Choose a decreasing numeric measure\"]\n  B -->|\"list or tree\"| D[\"Match every constructor\"]\n  B -->|\"expression with bindings\"| E[\"Carry a lexical context\"]\n  C --> F[\"Write base case and recursive step\"]\n  D --> F\n  E --> F\n  F --> G[\"Test ordinary, boundary, and adversarial cases\"]\n"
+  },
+  {
+    "name": "hw1-2",
+    "source": "flowchart TD\n  accTitle: Checking free variables by lexical path\n  accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.\n  A[\"check helper: context + expression\"] --> B{\"Outer constructor?\"}\n  B -->|\"V x\"| C{\"Is x in context?\"}\n  C -->|\"yes\"| T[\"true\"]\n  C -->|\"no\"| F[\"false\"]\n  B -->|\"P x body\"| D[\"Check body with x added\"]\n  B -->|\"C left right\"| E[\"Check both with the same incoming context\"]\n  E --> G[\"Combine with AND\"]\n"
+  },
+  {
+    "name": "hw2-1",
+    "source": "flowchart TD\n  accTitle: A staged plan for the ML-minus interpreter\n  accDescr: Each implementation layer depends on the previous one and should be tested before adding more constructors.\n  A[\"1. Tagged values and environment lookup\"] --> B[\"2. Constants, arithmetic, comparisons\"]\n  B --> C[\"3. IF, LET, and lists\"]\n  C --> D[\"4. PROC and lexical CALL\"]\n  D --> E[\"5. LETREC and LETMREC\"]\n  E --> F[\"6. PRINT, SEQ, and undefined cases\"]\n  F --> G[\"7. Run official examples and distinguishing tests\"]\n"
+  },
+  {
+    "name": "hw2-2",
+    "source": "flowchart TD\n  accTitle: Choosing the environment for a procedure call\n  accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure's saved context plus recursive and parameter bindings.\n  A[\"Evaluate function and argument in caller\"] --> B{\"Procedure value form?\"}\n  B -->|\"ordinary\"| C[\"Saved environment + parameter\"]\n  B -->|\"recursive\"| D[\"Saved environment + self + parameter\"]\n  B -->|\"mutually recursive\"| E[\"Saved environment + both procedures + parameter\"]\n  B -->|\"not a procedure\"| X[\"UndefinedSemantics\"]\n  C --> F[\"Evaluate the stored body\"]\n  D --> F\n  E --> F\n"
+  },
+  {
+    "name": "hw3-1",
+    "source": "flowchart TD\n  accTitle: The stateful evaluation contract\n  accDescr: Every child consumes the previous child's store. The interpreter returns a value and the latest memory.\n  A[\"eval environment M0 expression\"] --> B[\"Evaluate first required child\"]\n  B --> C[\"value1, M1\"]\n  C --> D[\"Evaluate next child using M1\"]\n  D --> E[\"value2, M2\"]\n  E --> F[\"Apply the rule and any memory update\"]\n  F --> G[\"Return value and final memory\"]\n"
+  },
+  {
+    "name": "hw3-2",
+    "source": "flowchart TD\n  accTitle: Value and reference calls choose different parameter locations\n  accDescr: Value calls allocate a new parameter location; reference calls reuse the caller's location. Both execute under the captured lexical environment.\n  A[\"Caller variable a at location 0<br/>memory[0] = 4\"] --> B{\"Call mode?\"}\n  B -->|\"CALLV\"| C[\"Allocate parameter p at location 1<br/>memory[1] = 4\"]\n  B -->|\"CALLR\"| D[\"Bind parameter p to location 0\"]\n  C --> E[\"p := 9 updates memory[1]<br/>a remains 4\"]\n  D --> F[\"p := 9 updates memory[0]<br/>a becomes 9\"]\n"
+  },
+  {
+    "name": "hw4-1",
+    "source": "flowchart TD\n  accTitle: The HW4 type-inference pipeline\n  accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.\n  A[\"AST + empty type environment\"] --> B[\"Generate provisional type<br/>and equations\"]\n  B --> C[\"Unify equations<br/>with occurs checks\"]\n  C --> D{\"All operator restrictions valid?\"}\n  D -->|\"yes\"| E[\"Apply final substitution<br/>Return type\"]\n  D -->|\"no\"| F[\"TypeError\"]\n  C -->|\"contradiction or cycle\"| F\n"
+  }
+]

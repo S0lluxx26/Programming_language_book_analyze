@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Evaluate e1 in ρ<br/>The old scope determines the definition’s<br/>meaning."]
+  N1["Extend with x ↦ v1<br/>Place the newest binding before older<br/>bindings."]
+  N0 --> N1
+  N2["Evaluate e2 in the extension<br/>Lookups now see the new x."]
+  N1 --> N2
+  N3["Return the body’s value<br/>Outer scopes remain available to their own<br/>computations."]
+  N2 --> N3

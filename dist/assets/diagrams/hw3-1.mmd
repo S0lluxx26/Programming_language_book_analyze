@@ -1,0 +1,9 @@
+flowchart TD
+  accTitle: The stateful evaluation contract
+  accDescr: Every child consumes the previous child's store. The interpreter returns a value and the latest memory.
+  A["eval environment M0 expression"] --> B["Evaluate first required child"]
+  B --> C["value1, M1"]
+  C --> D["Evaluate next child using M1"]
+  D --> E["value2, M2"]
+  E --> F["Apply the rule and any memory update"]
+  F --> G["Return value and final memory"]

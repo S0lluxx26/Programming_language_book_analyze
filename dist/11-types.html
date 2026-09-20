@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reason before running · The Programming Languages Notebook</title><meta name="description" content="Use typing judgments to rule out classes of runtime mistakes."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Reason before running"><meta property="og:description" content="Use typing judgments to rule out classes of runtime mistakes."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" aria-current="page">Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>III · Types &amp; foundations</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">11 · Static type systems</p><h1>Reason before running</h1><p class="dek">Use typing judgments to rule out classes of runtime mistakes.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-type-judgment-predicts-a-category-of-result">A type judgment predicts a category of result</h2>
+<p>Write <strong>Γ ⊢ e : τ</strong> as: “under <a href="glossary.html#type-environment" class="definition-link" title="A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation. — English textbook, PDF p. 230">type environment</a> Γ, expression e has <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> τ.” Γ maps names to types, while runtime <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> ρ maps names to values or locations. A type checker follows syntax without executing the program to discover its values.</p>
+<p>For a simple function language, types include integers, booleans, and function types. A function type <code>A → B</code> describes a value that accepts an A and produces a B when it returns normally.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/11-types-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/11-types-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/11-types-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Read the outer constructor&lt;br/&gt;Addition, variable, conditional,&lt;br/&gt;procedure, call…&quot;]
+  N1[&quot;Check the premises&lt;br/&gt;Recursively establish types under the&lt;br/&gt;appropriate context.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Enforce relationships&lt;br/&gt;For example, both addition operands must&lt;br/&gt;be integers.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Conclude a type&lt;br/&gt;Or reject when no rule can justify the&lt;br/&gt;expression.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><h2 id="typing-rules-mirror-semantic-rules">Typing rules mirror semantic rules</h2>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Required premises</th>
+<th>Result type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer literal</td>
+<td>None</td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td>Variable x</td>
+<td>x has a binding in Γ</td>
+<td>Γ(x)</td>
+</tr>
+<tr>
+<td><code>a + b</code></td>
+<td>a : int and b : int</td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>if c then a else b</code></td>
+<td>c : bool; a and b have a common type T</td>
+<td><code>T</code></td>
+</tr>
+<tr>
+<td><code>proc x body</code></td>
+<td>Under x : A, body : B</td>
+<td><code>A → B</code></td>
+</tr>
+<tr>
+<td><code>f argument</code></td>
+<td>f : A → B and argument : A</td>
+<td><code>B</code></td>
+</tr>
+</tbody>
+</table>
+<p>Typing both branches of a conditional is useful even though evaluation chooses only one. A simple syntax-directed type system conservatively checks all branches. It may reject <code>if true then 4 else false</code> even though the bad branch is unreachable in that particular expression.</p>
+<h2 id="a-worked-derivation">A worked derivation</h2>
+<p>For <code>proc x (if iszero x then 7 else x + 2)</code>, the use of <code>iszero</code> requires <code>x : int</code>. Both branch expressions have type <code>int</code>, so the conditional has type <code>int</code>. The procedure therefore has type <code>int → int</code>.</p>
+<pre><code class="language-text">Γ, x:int ⊢ x : int
+Γ, x:int ⊢ iszero x : bool
+Γ, x:int ⊢ 7 : int
+Γ, x:int ⊢ x + 2 : int
+----------------------------------------------
+Γ, x:int ⊢ if iszero x then 7 else x + 2 : int
+-----------------------------------------------------
+Γ ⊢ proc x (if iszero x then 7 else x + 2) : int → int
+</code></pre>
+<p>The diagram is a dependency tree: the conclusion rests on all of its premises. In an annotated language, the parameter type may be supplied. In an unannotated language, the checker must infer it, which motivates <a href="12-inference.html">constraint generation</a>.</p>
+<h2 id="soundness-is-a-one-way-guarantee">Soundness is a one-way guarantee</h2>
+<p>For a specified language and notion of error, a <a href="glossary.html#soundness" class="definition-link" title="The guarantee that accepted programs satisfy the safety property established for a particular language and its typing rules. It does not by itself prove termination or absence of every runtime failure. — English textbook, PDF p. 241">sound type system</a> does not accept programs that can go wrong in the prohibited way. This is often formalized with <strong>preservation</strong> (steps preserve typing) and <strong>progress</strong> (a well-typed term is a value or can take an allowed step). These statements depend on the exact operational <a href="glossary.html#semantics" class="definition-link" title="The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules. — English textbook, PDF p. 25">semantics</a>.</p>
+<p>Soundness does not automatically mean termination, correct business logic, no resource exhaustion, or no division by zero. A language can treat some failures as explicit exceptions or specified outcomes. If a course definition treats those failures as stuck, the theorem must exclude them or strengthen its premises.</p>
+<p><strong>Completeness</strong>, in the course’s safety discussion, would mean accepting every program that is safe under the chosen notion. Practical computable type systems for expressive languages cannot generally give a perfect decision procedure for all semantic safety properties. They conservatively reject some safe programs.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw4.html">HW4</a> requests a sound checker for ML− but gives only an <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>, a type datatype, and a public interface. It does not spell out all extended typing rules or its treatment of partial operations. The guide separates standard type safety from stronger claims about the absence of <code>UndefinedSemantics</code>, and identifies the equality restriction that a checker must respect.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>Why can a program have a function type and still run forever?</p>
+<details><summary>Reveal the reasoning</summary><p>The type constrains acceptable inputs and the kind of result if evaluation produces one. Ordinary typing rules for recursion do not supply a decreasing measure or a termination proof. A recursively self-calling function can therefore be well typed.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf#page=5">lecture 12, pp. 5–9</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf#page=4">lecture 13, pp. 4–15</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf#page=5">lecture 14, pp. 5–8</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=225">English book, §§8.1–8.5</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="10-objects.html"><small>← Previous</small>Objects as state plus dispatch</a><a href="12-inference.html"><small>Next →</small>Turn types into equations</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#a-type-judgment-predicts-a-category-of-result">A type judgment predicts a category of result</a><a href="#typing-rules-mirror-semantic-rules">Typing rules mirror semantic rules</a><a href="#a-worked-derivation">A worked derivation</a><a href="#soundness-is-a-one-way-guarantee">Soundness is a one-way guarantee</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

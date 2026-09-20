@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>When one type can stand for another · The Programming Languages Notebook</title><meta name="description" content="Understand substitution, function variance, and safe method overriding."><meta name="theme-color" content="#142b48"><meta property="og:title" content="When one type can stand for another"><meta property="og:description" content="Understand substitution, function variance, and safe method overriding."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" aria-current="page">When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>III · Types &amp; foundations</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">14 · Typed objects &amp; subtyping</p><h1>When one type can stand for another</h1><p class="dek">Understand substitution, function variance, and safe method overriding.</p><p class="reading-meta">2 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="subtyping-is-safe-substitutability">Subtyping is safe substitutability</h2>
+<p>Write <strong>S &lt;: T</strong> when a value of <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> S may be used wherever a T is expected. In the lecture’s nominal class system, declared inheritance introduces class subtype relationships. Reflexivity says every type is a subtype of itself; transitivity chains relationships.</p>
+<p>If <code>ColorPoint</code> extends <code>Point</code>, a ColorPoint can be passed to a function expecting a Point. The reverse is not generally safe: a plain Point may lack the color-specific behavior that the function needs.</p>
+<h2 id="subsumption-connects-subtyping-to-expressions">Subsumption connects subtyping to expressions</h2>
+<p>If Γ proves that e has type S and S &lt;: T, <strong>subsumption</strong> allows e to be used at type T. This changes the static view of the value, not its runtime class. <a href="glossary.html#dynamic-dispatch" class="definition-link" title="Choosing a method implementation by searching from the receiver's runtime class through its ancestors. — Course slides, PDF p. 25">Dynamic dispatch</a> still uses the actual receiver object.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/14-subtyping-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/14-subtyping-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/14-subtyping-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Infer the actual type&lt;br/&gt;A receiver or argument may have a specific&lt;br/&gt;subclass type.&quot;]
+  N1[&quot;Read the required type&lt;br/&gt;A parameter or declared result imposes an&lt;br/&gt;expected type.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Check actual &lt;: required&lt;br/&gt;Confirm that the use preserves the&lt;br/&gt;caller’s expectations.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Keep the runtime object&lt;br/&gt;Its class still determines ordinary method&lt;br/&gt;dispatch.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><h2 id="function-inputs-reverse-the-direction">Function inputs reverse the direction</h2>
+<p>For function types, the rule is:</p>
+<pre><code class="language-text">(A → B) &lt;: (C → D)  when  C &lt;: A  and  B &lt;: D
+</code></pre>
+<p>The replacement function must accept at least all the inputs promised by the expected function type, and return results at least as specific as promised.</p>
+<table>
+<thead>
+<tr>
+<th>Candidate replacement</th>
+<th>Expected function</th>
+<th>Safe?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Point → int</code></td>
+<td><code>ColorPoint → int</code></td>
+<td>Yes</td>
+<td>It accepts every ColorPoint because it accepts all Points</td>
+</tr>
+<tr>
+<td><code>ColorPoint → int</code></td>
+<td><code>Point → int</code></td>
+<td>No</td>
+<td>A caller may supply an uncolored Point</td>
+</tr>
+<tr>
+<td><code>int → ColorPoint</code></td>
+<td><code>int → Point</code></td>
+<td>Yes</td>
+<td>Every result is still a Point</td>
+</tr>
+</tbody>
+</table>
+<p>This input reversal is <strong>contravariance</strong>; the same-direction result rule is <strong>covariance</strong>. Re-derive them from what a caller may pass and receive instead of memorizing arrows.</p>
+<h2 id="safe-method-overrides-preserve-the-contract">Safe method overrides preserve the contract</h2>
+<p>Suppose a parent method expects <code>ColorPoint</code> and returns <code>Point</code>. The lecture allows an override that accepts <code>Point</code> and returns <code>ColorPoint</code>: it accepts a broader range of arguments and makes a stronger result guarantee. An override that narrows the accepted input can break callers compiled against the parent contract.</p>
+<p>The lecture checks equal arity, contravariant parameters, and covariant results. It specifically exempts <code>initialize</code> from the ordinary override compatibility check because constructors are selected for <code>new C(...)</code>. This is a rule of this course language; other languages can impose stricter method-override restrictions.</p>
+<h2 id="the-checker-has-three-passes">The checker has three passes</h2>
+<ol>
+<li>Build the class <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> in inheritance order, carrying inherited fields and signatures and checking overrides.</li>
+<li>Check method bodies with field types, parameter types, and <code>self</code>/<code>host</code> information. Ensure each body’s type is compatible with its declared return type.</li>
+<li>Check the main expression under the resulting class environment.</li>
+</ol>
+<p>A method call looks up the signature available from the receiver’s static type. Arguments must fit the corresponding parameter types, and the call receives the declared result type. Runtime lookup may choose an overriding body; override checks make that <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitution</a> safe.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p>HW4 targets ML−, not the typed class language, so it needs <a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">unification</a> rather than class <a href="glossary.html#subtyping" class="definition-link" title="A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system. — Course slides, PDF p. 8">subtyping</a>. This chapter is an extension of the same static reasoning method. Do not add subtype conversions to ordinary <code>int</code>/<code>bool</code> unification: distinct base types remain distinct in the lecture’s system.</p>
+<p>One cross-lecture distinction matters: lecture 19 types assignment as <code>void</code>, while B’s HW3 assignment rule returns the assigned value. Follow the language being discussed, not a global rule inferred from another chapter.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>Why is an override that accepts only ColorPoint unsafe when the parent accepts every Point?</p>
+<details><summary>Reveal the reasoning</summary><p>A caller holding a parent-typed reference is entitled to pass an ordinary Point. Dynamic dispatch could reach the narrower override, which cannot fulfill that promise. The child method must not demand a more specialized argument.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf#page=8">lecture 19, pp. 8–23</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="13-polymorphism.html"><small>← Previous</small>One definition, many types</a><a href="15-lambda.html"><small>Next →</small>The small language underneath</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#subtyping-is-safe-substitutability">Subtyping is safe substitutability</a><a href="#subsumption-connects-subtyping-to-expressions">Subsumption connects subtyping to expressions</a><a href="#function-inputs-reverse-the-direction">Function inputs reverse the direction</a><a href="#safe-method-overrides-preserve-the-contract">Safe method overrides preserve the contract</a><a href="#the-checker-has-three-passes">The checker has three passes</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

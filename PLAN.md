@@ -1,0 +1,42 @@
+# COSE212 illustrated study book — execution plan
+
+Source: <https://prl.korea.ac.kr/courses/cose212/2026/>.
+
+## 1. Collect and verify the course sources
+- Discover every distinct PDF linked on the course page, preserving the source directory structure in `sources/pdfs/`.
+- Save a dated source-page snapshot and a manifest with URLs, byte counts, SHA-256 hashes, and PDF page counts.
+- Download the linked OCaml example, inspect the official exercise repository, and extract PDF text locally for research.
+- Check actual slide headings against the website labels; explicitly record discrepancies.
+
+## 2. Design the learning sequence
+- Follow the course's three parts: foundations; language features and interpreters; types and advanced concepts.
+- For each chapter, connect a precise definition, a mental model, a flowchart, a worked trace, OCaml representation, common mistakes, and self-check questions.
+- Map every published homework exercise to relevant definitions, source PDF pages, book chapters, a reasoning strategy, and useful boundary tests.
+- Distinguish official specifications from companion explanations and original practice examples.
+
+## 3. Build a readable book
+- Create a static, responsive book with a persistent table of contents, full-text search, previous/next navigation, source links, and print styles.
+- Use an ink-blue and white editorial design with readable mathematics, OCaml code, and accessible diagrams.
+- Add interactive evaluation/type-inference traces where they make the reasoning easier to follow.
+- Keep the source PDFs available locally; link to official originals in the public book and publish original companion text and examples.
+- Include a glossary, notation reference, concept-to-homework matrix, environment guide, and a suggested study path.
+
+## 4. Verify
+- Check download completeness against the current course page, PDF signatures, parsing, hashes, and manifest integrity.
+- Validate every generated page, internal link, diagram, source citation/page reference, and search index.
+- Execute meaningful OCaml examples using the course's OCaml version when an interpreter is available; otherwise state the exact validation limitation.
+- Review the book in a browser at desktop and mobile widths; test search, navigation, trace controls, and print layout.
+
+## 5. Publish through the requested GitHub SSH setup
+- Use the SSH identity and GitHub account from `Daughter_project_student_support/Project_web_student_support` without modifying that repository.
+- Create a separate `Programming_language_book_analyze` repository under the same owner, commit the book sources and publishing setup, and push over SSH.
+- Enable GitHub Pages, wait for successful deployment, and verify the public book URL.
+- Document reproducible download, build, verification, and publication commands in `README.md`.
+
+## Execution log
+- 2026-09-20: Workspace is empty. Reference remote is `git@github.com:S0lluxx26/Project_web_student_support.git` and has a dedicated SSH identity.
+- 2026-09-20: Course page is reachable directly; discovered 29 unique PDF links (the `lec11.pdf` link appears under two different labels).
+- 2026-09-20: Downloaded and verified all 27 available PDFs (1,030 pages). Two PDF links and the linked OCaml example return 404; recorded these in the manifest.
+- 2026-09-20: Authored all 24 reading pages, including 15 concept chapters, four homework guides, and the full problem map.
+- 2026-09-20: Incorporated the user's follow-up: replaced card/row diagrams with 30 Mermaid graphs and linked 38 definitions to verified textbook/slide pages (155 first-use links).
+- 2026-09-20: Build, Mermaid rendering, local links, anchors, metadata, homework coverage, and PDF page-bound checks pass. Browser QA and publication are in progress.

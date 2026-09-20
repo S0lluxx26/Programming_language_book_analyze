@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Evaluate an expression<br/>Descend into a child and push a frame for<br/>the unfinished work."]
+  N1["Produce a value<br/>An atomic expression has no more internal<br/>work."]
+  N0 --> N1
+  N2["Apply the continuation<br/>Inspect the top frame to decide what<br/>happens next."]
+  N1 --> N2
+  N3["Continue or finish<br/>Evaluate another expression, combine<br/>values, or return at End."]
+  N2 --> N3

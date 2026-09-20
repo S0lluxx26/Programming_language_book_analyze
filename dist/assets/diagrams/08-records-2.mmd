@@ -1,0 +1,6 @@
+flowchart TD
+  accTitle: Is this allocated location reachable from the roots?
+  accDescr: Select the branch that matches the current case.
+  Q{"Is this allocated location reachable from<br/>the roots?"}
+  Q -->|"Yes"| N0["Retain it; follow any outgoing references<br/>not already visited."]
+  Q -->|"No"| N1["It can be reclaimed by a reachability-<br/>based collector."]

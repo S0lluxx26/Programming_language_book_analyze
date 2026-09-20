@@ -1,0 +1,7 @@
+flowchart TD
+  accTitle: What frame does handler search encounter?
+  accDescr: Select the branch that matches the current case.
+  Q{"What frame does handler search encounter?"}
+  Q -->|"Ordinary frame"| N0["Discard it and keep searching outward."]
+  Q -->|"Handler frame"| N1["Bind the payload and evaluate the handler<br/>with the outer continuation."]
+  Q -->|"End"| N2["No enclosing handler exists; the exception<br/>is uncaught."]

@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Infer the actual type<br/>A receiver or argument may have a specific<br/>subclass type."]
+  N1["Read the required type<br/>A parameter or declared result imposes an<br/>expected type."]
+  N0 --> N1
+  N2["Check actual <: required<br/>Confirm that the use preserves the<br/>caller’s expectations."]
+  N1 --> N2
+  N3["Keep the runtime object<br/>Its class still determines ordinary method<br/>dispatch."]
+  N2 --> N3

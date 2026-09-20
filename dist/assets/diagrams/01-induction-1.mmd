@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Choose a constructor<br/>Is this a base case or a recursive case?"]
+  N1["List its premises<br/>What smaller objects must already exist?"]
+  N0 --> N1
+  N2["Establish each premise<br/>Construct them, evaluate them, or use an<br/>induction hypothesis."]
+  N1 --> N2
+  N3["Apply the rule<br/>Combine the results into the conclusion."]
+  N2 --> N3

@@ -1,0 +1,267 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Course sources &amp; reading list · The Programming Languages Notebook</title><meta name="description" content="All course PDF links, local download status, source discrepancies, and reading references."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Course sources &amp; reading list"><meta property="og:description" content="All course PDF links, local download status, source discrepancies, and reading references."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" aria-current="page">Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Reference</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Verified source inventory</p><h1>Course sources &amp; reading list</h1><p class="dek">All course PDF links, local download status, source discrepancies, and reading references.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="source-snapshot">Source snapshot</h2>
+<p>Course: <a href="https://prl.korea.ac.kr/courses/cose212/2026/">COSE212, Programming Languages, Fall 2026</a>, Hakjoo Oh, Korea University. Retrieved <strong>2026-09-20</strong>. The English and Korean books are draft course textbooks by the instructor. This companion’s explanations and practice examples are independently written.</p>
+<p>The course page exposes <strong>29 distinct PDF URLs</strong>. <strong>27 PDFs</strong> downloaded successfully; their local archive preserves the course’s directory structure under <code>sources/pdfs/</code>. The public book links to the official originals. The <a href="assets/source-manifest.json">machine-readable inventory</a> <a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">records</a> sizes, hashes, page counts, URLs, and failed links.</p>
+<h2 id="every-linked-pdf">Every linked PDF</h2>
+<table>
+<thead>
+<tr>
+<th>Course file</th>
+<th style="text-align:right">PDF pages</th>
+<th>Local archive status</th>
+<th>Official source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>howtotryml.pdf</td>
+<td style="text-align:right">—</td>
+<td>Unavailable · HTTP 404</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/howtotryml.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>hw/hw1.pdf</td>
+<td style="text-align:right">6</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>hw/hw2.pdf</td>
+<td style="text-align:right">9</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>hw/hw3.pdf</td>
+<td style="text-align:right">7</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>hw/hw4.pdf</td>
+<td style="text-align:right">2</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>pl-book-eng.pdf</td>
+<td style="text-align:right">292</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>pl-book.pdf</td>
+<td style="text-align:right">258</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/fixpoint.pdf</td>
+<td style="text-align:right">—</td>
+<td>Unavailable · HTTP 404</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/fixpoint.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec0.pdf</td>
+<td style="text-align:right">13</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec0.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec1.pdf</td>
+<td style="text-align:right">10</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec1.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec2.pdf</td>
+<td style="text-align:right">20</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec2.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec3.pdf</td>
+<td style="text-align:right">53</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec3.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec4.pdf</td>
+<td style="text-align:right">29</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec4.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec5.pdf</td>
+<td style="text-align:right">25</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec5.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec6.pdf</td>
+<td style="text-align:right">26</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec6.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec7.pdf</td>
+<td style="text-align:right">16</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec7.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec8.pdf</td>
+<td style="text-align:right">39</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec8.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec9.pdf</td>
+<td style="text-align:right">21</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec9.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec10.pdf</td>
+<td style="text-align:right">22</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec11.pdf</td>
+<td style="text-align:right">28</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec12.pdf</td>
+<td style="text-align:right">10</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec13.pdf</td>
+<td style="text-align:right">16</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec14.pdf</td>
+<td style="text-align:right">8</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec15.pdf</td>
+<td style="text-align:right">11</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec16.pdf</td>
+<td style="text-align:right">11</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec17.pdf</td>
+<td style="text-align:right">28</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec18.pdf</td>
+<td style="text-align:right">15</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec19.pdf</td>
+<td style="text-align:right">25</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf">Open PDF</a></td>
+</tr>
+<tr>
+<td>slides/lec20.pdf</td>
+<td style="text-align:right">30</td>
+<td>Downloaded</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec20.pdf">Open PDF</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="read-the-english-textbook-by-concept">Read the English textbook by concept</h2>
+<table>
+<thead>
+<tr>
+<th>Companion topic</th>
+<th>Textbook section</th>
+<th>Direct PDF page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Induction</td>
+<td>Chapter 1</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=11">11</a></td>
+</tr>
+<tr>
+<td>OCaml and recursion</td>
+<td>Chapter 2</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=33">33</a></td>
+</tr>
+<tr>
+<td><a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">Environments</a> and evaluation</td>
+<td>Chapter 3</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97">97</a></td>
+</tr>
+<tr>
+<td>Functions and <a href="glossary.html#lexical-scope" class="definition-link" title="A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers. — English textbook, PDF p. 128">lexical scope</a></td>
+<td>Chapter 4</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119">119</a></td>
+</tr>
+<tr>
+<td>Functional language extension</td>
+<td>Chapter 5</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147">147</a></td>
+</tr>
+<tr>
+<td>State and parameter passing</td>
+<td>Chapter 6</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161">161</a></td>
+</tr>
+<tr>
+<td>Records and memory</td>
+<td>Chapter 7</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193">193</a></td>
+</tr>
+<tr>
+<td><a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">Types</a> and inference</td>
+<td>Chapter 8</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223">223</a></td>
+</tr>
+<tr>
+<td><a href="glossary.html#lambda-calculus" class="definition-link" title="A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings. — English textbook, PDF p. 279">Lambda calculus</a></td>
+<td>Chapter 9</td>
+<td><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277">277</a></td>
+</tr>
+</tbody>
+</table>
+<p>Exceptions, the class interpreter, and typed classes have dedicated material in lectures 10, 11, and 19; they do not have matching standalone chapters in this English textbook snapshot. The <a href="glossary.html">glossary</a> provides more precise definition-level links.</p>
+<h2 id="source-discrepancies-to-keep-in-mind">Source discrepancies to keep in mind</h2>
+<ul>
+<li><strong>Unavailable links:</strong> <code>slides/fixpoint.pdf</code>, <code>howtotryml.pdf</code>, and the additional linked <code>code/let.ml</code> return HTTP 404. No substitute is presented as an original 2026 file. Fixed points remain covered in HW2 pp. 7–9 and lecture 20; the official GitHub repository provides local setup instructions.</li>
+<li><strong>Lecture 11:</strong> the course page links it both under classes and under static types. The PDF is titled “Classes and Objects”; static typing starts in lecture 12.</li>
+<li><strong>Lecture 8 numbering:</strong> it has 39 PDF pages; some slide footers retain an older total. All companion links use the PDF page index.</li>
+<li><strong>HW2, p. 3:</strong> the mutual-recursion call rule is visibly missing the result after its final evaluation arrow. Read its intended result as the value from the body premise. The print rule is schematic; the surrounding prose requires evaluating and printing the operand.</li>
+<li><strong>HW2, p. 6:</strong> example 3’s prose calls even on 13, while the supplied <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a> calls odd on 13 and the expected result is true. Trace the AST: odd(13) is true; even(13) is false.</li>
+<li><strong>HW3, p. 1:</strong> prose mentions read, but the provided AST contains no READ constructor. Its implementation contract is the actual listed AST.</li>
+<li><strong>HW4, pp. 1–2:</strong> it refers to ML− from HW3; in this course listing ML− is HW2, while HW3 is B. The type-checker AST matches HW2. Its brief handout leaves several typing-policy details unstated; see the <a href="hw4.html">HW4 guide</a>.</li>
+<li><strong>Lecture 18, p. 13:</strong> the procedure typing rule contains an inconsistent parameter-type symbol. The explanation uses the ordinary monomorphic parameter rule, distinguished from let generalization.</li>
+</ul>
+<p>These observations concern the downloaded snapshot and are companion notes, not instructor-issued errata. The download script can be rerun to check for later source changes.</p>
+<h2 id="attribution-and-further-reading">Attribution and further reading</h2>
+<p>Primary course sources: Hakjoo Oh’s <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf">English textbook</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book.pdf">Korean textbook</a>, lecture PDFs, and homework handouts listed above. Official templates and environment: <a href="https://github.com/kupl-courses/COSE212-2026fall">kupl-courses/COSE212-2026fall</a>. Graphs are authored in <a href="https://mermaid.js.org/config/usage.html">Mermaid</a> and rendered to SVG for reliable reading and printing.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="glossary.html"><small>← Previous</small>Notation &amp; glossary</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#source-snapshot">Source snapshot</a><a href="#every-linked-pdf">Every linked PDF</a><a href="#read-the-english-textbook-by-concept">Read the English textbook by concept</a><a href="#source-discrepancies-to-keep-in-mind">Source discrepancies to keep in mind</a><a href="#attribution-and-further-reading">Attribution and further reading</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Names, scope, and recursive calls · The Programming Languages Notebook</title><meta name="description" content="Connect recursive closures, mutual recursion, free variables, and nameless representations."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Names, scope, and recursive calls"><meta property="og:description" content="Connect recursive closures, mutual recursion, free variables, and nameless representations."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" aria-current="page">Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>II · Language machines</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">06 · Recursion &amp; lexical addresses</p><h1>Names, scope, and recursive calls</h1><p class="dek">Connect recursive closures, mutual recursion, free variables, and nameless representations.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-recursive-closure-remembers-its-own-name">A recursive closure remembers its own name</h2>
+<p>An ordinary <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closure</a> cannot call itself through a name that was not yet in its captured <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a>. The course resolves this with a distinct recursive procedure value containing the function’s name, parameter, body, and definition environment.</p>
+<p>At each recursive call, rebuild the environment the body needs:</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/06-scope-recursion-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/06-scope-recursion-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Find the recursive closure&lt;br/&gt;Obtain function name f, parameter x, body,&lt;br/&gt;and saved environment.&quot;]
+  N1[&quot;Evaluate the argument&lt;br/&gt;Use the caller environment.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Extend the saved environment&lt;br/&gt;Add f bound to the recursive closure and x&lt;br/&gt;bound to the argument.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Evaluate the body&lt;br/&gt;A lookup of f can now produce another&lt;br/&gt;recursive call.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p>This avoids requiring an OCaml association list to contain itself. The recursion is in the interpreter’s behavior: calling the represented function reconstructs the necessary self-binding.</p>
+<h2 id="mutual-recursion-needs-both-names">Mutual recursion needs both names</h2>
+<p>Two mutually recursive procedures must see each other as well as themselves. If one procedure calls the other, that second procedure must carry the same pair of definitions and the same lexical environment.</p>
+<p>For an original example, imagine <code>is_even</code> and <code>is_odd</code> decreasing a nonnegative argument. The call chain for <code>is_even 3</code> is:</p>
+<pre><code class="language-text">is_even 3 → is_odd 2 → is_even 1 → is_odd 0 → false
+</code></pre>
+<p>At every body entry, both procedure names must be bound correctly. Merely adding the currently executing name is insufficient. The active formal parameter gets the current argument; it is not a permanent binding shared by future calls.</p>
+<h2 id="lexical-addresses-remove-spelling-from-lookup">Lexical addresses remove spelling from lookup</h2>
+<p>A name can be replaced with the position of its binder in a stack of surrounding binders. The nearest binder has index <code>0</code>, the next one has index <code>1</code>, and so on in the simple one-binding-per-frame convention.</p>
+<p>Consider the object-language term:</p>
+<pre><code class="language-text">proc x (proc y (x - y))
+</code></pre>
+<p>Inside the inner body the context is <code>[y; x]</code>. Therefore <code>x</code> becomes index <code>1</code> and <code>y</code> becomes index <code>0</code>. The term’s meaning does not depend on whether the original names were <code>x,y</code> or <code>a,b</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Point in the term</th>
+<th>Name context</th>
+<th>Lookup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Before outer procedure</td>
+<td><code>[]</code></td>
+<td>Neither name is bound</td>
+</tr>
+<tr>
+<td>Inside outer body</td>
+<td><code>[x]</code></td>
+<td><code>x</code> has index 0</td>
+</tr>
+<tr>
+<td>Inside inner body</td>
+<td><code>[y; x]</code></td>
+<td><code>y</code> has index 0; <code>x</code> has index 1</td>
+</tr>
+</tbody>
+</table>
+<p>A translator carries names while traversing syntax; the nameless evaluator carries values in matching order. Translation and execution must agree about which constructs push bindings. An ordinary <code>let</code> pushes its binder only for its body, not for its definition.</p>
+<h2 id="scope-is-a-path-not-a-global-collection">Scope is a path, not a global collection</h2>
+<p>For an application with left and right subtrees, a binder created inside the left subtree does not become available in the right subtree. A global set of all names appearing anywhere in a program therefore cannot correctly check <a href="glossary.html#free-variable" class="definition-link" title="A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context. — English textbook, PDF p. 124">free variables</a>.</p>
+<p>This also explains <strong><a href="glossary.html#alpha-renaming" class="definition-link" title="Consistently changing a binder and the occurrences it binds while preserving the program's binding structure. — English textbook, PDF p. 283">alpha-renaming</a></strong>: consistently change a binder and its associated occurrences, preserving which declaration each use points to. Renaming that accidentally captures a formerly free variable changes meaning.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw1.html#p15-free-variable-checker">HW1 P15</a> is a <a href="glossary.html#lexical-scope" class="definition-link" title="A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers. — English textbook, PDF p. 128">static scope</a> traversal. <a href="hw2.html">HW2</a> uses recursive and mutually recursive closures. Lexical-address translation is covered in lecture 7; it is a useful conceptual exercise but is not a separate requested constructor in HW2’s public <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">AST</a>.</p>
+<p>The missing <code>fixpoint.pdf</code> supplement does not remove the fixed-point topic: HW2 pp. 7–9 and lecture 20 pp. 28–29 still discuss recursion expressed with non-recursive procedures. See <a href="15-lambda.html#recursion-as-a-fixed-point">lambda calculus</a>.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>In <code>proc x ((proc y y) x)</code>, is <code>y</code> in scope at the final occurrence of <code>x</code>?</p>
+<details><summary>Reveal the reasoning</summary><p>No. The binder for y belongs only to the left subexpression’s procedure body. The right argument is evaluated under the outer scope, where x is bound. An immutable context passed separately to the two children models this correctly.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec6.pdf#page=16">lecture 6, pp. 16–24</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec7.pdf#page=8">lecture 7, pp. 8–15</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf#page=3">HW2, pp. 3–5</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="05-closures.html"><small>← Previous</small>What a function remembers</a><a href="07-state.html"><small>Next →</small>When evaluation changes memory</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#a-recursive-closure-remembers-its-own-name">A recursive closure remembers its own name</a><a href="#mutual-recursion-needs-both-names">Mutual recursion needs both names</a><a href="#lexical-addresses-remove-spelling-from-lookup">Lexical addresses remove spelling from lookup</a><a href="#scope-is-a-path-not-a-global-collection">Scope is a path, not a global collection</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

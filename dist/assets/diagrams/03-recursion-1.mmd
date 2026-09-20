@@ -1,0 +1,6 @@
+flowchart TD
+  accTitle: Can I answer from the current constructor alone?
+  accDescr: Select the branch that matches the current case.
+  Q{"Can I answer from the current constructor<br/>alone?"}
+  Q -->|"Base case"| N0["Return the identity or direct result that<br/>the specification requires."]
+  Q -->|"Recursive case"| N1["Solve the immediate smaller pieces and<br/>combine their answers."]

@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: Checking free variables by lexical path
+  accDescr: Variables consult the bound-name context; procedures extend it locally; applications check both children independently.
+  A["check helper: context + expression"] --> B{"Outer constructor?"}
+  B -->|"V x"| C{"Is x in context?"}
+  C -->|"yes"| T["true"]
+  C -->|"no"| F["false"]
+  B -->|"P x body"| D["Check body with x added"]
+  B -->|"C left right"| E["Check both with the same incoming context"]
+  E --> G["Combine with AND"]

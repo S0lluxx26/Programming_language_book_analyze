@@ -1,0 +1,11 @@
+flowchart TD
+  accTitle: Choosing the environment for a procedure call
+  accDescr: A call evaluates its operands in the caller, then evaluates the body using the closure's saved context plus recursive and parameter bindings.
+  A["Evaluate function and argument in caller"] --> B{"Procedure value form?"}
+  B -->|"ordinary"| C["Saved environment + parameter"]
+  B -->|"recursive"| D["Saved environment + self + parameter"]
+  B -->|"mutually recursive"| E["Saved environment + both procedures + parameter"]
+  B -->|"not a procedure"| X["UndefinedSemantics"]
+  C --> F["Evaluate the stored body"]
+  D --> F
+  E --> F

@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A map of the course · The Programming Languages Notebook</title><meta name="description" content="Understand the course as one connected journey, from inductive definitions to interpreters and type inference."><meta name="theme-color" content="#142b48"><meta property="og:title" content="A map of the course"><meta property="og:description" content="Understand the course as one connected journey, from inductive definitions to interpreters and type inference."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" aria-current="page">A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Start here</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">COSE212 · Fall 2026</p><h1>A map of the course</h1><p class="dek">Understand the course as one connected journey, from inductive definitions to interpreters and type inference.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><div class="study-stats"><div><strong>15</strong><span>Concept chapters</span></div><div><strong>4</strong><span>Homework guides</span></div><div><strong>27</strong><span>Downloaded PDFs</span></div></div>
+<h2 id="the-question-behind-the-course">The question behind the course</h2>
+<p><strong>What does a program mean, and how can we know that our implementation respects that meaning?</strong> OCaml is both a language you learn and the tool you use to answer this question. The small languages you implement—Let, Proc, ML−, and B—are separate objects of study. Keeping these two levels apart removes much of the initial confusion.</p>
+<p>This notebook follows the <a href="https://prl.korea.ac.kr/courses/cose212/2026/">2026 COSE212 course</a> taught by Hakjoo Oh. It supplies original explanations, diagrams, worked examples, and homework routes. Read it beside the official slides and book; the original specifications decide assignment behavior.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/index-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/index-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/index-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Define the shape&lt;br/&gt;A grammar describes the programs you can&lt;br/&gt;write.&quot;]
+  N1[&quot;Define the meaning&lt;br/&gt;Inference rules describe what those&lt;br/&gt;programs do.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Build the machine&lt;br/&gt;An OCaml interpreter implements the rules.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Check before running&lt;br/&gt;A type checker reasons about the program’s&lt;br/&gt;structure.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><h2 id="start-where-you-are">Start where you are</h2>
+<div class="feature-grid"><a href="01-induction.html"><small>I · Foundations</small><strong>Learn the thinking tools</strong><span>Induction, pattern matching, recursion, and higher-order functions.</span></a><a href="04-expressions.html"><small>II · Language machines</small><strong>Build the meaning</strong><span>Environments, closures, stores, exceptions, and objects.</span></a><a href="11-types.html"><small>III · Types & foundations</small><strong>Reason about programs</strong><span>Typing rules, constraints, unification, polymorphism, and lambda calculus.</span></a><a href="homework-map.html"><small>Practice atlas</small><strong>Connect a rule to a problem</strong><span>All 15 HW1 problems plus the ML−, B, and type-checker assignments.</span></a></div>
+<h2 id="one-idea-four-assignments">One idea, four assignments</h2>
+<p>Every assignment asks you to walk a tree. What changes is the information carried along the walk.</p>
+<table>
+<thead>
+<tr>
+<th>Assignment</th>
+<th>What you traverse</th>
+<th>What you carry</th>
+<th>What you return</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="hw1.html">HW1</a></td>
+<td>Numbers, lists, trees, and expressions</td>
+<td>A smaller input; sometimes a bound-variable set</td>
+<td>A computed value or transformed tree</td>
+</tr>
+<tr>
+<td><a href="hw2.html">HW2</a></td>
+<td>The ML− <a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">abstract syntax tree</a></td>
+<td>A runtime <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a></td>
+<td>A language value</td>
+</tr>
+<tr>
+<td><a href="hw3.html">HW3</a></td>
+<td>The B abstract syntax tree</td>
+<td>An environment and current memory</td>
+<td>A value and updated memory</td>
+</tr>
+<tr>
+<td><a href="hw4.html">HW4</a></td>
+<td>The ML− abstract syntax tree</td>
+<td>A <a href="glossary.html#type-environment" class="definition-link" title="A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation. — English textbook, PDF p. 230">type environment</a> and fresh variables</td>
+<td>A <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a>, constrained by equations</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The recurring method:</strong> identify the outer constructor, read its rule, solve its premises recursively, and combine the results. When a rule introduces a binding or changes memory, write that change explicitly before descending.</p>
+<h2 id="a-suggested-eight-session-route">A suggested eight-session route</h2>
+<p>These are study sessions, not the official lecture calendar or assignment deadlines. Split a session when a topic needs more practice.</p>
+<table>
+<thead>
+<tr>
+<th>Session</th>
+<th>Read</th>
+<th>Draw or explain</th>
+<th>Practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Chapters 1–2</td>
+<td>A data constructor and its matching branch</td>
+<td>HW1 P1–P5, P9–P11</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chapter 3</td>
+<td>A recursion tree and an accumulator invariant</td>
+<td>HW1 P6–P8, P12–P15</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Chapters 4–5</td>
+<td>A <code>let</code> environment and a captured <a href="glossary.html#closure" class="definition-link" title="A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called. — English textbook, PDF p. 129">closure</a></td>
+<td>HW2 constants, bindings, procedures</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chapter 6</td>
+<td>The environments of mutually recursive calls</td>
+<td>Finish the HW2 reasoning and tests</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chapters 7–8</td>
+<td>Two names pointing to one memory cell</td>
+<td>HW3 <a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">stores</a>, <a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">records</a>, and calls</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Chapters 9–10</td>
+<td>A handler stack and method lookup chain</td>
+<td>Original self-check exercises</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Chapters 11–12</td>
+<td>A typing derivation and <a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">unification</a> worklist</td>
+<td>HW4 constraint generation</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Chapters 13–15</td>
+<td>Generalization, <a href="glossary.html#subtyping" class="definition-link" title="A relation S &lt;: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system. — Course slides, PDF p. 8">subtyping</a>, and <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitution</a></td>
+<td>HW4 design review and course review</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-use-a-chapter">How to use a chapter</h2>
+<ol>
+<li>Read the definition and say it aloud without notation.</li>
+<li>Follow the diagram and work the example on paper before revealing a check answer.</li>
+<li>Translate each mathematical object into an OCaml representation.</li>
+<li>Open the homework link and identify the same structure inside the assignment.</li>
+<li>Test one ordinary case, one boundary case, and one case that would expose the wrong mental model.</li>
+</ol>
+<blockquote>
+<p>A useful debugging question is: <strong>“Which premise of which rule did this line of code implement?”</strong> If you cannot answer, return to the rule before adding another special case.</p>
+</blockquote>
+<h2 id="about-the-sources">About the sources</h2>
+<p>The inventory was checked on <strong>20 September 2026</strong>. All 27 available PDFs—both books, lectures 0–20, and HW1–HW4—are downloaded locally. Two additional linked PDFs return 404; the <a href="sources.html">source library</a> records them and the course’s visible inconsistencies. Citations use <strong>PDF page numbers</strong>, which may differ from slide footer numbers. In particular, lecture 8 contains 39 PDF pages even though some footers still say “/ 29.”</p>
+<p>The book includes guided approaches and independent examples. It is not a collection of claimed official solutions or an account of unpublished grading requirements.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><span></span><a href="setup.html"><small>Next →</small>Your OCaml workbench</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#the-question-behind-the-course">The question behind the course</a><a href="#start-where-you-are">Start where you are</a><a href="#one-idea-four-assignments">One idea, four assignments</a><a href="#a-suggested-eight-session-route">A suggested eight-session route</a><a href="#how-to-use-a-chapter">How to use a chapter</a><a href="#about-the-sources">About the sources</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

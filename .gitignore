@@ -1,0 +1,10 @@
+sources/pdfs/
+sources/text/
+sources/course-page.html
+sources/code/
+tmp/
+__pycache__/
+node_modules/
+.sites-runtime/
+.env
+*.log

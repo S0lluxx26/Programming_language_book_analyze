@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Read the outer constructor<br/>Addition, variable, conditional,<br/>procedure, call…"]
+  N1["Check the premises<br/>Recursively establish types under the<br/>appropriate context."]
+  N0 --> N1
+  N2["Enforce relationships<br/>For example, both addition operands must<br/>be integers."]
+  N1 --> N2
+  N3["Conclude a type<br/>Or reject when no rule can justify the<br/>expression."]
+  N2 --> N3

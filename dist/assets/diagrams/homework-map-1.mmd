@@ -1,0 +1,12 @@
+flowchart TD
+  accTitle: Concepts leading to the four homework assignments
+  accDescr: Induction and OCaml lead to HW1, environments and closures to HW2, stores and records to HW3, and typing and unification to HW4.
+  I["Inductive definitions<br/>Constructors and structural recursion"] --> O["OCaml<br/>Patterns and higher-order functions"]
+  O --> H1["HW1<br/>15 functional-programming exercises"]
+  H1 --> E["Semantic rules<br/>Environments and closures"]
+  E --> H2["HW2<br/>ML− interpreter"]
+  H2 --> S["State<br/>Locations, stores, and records"]
+  S --> H3["HW3<br/>B interpreter"]
+  E --> T["Typing rules<br/>Constraints and unification"]
+  T --> H4["HW4<br/>ML− type checker"]
+  H2 -. "same AST, different meaning" .-> H4

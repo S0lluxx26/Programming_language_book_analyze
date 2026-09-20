@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Predict<br/>Write the result and type before running."]
+  N1["Trace<br/>Follow constructors, environments, or<br/>memory on paper."]
+  N0 --> N1
+  N2["Run<br/>Test one small expression in the official<br/>environment."]
+  N1 --> N2
+  N3["Explain<br/>If the result differs, identify the exact<br/>rule you misunderstood."]
+  N2 --> N3

@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: What shapes appear on the two sides?
+  accDescr: Select the branch that matches the current case.
+  Q{"What shapes appear on the two sides?"}
+  Q -->|"Identical types"| N0["Discard the equation; it is already<br/>satisfied."]
+  Q -->|"Same type constructor"| N1["Decompose functions into domain/result<br/>equations and lists into element<br/>equations."]
+  Q -->|"Variable versus type"| N2["Bind the variable only if it does not<br/>occur inside the other type."]
+  Q -->|"Different constructors"| N3["Reject: no substitution can make int and<br/>bool equal."]

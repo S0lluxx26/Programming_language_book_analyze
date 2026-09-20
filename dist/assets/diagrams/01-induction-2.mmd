@@ -1,0 +1,6 @@
+flowchart TD
+  accTitle: What constructor built this shape?
+  accDescr: Select the branch that matches the current case.
+  Q{"What constructor built this shape?"}
+  Q -->|"Tip"| N0["Return 1 immediately. There are no<br/>recursive premises."]
+  Q -->|"Fork (l, r)"| N1["Count l, count r, then add the two<br/>results."]

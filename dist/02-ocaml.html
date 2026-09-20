@@ -1,0 +1,105 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reading and writing OCaml · The Programming Languages Notebook</title><meta name="description" content="Expressions, types, pattern matching, currying, and algebraic data types."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Reading and writing OCaml"><meta property="og:description" content="Expressions, types, pattern matching, currying, and algebraic data types."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" aria-current="page">Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>I · Foundations</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">02 · Functional programming</p><h1>Reading and writing OCaml</h1><p class="dek">Expressions, types, pattern matching, currying, and algebraic data types.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="start-with-expressions-and-types">Start with expressions and types</h2>
+<p>An expression computes a value. In OCaml, <code>if</code>, function application, and local <code>let</code> bindings are expressions too. A <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> describes the kind of result and constrains how it may be used. The compiler checks those constraints before evaluation.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> adjustment n =
+  <span class="hljs-keyword">let</span> delta = <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">1</span> <span class="hljs-keyword">in</span>
+  n + delta
+</code></pre>
+<p>Both branches of <code>if</code> have type <code>int</code>, so <code>delta</code> is an integer. The whole function has type <code>int -&gt; int</code>. A function returning an integer in one branch and a string in the other does not receive a union type automatically.</p>
+<h2 id="bindings-are-not-assignments">Bindings are not assignments</h2>
+<p><code>let x = e1 in e2</code> computes <code>e1</code>, introduces a name for the resulting value, and evaluates <code>e2</code> in the extended scope. A later <code>let x = ...</code> shadows an earlier binding. It does not mutate the earlier value.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> answer =
+  <span class="hljs-keyword">let</span> x = <span class="hljs-number">7</span> <span class="hljs-keyword">in</span>
+  <span class="hljs-keyword">let</span> y = x + <span class="hljs-number">1</span> <span class="hljs-keyword">in</span>
+  <span class="hljs-keyword">let</span> x = <span class="hljs-number">100</span> <span class="hljs-keyword">in</span>
+  x + y
+</code></pre>
+<p><code>y</code> remains <code>8</code>; the answer is <code>108</code>. This is the same binding discipline you will implement in HW2.</p>
+<h2 id="read-function-types-with-parentheses">Read function types with parentheses</h2>
+<p>The arrow associates to the right: <code>int -&gt; int -&gt; int</code> means <code>int -&gt; (int -&gt; int)</code>. Function application associates to the left: <code>f x y</code> means <code>(f x) y</code>.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> add x y = x + y
+<span class="hljs-keyword">let</span> add_seven = add <span class="hljs-number">7</span>
+<span class="hljs-keyword">let</span> add_pair (x, y) = x + y
+</code></pre>
+<p><code>add</code> is curried: it takes an integer and returns a function. <code>add_pair</code> accepts one argument that is a pair. Their types and calls are different. Partial application works naturally for <code>add</code> because a function is a value.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/02-ocaml-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/02-ocaml-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/02-ocaml-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;add&lt;br/&gt;int → (int → int)&quot;]
+  N1[&quot;add 7&lt;br/&gt;int → int; remembers the first argument&quot;]
+  N0 --&gt; N1
+  N2[&quot;add 7 4&lt;br/&gt;int; produces 11&quot;]
+  N1 --&gt; N2
+</code></pre></details></figure><h2 id="pattern-matching-follows-data-construction">Pattern matching follows data construction</h2>
+<p>An OCaml list is either <code>[]</code> or <code>head :: tail</code>. The tail is itself a list. <a href="glossary.html#pattern-matching" class="definition-link" title="Selecting a case by the constructor and components of a value, binding names to the matched components. — English textbook, PDF p. 54">Pattern matching</a> exposes exactly that structure.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> describe xs =
+  <span class="hljs-keyword">match</span> xs <span class="hljs-keyword">with</span>
+  | <span class="hljs-literal">[]</span> -&gt; <span class="hljs-string">&quot;empty&quot;</span>
+  | [_] -&gt; <span class="hljs-string">&quot;one element&quot;</span>
+  | _ :: _ :: _ -&gt; <span class="hljs-string">&quot;at least two elements&quot;</span>
+</code></pre>
+<p>The final wildcard is the remaining list, not necessarily one element. Patterns are tried in order. An earlier catch-all would make later cases unreachable.</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+<th>Typical mistake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[a; b]</code></td>
+<td>A list containing two elements</td>
+<td>Using commas, which construct a pair</td>
+</tr>
+<tr>
+<td><code>(a, b)</code></td>
+<td>One pair</td>
+<td>Passing it to a curried function</td>
+</tr>
+<tr>
+<td><code>x :: xs</code></td>
+<td>An element followed by a list</td>
+<td>Giving another element as the tail</td>
+</tr>
+<tr>
+<td><code>xs @ ys</code></td>
+<td>Concatenation of two lists</td>
+<td>Assuming it is constant time</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>Structural equality where supported</td>
+<td>Using physical equality as a general replacement</td>
+</tr>
+<tr>
+<td><code>'a</code></td>
+<td>A <a href="glossary.html#type-variable" class="definition-link" title="An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable. — English textbook, PDF p. 254">type variable</a></td>
+<td>Treating it as a runtime variable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="invent-the-representation-before-the-algorithm">Invent the representation before the algorithm</h2>
+<pre><code class="language-ocaml"><span class="hljs-keyword">type</span> measurement =
+  | <span class="hljs-type">Exact</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">int</span>
+  | <span class="hljs-type">Between</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">int</span> * <span class="hljs-built_in">int</span>
+  | <span class="hljs-type">Missing</span>
+
+<span class="hljs-keyword">let</span> lower_bound = <span class="hljs-keyword">function</span>
+  | <span class="hljs-type">Exact</span> n -&gt; <span class="hljs-type">Some</span> n
+  | <span class="hljs-type">Between</span> (lo, _) -&gt; <span class="hljs-type">Some</span> lo
+  | <span class="hljs-type">Missing</span> -&gt; <span class="hljs-type">None</span>
+</code></pre>
+<p>The <code>option</code> return type makes absence explicit. This is a useful teaching design, but preserve the exact return type required by homework. For example, HW1 <code>max</code> returns <code>int</code>, not <code>int option</code>; its PDF leaves the empty-list policy unstated.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw1.html">HW1</a> asks you to recognize <code>int</code>, polymorphic lists, curried functions, tuples, and mutually defined datatypes. P8 depends on treating functions as values. P12 has two expression categories: formulas return booleans while arithmetic expressions return integers. Two mutually recursive helpers respect those different result types.</p>
+<p>Do not use OCaml’s convenient built-in equality to silently define your interpreted language’s equality. HW2 only specifies equality on integer pairs and boolean pairs. OCaml’s host capabilities do not expand ML−’s language rules.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>What is the type of <code>fun f -&gt; fun x -&gt; f x</code>, and what relationship does it impose between <code>f</code> and <code>x</code>?</p>
+<details><summary>Reveal the reasoning</summary><p>Its type is <code>('a -&gt; 'b) -&gt; 'a -&gt; 'b</code>. Whatever type x has must be f’s input type, and the whole application returns f’s output type. No arithmetic or other operation forces a concrete base type.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec3.pdf#page=8">lecture 3, pp. 8–44</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=34">English book, §2.1</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="01-induction.html"><small>← Previous</small>Thinking in constructors</a><a href="03-recursion.html"><small>Next →</small>The recursive way of thinking</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#start-with-expressions-and-types">Start with expressions and types</a><a href="#bindings-are-not-assignments">Bindings are not assignments</a><a href="#read-function-types-with-parentheses">Read function types with parentheses</a><a href="#pattern-matching-follows-data-construction">Pattern matching follows data construction</a><a href="#invent-the-representation-before-the-algorithm">Invent the representation before the algorithm</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Value and reference calls choose different parameter locations
+  accDescr: Value calls allocate a new parameter location; reference calls reuse the caller's location. Both execute under the captured lexical environment.
+  A["Caller variable a at location 0<br/>memory[0] = 4"] --> B{"Call mode?"}
+  B -->|"CALLV"| C["Allocate parameter p at location 1<br/>memory[1] = 4"]
+  B -->|"CALLR"| D["Bind parameter p to location 0"]
+  C --> E["p := 9 updates memory[1]<br/>a remains 4"]
+  D --> F["p := 9 updates memory[0]<br/>a becomes 9"]

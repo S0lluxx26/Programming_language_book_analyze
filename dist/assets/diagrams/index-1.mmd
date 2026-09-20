@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Define the shape<br/>A grammar describes the programs you can<br/>write."]
+  N1["Define the meaning<br/>Inference rules describe what those<br/>programs do."]
+  N0 --> N1
+  N2["Build the machine<br/>An OCaml interpreter implements the rules."]
+  N1 --> N2
+  N3["Check before running<br/>A type checker reasons about the program’s<br/>structure."]
+  N2 --> N3

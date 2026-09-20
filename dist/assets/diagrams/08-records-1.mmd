@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Evaluate the record expression<br/>Obtain a field-location map and the<br/>resulting store."]
+  N1["Find the named field<br/>Missing field means no applicable lookup<br/>rule."]
+  N0 --> N1
+  N2["Read or update its location<br/>Use the current store, including prior<br/>effects."]
+  N1 --> N2
+  N3["Preserve the rest of memory<br/>Other aliases can still observe this same<br/>cell."]
+  N2 --> N3

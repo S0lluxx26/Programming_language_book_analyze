@@ -1,0 +1,74 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>When evaluation changes memory · The Programming Languages Notebook</title><meta name="description" content="Separate environments from stores and trace call-by-value versus call-by-reference."><meta name="theme-color" content="#142b48"><meta property="og:title" content="When evaluation changes memory"><meta property="og:description" content="Separate environments from stores and trace call-by-value versus call-by-reference."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" aria-current="page">When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>II · Language machines</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">07 · State &amp; parameter passing</p><h1>When evaluation changes memory</h1><p class="dek">Separate environments from stores and trace call-by-value versus call-by-reference.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="a-name-and-its-current-value-are-different-things">A name and its current value are different things</h2>
+<p>To model mutation, separate the <strong><a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a></strong>, which resolves a name to a location, from the <strong><a href="glossary.html#store" class="definition-link" title="A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory. — English textbook, PDF p. 165">store</a></strong>, which resolves a location to its current value. In this chapter write <code>ρ : Name → Location</code> and <code>M : Location → Value</code>. HW3 uses <code>σ</code> for its environment and <code>M</code> for memory; lecture 8 uses different letters. Follow the roles, not only the Greek symbols.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/07-state-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/07-state-1.svg" alt="A variable lookup has two stages" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/07-state-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart LR
+  accTitle: A variable lookup has two stages
+  accDescr: The environment maps x to location zero, and memory maps that location to a value. Assignment changes memory only.
+  X[&quot;Name x&quot;] --&gt;|&quot;environment lookup&quot;| L[&quot;Location 0&quot;]
+  L --&gt;|&quot;memory before&quot;| V[&quot;Value 4&quot;]
+  L --&gt;|&quot;memory after x := 6&quot;| W[&quot;Value 6&quot;]
+</code></pre></details></figure><p>The evaluator now has the conceptual <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> <code>environment -&gt; memory -&gt; expression -&gt; value * memory</code>. Every subexpression may change memory, so a caller needs both its value and its resulting store.</p>
+<h2 id="thread-the-latest-memory">Thread the latest memory</h2>
+<p>To evaluate <code>e1 + e2</code> left to right, evaluate <code>e1</code> with <code>M0</code>, producing <code>(v1, M1)</code>. Evaluate <code>e2</code> with <strong>M1</strong>, producing <code>(v2, M2)</code>. Return the arithmetic result with <strong>M2</strong>. Reusing <code>M0</code> loses the effects of the left expression.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/07-state-2.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/07-state-2.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/07-state-2.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;e1 with M0&lt;br/&gt;Produce v1 and M1.&quot;]
+  N1[&quot;e2 with M1&lt;br/&gt;Observe all effects from e1; produce v2&lt;br/&gt;and M2.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Combine v1 and v2&lt;br/&gt;Check the operation’s required value&lt;br/&gt;shapes.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Return result with M2&lt;br/&gt;Preserve the latest state.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p>The same discipline applies to sequences, conditionals, loop conditions, argument lists, and <a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">record</a> initializers. Even a loop condition that becomes false can have changed memory; return that final condition store.</p>
+<div class="trace" data-trace="store" data-title="Trace an assignment"><p>Starting with x at location 0 containing 4, evaluate x + 2, store 6 at location 0, then read x as 6.</p></div>
+<h2 id="explicit-and-implicit-references">Explicit and implicit references</h2>
+<p>In explicit-reference languages, allocating a cell, reading it, and writing it have separate operations. OCaml references illustrate the idea:</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> counter = <span class="hljs-built_in">ref</span> <span class="hljs-number">4</span>
+<span class="hljs-keyword">let</span> <span class="hljs-literal">()</span> = counter := !counter + <span class="hljs-number">2</span>
+<span class="hljs-keyword">let</span> result = !counter
+</code></pre>
+<p>An implicit-reference language makes variable bindings allocate cells and variable lookup read them automatically. B uses this model for variable bindings. Its assignment evaluates to the assigned value; OCaml’s <code>:=</code> evaluates to <code>unit</code>. Translating syntax mechanically between these languages will miss that difference.</p>
+<h2 id="call-by-value-and-call-by-reference">Call by value and call by reference</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th><a href="glossary.html#call-by-value" class="definition-link" title="Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value. — English textbook, PDF p. 183">Call by value</a></th>
+<th><a href="glossary.html#call-by-reference" class="definition-link" title="Bind a formal parameter to the caller's existing variable location so assignments through the parameter affect that shared cell. — English textbook, PDF p. 184">Call by reference</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is passed?</td>
+<td>The evaluated argument value</td>
+<td>The caller’s existing variable location</td>
+</tr>
+<tr>
+<td>Parameter binding</td>
+<td>Fresh location initialized with the value</td>
+<td>Same location as the caller’s variable</td>
+</tr>
+<tr>
+<td>Assigning to a scalar parameter</td>
+<td>Updates the local cell</td>
+<td>Updates the caller’s cell</td>
+</tr>
+<tr>
+<td>Can two parameters alias?</td>
+<td>Fresh scalar parameter cells do not</td>
+<td>Yes, when passed the same variable</td>
+</tr>
+</tbody>
+</table>
+<p>If <code>a</code> initially contains <code>4</code>, calling a procedure that assigns <code>p := 9</code> by value leaves <code>a = 4</code>; by reference it leaves <code>a = 9</code>. With record values, copying the value can still copy field addresses and preserve shared mutable fields. Call by value does not promise a deep copy of reachable memory.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw3.html">HW3</a> makes store threading explicit. It also has an environment containing either location bindings or procedure bindings: procedures are not general stored values in B. Calls execute under the procedure’s captured environment, while argument values or argument locations come from the caller.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>Why must fresh parameter locations be pairwise distinct, not merely absent from the incoming store?</p>
+<details><summary>Reveal the reasoning</summary><p>Two newly allocated parameters could otherwise receive the same previously unused location and accidentally alias. Allocate successively, updating the allocator state, or otherwise ensure all fresh locations are distinct.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec8.pdf#page=14">lecture 8, PDF pp. 14–16, 25–26, 30–38</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf#page=2">HW3, pp. 2–4</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161">English book, chapter 6</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="06-scope-recursion.html"><small>← Previous</small>Names, scope, and recursive calls</a><a href="08-records.html"><small>Next →</small>Following the pointers</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#a-name-and-its-current-value-are-different-things">A name and its current value are different things</a><a href="#thread-the-latest-memory">Thread the latest memory</a><a href="#explicit-and-implicit-references">Explicit and implicit references</a><a href="#call-by-value-and-call-by-reference">Call by value and call by reference</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

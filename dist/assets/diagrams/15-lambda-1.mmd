@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Identify the binder being applied<br/>Substitute only for occurrences bound by<br/>this abstraction."]
+  N1["Inspect free variables of the argument<br/>Determine which names must remain free."]
+  N0 --> N1
+  N2["Rename conflicting inner binders<br/>Use fresh names and rename their bound<br/>occurrences consistently."]
+  N1 --> N2
+  N3["Substitute and continue<br/>Preserve the binding structure of the<br/>original term."]
+  N2 --> N3

@@ -1,0 +1,269 @@
+{
+  "course_url": "https://prl.korea.ac.kr/courses/cose212/2026/",
+  "retrieved_at": "2026-09-20T04:42:27.212540+00:00",
+  "pdf_count": 29,
+  "downloaded_pdf_count": 27,
+  "files": [
+    {
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/code/let.ml",
+      "file": "sources/code/code/let.ml",
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/howtotryml.pdf",
+      "file": "sources/pdfs/howtotryml.pdf",
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/hw/hw1.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/hw/hw1.pdf",
+      "bytes": 147589,
+      "sha256": "2f950b6154f5ba4bded85044401bd255ecadc8cde312ef217951e9494c0735f0",
+      "pages": 6,
+      "title": ""
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/hw/hw2.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf",
+      "bytes": 183630,
+      "sha256": "478b8f63e29f85388331d3f6a0017c1073619e5238e9900fb188dbe1d2414446",
+      "pages": 9,
+      "title": ""
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/hw/hw3.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/hw/hw3.pdf",
+      "bytes": 237036,
+      "sha256": "788e6bcb59d30a81b81406f02930e56aaf3865bee311b192358c4ca3a0512da4",
+      "pages": 7,
+      "title": ""
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/hw/hw4.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf",
+      "bytes": 111621,
+      "sha256": "f75ba5567d0adfd9cfed3afaa760904bba321f738dfcf32de1e5a5e62f881d13",
+      "pages": 2,
+      "title": ""
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/pl-book-eng.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf",
+      "bytes": 7321478,
+      "sha256": "01f6045510685b5008ad5e60bfb0c958f48885d8b7e9dd00138a4001e641e661",
+      "pages": 292,
+      "title": "Principles of Programming Languages"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/pl-book.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/pl-book.pdf",
+      "bytes": 10066513,
+      "sha256": "184d52720e4722185428b13e4aeb19150d90e2977bab2c7dbe2c58b70c203fa3",
+      "pages": 258,
+      "title": "프로그래밍 언어의 원리"
+    },
+    {
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/fixpoint.pdf",
+      "file": "sources/pdfs/slides/fixpoint.pdf",
+      "status": 404,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec0.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec0.pdf",
+      "bytes": 2202391,
+      "sha256": "931f86043f33a6500233dadc5590080953c3144d5a2f32d8908be025e6a5df88",
+      "pages": 13,
+      "title": "Lecture 0 — Course Overview"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec1.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec1.pdf",
+      "bytes": 150579,
+      "sha256": "b14edd994b6d07a9eab76fd6b6ddb7cd908aa193c5133dd6c99191c34ff6cdcf",
+      "pages": 10,
+      "title": "Lecture 1 — Inductive Definitions (1)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec10.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec10.pdf",
+      "bytes": 312787,
+      "sha256": "fe18e88df1a67dc91dcae4f14a4101f6591191371e84fa27d9ec0d2e9262b185",
+      "pages": 22,
+      "title": "Lecture 10 — Design and Implementation of PLs  [0.5em] (6) Exceptions"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec11.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec11.pdf",
+      "bytes": 297564,
+      "sha256": "53272878a08e154ec04c9a33fef227e206c51185757768ea502716184b6f21bc",
+      "pages": 28,
+      "title": "Lecture 11 — Design and Implementation of PLs  [0.5em] (7) Classes and Objects"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec12.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec12.pdf",
+      "bytes": 1092261,
+      "sha256": "8e5af7bb46c3ce581706de50d640592284fe7a563938f2c917c42c86c23cbc73",
+      "pages": 10,
+      "title": "Lecture 12 — Type System  [0.5em] (1) Motivation"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec13.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec13.pdf",
+      "bytes": 203994,
+      "sha256": "41077fd906ccb3932f10409da3c44af66830dfceaf0fc76c9a24ac653d30ad1c",
+      "pages": 16,
+      "title": "Lecture 13 — Type System  [0.5em] (2) Design"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec14.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec14.pdf",
+      "bytes": 137896,
+      "sha256": "edc888e9da7dda3d4a5d8ea1073673a673f3d5650e6845a503ad0ed1a5b5c984",
+      "pages": 8,
+      "title": "Lecture 14 — Type System  [0.5em] (3) Manual Type Annotation"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec15.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec15.pdf",
+      "bytes": 167587,
+      "sha256": "1c4b42dc64abddf84d0a5e877a07fab6ca46d6d46b216e27f6a779c35d9b6991",
+      "pages": 11,
+      "title": "Lecture 15 — Automatic Type Inference (1)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec16.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec16.pdf",
+      "bytes": 145939,
+      "sha256": "8f2786c263a51bb20af7cabef1c71e38f95dfe2bd663d2c0e096f18e48879dfc",
+      "pages": 11,
+      "title": "Lecture 16 — Automatic Type Inference (2)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec17.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf",
+      "bytes": 252340,
+      "sha256": "afbcd68bc490cee2ea0907ecc7f7854aacd1589a367f4e278b6d92fd07d14f74",
+      "pages": 28,
+      "title": "Lecture 17 — Automatic Type Inference (3)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec18.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec18.pdf",
+      "bytes": 210895,
+      "sha256": "0480e4d4c33c3547b3a968a2ebdfaae4de55e3285001143f5e5951ed2b1dacee",
+      "pages": 15,
+      "title": "Lecture 18 — Let-Polymorphic Type System"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec19.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec19.pdf",
+      "bytes": 358845,
+      "sha256": "451fcc16a16b34ac451740147b15fa7dbb1a3575dee1968edcef6a8e33e14872",
+      "pages": 25,
+      "title": "Lecture 19 — Typed Object-Oriented Language"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec2.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec2.pdf",
+      "bytes": 214408,
+      "sha256": "4580bc8fd462474bb7282f61a1321c64a801525fa5839b51fdee1811882a40f7",
+      "pages": 20,
+      "title": "Lecture 2 — Inductive Definitions (2)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec20.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec20.pdf",
+      "bytes": 971056,
+      "sha256": "244670eb99379442de4e6481932a2f482dd294ec441c844c2c902c49c7c4305d",
+      "pages": 30,
+      "title": "Lecture 20 — Lambda Calculus  [0.5em] (Origin of Programming Languages)"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec3.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec3.pdf",
+      "bytes": 460499,
+      "sha256": "eda0b2e63a17537a5f0660221b15c19402dab4d2eae7ce68eaa6dcd85d80c8f3",
+      "pages": 53,
+      "title": "Lecture 3 — Basics of OCaml"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec4.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec4.pdf",
+      "bytes": 1217323,
+      "sha256": "c99b3a8371d9b43a6c6f7dd9e44b1cf8d2d106921f65f678954b2a671fff3d83",
+      "pages": 29,
+      "title": "Lecture 4 — Recursive and Higher-Order Programming"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec5.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec5.pdf",
+      "bytes": 197945,
+      "sha256": "800bb99bdb384114a9feace52886620681e28f427101cc2d8037cd669550143f",
+      "pages": 25,
+      "title": "Lecture 5 — Design and Implementation of PLs [0.5em] (1) Expressions"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec6.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec6.pdf",
+      "bytes": 251417,
+      "sha256": "d133408bab429217e428a33f507268100f9a071c2f6f019b044dd912cbed767c",
+      "pages": 26,
+      "title": "Lecture 6 — Design and Implementation of PLs [0.5em] (2) Procedures"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec7.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec7.pdf",
+      "bytes": 436410,
+      "sha256": "c2558863f481166297fda4b6690e36811182f78781ccab0fb6513d1249e56fd6",
+      "pages": 16,
+      "title": "Lecture 7 — Design and Implementation of PLs  [0.5em] (3) Lexical Scoping of Variables"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec8.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec8.pdf",
+      "bytes": 233755,
+      "sha256": "f7466166d7e25b53e4e92aef4f1a41e414f820eff7ebed92e24c683c165489cf",
+      "pages": 39,
+      "title": "Lecture 8 — Design and Implementation of PLs  [0.5em] (4) States"
+    },
+    {
+      "status": 200,
+      "file": "sources/pdfs/slides/lec9.pdf",
+      "url": "https://prl.korea.ac.kr/courses/cose212/2026/slides/lec9.pdf",
+      "bytes": 291974,
+      "sha256": "6d311a78a45c1a75301196f2b571a4b5226f391182aac1137a294f991ef7d17b",
+      "pages": 21,
+      "title": "Lecture 9 — Design and Implementation of PLs  [0.5em] (5) Records, Pointers, and Garbage Collection"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+flowchart LR
+  accTitle: A variable lookup has two stages
+  accDescr: The environment maps x to location zero, and memory maps that location to a value. Assignment changes memory only.
+  X["Name x"] -->|"environment lookup"| L["Location 0"]
+  L -->|"memory before"| V["Value 4"]
+  L -->|"memory after x := 6"| W["Value 6"]

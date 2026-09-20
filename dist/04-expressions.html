@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>From rules to an interpreter · The Programming Languages Notebook</title><meta name="description" content="Read semantic judgments and turn them into a small executable language."><meta name="theme-color" content="#142b48"><meta property="og:title" content="From rules to an interpreter"><meta property="og:description" content="Read semantic judgments and turn them into a small executable language."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" aria-current="page">From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>II · Language machines</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">04 · Expressions &amp; environments</p><h1>From rules to an interpreter</h1><p class="dek">Read semantic judgments and turn them into a small executable language.</p><p class="reading-meta">4 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="syntax-is-shape-semantics-is-behavior">Syntax is shape; semantics is behavior</h2>
+<p>An <strong><a href="glossary.html#abstract-syntax-tree" class="definition-link" title="A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes. — English textbook, PDF p. 23">abstract syntax tree</a> (AST)</strong> represents the structure of a program independently of surface punctuation. A grammar says which trees exist. A <a href="glossary.html#semantics" class="definition-link" title="The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules. — English textbook, PDF p. 25">semantics</a> says which results those trees produce. A syntactically valid program may still have undefined behavior in the language’s semantics.</p>
+<p>This original tiny language contains only integers, names, addition, and local binding:</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">type</span> expr =
+  | <span class="hljs-type">Number</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">int</span>
+  | <span class="hljs-type">Name</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">string</span>
+  | <span class="hljs-type">Plus</span> <span class="hljs-keyword">of</span> expr * expr
+  | <span class="hljs-type">Bind</span> <span class="hljs-keyword">of</span> <span class="hljs-built_in">string</span> * expr * expr
+</code></pre>
+<p>The host language is OCaml. <code>Number</code>, <code>Plus</code>, and <code>Bind</code> are constructors representing the object language. The OCaml integer in <code>Number 7</code> is the representation of an object-language literal.</p>
+<h2 id="an-environment-gives-names-meaning">An environment gives names meaning</h2>
+<p>Write <strong>ρ ⊢ e ⇓ v</strong> as: “under runtime <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a> ρ, expression e evaluates to value v.” The course often writes <code>⇒</code> for the same big-step evaluation relation. An environment is a mapping from names to values. An association list implements it if lookup returns the first matching name.</p>
+<pre><code class="language-ocaml"><span class="hljs-keyword">let</span> <span class="hljs-keyword">rec</span> lookup x = <span class="hljs-keyword">function</span>
+  | <span class="hljs-literal">[]</span> -&gt; failwith (<span class="hljs-string">&quot;unbound name: &quot;</span> ^ x)
+  | (y, v) :: rest -&gt; <span class="hljs-keyword">if</span> x = y <span class="hljs-keyword">then</span> v <span class="hljs-keyword">else</span> lookup x rest
+
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">rec</span> evaluate env = <span class="hljs-keyword">function</span>
+  | <span class="hljs-type">Number</span> n -&gt; n
+  | <span class="hljs-type">Name</span> x -&gt; lookup x env
+  | <span class="hljs-type">Plus</span> (a, b) -&gt;
+      <span class="hljs-keyword">let</span> va = evaluate env a <span class="hljs-keyword">in</span>
+      <span class="hljs-keyword">let</span> vb = evaluate env b <span class="hljs-keyword">in</span>
+      va + vb
+  | <span class="hljs-type">Bind</span> (x, definition, body) -&gt;
+      <span class="hljs-keyword">let</span> <span class="hljs-keyword">value</span> = evaluate env definition <span class="hljs-keyword">in</span>
+      evaluate ((x, <span class="hljs-keyword">value</span>) :: env) body
+</code></pre>
+<p>This pedagogical evaluator has only integer values and uses <code>Failure</code> for missing names. The homework language has tagged values and requires <code>UndefinedSemantics</code>; preserve that distinction when adapting the idea.</p>
+<h2 id="derive-the-binding-case">Derive the binding case</h2>
+<p>For <code>let x = e1 in e2</code>, the binding rule has two premises: evaluate the definition in the old environment, then evaluate the body in an extended environment. The new name is not in scope inside its own ordinary <code>let</code> definition.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/04-expressions-1.svg" alt="A step-by-step reasoning flow" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/04-expressions-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0[&quot;Evaluate e1 in ρ&lt;br/&gt;The old scope determines the definition’s&lt;br/&gt;meaning.&quot;]
+  N1[&quot;Extend with x ↦ v1&lt;br/&gt;Place the newest binding before older&lt;br/&gt;bindings.&quot;]
+  N0 --&gt; N1
+  N2[&quot;Evaluate e2 in the extension&lt;br/&gt;Lookups now see the new x.&quot;]
+  N1 --&gt; N2
+  N3[&quot;Return the body’s value&lt;br/&gt;Outer scopes remain available to their own&lt;br/&gt;computations.&quot;]
+  N2 --&gt; N3
+</code></pre></details></figure><p>Consider this object-language expression:</p>
+<pre><code class="language-text">let x = 4 in
+let x = x + 3 in
+x + 2
+</code></pre>
+<p>The second definition sees the old <code>x = 4</code>, so it produces <code>7</code>. Its body sees <code>x = 7</code> and returns <code>9</code>. Evaluating the definition in the extended environment would either create an accidental recursive binding or require a value that does not exist yet.</p>
+<h2 id="premises-become-recursive-calls">Premises become recursive calls</h2>
+<table>
+<thead>
+<tr>
+<th>Rule element</th>
+<th>Interpreter counterpart</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Literal conclusion</td>
+<td>Wrap or return the literal value</td>
+</tr>
+<tr>
+<td>A variable premise using ρ(x)</td>
+<td>Environment lookup</td>
+</tr>
+<tr>
+<td>Evaluation premise for a child</td>
+<td>Recursive call on that child</td>
+</tr>
+<tr>
+<td>Side condition such as a nonzero divisor</td>
+<td>Explicit guard</td>
+</tr>
+<tr>
+<td>Different rule for true and false</td>
+<td>Pattern match on the condition value</td>
+</tr>
+<tr>
+<td>No rule applies</td>
+<td>Raise the specified undefined-semantics exception</td>
+</tr>
+</tbody>
+</table>
+<p>For a conditional, evaluate only the selected branch. If <code>if true then 8 else (1 / 0)</code> is allowed by the object language, it evaluates to <code>8</code>; eagerly evaluating all three children would be an interpreter bug. Evaluation order is part of the language definition. Use sequential <code>let</code> bindings in OCaml to make required order explicit rather than relying on the host’s argument-evaluation order.</p>
+<h2 id="the-homework-connection">The homework connection</h2>
+<p><a href="hw1.html#p12-formulas-and-arithmetic">HW1 P12</a> already asks for a small interpreter, without an environment. <a href="hw1.html#p14-sigma-calculator">P14</a> adds a changing interpretation of <code>X</code>. <a href="hw2.html">HW2</a> extends the same pattern with runtime environments, tagged values, lists, and procedures.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p>How can an expression be a valid AST but have no evaluation derivation?</p>
+<details><summary>Reveal the reasoning</summary><p>The grammar can allow a division node whose divisor evaluates to zero, or an addition node whose child produces a boolean. The node is syntactically valid, but the relevant semantic side condition or value shape fails. Syntax recognition and semantic validity are different questions.</p></details>
+<p><strong>Read alongside:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec5.pdf#page=8">lecture 5, pp. 8–12 and 19–24</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97">English book, chapter 3</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="03-recursion.html"><small>← Previous</small>The recursive way of thinking</a><a href="05-closures.html"><small>Next →</small>What a function remembers</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#syntax-is-shape-semantics-is-behavior">Syntax is shape; semantics is behavior</a><a href="#an-environment-gives-names-meaning">An environment gives names meaning</a><a href="#derive-the-binding-case">Derive the binding case</a><a href="#premises-become-recursive-calls">Premises become recursive calls</a><a href="#the-homework-connection">The homework connection</a><a href="#check-your-understanding">Check your understanding</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

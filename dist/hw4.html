@@ -1,0 +1,218 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HW4 · Build the type checker · The Programming Languages Notebook</title><meta name="description" content="A precise design guide for a sound checker, including underspecified cases in the assignment."><meta name="theme-color" content="#142b48"><meta property="og:title" content="HW4 · Build the type checker"><meta property="og:description" content="A precise design guide for a sound checker, including underspecified cases in the assignment."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" aria-current="page">HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Practice atlas</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">Rules → constraints → types</p><h1>HW4 · Build the type checker</h1><p class="dek">A precise design guide for a sound checker, including underspecified cases in the assignment.</p><p class="reading-meta">7 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="the-contract-and-the-missing-details">The contract and the missing details</h2>
+<p>Implement <code>typeof : exp -&gt; typ</code>, returning a <a href="glossary.html#type" class="definition-link" title="An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships. — English textbook, PDF p. 226">type</a> for an accepted ML− program and raising <code>TypeError</code> for a rejected one. The <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf">two-page handout</a> provides the expression and type datatypes, but not a complete set of extended typing rules. The language matches HW2; the reference to “ML− from HW3” is inconsistent with the published assignment sequence.</p>
+<p>The guide below derives a <strong>monomorphic constraint-based baseline</strong> from lectures 13–17. It explicitly identifies equality, partial-operation safety, and polymorphism decisions rather than claiming that unpublished grading requirements are known.</p>
+<h2 id="design-the-pipeline">Design the pipeline</h2>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/hw4-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/hw4-1.svg" alt="The HW4 type-inference pipeline" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/hw4-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: The HW4 type-inference pipeline
+  accDescr: Generate equations and operator restrictions, unify them, validate restrictions, and apply the resulting substitution to the provisional result type.
+  A[&quot;AST + empty type environment&quot;] --&gt; B[&quot;Generate provisional type&lt;br/&gt;and equations&quot;]
+  B --&gt; C[&quot;Unify equations&lt;br/&gt;with occurs checks&quot;]
+  C --&gt; D{&quot;All operator restrictions valid?&quot;}
+  D --&gt;|&quot;yes&quot;| E[&quot;Apply final substitution&lt;br/&gt;Return type&quot;]
+  D --&gt;|&quot;no&quot;| F[&quot;TypeError&quot;]
+  C --&gt;|&quot;contradiction or cycle&quot;| F
+</code></pre></details></figure><p>Keep these responsibilities separate: generate fresh unknowns, look up type bindings, generate constraints, apply <a href="glossary.html#substitution" class="definition-link" title="A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture. — English textbook, PDF p. 266">substitutions</a>, perform <a href="glossary.html#occurs-check" class="definition-link" title="Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar. — English textbook, PDF p. 269">occurs checks</a>, unify equations, and validate any additional restrictions. The final substitution must be applied to the result type.</p>
+<h2 id="constraint-rules-for-the-whole-ast">Constraint rules for the whole AST</h2>
+<p>Here <code>t(e)</code> means the provisional type of e, and α/β are fresh variables. These are companion design rules for the standard baseline, not a newly supplied official rubric.</p>
+<table>
+<thead>
+<tr>
+<th>Constructors</th>
+<th>Constraints</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UNIT</code></td>
+<td>None</td>
+<td><code>TyUnit</code></td>
+</tr>
+<tr>
+<td><code>TRUE</code>, <code>FALSE</code></td>
+<td>None</td>
+<td><code>TyBool</code></td>
+</tr>
+<tr>
+<td><code>CONST</code></td>
+<td>None</td>
+<td><code>TyInt</code></td>
+</tr>
+<tr>
+<td><code>VAR x</code></td>
+<td>x must be bound in Γ</td>
+<td>Γ(x)</td>
+</tr>
+<tr>
+<td><code>ADD</code>, <code>SUB</code>, <code>MUL</code>, <code>DIV</code></td>
+<td>Both operands are int</td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>LESS</code></td>
+<td>Both operands are int</td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>NOT</code></td>
+<td>Operand is bool</td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>EQUAL</code></td>
+<td>Same operand type, restricted to int or bool</td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>NIL</code></td>
+<td>Fresh α for each occurrence</td>
+<td>list α</td>
+</tr>
+<tr>
+<td><code>CONS(h,t)</code></td>
+<td>t(h) = α; t(t) = list α</td>
+<td>list α</td>
+</tr>
+<tr>
+<td><code>APPEND(a,b)</code></td>
+<td>Both operands are list α</td>
+<td>list α</td>
+</tr>
+<tr>
+<td><code>HEAD e</code></td>
+<td>t(e) = list α</td>
+<td>α</td>
+</tr>
+<tr>
+<td><code>TAIL e</code></td>
+<td>t(e) = list α</td>
+<td>list α</td>
+</tr>
+<tr>
+<td><code>ISNIL e</code></td>
+<td>t(e) = list α</td>
+<td>bool</td>
+</tr>
+<tr>
+<td><code>IF(c,a,b)</code></td>
+<td>c : bool; t(a) = t(b)</td>
+<td>Common branch type</td>
+</tr>
+<tr>
+<td><code>LET(x,a,b)</code></td>
+<td>Infer a; extend Γ with its type while inferring b</td>
+<td>t(b)</td>
+</tr>
+<tr>
+<td><code>PROC(x,b)</code></td>
+<td>Infer b under x : fresh α</td>
+<td>α → t(b)</td>
+</tr>
+<tr>
+<td><code>CALL(f,a)</code></td>
+<td>t(f) = t(a) → fresh β</td>
+<td>β</td>
+</tr>
+<tr>
+<td><code>LETREC</code></td>
+<td>Assume f : α → β, check body under x : α and f; equate body type with β</td>
+<td>Type of the surrounding expression</td>
+</tr>
+<tr>
+<td><code>LETMREC</code></td>
+<td>Assume both function arrows before checking either body</td>
+<td>Type of the surrounding expression</td>
+</tr>
+<tr>
+<td><code>PRINT e</code></td>
+<td>Infer e even if its result is discarded; printing policy follows ML−</td>
+<td>unit</td>
+</tr>
+<tr>
+<td><code>SEQ(a,b)</code></td>
+<td>Infer both; do not require a to be unit merely because OCaml often expects it</td>
+<td>t(b)</td>
+</tr>
+</tbody>
+</table>
+<p>The dynamic list domain is broader than homogeneous list typing. Rejecting a dynamically evaluable heterogeneous list is a normal conservative restriction, not evidence that the type checker must execute the program to discover its elements.</p>
+<h2 id="equality-needs-more-than-ordinary-unification">Equality needs more than ordinary unification</h2>
+<p>HW2 specifies equality only for two integers or two booleans. If you merely require equal operand types, <code>[] = []</code> or a function compared with itself could type-check even though the ML− evaluator has no applicable equality rule.</p>
+<p><a href="glossary.html#record" class="definition-link" title="In the imperative course language, a collection mapping field names to locations. Field contents are found in the store. — English textbook, PDF p. 194">Record</a> an admissibility obligation for every equality operand type. After <a href="glossary.html#unification" class="definition-link" title="Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints. — English textbook, PDF p. 259">unification</a>, accept it only when its type is known to be <code>TyInt</code> or <code>TyBool</code>. An unresolved variable is not proof that all its eventual instantiations are allowed. One conservative policy is to reject an unresolved equality restriction rather than exporting an unrestricted <a href="glossary.html#type-variable" class="definition-link" title="An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable. — English textbook, PDF p. 254">type variable</a>.</p>
+<p>For <code>proc x (x = x)</code>, this conservative policy rejects the expression unless another constraint fixes x to an admissible base type. Supporting both admissible types generically requires a representation for restricted polymorphism or another carefully justified mechanism, which the supplied <code>typ</code> datatype does not express. Arbitrarily defaulting x to int changes inference behavior; do not call it an official requirement.</p>
+<h2 id="soundness-and-partial-operations">Soundness and partial operations</h2>
+<p>Conventional simple typing proves the absence of certain <strong>type-shape errors</strong>. It does not prove that every divisor is nonzero or every list is nonempty. Thus a basic constraint system can assign int to <code>DIV(CONST 1, CONST 0)</code> and an element type to <code>HEAD NIL</code>, while the HW2 interpreter raises <code>UndefinedSemantics</code>.</p>
+<p>If “sound with respect to dynamic <a href="glossary.html#semantics" class="definition-link" title="The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules. — English textbook, PDF p. 25">semantics</a>” is intended to mean <em>no UndefinedSemantics under any execution</em>, the basic rules need a stronger safety analysis, refinements, or conservative rejection of operations whose preconditions cannot be established. The two-page handout does not resolve this distinction. Record the property your implementation actually establishes and use instructor guidance for submission requirements; do not claim a stronger theorem because ordinary unification passed.</p>
+<h2 id="monomorphic-let-versus-polymorphic-let">Monomorphic let versus polymorphic let</h2>
+<p>The baseline gives a let-bound name one shared type. If the course expects <a href="glossary.html#let-polymorphism" class="definition-link" title="Giving an eligible let-bound value a type scheme whose quantified variables are freshly instantiated at each use. Variables fixed by the surrounding environment must remain shared. — English textbook, PDF p. 273">let-polymorphism</a>, implement <a href="glossary.html#type-scheme" class="definition-link" title="A type together with explicitly universally quantified variables, such as ∀α. α → α. Instantiation replaces only those quantified variables with fresh unknowns. — Course slides, PDF p. 12">type schemes</a> internally, generalize only <a href="glossary.html#free-variable" class="definition-link" title="A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context. — English textbook, PDF p. 124">free variables</a> absent from the updated <a href="glossary.html#environment" class="definition-link" title="A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B. — English textbook, PDF p. 102">environment</a>, and instantiate quantified variables freshly at each lookup. Procedure parameters remain monomorphic. Recursive bindings also need a defined generalization policy; unrestricted polymorphic recursion is not obtained by inserting fresh variables casually.</p>
+<p>The handout’s <code>TyVar</code> constructor represents unknown types, not automatically universally quantified schemes. See <a href="13-polymorphism.html">the polymorphism chapter</a> for the distinction.</p>
+<h2 id="a-small-but-discriminating-test-suite">A small but discriminating test suite</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Expected under the declared baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer arithmetic</td>
+<td>int</td>
+</tr>
+<tr>
+<td>Procedure adding one to its argument</td>
+<td>int → int</td>
+</tr>
+<tr>
+<td>Identity procedure</td>
+<td>α → α, up to fresh variable renaming</td>
+</tr>
+<tr>
+<td>Call an integer as a function</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td>Conditional with integer guard</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td>Conditional with int/bool branch mismatch</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td>Homogeneous list construction</td>
+<td>Corresponding list type</td>
+</tr>
+<tr>
+<td>Mixed int/bool list</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td><code>proc x (x x)</code></td>
+<td>TypeError from occurs check</td>
+</tr>
+<tr>
+<td>Chained equations α = β, β = int</td>
+<td>Both unknowns resolve to int</td>
+</tr>
+<tr>
+<td>Equality of lists or procedures</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td>Recursive bodies returning inconsistent types</td>
+<td>TypeError</td>
+</tr>
+<tr>
+<td>Division by zero or head of empty list</td>
+<td>Exposes the difference between type-shape checking and stronger safety</td>
+</tr>
+</tbody>
+</table>
+<p>Compare returned types structurally up to renaming fresh variables, not by expecting a particular counter-generated name. Two valid inference runs may use <code>t1</code> and <code>t17</code> for the same unknown structure.</p>
+<p><strong>Prerequisites:</strong> <a href="11-types.html">typing rules</a>, <a href="12-inference.html">constraint solving</a>, <a href="13-polymorphism.html">polymorphism</a>. <strong>Sources:</strong> <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw4.pdf#page=2">HW4 p. 2</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/slides/lec17.pdf#page=21">lecture 17 pp. 21–26</a>, <a href="https://prl.korea.ac.kr/courses/cose212/2026/hw/hw2.pdf#page=2">HW2 equality rules, pp. 2–3</a>.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="hw3.html"><small>← Previous</small>HW3 · Build the B interpreter</a><a href="glossary.html"><small>Next →</small>Notation &amp; glossary</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#the-contract-and-the-missing-details">The contract and the missing details</a><a href="#design-the-pipeline">Design the pipeline</a><a href="#constraint-rules-for-the-whole-ast">Constraint rules for the whole AST</a><a href="#equality-needs-more-than-ordinary-unification">Equality needs more than ordinary unification</a><a href="#soundness-and-partial-operations">Soundness and partial operations</a><a href="#monomorphic-let-versus-polymorphic-let">Monomorphic let versus polymorphic let</a><a href="#a-small-but-discriminating-test-suite">A small but discriminating test suite</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Find the recursive closure<br/>Obtain function name f, parameter x, body,<br/>and saved environment."]
+  N1["Evaluate the argument<br/>Use the caller environment."]
+  N0 --> N1
+  N2["Extend the saved environment<br/>Add f bound to the recursive closure and x<br/>bound to the argument."]
+  N1 --> N2
+  N3["Evaluate the body<br/>A lookup of f can now produce another<br/>recursive call."]
+  N2 --> N3

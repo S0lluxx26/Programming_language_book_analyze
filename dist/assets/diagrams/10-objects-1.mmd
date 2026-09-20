@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: A step-by-step reasoning flow
+  accDescr: Each arrow passes the result of one reasoning step to the next.
+  N0["Evaluate the receiver<br/>Obtain its runtime class and field-<br/>location map."]
+  N1["Evaluate the argument<br/>Preserve any memory changes."]
+  N0 --> N1
+  N2["Look up the method<br/>Search the runtime class, then ancestors."]
+  N1 --> N2
+  N3["Run its body<br/>Bind parameter, self, fields, and method<br/>host; thread memory."]
+  N2 --> N3

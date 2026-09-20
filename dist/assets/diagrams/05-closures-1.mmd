@@ -1,0 +1,9 @@
+flowchart TD
+  accTitle: Closure creation and lexical application
+  accDescr: The caller supplies the argument while the closure supplies the environment for the body.
+  A["Caller environment<br/>x = 90"] -->|"evaluate argument 3"| D["Argument value: 3"]
+  A -->|"lookup f"| B["Closure<br/>parameter y; body x + y"]
+  B -->|"captures at creation"| C["Saved environment<br/>x = 10"]
+  C --> E["Body environment<br/>y = 3, x = 10"]
+  D --> E
+  E --> F["10 + 3 = 13"]
