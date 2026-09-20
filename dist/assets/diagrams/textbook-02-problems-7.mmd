@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 7 - build an n-fold function
+  accDescr: Return a function whose loop counts applications down to zero while carrying the current value.
+  A["Receive n and f"] --> B["Return a function waiting for x"]
+  B --> C{"Remaining count zero?"}
+  C -->|Yes| D["Return current x"]
+  C -->|No| E["Replace x by f x; decrement count"]
+  E --> C

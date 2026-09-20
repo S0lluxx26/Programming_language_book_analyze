@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 9 - choose and test the intended numeric representation
+  accDescr: The book example uses Church naturals; signed subtraction requires a different representation and decoder.
+  A["What numeric semantics do you need?"] --> B{"Nonnegative Church numbers or signed integers?"}
+  B -->|Book's displayed encoding| C["translate; subtraction stops at zero"]
+  B -->|Signed extension| D["translate_signed; pair represents positive minus negative"]
+  C --> E["Normalize; decode Church numeral"]
+  D --> F["Normalize pair projections; subtract decoded parts"]

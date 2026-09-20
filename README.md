@@ -5,6 +5,7 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 ## Read
 
 - Published book: <https://s0lluxx26.github.io/Programming_language_book_analyze/>
+- Textbook reader: <https://s0lluxx26.github.io/Programming_language_book_analyze/textbook.html>
 - Official course: <https://prl.korea.ac.kr/courses/cose212/2026/>
 - Detailed implementation plan: [PLAN.md](PLAN.md)
 - Verification notes: [VALIDATION.md](VALIDATION.md)
@@ -12,9 +13,12 @@ An illustrated, English-language study companion to Hakjoo Oh's **COSE212, Korea
 ## Contents
 
 - 15 concept chapters, covering lectures 1–20.
+- A source-aligned reader following all 9 English textbook chapters and 48 numbered sections, plus the complete 12-problem §2.4 walkthrough.
+- Worked solutions to the implementation tasks in Chapters 4–9, with five executable OCaml files and explicit assumptions where the draft leaves gaps.
 - 4 assignment guides, including all 15 HW1 problems and constructor maps for HW2–HW4.
 - Mermaid flowcharts and relationship graphs, rendered to accessible static SVG; editable source is included beside each diagram.
-- 38 definition entries with highlighted term links and verified textbook/slide PDF page references.
+- 42 definition entries with highlighted term links, in-place definition dialogs, and verified textbook/slide PDF page references.
+- 35 reading pages and 71 Mermaid diagrams, with source code available under each graph.
 - Interactive closure, store, exception, and type-inference traces; search; chapter navigation; responsive layout; print styles.
 - A full source inventory with byte sizes, SHA-256 hashes, and PDF page counts.
 
@@ -54,9 +58,16 @@ The official environment targets OCaml 4.14.1. Run the independent teaching exam
 
 ```bash
 ocaml examples/notebook_examples.ml
+ocaml examples/textbook_exercises.ml
+ocaml examples/textbook_functional.ml
+ocaml examples/textbook_state.ml
+ocaml examples/textbook_types.ml
+ocaml examples/textbook_lambda.ml
 ```
 
 They test recursion, lexical scope, a small evaluator, stores, type unification, and exception control flow. They do not implement or submit the full homework assignments. Some assignment policies are unstated in the public handouts; the corresponding guides identify them explicitly.
+
+The `textbook_*.ml` files are original worked solutions to the **textbook tasks**, not the separately specified homework submissions. The type-system solution is monomorphic, including its Fun extension; let-polymorphism is explained separately. The lambda solution provides both the textbook's natural-number convention and a signed-pair extension. The GC solution collects only at global no-continuation points, as described in the book. These choices and their limits are explained in the reader.
 
 ## Publishing
 

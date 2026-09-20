@@ -323,3 +323,35 @@ Choosing the leftmost outermost reducible application, continuing under abstract
 
 [See the explanation](15-lambda.html) · [English textbook, PDF p. 284](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=284)
 
+## Capture-avoiding substitution
+
+Replacing free occurrences of a name while renaming conflicting binders so that free variables in the replacement do not accidentally become bound.
+
+**Use it in:** Textbook §9.3 reduce; HW1 binding analysis.
+
+[See the explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
+
+## Shadowing
+
+A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding.
+
+**Use it in:** Textbook §3.3 and §4.3; HW2 LET.
+
+[See the explanation](textbook-03.html) · [English textbook, PDF p. 105](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=105)
+
+## Normal form
+
+A lambda term containing no beta-redex anywhere, including inside abstraction bodies.
+
+**Use it in:** Textbook §9.3 reduce.
+
+[See the explanation](textbook-09.html) · [English textbook, PDF p. 282](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=282)
+
+## Redex
+
+A reducible lambda application whose function is an abstraction, of the form (lambda x. body) argument.
+
+**Use it in:** Textbook §9.3 normal-order reduction.
+
+[See the explanation](textbook-09.html) · [English textbook, PDF p. 281](https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=281)
+

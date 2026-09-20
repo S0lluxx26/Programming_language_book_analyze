@@ -4,6 +4,154 @@
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Define the shape<br/>A grammar describes the programs you can<br/>write.\"]\n  N1[\"Define the meaning<br/>Inference rules describe what those<br/>programs do.\"]\n  N0 --> N1\n  N2[\"Build the machine<br/>An OCaml interpreter implements the rules.\"]\n  N1 --> N2\n  N3[\"Check before running<br/>A type checker reasons about the program’s<br/>structure.\"]\n  N2 --> N3\n"
   },
   {
+    "name": "textbook-1",
+    "source": "flowchart TD\n  accTitle: The textbook's nine-chapter learning path\n  accDescr: Inductive definitions support OCaml, interpreters, memory models, type analysis, and lambda calculus.\n  A[\"1. Define syntax and prove properties\"] --> B[\"2. Express recursion in OCaml\"]\n  B --> C[\"3. Interpret names with environments\"]\n  C --> D[\"4. Add closures and recursion\"]\n  D --> E[\"5. Build the Fun language\"]\n  E --> F[\"6. Separate names from changing memory\"]\n  F --> G[\"7. Follow pointers and collect garbage\"]\n  E --> H[\"8. Predict types before execution\"]\n  D --> I[\"9. Translate to lambda calculus\"]\n"
+  },
+  {
+    "name": "textbook-01-1",
+    "source": "flowchart TD\n  accTitle: Decide membership from the rules, not from a few examples\n  accDescr: Derive nine by repeated construction and exclude seven using a preserved divisibility invariant.\n  A[\"Base: 0 belongs\"] --> B[\"Step: add 3\"]\n  B --> C[\"3, then 6, then 9\"]\n  C --> D[\"9 has a finite derivation\"]\n  A --> E[\"Invariant: every result is divisible by 3\"]\n  B --> E\n  E --> F[\"7 is not divisible by 3\"]\n  F --> G[\"7 cannot have a derivation\"]\n"
+  },
+  {
+    "name": "textbook-01-2",
+    "source": "flowchart TD\n  accTitle: From a grammar constructor to an evaluator case\n  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.\n  A[\"Expression node\"] --> B{\"Literal or binary constructor?\"}\n  B -->|Literal| C[\"Return its numeric value\"]\n  B -->|Binary| D[\"Evaluate left child\"]\n  D --> E[\"Evaluate right child\"]\n  E --> F[\"Apply the selected operation\"]\n"
+  },
+  {
+    "name": "textbook-01-3",
+    "source": "flowchart TD\n  accTitle: A structural proof has a branch for each construction rule\n  accDescr: The base, wrapping, and concatenation cases all establish equal left and right parenthesis counts.\n  A[\"How was the string constructed?\"] --> B{\"Last rule\"}\n  B -->|Base| C[\"One opening and one closing parenthesis\"]\n  B -->|Wrap s| D[\"Assume equal counts for s; add one to both\"]\n  B -->|Join s and t| E[\"Assume equal counts for each; add their counts\"]\n  C --> F[\"Equal counts for every derivable string\"]\n  D --> F\n  E --> F\n"
+  },
+  {
+    "name": "textbook-02-1",
+    "source": "flowchart TD\n  accTitle: Read an OCaml expression through its type and data shape\n  accDescr: Determine what a value represents before choosing its operation or pattern.\n  A[\"What value does this expression produce?\"] --> B{\"Data shape\"}\n  B -->|List| C[\"Match empty or head plus tail\"]\n  B -->|Variant| D[\"Match its constructor and fields\"]\n  B -->|Function| E[\"Read input and output types; apply an argument\"]\n  C --> F[\"Every branch must return a compatible type\"]\n  D --> F\n  E --> F\n"
+  },
+  {
+    "name": "textbook-02-2",
+    "source": "flowchart TD\n  accTitle: Derive recursion before writing recursive calls\n  accDescr: Choose the base case, smaller input, and recombination rule, then check termination and cost.\n  A[\"State input and desired result\"] --> B[\"List all constructors or boundary cases\"]\n  B --> C[\"Solve the smallest case directly\"]\n  B --> D[\"Choose a strictly smaller recursive input\"]\n  D --> E[\"Assume its result is correct\"]\n  E --> F[\"Reconstruct this case's result\"]\n  C --> G[\"Check examples, boundary cases, and cost\"]\n  F --> G\n"
+  },
+  {
+    "name": "textbook-02-3",
+    "source": "flowchart TD\n  accTitle: Choose a fold from the meaning of its accumulator\n  accDescr: A right fold combines an element with the processed suffix; a left fold updates a processed-prefix summary.\n  A[\"What does the partial answer represent?\"] --> B{\"Suffix answer or prefix summary?\"}\n  B -->|Suffix| C[\"Right fold: element plus answer for the tail\"]\n  B -->|Prefix| D[\"Left fold: old accumulator plus next element\"]\n  C --> E[\"Choose the empty-list answer\"]\n  D --> E\n  E --> F[\"Expand a three-element example by hand\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-1",
+    "source": "flowchart TD\n  accTitle: Problem 1 - shrink an inclusive interval\n  accDescr: Empty intervals return empty; a singleton stops without overflowing the next integer; otherwise emit the lower endpoint.\n  A[\"range n m\"] --> B{\"n greater than m?\"}\n  B -->|Yes| C[\"Return empty list\"]\n  B -->|No| D{\"n equals m?\"}\n  D -->|Yes| E[\"Return singleton m\"]\n  D -->|No| F[\"Emit n; solve range n+1 m\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-2",
+    "source": "flowchart TD\n  accTitle: Problem 2 - flatten a list of lists\n  accDescr: Flatten the tail, then append the current inner list before that result.\n  A[\"Outer list\"] --> B{\"Empty?\"}\n  B -->|Yes| C[\"Return empty list\"]\n  B -->|No| D[\"Take current inner list and remaining lists\"]\n  D --> E[\"Flatten remaining lists\"]\n  E --> F[\"Append current inner list before the result\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-3",
+    "source": "flowchart TD\n  accTitle: Problem 3 - interleave with asymmetric remainders\n  accDescr: When either list is exhausted, return the other; otherwise emit two heads and recur on two tails.\n  A[\"Inspect both lists\"] --> B{\"Either list empty?\"}\n  B -->|Yes| C[\"Return the other list unchanged\"]\n  B -->|No| D[\"Emit first head, then second head\"]\n  D --> E[\"Interleave the two tails\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-4",
+    "source": "flowchart TD\n  accTitle: Problem 4 - use both components of one recursive answer\n  accDescr: Unzip the tail once, then prepend each head component to its matching result list.\n  A[\"Pair list\"] --> B{\"Empty?\"}\n  B -->|Yes| C[\"Return two empty lists\"]\n  B -->|No| D[\"Head is x,y; unzip tail once\"]\n  D --> E[\"Tail answer is xs,ys\"]\n  E --> F[\"Return x::xs and y::ys\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-5",
+    "source": "flowchart TD\n  accTitle: Problem 5 - count down while discarding heads\n  accDescr: Stop when the requested count is exhausted or the list is empty.\n  A[\"drop list n\"] --> B{\"n at most zero?\"}\n  B -->|Yes| C[\"Return current list\"]\n  B -->|No| D{\"List empty?\"}\n  D -->|Yes| E[\"Return empty\"]\n  D -->|No| F[\"Discard head; call drop tail n-1\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-6",
+    "source": "flowchart TD\n  accTitle: Problem 6 - separate the interval from its contribution function\n  accDescr: An empty interval contributes zero; otherwise add the current contribution to the smaller interval's sum.\n  A[\"sigma f a b\"] --> B{\"Interval empty?\"}\n  B -->|Yes| C[\"Return 0\"]\n  B -->|No| D{\"Single endpoint?\"}\n  D -->|Yes| E[\"Return f a\"]\n  D -->|No| F[\"Compute f a plus sigma f a+1 b\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-7",
+    "source": "flowchart TD\n  accTitle: Problem 7 - build an n-fold function\n  accDescr: Return a function whose loop counts applications down to zero while carrying the current value.\n  A[\"Receive n and f\"] --> B[\"Return a function waiting for x\"]\n  B --> C{\"Remaining count zero?\"}\n  C -->|Yes| D[\"Return current x\"]\n  C -->|No| E[\"Replace x by f x; decrement count\"]\n  E --> C\n"
+  },
+  {
+    "name": "textbook-02-problems-8",
+    "source": "flowchart TD\n  accTitle: Problem 8 - fold universal truth\n  accDescr: The empty list is true; combine each predicate result with the suffix's result using conjunction.\n  A[\"Empty-list answer: true\"] --> B[\"Right fold computes suffix result\"]\n  B --> C[\"Combine p head AND suffix result\"]\n  C --> D[\"Any false contribution makes the result false\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-9",
+    "source": "flowchart LR\n  accTitle: Problem 9 - extend a decimal prefix\n  accDescr: Processing digits one, two, three updates the prefix value from zero to one to twelve to one hundred twenty-three.\n  A[\"0\"] -->|\"digit 1: 10*0+1\"| B[\"1\"]\n  B -->|\"digit 2: 10*1+2\"| C[\"12\"]\n  C -->|\"digit 3: 10*12+3\"| D[\"123\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-10",
+    "source": "flowchart TD\n  accTitle: Problem 10 - derive a fold from the result being built\n  accDescr: Counting, conjunction, reversal, transformation, and selection require different accumulator meanings.\n  A[\"Which result are you constructing?\"] --> B[\"Length: count processed elements\"]\n  A --> C[\"All positive: conjunction with true identity\"]\n  A --> D[\"Reverse: prepend into a left-fold accumulator\"]\n  A --> E[\"Map: transform, then preserve order\"]\n  A --> F[\"Filter: keep selected elements in order\"]\n  E --> G[\"Right fold: cons directly; left fold: reverse once at the end\"]\n  F --> G\n"
+  },
+  {
+    "name": "textbook-02-problems-11",
+    "source": "flowchart TD\n  accTitle: Problem 11 - derive arithmetic from ZERO and SUCC\n  accDescr: Addition turns a successor into a successor of a smaller sum; multiplication turns it into one more addition.\n  A[\"Inspect first natural number\"] --> B{\"ZERO or SUCC a?\"}\n  B -->|ZERO| C[\"Addition returns b; multiplication returns ZERO\"]\n  B -->|SUCC a| D[\"Addition: SUCC of add a b\"]\n  B -->|SUCC a| E[\"Multiplication: add b to mul a b\"]\n"
+  },
+  {
+    "name": "textbook-02-problems-12",
+    "source": "flowchart TD\n  accTitle: Problem 12 - dispatch differentiation by expression constructor\n  accDescr: Constants, variables, powers, sums, and products have separate derivative rules; product terms differentiate one factor at a time.\n  A[\"diff expression with respect to x\"] --> B{\"Constructor\"}\n  B -->|Const| C[\"0\"]\n  B -->|Var y| D[\"1 if y=x, otherwise 0\"]\n  B -->|Power y,n| E[\"0 if y differs or n=0; otherwise n times y to n-1\"]\n  B -->|Sum| F[\"Differentiate every summand\"]\n  B -->|Times h and tail| G[\"Derivative h times tail PLUS h times derivative tail\"]\n  G --> H[\"Remove zero terms and unit factors\"]\n  F --> H\n  E --> H\n"
+  },
+  {
+    "name": "textbook-03-1",
+    "source": "flowchart TD\n  accTitle: Chapter 3 - derive the LET evaluator from its rule\n  accDescr: The right-hand side uses the old environment; only the body sees the new binding.\n  A[\"LET x = e1 IN e2, environment rho\"] --> B[\"Evaluate e1 in rho to get v1\"]\n  B --> C[\"Create rho2 = rho extended with x maps to v1\"]\n  C --> D[\"Evaluate e2 in rho2\"]\n  D --> E[\"Return the body's value\"]\n"
+  },
+  {
+    "name": "textbook-03-2",
+    "source": "flowchart TD\n  accTitle: Chapter 3 - keep an inner binding from leaking out\n  accDescr: The final y receives four, but the final subtraction still uses the outer x equal to one.\n  A[\"Outer environment: x=1, y=2\"] --> B[\"Evaluate new y's right-hand side\"]\n  B --> C[\"Inside that expression only: x=2\"]\n  C --> D[\"Compute x+y = 4\"]\n  D --> E[\"Return to outer scope; bind y=4\"]\n  E --> F[\"x-y = 1-4 = -3\"]\n"
+  },
+  {
+    "name": "textbook-04-1",
+    "source": "flowchart TD\n  accTitle: Chapter 4 - choose the environment for a function call\n  accDescr: Both variants evaluate the argument in the caller; static scope extends the definition environment while dynamic scope extends the caller environment.\n  A[\"Evaluate callee and argument in caller environment\"] --> B{\"Scope policy\"}\n  B -->|Static| C[\"Start from closure's saved environment\"]\n  B -->|Dynamic| D[\"Start from current caller environment\"]\n  C --> E[\"Bind parameter to argument value\"]\n  D --> E\n  E --> F[\"Evaluate the body\"]\n"
+  },
+  {
+    "name": "textbook-04-2",
+    "source": "flowchart TD\n  accTitle: Chapter 4 - make recursion available inside its own body\n  accDescr: A recursive closure records the function name and reintroduces it on application before binding the parameter.\n  A[\"Create recursive closure f, x, body, saved\"] --> B[\"Bind f in the surrounding body\"]\n  B --> C[\"Call f with argument v\"]\n  C --> D[\"Choose saved or caller environment by scope policy\"]\n  D --> E[\"Install f as self; install x as v\"]\n  E --> F[\"Evaluate body; recursive calls repeat this process\"]\n"
+  },
+  {
+    "name": "textbook-05-1",
+    "source": "flowchart TD\n  accTitle: Chapter 5 - evaluate operations only when their value shapes match\n  accDescr: Constructor dispatch determines the expected shapes; invalid shapes produce an explicit undefined-operation error.\n  A[\"Inspect expression constructor\"] --> B[\"Evaluate required operands in order\"]\n  B --> C{\"Operand shapes satisfy the rule?\"}\n  C -->|Yes| D[\"Construct the specified result\"]\n  C -->|No| E[\"Report a runtime error\"]\n  D --> F[\"Lists remain values; procedures remain closures\"]\n"
+  },
+  {
+    "name": "textbook-05-2",
+    "source": "flowchart TD\n  accTitle: Chapter 5 - trace mutually recursive parity functions\n  accDescr: Every call sees both functions; decreasing the argument alternates between even and odd until a base case is reached.\n  A[\"Install even and odd together\"] --> B[\"even 3\"]\n  B --> C[\"odd 2\"]\n  C --> D[\"even 1\"]\n  D --> E[\"odd 0\"]\n  E --> F[\"false\"]\n"
+  },
+  {
+    "name": "textbook-06-1",
+    "source": "flowchart TD\n  accTitle: Chapter 6 - explicit reference assignment threads memory\n  accDescr: Evaluate the location expression, then the new value with the updated memory, then update that cell.\n  A[\"SETREF e1 e2 with memory m0\"] --> B[\"Evaluate e1 to location l and memory m1\"]\n  B --> C[\"Evaluate e2 using m1 to value v and memory m2\"]\n  C --> D[\"Update l to v in m2\"]\n  D --> E[\"Return v and the new memory\"]\n"
+  },
+  {
+    "name": "textbook-06-2",
+    "source": "flowchart TD\n  accTitle: Chapter 6 - parameter passing is a choice about locations\n  accDescr: Value calls allocate a new cell; reference calls reuse the caller's cell, making assignment visible to the caller.\n  A[\"Caller a is stored at location L1\"] --> B{\"Call method\"}\n  B -->|Value| C[\"Read a; allocate fresh parameter cell L2\"]\n  B -->|Reference| D[\"Parameter also points to L1\"]\n  C --> E[\"Assign parameter: only L2 changes\"]\n  D --> F[\"Assign parameter: caller's L1 changes\"]\n"
+  },
+  {
+    "name": "textbook-07-1",
+    "source": "flowchart TD\n  accTitle: Chapter 7 - two record values share a field cell\n  accDescr: Separate variable cells hold records whose v fields both point to the same location, so a field update is visible through either name.\n  A[\"Variable a\"] --> LA[\"Variable cell LA\"]\n  B[\"Variable b\"] --> LB[\"Variable cell LB\"]\n  LA --> RA[\"Record: v maps to LV\"]\n  LB --> RB[\"Record: v maps to LV\"]\n  RA --> V[\"Field cell LV: initially 1, then 8\"]\n  RB --> V\n"
+  },
+  {
+    "name": "textbook-07-2",
+    "source": "flowchart TD\n  accTitle: Chapter 7 - mark a heap graph without looping on cycles\n  accDescr: A worklist starts at roots; unseen cells are marked before following pointers, record fields, and closure environments.\n  A[\"Worklist = root locations; marked = empty\"] --> B{\"Worklist empty?\"}\n  B -->|Yes| C[\"Keep only marked store entries\"]\n  B -->|No| D[\"Remove location l\"]\n  D --> E{\"Already marked?\"}\n  E -->|Yes| B\n  E -->|No| F[\"Mark l before following edges\"]\n  F --> G[\"Add pointer, record, and closure locations\"]\n  G --> B\n"
+  },
+  {
+    "name": "textbook-07-3",
+    "source": "flowchart TD\n  accTitle: Chapter 7 - decide whether environment-only collection is safe\n  accDescr: A global continuation condition is stricter than being locally the last expression of a function.\n  A[\"About to evaluate an expression\"] --> B{\"Any surrounding work still pending?\"}\n  B -->|Yes| C[\"Skip environment-only GC\"]\n  B -->|No| D[\"Mark from current environment and sweep\"]\n  C --> E[\"Evaluate with the current store\"]\n  D --> E\n"
+  },
+  {
+    "name": "textbook-08-1",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - typing a call relates three types\n  accDescr: The function must accept the argument type and return the type requested for the whole call.\n  A[\"CALL f arg has desired result r\"] --> B[\"Choose fresh argument type a\"]\n  B --> C[\"Require f : a to r\"]\n  B --> D[\"Require arg : a\"]\n  C --> E[\"Solve both requirements together\"]\n  D --> E\n"
+  },
+  {
+    "name": "textbook-08-2",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - derive the type of a higher-order function\n  accDescr: Integer addition constrains x, then application constrains f, and the nested procedures form the final function type.\n  A[\"f has alpha; x has beta\"] --> B[\"x+1 requires beta = int\"]\n  B --> C[\"f applied to int returns gamma\"]\n  C --> D[\"alpha = int to gamma\"]\n  D --> E[\"Whole type: (int to gamma) to int to gamma\"]\n"
+  },
+  {
+    "name": "textbook-08-3",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - unification decision tree\n  accDescr: Normalize an equation, then delete, decompose, bind with an occurs check, or reject incompatible constructors.\n  A[\"Apply current substitution to both sides\"] --> B{\"Same type?\"}\n  B -->|Yes| C[\"Discard equation\"]\n  B -->|No| D{\"One side a variable?\"}\n  D -->|Yes| E{\"Variable occurs in other side?\"}\n  E -->|Yes| F[\"Reject infinite type\"]\n  E -->|No| G[\"Bind variable and update substitution\"]\n  D -->|No| H{\"Matching function or list constructors?\"}\n  H -->|Yes| I[\"Enqueue component equations\"]\n  H -->|No| J[\"Reject constructor mismatch\"]\n"
+  },
+  {
+    "name": "textbook-08-4",
+    "source": "flowchart TD\n  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme\n  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.\n  A[\"Infer let-bound identity: alpha to alpha\"] --> B[\"Solve constraints and apply them to the environment\"]\n  B --> C[\"Generalize alpha only if absent from environment free variables\"]\n  C --> D[\"Store scheme: forall alpha, alpha to alpha\"]\n  D --> E[\"Integer use gets fresh beta: beta=int\"]\n  D --> F[\"Boolean use gets fresh gamma: gamma=bool\"]\n"
+  },
+  {
+    "name": "textbook-09-1",
+    "source": "flowchart TD\n  accTitle: Chapter 9 - substitute without changing which binder owns a name\n  accDescr: Stop at a matching binder, rename a conflicting binder, and otherwise recurse structurally.\n  A[\"Substitute x by argument inside a term\"] --> B{\"Outer constructor\"}\n  B -->|Variable| C[\"Replace only if its name is x\"]\n  B -->|Application| D[\"Substitute in both children\"]\n  B -->|Lambda y| E{\"y equals x?\"}\n  E -->|Yes| F[\"Stop: x is shadowed here\"]\n  E -->|No| G{\"y free in argument, and x free in body?\"}\n  G -->|Yes| H[\"Rename y to a fresh name; recurse\"]\n  G -->|No| I[\"Keep binder; recurse in body\"]\n"
+  },
+  {
+    "name": "textbook-09-2",
+    "source": "flowchart TD\n  accTitle: Chapter 9 - translate and normalize a source expression\n  accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.\n  A[\"Inspect source AST constructor\"] --> B[\"Translate child expressions\"]\n  B --> C[\"Wrap them in the matching closed encoding\"]\n  C --> D[\"Obtain a lambda term\"]\n  D --> E[\"Contract leftmost outermost redex repeatedly\"]\n  E --> F[\"Decode the resulting numeral or other value\"]\n"
+  },
+  {
+    "name": "textbook-09-3",
+    "source": "flowchart TD\n  accTitle: Chapter 9 - choose and test the intended numeric representation\n  accDescr: The book example uses Church naturals; signed subtraction requires a different representation and decoder.\n  A[\"What numeric semantics do you need?\"] --> B{\"Nonnegative Church numbers or signed integers?\"}\n  B -->|Book's displayed encoding| C[\"translate; subtraction stops at zero\"]\n  B -->|Signed extension| D[\"translate_signed; pair represents positive minus negative\"]\n  C --> E[\"Normalize; decode Church numeral\"]\n  D --> F[\"Normalize pair projections; subtract decoded parts\"]\n"
+  },
+  {
     "name": "setup-1",
     "source": "flowchart TD\n  accTitle: A step-by-step reasoning flow\n  accDescr: Each arrow passes the result of one reasoning step to the next.\n  N0[\"Predict<br/>Write the result and type before running.\"]\n  N1[\"Trace<br/>Follow constructors, environments, or<br/>memory on paper.\"]\n  N0 --> N1\n  N2[\"Run<br/>Test one small expression in the official<br/>environment.\"]\n  N1 --> N2\n  N3[\"Explain<br/>If the result differs, identify the exact<br/>rule you misunderstood.\"]\n  N2 --> N3\n"
   },

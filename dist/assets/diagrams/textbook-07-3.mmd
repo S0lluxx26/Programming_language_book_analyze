@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 7 - decide whether environment-only collection is safe
+  accDescr: A global continuation condition is stricter than being locally the last expression of a function.
+  A["About to evaluate an expression"] --> B{"Any surrounding work still pending?"}
+  B -->|Yes| C["Skip environment-only GC"]
+  B -->|No| D["Mark from current environment and sweep"]
+  C --> E["Evaluate with the current store"]
+  D --> E

@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 9 - translate and normalize a source expression
+  accDescr: Each source constructor chooses an encoding; recursive translation builds a lambda term, which normal-order reduction simplifies.
+  A["Inspect source AST constructor"] --> B["Translate child expressions"]
+  B --> C["Wrap them in the matching closed encoding"]
+  C --> D["Obtain a lambda term"]
+  D --> E["Contract leftmost outermost redex repeatedly"]
+  E --> F["Decode the resulting numeral or other value"]

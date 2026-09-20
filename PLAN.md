@@ -47,3 +47,16 @@ Source: <https://prl.korea.ac.kr/courses/cose212/2026/>.
 ## Result
 
 The source collection, original study book, definition references, homework maps, Mermaid diagrams, validation, SSH repository, and GitHub Pages configuration are complete. The only unavailable requested source files are the two original PDF URLs returning 404, explicitly listed in the manifest and book. No replacement is misrepresented as a downloaded 2026 original.
+
+## Textbook reader and worked-problem expansion
+
+User follow-up: follow the PDF's actual chapters and sections, highlight/link definitions, and solve the textbook's own problems using Mermaid thinking flows.
+
+1. **Inventory:** inspect all 292 pages through the extracted text, confirm the table of contents, and visually check ambiguous pages. Record all 48 numbered sections, 12 exercises in §2.4, and implementation tasks in Chapters 4–9. Do not mistake hidden figure text for a visible extra exercise.
+2. **Reading structure:** add a complete textbook contents page and nine chapter pages in source order. Keep original section numbers, exact PDF-page links, contextual definitions, worked traces, and chapter transitions. Retain the existing concept chapters and separate homework atlas.
+3. **Problem solutions:** explain every §2.4 exercise, all five subparts of Problem 10 in both fold directions, both scope variants, Fun, both state models, the four memory/GC tasks, type equations and the Fun extension, and lambda reduction/translation. Supply reproducible OCaml files.
+4. **Reading interaction:** show a definition in place when clicked, with its source page, full glossary entry, and worked explanation. Preserve normal links without JavaScript and with modifier clicks. Make worked solutions expandable.
+5. **Verification:** enforce chapter/section/problem coverage and all internal anchors, render every Mermaid graph, execute all OCaml solutions in the course's 4.14.1 environment, and review desktop/mobile reading, definition dialogs, and solution disclosures.
+6. **Publication:** push through the existing SSH configuration, wait for successful CI and Pages deployment, and verify the public reader.
+
+Implementation status: authored 11 new reading pages, 37 new diagrams, five executable solution files, and four additional definition entries. The site build and 2,822 link checks pass. OCaml execution, browser review, and final deployment are being completed.

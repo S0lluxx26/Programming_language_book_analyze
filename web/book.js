@@ -12,6 +12,34 @@ document.querySelector('main').addEventListener('click',closeMenu);
 document.querySelector('.print-button').addEventListener('click',()=>window.print());
 document.querySelectorAll('article table').forEach(t=>{const wrap=document.createElement('div');wrap.className='table-wrap';wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Scrollable table');t.before(wrap);wrap.append(t);});
 const active=document.querySelector('.sidebar [aria-current]');if(active)sidebar.scrollTop=Math.max(0,active.offsetTop-sidebar.clientHeight/2);
+// Keep the reader's place while explaining a term. Links still work without JS
+// and modifier-clicks still open the full glossary in a separate tab.
+const definitionDialog=document.createElement('dialog');
+definitionDialog.className='definition-dialog';
+definitionDialog.setAttribute('aria-labelledby','definition-title');
+document.body.append(definitionDialog);
+document.querySelectorAll('a[href^="glossary.html#"]').forEach(link=>{
+  const id=link.getAttribute('href').split('#')[1];
+  const definition=(window.BOOK_DEFINITIONS||[]).find(d=>d.id===id);
+  if(!definition)return;
+  link.classList.add('definition-link');
+  link.addEventListener('click',event=>{
+    if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    event.preventDefault();
+    const heading=document.createElement('h2');heading.id='definition-title';heading.textContent=definition.term;
+    const meaning=document.createElement('p');meaning.textContent=definition.meaning;
+    const connection=document.createElement('p');connection.className='definition-connection';connection.textContent='Use it in: '+definition.homework;
+    const links=document.createElement('div');links.className='definition-actions';
+    const source=document.createElement('a');source.textContent=`${definition.source?'Course slides':'Textbook'} · PDF p. ${definition.page} ↗`;
+    source.href='https://prl.korea.ac.kr/courses/cose212/2026/'+(definition.source||'pl-book-eng.pdf')+'#page='+definition.page;
+    source.target='_blank';source.rel='noopener';
+    const glossary=document.createElement('a');glossary.textContent='Full glossary entry';glossary.href=link.getAttribute('href');
+    const chapter=document.createElement('a');chapter.textContent='Worked explanation';chapter.href=definition.chapter;
+    const close=document.createElement('button');close.type='button';close.textContent='Continue reading';close.autofocus=true;close.addEventListener('click',()=>definitionDialog.close());
+    links.append(source,glossary,chapter);definitionDialog.replaceChildren(heading,meaning,connection,links,close);definitionDialog.showModal();
+  });
+});
+definitionDialog.addEventListener('click',event=>{if(event.target!==definitionDialog)return;const r=definitionDialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)definitionDialog.close();});
 const traces={
  closure:[['x ↦ 10','Evaluate the first binding. The current environment associates x with 10.'],['f ↦ Closure(y, x + y, {x ↦ 10})','Creating a function packages its parameter, body, and definition environment. The body is not run yet.'],['caller: x ↦ 90\nf still captures: x ↦ 10','A later binding shadows x in the caller. It does not replace the environment saved in f.'],['call f 3\nbody environment: y ↦ 3, x ↦ 10','Evaluate the argument in the caller, then extend the captured environment with the parameter.'],['x + y = 10 + 3 = 13','The lexical-scope result is 13. A dynamic-scope interpreter would incorrectly use the caller’s x here.']],
  store:[['environment: x ↦ ℓ0\nmemory: ℓ0 ↦ 4','A variable name denotes a location; the store supplies the current value.'],['evaluate x + 2\nlookup x → ℓ0 → 4\nresult: 6','Read through the environment and then the store.'],['x := 6\nenvironment: x ↦ ℓ0\nmemory: ℓ0 ↦ 6','Assignment updates memory at the existing location. The environment mapping stays the same.'],['evaluate x\nresult: 6\nfinal memory: ℓ0 ↦ 6','Sequence passes the updated memory to the next expression. In B, assignment itself also returns 6.']],

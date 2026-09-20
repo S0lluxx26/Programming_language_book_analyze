@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: From a grammar constructor to an evaluator case
+  accDescr: A binary expression has two smaller syntax trees, whose values are combined by its semantic operation.
+  A["Expression node"] --> B{"Literal or binary constructor?"}
+  B -->|Literal| C["Return its numeric value"]
+  B -->|Binary| D["Evaluate left child"]
+  D --> E["Evaluate right child"]
+  E --> F["Apply the selected operation"]

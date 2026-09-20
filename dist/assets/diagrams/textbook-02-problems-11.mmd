@@ -1,0 +1,7 @@
+flowchart TD
+  accTitle: Problem 11 - derive arithmetic from ZERO and SUCC
+  accDescr: Addition turns a successor into a successor of a smaller sum; multiplication turns it into one more addition.
+  A["Inspect first natural number"] --> B{"ZERO or SUCC a?"}
+  B -->|ZERO| C["Addition returns b; multiplication returns ZERO"]
+  B -->|SUCC a| D["Addition: SUCC of add a b"]
+  B -->|SUCC a| E["Multiplication: add b to mul a b"]

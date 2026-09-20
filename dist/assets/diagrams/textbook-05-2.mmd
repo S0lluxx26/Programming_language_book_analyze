@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 5 - trace mutually recursive parity functions
+  accDescr: Every call sees both functions; decreasing the argument alternates between even and odd until a base case is reached.
+  A["Install even and odd together"] --> B["even 3"]
+  B --> C["odd 2"]
+  C --> D["even 1"]
+  D --> E["odd 0"]
+  E --> F["false"]

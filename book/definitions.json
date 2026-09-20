@@ -1,40 +1,479 @@
 [
- {"id":"inductive-definition","term":"Inductive definition","aliases":["inductive definition"],"meaning":"A specification of the smallest set containing its base elements and closed under its construction rules.","page":12,"chapter":"01-induction.html","homework":"HW1 P9–P13; every AST in HW2–HW4"},
- {"id":"inference-rule","term":"Inference rule","aliases":["inference rule"],"meaning":"A rule that derives a conclusion when all its premises and side conditions hold. A rule with no premises is an axiom.","page":13,"chapter":"01-induction.html","homework":"HW2 and HW3 semantic rules; HW4 typing rules"},
- {"id":"abstract-syntax-tree","term":"Abstract syntax tree","aliases":["abstract syntax tree","AST"],"meaning":"A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes.","page":23,"chapter":"04-expressions.html","homework":"HW1 P12–P15; HW2–HW4 exp datatypes"},
- {"id":"semantics","term":"Semantics","aliases":["semantics"],"meaning":"The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules.","page":25,"chapter":"04-expressions.html","homework":"HW2 runml; HW3 runb"},
- {"id":"structural-induction","term":"Structural induction","aliases":["structural induction"],"meaning":"A proof method with a base case for each base constructor and an inductive case that assumes the property for immediate recursive components.","page":28,"chapter":"01-induction.html","homework":"HW1 P9–P13 correctness reasoning"},
- {"id":"pattern-matching","term":"Pattern matching","aliases":["pattern matching"],"meaning":"Selecting a case by the constructor and components of a value, binding names to the matched components.","page":54,"chapter":"02-ocaml.html","homework":"All HW1 recursive datatypes; interpreter and checker branches"},
- {"id":"structural-recursion","term":"Structural recursion","aliases":["structural recursion"],"meaning":"Computing over an inductively built value by recursively processing its smaller components and combining their results.","page":70,"chapter":"03-recursion.html","homework":"HW1 lists, trees, formulas, and symbolic differentiation"},
- {"id":"tail-recursion","term":"Tail recursion","aliases":["tail recursion","tail recursive","tail-recursive"],"meaning":"Recursion in which the recursive call is the final computation in its branch. An accumulator can carry work that would otherwise remain on the stack.","page":79,"chapter":"03-recursion.html","homework":"HW1 long list and interval traversals"},
- {"id":"higher-order-function","term":"Higher-order function","aliases":["higher-order function"],"meaning":"A function that accepts a function as an argument or returns one as its result.","page":81,"chapter":"03-recursion.html","homework":"HW1 P6 sigma, P7 forall, P8 double"},
- {"id":"environment","term":"Environment","aliases":["environment"],"meaning":"A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B.","page":102,"chapter":"04-expressions.html","homework":"HW1 P15 context; HW2 values; HW3 locations and procedures"},
- {"id":"syntactic-sugar","term":"Syntactic sugar","aliases":["syntactic sugar"],"meaning":"A convenient language form expressible by a translation into more basic forms while preserving its intended behavior.","page":123,"chapter":"15-lambda.html","homework":"HW2 fixed-point examples; let and multiargument encodings"},
- {"id":"free-variable","term":"Free variable","aliases":["free variable"],"meaning":"A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context.","page":124,"chapter":"06-scope-recursion.html","homework":"HW1 P15; HW2 closures"},
- {"id":"lexical-scope","term":"Lexical scope","aliases":["lexical scope","lexical scoping","static scope"],"meaning":"A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers.","page":128,"chapter":"05-closures.html","homework":"HW1 P15; HW2 and HW3 procedure bodies"},
- {"id":"closure","term":"Closure","aliases":["closure"],"meaning":"A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called.","page":129,"chapter":"05-closures.html","homework":"HW2 Procedure, RecProcedure, and MRecProcedure"},
- {"id":"dynamic-scope","term":"Dynamic scope","aliases":["dynamic scope","dynamic scoping"],"meaning":"Resolving nonlocal names through runtime calling environments. This differs from the lexical scope required by the posted interpreters.","page":134,"chapter":"05-closures.html","homework":"A useful negative test for HW2 and HW3"},
- {"id":"store","term":"Store","aliases":["store"],"meaning":"A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory.","page":165,"chapter":"07-state.html","homework":"HW3 every stateful evaluation case"},
- {"id":"call-by-value","term":"Call by value","aliases":["call by value","call-by-value"],"meaning":"Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value.","page":183,"chapter":"07-state.html","homework":"HW2 CALL; HW3 CALLV"},
- {"id":"call-by-reference","term":"Call by reference","aliases":["call by reference","call-by-reference"],"meaning":"Bind a formal parameter to the caller's existing variable location so assignments through the parameter affect that shared cell.","page":184,"chapter":"07-state.html","homework":"HW3 CALLR"},
- {"id":"record","term":"Record","aliases":["record"],"meaning":"In the imperative course language, a collection mapping field names to locations. Field contents are found in the store.","page":194,"chapter":"08-records.html","homework":"HW3 RECORD, FIELD, ASSIGNF"},
- {"id":"reachability","term":"Reachability","aliases":["reachability"],"meaning":"Whether a location can be reached by following references from the current roots. Tracing garbage collection retains reachable cells conservatively.","page":217,"chapter":"08-records.html","homework":"Reasoning extension to HW3 sharing; no GC implementation requested"},
- {"id":"garbage-collection","term":"Garbage collection","aliases":["garbage collection"],"meaning":"Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots.","page":218,"chapter":"08-records.html","homework":"Lecture extension beyond HW3"},
- {"id":"type","term":"Type","aliases":["type"],"meaning":"An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships.","page":226,"chapter":"11-types.html","homework":"HW4 typ datatype and typeof"},
- {"id":"type-environment","term":"Type environment","aliases":["type environment"],"meaning":"A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation.","page":230,"chapter":"11-types.html","homework":"HW4 variable lookup, bindings, procedures, recursion"},
- {"id":"typing-judgment","term":"Typing judgment","aliases":["typing judgment","type judgment"],"meaning":"A statement Γ ⊢ e : T asserting that expression e has type T under the assumptions in Γ.","page":232,"chapter":"11-types.html","homework":"HW4 all constraint rules"},
- {"id":"soundness","term":"Soundness","aliases":["soundness","sound type system"],"meaning":"The guarantee that accepted programs satisfy the safety property established for a particular language and its typing rules. It does not by itself prove termination or absence of every runtime failure.","page":241,"chapter":"11-types.html","homework":"HW4 checker contract and partial-operation caveat"},
- {"id":"type-variable","term":"Type variable","aliases":["type variable"],"meaning":"An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable.","page":254,"chapter":"12-inference.html","homework":"HW4 fresh_tyvar"},
- {"id":"unification","term":"Unification","aliases":["unification"],"meaning":"Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints.","page":259,"chapter":"12-inference.html","homework":"HW4 constraint solver"},
- {"id":"occurs-check","term":"Occurs check","aliases":["occurs check"],"meaning":"Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar.","page":269,"chapter":"12-inference.html","homework":"HW4 self-application and indirect cyclic constraints"},
- {"id":"substitution","term":"Substitution","aliases":["substitution"],"meaning":"A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture.","page":266,"chapter":"12-inference.html","homework":"HW4 composed substitutions; lambda calculus term substitution"},
- {"id":"let-polymorphism","term":"Let-polymorphism","aliases":["let-polymorphism","let-polymorphic"],"meaning":"Giving an eligible let-bound value a type scheme whose quantified variables are freshly instantiated at each use. Variables fixed by the surrounding environment must remain shared.","page":273,"chapter":"13-polymorphism.html","homework":"HW4 extension if required by the instructor"},
- {"id":"type-scheme","term":"Type scheme","aliases":["type scheme"],"meaning":"A type together with explicitly universally quantified variables, such as ∀α. α → α. Instantiation replaces only those quantified variables with fresh unknowns.","source":"slides/lec18.pdf","page":12,"chapter":"13-polymorphism.html","homework":"Polymorphic let inference"},
- {"id":"continuation","term":"Continuation","aliases":["continuation"],"meaning":"An explicit representation of the work waiting for a computation's result. Exception handling can inspect and discard these pending frames.","source":"slides/lec10.pdf","page":9,"chapter":"09-exceptions.html","homework":"Lecture 10 extension; not a posted interpreter constructor"},
- {"id":"dynamic-dispatch","term":"Dynamic dispatch","aliases":["dynamic dispatch"],"meaning":"Choosing a method implementation by searching from the receiver's runtime class through its ancestors.","source":"slides/lec11.pdf","page":25,"chapter":"10-objects.html","homework":"Builds on HW3 state and records"},
- {"id":"subtyping","term":"Subtyping","aliases":["subtyping"],"meaning":"A relation S <: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system.","source":"slides/lec19.pdf","page":8,"chapter":"14-subtyping.html","homework":"Typed class extension, not ML− HW4"},
- {"id":"lambda-calculus","term":"Lambda calculus","aliases":["lambda calculus"],"meaning":"A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings.","page":279,"chapter":"15-lambda.html","homework":"HW1 P15; HW2 fixed-point examples"},
- {"id":"beta-reduction","term":"Beta reduction","aliases":["beta reduction"],"meaning":"Reducing an applied abstraction by substituting its argument for the parameter's free occurrences in the body, without capturing variables.","page":281,"chapter":"15-lambda.html","homework":"Understanding the fixed-point tests in HW2"},
- {"id":"alpha-renaming","term":"Alpha-renaming","aliases":["alpha-renaming"],"meaning":"Consistently changing a binder and the occurrences it binds while preserving the program's binding structure.","page":283,"chapter":"15-lambda.html","homework":"HW1 P15 scope reasoning and capture-avoiding substitution"},
- {"id":"normal-order","term":"Normal order","aliases":["normal order"],"meaning":"Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form.","page":284,"chapter":"15-lambda.html","homework":"Lecture 20 evaluation-strategy comparison"}
+  {
+    "id": "inductive-definition",
+    "term": "Inductive definition",
+    "aliases": [
+      "inductive definition"
+    ],
+    "meaning": "A specification of the smallest set containing its base elements and closed under its construction rules.",
+    "page": 12,
+    "chapter": "01-induction.html",
+    "homework": "HW1 P9–P13; every AST in HW2–HW4"
+  },
+  {
+    "id": "inference-rule",
+    "term": "Inference rule",
+    "aliases": [
+      "inference rule"
+    ],
+    "meaning": "A rule that derives a conclusion when all its premises and side conditions hold. A rule with no premises is an axiom.",
+    "page": 13,
+    "chapter": "01-induction.html",
+    "homework": "HW2 and HW3 semantic rules; HW4 typing rules"
+  },
+  {
+    "id": "abstract-syntax-tree",
+    "term": "Abstract syntax tree",
+    "aliases": [
+      "abstract syntax tree",
+      "AST"
+    ],
+    "meaning": "A tree representing a program's constructors and children rather than its surface punctuation. The textbook introduces programs as trees before implementing them with datatypes.",
+    "page": 23,
+    "chapter": "04-expressions.html",
+    "homework": "HW1 P12–P15; HW2–HW4 exp datatypes"
+  },
+  {
+    "id": "semantics",
+    "term": "Semantics",
+    "aliases": [
+      "semantics"
+    ],
+    "meaning": "The rules defining a program's meaning, such as how an expression evaluates to a value. A grammar alone does not provide these rules.",
+    "page": 25,
+    "chapter": "04-expressions.html",
+    "homework": "HW2 runml; HW3 runb"
+  },
+  {
+    "id": "structural-induction",
+    "term": "Structural induction",
+    "aliases": [
+      "structural induction"
+    ],
+    "meaning": "A proof method with a base case for each base constructor and an inductive case that assumes the property for immediate recursive components.",
+    "page": 28,
+    "chapter": "01-induction.html",
+    "homework": "HW1 P9–P13 correctness reasoning"
+  },
+  {
+    "id": "pattern-matching",
+    "term": "Pattern matching",
+    "aliases": [
+      "pattern matching"
+    ],
+    "meaning": "Selecting a case by the constructor and components of a value, binding names to the matched components.",
+    "page": 54,
+    "chapter": "02-ocaml.html",
+    "homework": "All HW1 recursive datatypes; interpreter and checker branches"
+  },
+  {
+    "id": "structural-recursion",
+    "term": "Structural recursion",
+    "aliases": [
+      "structural recursion"
+    ],
+    "meaning": "Computing over an inductively built value by recursively processing its smaller components and combining their results.",
+    "page": 70,
+    "chapter": "03-recursion.html",
+    "homework": "HW1 lists, trees, formulas, and symbolic differentiation"
+  },
+  {
+    "id": "tail-recursion",
+    "term": "Tail recursion",
+    "aliases": [
+      "tail recursion",
+      "tail recursive",
+      "tail-recursive"
+    ],
+    "meaning": "Recursion in which the recursive call is the final computation in its branch. An accumulator can carry work that would otherwise remain on the stack.",
+    "page": 79,
+    "chapter": "03-recursion.html",
+    "homework": "HW1 long list and interval traversals"
+  },
+  {
+    "id": "higher-order-function",
+    "term": "Higher-order function",
+    "aliases": [
+      "higher-order function"
+    ],
+    "meaning": "A function that accepts a function as an argument or returns one as its result.",
+    "page": 81,
+    "chapter": "03-recursion.html",
+    "homework": "HW1 P6 sigma, P7 forall, P8 double"
+  },
+  {
+    "id": "environment",
+    "term": "Environment",
+    "aliases": [
+      "environment"
+    ],
+    "meaning": "A mapping that gives identifiers their current interpretation. It maps names to values in a pure interpreter, and to locations or procedure bindings in B.",
+    "page": 102,
+    "chapter": "04-expressions.html",
+    "homework": "HW1 P15 context; HW2 values; HW3 locations and procedures"
+  },
+  {
+    "id": "syntactic-sugar",
+    "term": "Syntactic sugar",
+    "aliases": [
+      "syntactic sugar"
+    ],
+    "meaning": "A convenient language form expressible by a translation into more basic forms while preserving its intended behavior.",
+    "page": 123,
+    "chapter": "15-lambda.html",
+    "homework": "HW2 fixed-point examples; let and multiargument encodings"
+  },
+  {
+    "id": "free-variable",
+    "term": "Free variable",
+    "aliases": [
+      "free variable"
+    ],
+    "meaning": "A variable occurrence without a corresponding binder inside the expression being considered. It may still be bound by an outer context.",
+    "page": 124,
+    "chapter": "06-scope-recursion.html",
+    "homework": "HW1 P15; HW2 closures"
+  },
+  {
+    "id": "lexical-scope",
+    "term": "Lexical scope",
+    "aliases": [
+      "lexical scope",
+      "lexical scoping",
+      "static scope"
+    ],
+    "meaning": "A reference is associated with an enclosing declaration according to program structure, rather than the chain of runtime callers.",
+    "page": 128,
+    "chapter": "05-closures.html",
+    "homework": "HW1 P15; HW2 and HW3 procedure bodies"
+  },
+  {
+    "id": "closure",
+    "term": "Closure",
+    "aliases": [
+      "closure"
+    ],
+    "meaning": "A procedure's parameter and body packaged with its definition environment, which supplies meanings for free variables when the procedure is called.",
+    "page": 129,
+    "chapter": "05-closures.html",
+    "homework": "HW2 Procedure, RecProcedure, and MRecProcedure"
+  },
+  {
+    "id": "dynamic-scope",
+    "term": "Dynamic scope",
+    "aliases": [
+      "dynamic scope",
+      "dynamic scoping"
+    ],
+    "meaning": "Resolving nonlocal names through runtime calling environments. This differs from the lexical scope required by the posted interpreters.",
+    "page": 134,
+    "chapter": "05-closures.html",
+    "homework": "A useful negative test for HW2 and HW3"
+  },
+  {
+    "id": "store",
+    "term": "Store",
+    "aliases": [
+      "store"
+    ],
+    "meaning": "A mapping from locations to their current values. Stateful evaluation returns both a value and an updated store, also called memory.",
+    "page": 165,
+    "chapter": "07-state.html",
+    "homework": "HW3 every stateful evaluation case"
+  },
+  {
+    "id": "call-by-value",
+    "term": "Call by value",
+    "aliases": [
+      "call by value",
+      "call-by-value"
+    ],
+    "meaning": "Evaluate an argument before the call. In the implicit-reference language, initialize a fresh parameter cell with the argument value.",
+    "page": 183,
+    "chapter": "07-state.html",
+    "homework": "HW2 CALL; HW3 CALLV"
+  },
+  {
+    "id": "call-by-reference",
+    "term": "Call by reference",
+    "aliases": [
+      "call by reference",
+      "call-by-reference"
+    ],
+    "meaning": "Bind a formal parameter to the caller's existing variable location so assignments through the parameter affect that shared cell.",
+    "page": 184,
+    "chapter": "07-state.html",
+    "homework": "HW3 CALLR"
+  },
+  {
+    "id": "record",
+    "term": "Record",
+    "aliases": [
+      "record"
+    ],
+    "meaning": "In the imperative course language, a collection mapping field names to locations. Field contents are found in the store.",
+    "page": 194,
+    "chapter": "08-records.html",
+    "homework": "HW3 RECORD, FIELD, ASSIGNF"
+  },
+  {
+    "id": "reachability",
+    "term": "Reachability",
+    "aliases": [
+      "reachability"
+    ],
+    "meaning": "Whether a location can be reached by following references from the current roots. Tracing garbage collection retains reachable cells conservatively.",
+    "page": 217,
+    "chapter": "08-records.html",
+    "homework": "Reasoning extension to HW3 sharing; no GC implementation requested"
+  },
+  {
+    "id": "garbage-collection",
+    "term": "Garbage collection",
+    "aliases": [
+      "garbage collection"
+    ],
+    "meaning": "Automatic reclamation of storage that can safely be reused, commonly based on identifying cells unreachable from runtime roots.",
+    "page": 218,
+    "chapter": "08-records.html",
+    "homework": "Lecture extension beyond HW3"
+  },
+  {
+    "id": "type",
+    "term": "Type",
+    "aliases": [
+      "type"
+    ],
+    "meaning": "An abstraction classifying values and constraining operations that may safely use them. Function types describe argument/result relationships.",
+    "page": 226,
+    "chapter": "11-types.html",
+    "homework": "HW4 typ datatype and typeof"
+  },
+  {
+    "id": "type-environment",
+    "term": "Type environment",
+    "aliases": [
+      "type environment"
+    ],
+    "meaning": "A context mapping identifiers to types, or to type schemes in a polymorphic system. It is used by static analysis rather than runtime evaluation.",
+    "page": 230,
+    "chapter": "11-types.html",
+    "homework": "HW4 variable lookup, bindings, procedures, recursion"
+  },
+  {
+    "id": "typing-judgment",
+    "term": "Typing judgment",
+    "aliases": [
+      "typing judgment",
+      "type judgment"
+    ],
+    "meaning": "A statement Γ ⊢ e : T asserting that expression e has type T under the assumptions in Γ.",
+    "page": 232,
+    "chapter": "11-types.html",
+    "homework": "HW4 all constraint rules"
+  },
+  {
+    "id": "soundness",
+    "term": "Soundness",
+    "aliases": [
+      "soundness",
+      "sound type system"
+    ],
+    "meaning": "The guarantee that accepted programs satisfy the safety property established for a particular language and its typing rules. It does not by itself prove termination or absence of every runtime failure.",
+    "page": 241,
+    "chapter": "11-types.html",
+    "homework": "HW4 checker contract and partial-operation caveat"
+  },
+  {
+    "id": "type-variable",
+    "term": "Type variable",
+    "aliases": [
+      "type variable"
+    ],
+    "meaning": "An unknown type used in inference. Constraints restrict what it can become; a free unknown is distinct from a universally quantified scheme variable.",
+    "page": 254,
+    "chapter": "12-inference.html",
+    "homework": "HW4 fresh_tyvar"
+  },
+  {
+    "id": "unification",
+    "term": "Unification",
+    "aliases": [
+      "unification"
+    ],
+    "meaning": "Solving type equations by finding a substitution that makes both sides structurally identical, or rejecting incompatible constraints.",
+    "page": 259,
+    "chapter": "12-inference.html",
+    "homework": "HW4 constraint solver"
+  },
+  {
+    "id": "occurs-check",
+    "term": "Occurs check",
+    "aliases": [
+      "occurs check"
+    ],
+    "meaning": "Rejecting a proposed variable binding when the variable occurs within its replacement type, preventing an infinite type in a finite simple-type grammar.",
+    "page": 269,
+    "chapter": "12-inference.html",
+    "homework": "HW4 self-application and indirect cyclic constraints"
+  },
+  {
+    "id": "substitution",
+    "term": "Substitution",
+    "aliases": [
+      "substitution"
+    ],
+    "meaning": "A mapping from type variables to types, applied throughout a type expression. Term substitution in lambda calculus is a separate operation replacing free variable occurrences while avoiding capture.",
+    "page": 266,
+    "chapter": "12-inference.html",
+    "homework": "HW4 composed substitutions; lambda calculus term substitution"
+  },
+  {
+    "id": "let-polymorphism",
+    "term": "Let-polymorphism",
+    "aliases": [
+      "let-polymorphism",
+      "let-polymorphic"
+    ],
+    "meaning": "Giving an eligible let-bound value a type scheme whose quantified variables are freshly instantiated at each use. Variables fixed by the surrounding environment must remain shared.",
+    "page": 273,
+    "chapter": "13-polymorphism.html",
+    "homework": "HW4 extension if required by the instructor"
+  },
+  {
+    "id": "type-scheme",
+    "term": "Type scheme",
+    "aliases": [
+      "type scheme"
+    ],
+    "meaning": "A type together with explicitly universally quantified variables, such as ∀α. α → α. Instantiation replaces only those quantified variables with fresh unknowns.",
+    "source": "slides/lec18.pdf",
+    "page": 12,
+    "chapter": "13-polymorphism.html",
+    "homework": "Polymorphic let inference"
+  },
+  {
+    "id": "continuation",
+    "term": "Continuation",
+    "aliases": [
+      "continuation"
+    ],
+    "meaning": "An explicit representation of the work waiting for a computation's result. Exception handling can inspect and discard these pending frames.",
+    "source": "slides/lec10.pdf",
+    "page": 9,
+    "chapter": "09-exceptions.html",
+    "homework": "Lecture 10 extension; not a posted interpreter constructor"
+  },
+  {
+    "id": "dynamic-dispatch",
+    "term": "Dynamic dispatch",
+    "aliases": [
+      "dynamic dispatch"
+    ],
+    "meaning": "Choosing a method implementation by searching from the receiver's runtime class through its ancestors.",
+    "source": "slides/lec11.pdf",
+    "page": 25,
+    "chapter": "10-objects.html",
+    "homework": "Builds on HW3 state and records"
+  },
+  {
+    "id": "subtyping",
+    "term": "Subtyping",
+    "aliases": [
+      "subtyping"
+    ],
+    "meaning": "A relation S <: T allowing an S value where a T is expected. Function arguments are contravariant and results covariant in the lecture's system.",
+    "source": "slides/lec19.pdf",
+    "page": 8,
+    "chapter": "14-subtyping.html",
+    "homework": "Typed class extension, not ML− HW4"
+  },
+  {
+    "id": "lambda-calculus",
+    "term": "Lambda calculus",
+    "aliases": [
+      "lambda calculus"
+    ],
+    "meaning": "A core language of variables, abstractions, and applications, used to study binding, substitution, computation, and encodings.",
+    "page": 279,
+    "chapter": "15-lambda.html",
+    "homework": "HW1 P15; HW2 fixed-point examples"
+  },
+  {
+    "id": "beta-reduction",
+    "term": "Beta reduction",
+    "aliases": [
+      "beta reduction"
+    ],
+    "meaning": "Reducing an applied abstraction by substituting its argument for the parameter's free occurrences in the body, without capturing variables.",
+    "page": 281,
+    "chapter": "15-lambda.html",
+    "homework": "Understanding the fixed-point tests in HW2"
+  },
+  {
+    "id": "alpha-renaming",
+    "term": "Alpha-renaming",
+    "aliases": [
+      "alpha-renaming"
+    ],
+    "meaning": "Consistently changing a binder and the occurrences it binds while preserving the program's binding structure.",
+    "page": 283,
+    "chapter": "15-lambda.html",
+    "homework": "HW1 P15 scope reasoning and capture-avoiding substitution"
+  },
+  {
+    "id": "normal-order",
+    "term": "Normal order",
+    "aliases": [
+      "normal order"
+    ],
+    "meaning": "Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form.",
+    "page": 284,
+    "chapter": "15-lambda.html",
+    "homework": "Lecture 20 evaluation-strategy comparison"
+  },
+  {
+    "id": "capture-avoiding-substitution",
+    "term": "Capture-avoiding substitution",
+    "aliases": [
+      "capture-avoiding substitution"
+    ],
+    "meaning": "Replacing free occurrences of a name while renaming conflicting binders so that free variables in the replacement do not accidentally become bound.",
+    "page": 282,
+    "chapter": "textbook-09.html",
+    "homework": "Textbook §9.3 reduce; HW1 binding analysis"
+  },
+  {
+    "id": "shadowing",
+    "term": "Shadowing",
+    "aliases": [
+      "shadowing"
+    ],
+    "meaning": "A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding.",
+    "page": 105,
+    "chapter": "textbook-03.html",
+    "homework": "Textbook §3.3 and §4.3; HW2 LET"
+  },
+  {
+    "id": "normal-form",
+    "term": "Normal form",
+    "aliases": [
+      "normal form"
+    ],
+    "meaning": "A lambda term containing no beta-redex anywhere, including inside abstraction bodies.",
+    "page": 282,
+    "chapter": "textbook-09.html",
+    "homework": "Textbook §9.3 reduce"
+  },
+  {
+    "id": "redex",
+    "term": "Redex",
+    "aliases": [
+      "redex"
+    ],
+    "meaning": "A reducible lambda application whose function is an abstraction, of the form (lambda x. body) argument.",
+    "page": 281,
+    "chapter": "textbook-09.html",
+    "homework": "Textbook §9.3 normal-order reduction"
+  }
 ]

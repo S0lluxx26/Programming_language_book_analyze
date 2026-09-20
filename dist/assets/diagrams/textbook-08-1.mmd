@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 8 - typing a call relates three types
+  accDescr: The function must accept the argument type and return the type requested for the whole call.
+  A["CALL f arg has desired result r"] --> B["Choose fresh argument type a"]
+  B --> C["Require f : a to r"]
+  B --> D["Require arg : a"]
+  C --> E["Solve both requirements together"]
+  D --> E

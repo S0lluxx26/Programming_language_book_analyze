@@ -1,0 +1,9 @@
+flowchart TD
+  accTitle: Chapter 7 - two record values share a field cell
+  accDescr: Separate variable cells hold records whose v fields both point to the same location, so a field update is visible through either name.
+  A["Variable a"] --> LA["Variable cell LA"]
+  B["Variable b"] --> LB["Variable cell LB"]
+  LA --> RA["Record: v maps to LV"]
+  LB --> RB["Record: v maps to LV"]
+  RA --> V["Field cell LV: initially 1, then 8"]
+  RB --> V

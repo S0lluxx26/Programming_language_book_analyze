@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 5 - evaluate operations only when their value shapes match
+  accDescr: Constructor dispatch determines the expected shapes; invalid shapes produce an explicit undefined-operation error.
+  A["Inspect expression constructor"] --> B["Evaluate required operands in order"]
+  B --> C{"Operand shapes satisfy the rule?"}
+  C -->|Yes| D["Construct the specified result"]
+  C -->|No| E["Report a runtime error"]
+  D --> F["Lists remain values; procedures remain closures"]

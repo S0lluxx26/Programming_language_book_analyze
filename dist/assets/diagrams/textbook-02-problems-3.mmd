@@ -1,0 +1,7 @@
+flowchart TD
+  accTitle: Problem 3 - interleave with asymmetric remainders
+  accDescr: When either list is exhausted, return the other; otherwise emit two heads and recur on two tails.
+  A["Inspect both lists"] --> B{"Either list empty?"}
+  B -->|Yes| C["Return the other list unchanged"]
+  B -->|No| D["Emit first head, then second head"]
+  D --> E["Interleave the two tails"]

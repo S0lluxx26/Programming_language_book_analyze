@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Textbook · Complete contents · The Programming Languages Notebook</title><meta name="description" content="Follow all nine chapters in the original section order, with linked definitions, Mermaid thinking flows, and worked problems."><meta name="theme-color" content="#142b48"><meta property="og:title" content="Textbook · Complete contents"><meta property="og:description" content="Follow all nine chapters in the original section order, with linked definitions, Mermaid thinking flows, and worked problems."><meta property="og:type" content="article"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/book.css"><script src="assets/search-index.js" defer></script><script src="assets/book.js" defer></script></head><body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" id="sidebar"><a class="brand" href="index.html"><span class="brand-icon">λ</span><span>The Programming<br>Languages Notebook</span></a><p class="edition">COSE212 / KOREA UNIVERSITY<br>FALL 2026 · STUDY COMPANION</p><button class="search-trigger" type="button">Search the book <kbd>/</kbd></button><nav aria-label="Book chapters"><p class="nav-group">Start here</p><a href="index.html" >A map of the course</a><p class="nav-group">Read the textbook</p><a href="textbook.html" aria-current="page">Textbook · Complete contents</a><a href="textbook-01.html" >1. Induction</a><a href="textbook-02.html" >2. Functional Programming</a><a href="textbook-02-problems.html" >2.4 Problems · Worked solutions</a><a href="textbook-03.html" >3. Variables and the Environment</a><a href="textbook-04.html" >4. Defining and Calling Functions</a><a href="textbook-05.html" >5. Functional Language Fun</a><a href="textbook-06.html" >6. State Changes</a><a href="textbook-07.html" >7. Pointers and Memory Management</a><a href="textbook-08.html" >8. Static Type Systems</a><a href="textbook-09.html" >9. Lambda Calculus</a><p class="nav-group">Start here</p><a href="setup.html" >Your OCaml workbench</a><p class="nav-group">I · Foundations</p><a href="01-induction.html" >Thinking in constructors</a><a href="02-ocaml.html" >Reading and writing OCaml</a><a href="03-recursion.html" >The recursive way of thinking</a><p class="nav-group">II · Language machines</p><a href="04-expressions.html" >From rules to an interpreter</a><a href="05-closures.html" >What a function remembers</a><a href="06-scope-recursion.html" >Names, scope, and recursive calls</a><a href="07-state.html" >When evaluation changes memory</a><a href="08-records.html" >Following the pointers</a><a href="09-exceptions.html" >The work left to do</a><a href="10-objects.html" >Objects as state plus dispatch</a><p class="nav-group">III · Types &amp; foundations</p><a href="11-types.html" >Reason before running</a><a href="12-inference.html" >Turn types into equations</a><a href="13-polymorphism.html" >One definition, many types</a><a href="14-subtyping.html" >When one type can stand for another</a><a href="15-lambda.html" >The small language underneath</a><p class="nav-group">Practice atlas</p><a href="homework-map.html" >Definitions → homework</a><a href="hw1.html" >HW1 · Learn to think recursively</a><a href="hw2.html" >HW2 · Build the ML− interpreter</a><a href="hw3.html" >HW3 · Build the B interpreter</a><a href="hw4.html" >HW4 · Build the type checker</a><p class="nav-group">Reference</p><a href="glossary.html" >Notation &amp; glossary</a><a href="sources.html" >Course sources &amp; reading list</a></nav><div class="sidebar-foot">Read the rule.<br>Draw the state.<br>Write the program.</div></aside>
+  <div class="page"><header class="topbar"><button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Contents</button><span>Read the textbook</span><div><a href="sources.html">Source library</a><button class="print-button" type="button">Print chapter</button></div></header><div class="reading-layout"><main id="main" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">The PDF, chapter by chapter</p><h1>Textbook · Complete contents</h1><p class="dek">Follow all nine chapters in the original section order, with linked definitions, Mermaid thinking flows, and worked problems.</p><p class="reading-meta">5 MIN READ <span>•</span> ORIGINAL COMPANION NOTES</p></div><article><h2 id="read-the-textbook-with-a-guide-beside-you">Read the textbook with a guide beside you</h2>
+<p>This reader follows <strong>Hakjoo Oh’s <em>Principles of Programming Languages</em> (English draft, 31 August 2026)</strong> in its own nine-chapter order. Section numbers and PDF page links match the downloaded book. Explanations, Mermaid diagrams, and worked solutions here are original companion material; use the linked PDF whenever you want the author's exact wording, figures, or notation.</p>
+<p><strong>How to read:</strong> open a chapter, read its section explanation, follow the arrows in the thinking flow, and then attempt its problem before opening the worked solution. Highlighted terms link to precise definitions. A section's <strong>Read in the PDF</strong> link takes you to its source page. Textbook problem numbers are separate from the course homework numbers.</p>
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/textbook-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/textbook-1.svg" width="755.9365234375" height="829.9000244140625" alt="The textbook&#39;s nine-chapter learning path"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/textbook-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+  accTitle: The textbook&#39;s nine-chapter learning path
+  accDescr: Inductive definitions support OCaml, interpreters, memory models, type analysis, and lambda calculus.
+  A[&quot;1. Define syntax and prove properties&quot;] --&gt; B[&quot;2. Express recursion in OCaml&quot;]
+  B --&gt; C[&quot;3. Interpret names with environments&quot;]
+  C --&gt; D[&quot;4. Add closures and recursion&quot;]
+  D --&gt; E[&quot;5. Build the Fun language&quot;]
+  E --&gt; F[&quot;6. Separate names from changing memory&quot;]
+  F --&gt; G[&quot;7. Follow pointers and collect garbage&quot;]
+  E --&gt; H[&quot;8. Predict types before execution&quot;]
+  D --&gt; I[&quot;9. Translate to lambda calculus&quot;]
+</code></pre></details></figure><h2 id="part-i-the-tools-for-thinking">Part I — The tools for thinking</h2>
+<h3 id="1-induction-pdf-pp-11-32">1. Induction · PDF pp. 11–32</h3>
+<p><a href="textbook-01.html">Read Chapter 1</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=11">Open PDF</a></p>
+<ul>
+<li><a href="textbook-01.html#1-1-inductive-definition-of-sets">1.1 Inductive Definition of Sets</a></li>
+<li><a href="textbook-01.html#1-2-inductive-definition-of-programming-languages">1.2 Inductive Definition of Programming Languages</a></li>
+<li><a href="textbook-01.html#1-3-inductive-proof">1.3 Inductive Proof</a></li>
+</ul>
+<p><strong>You will be able to:</strong> read construction rules, build a derivation, and prove a property by following the same cases. Chapter 1 supplies worked examples, not a separate numbered exercise set.</p>
+<h3 id="2-functional-programming-pdf-pp-33-96">2. Functional Programming · PDF pp. 33–96</h3>
+<p><a href="textbook-02.html">Read Chapter 2</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=33">Open PDF</a></p>
+<ul>
+<li><a href="textbook-02.html#2-1-ocaml-basics">2.1 OCaml Basics</a></li>
+<li><a href="textbook-02.html#2-2-recursive-functions">2.2 Recursive Functions</a></li>
+<li><a href="textbook-02.html#2-3-higher-order-functions">2.3 Higher-Order Functions</a></li>
+<li><a href="textbook-02-problems.html">2.4 Exercises: all 12 problems and solutions</a></li>
+</ul>
+<p><strong>You will be able to:</strong> turn data constructors into matching branches, choose a decreasing recursive argument, and express list computations as folds. Problem 10 has five subparts; each has both fold directions in the solution file.</p>
+<h2 id="part-ii-build-a-language-one-feature-at-a-time">Part II — Build a language, one feature at a time</h2>
+<h3 id="3-variables-and-the-environment-pdf-pp-97-117">3. Variables and the Environment · PDF pp. 97–117</h3>
+<p><a href="textbook-03.html">Read Chapter 3</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=97">Open PDF</a></p>
+<ul>
+<li><a href="textbook-03.html#3-1-syntactic-structure">3.1 Syntactic Structure</a></li>
+<li><a href="textbook-03.html#3-2-semantic-structure">3.2 Semantic Structure</a></li>
+<li><a href="textbook-03.html#3-2-1-environment">3.2.1 Environment</a></li>
+<li><a href="textbook-03.html#3-2-2-inference-rules">3.2.2 Inference Rules</a></li>
+<li><a href="textbook-03.html#3-3-implementation">3.3 Implementation</a></li>
+</ul>
+<p><strong>You will be able to:</strong> translate each rule into an evaluator case and explain <a href="glossary.html#shadowing" class="definition-link" title="A nearer binding with the same name hides an outer binding within its scope; extending an environment does not mutate the outer binding. — English textbook, PDF p. 105">shadowing</a>. This chapter gives a worked implementation rather than an unanswered numbered problem.</p>
+<h3 id="4-defining-and-calling-functions-pdf-pp-119-145">4. Defining and Calling Functions · PDF pp. 119–145</h3>
+<p><a href="textbook-04.html">Read Chapter 4</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=119">Open PDF</a></p>
+<ul>
+<li><a href="textbook-04.html#4-1-syntactic-structure">4.1 Syntactic Structure</a></li>
+<li><a href="textbook-04.html#4-2-semantic-structure">4.2 Semantic Structure</a></li>
+<li><a href="textbook-04.html#4-2-1-static-scope">4.2.1 Static Scope</a></li>
+<li><a href="textbook-04.html#4-2-2-dynamic-scope">4.2.2 Dynamic Scope</a></li>
+<li><a href="textbook-04.html#4-2-3-recursive-functions">4.2.3 Recursive Functions</a></li>
+<li><a href="textbook-04.html#4-3-implementation">4.3 Implementation: static and dynamic evaluators</a></li>
+</ul>
+<h3 id="5-functional-language-fun-pdf-pp-147-160">5. Functional Language Fun · PDF pp. 147–160</h3>
+<p><a href="textbook-05.html">Read Chapter 5</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=147">Open PDF</a></p>
+<ul>
+<li><a href="textbook-05.html#5-1-syntactic-structure">5.1 Syntactic Structure</a></li>
+<li><a href="textbook-05.html#5-2-semantic-structure">5.2 Semantic Structure</a></li>
+<li><a href="textbook-05.html#5-3-implementation">5.3 Implementation: the complete Fun evaluator</a></li>
+</ul>
+<h3 id="6-state-changes-pdf-pp-161-192">6. State Changes · PDF pp. 161–192</h3>
+<p><a href="textbook-06.html">Read Chapter 6</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=161">Open PDF</a></p>
+<ul>
+<li><a href="textbook-06.html#6-1-first-approach">6.1 First Approach: explicit references</a></li>
+<li><a href="textbook-06.html#6-1-1-syntactic-structure">6.1.1 Syntax</a> · <a href="textbook-06.html#6-1-2-semantic-structure">6.1.2 Semantics</a></li>
+<li><a href="textbook-06.html#6-2-second-approach">6.2 Second Approach: implicit references</a></li>
+<li><a href="textbook-06.html#6-2-1-syntactic-structure">6.2.1 Syntax</a> · <a href="textbook-06.html#6-2-2-semantic-structure">6.2.2 Semantics</a></li>
+<li><a href="textbook-06.html#6-2-3-function-call-method">6.2.3 Function Call Method</a></li>
+<li><a href="textbook-06.html#6-3-implementation">6.3 Implementation: both interpreters</a></li>
+</ul>
+<h3 id="7-pointers-and-memory-management-pdf-pp-193-221">7. Pointers and Memory Management · PDF pp. 193–221</h3>
+<p><a href="textbook-07.html">Read Chapter 7</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=193">Open PDF</a></p>
+<ul>
+<li><a href="textbook-07.html#7-1-records">7.1 Records</a></li>
+<li><a href="textbook-07.html#7-2-pointers">7.2 Pointers</a></li>
+<li><a href="textbook-07.html#7-3-memory-management">7.3 Memory Management</a></li>
+<li><a href="textbook-07.html#7-3-1-manual-memory-reclamation">7.3.1 Manual Memory Reclamation</a></li>
+<li><a href="textbook-07.html#7-3-2-automatic-memory-recycling">7.3.2 Automatic Memory Recycling</a></li>
+<li><a href="textbook-07.html#7-4-implementation">7.4 Implementation: all four tasks</a></li>
+</ul>
+<h2 id="part-iii-reason-about-programs-and-their-foundations">Part III — Reason about programs and their foundations</h2>
+<h3 id="8-static-type-systems-pdf-pp-223-276">8. Static Type Systems · PDF pp. 223–276</h3>
+<p><a href="textbook-08.html">Read Chapter 8</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=223">Open PDF</a></p>
+<ul>
+<li><a href="textbook-08.html#8-1-target-language">8.1 Target Language</a></li>
+<li><a href="textbook-08.html#8-2-type">8.2 Type</a> · <a href="textbook-08.html#8-3-type-environment">8.3 Type Environment</a></li>
+<li><a href="textbook-08.html#8-4-type-inference-rules">8.4 Type Inference Rules</a></li>
+<li><a href="textbook-08.html#8-5-type-checker-implementation-approach">8.5 Type Checker Implementation Approach</a></li>
+<li><a href="textbook-08.html#8-6-automatic-type-inference-algorithm">8.6 Automatic Type Inference Algorithm</a></li>
+<li><a href="textbook-08.html#8-6-1-generating-type-equations">8.6.1 Generating Type Equations</a></li>
+<li><a href="textbook-08.html#8-6-2-solving-type-equations">8.6.2 Solving Type Equations</a></li>
+<li><a href="textbook-08.html#8-7-polymorphic-type-systems">8.7 Polymorphic Type Systems</a></li>
+<li><a href="textbook-08.html#8-8-implementation">8.8 Implementation: generator, solver, and Fun extension</a></li>
+</ul>
+<h3 id="9-lambda-calculus-pdf-pp-277-292">9. Lambda Calculus · PDF pp. 277–292</h3>
+<p><a href="textbook-09.html">Read Chapter 9</a> · <a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=277">Open PDF</a></p>
+<ul>
+<li><a href="textbook-09.html#9-1-lambda-calculus">9.1 Lambda Calculus</a></li>
+<li><a href="textbook-09.html#9-2-converting-to-a-lambda-expression">9.2 Converting to a Lambda Expression</a></li>
+<li><a href="textbook-09.html#9-3-implementation">9.3 Implementation: reducer and translator</a></li>
+</ul>
+<h2 id="keep-the-three-kinds-of-material-distinct">Keep the three kinds of material distinct</h2>
+<table>
+<thead>
+<tr>
+<th>Material</th>
+<th>Where to find it</th>
+<th>What it is for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Textbook reader</td>
+<td>The nine chapters above</td>
+<td>Read in the PDF's section order, with definitions and reasoning diagrams</td>
+</tr>
+<tr>
+<td>Textbook solutions</td>
+<td>§2.4 and each chapter's Implementation section</td>
+<td>Original worked solutions to the textbook's own tasks</td>
+</tr>
+<tr>
+<td>Course homework</td>
+<td><a href="homework-map.html">Homework map</a></td>
+<td>The separately numbered 2026 assignments and their precise specifications</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="01-induction.html">concept chapters</a> remain available for shorter explanations and interactive traces. Exceptions and classes appear in course slides but are not separate chapters in this English PDF.</p>
+<h2 id="source-and-solution-notes">Source and solution notes</h2>
+<p>The source is a draft. Where a problem is ambiguous, the guide states the interpretation before solving it. In particular: §7.4's printed evaluator result needs an internal value-and-memory pair; §8.8's Fun extension needs an explicit equality policy; §9.2 initially encodes natural numbers and uses <a href="glossary.html#normal-order" class="definition-link" title="Choosing the leftmost outermost reducible application, continuing under abstractions when computing a full normal form. — English textbook, PDF p. 284">normal order</a>. These are explained in their chapters.</p>
+<p>The PDF's hidden text layer contains an apparent “Exercise 3” near Figure 4.2. Visual inspection of p. 127 shows a scope figure, not a separate visible exercise. It is therefore treated as a worked scope example, not invented as a new numbered problem.</p>
+</article><nav class="chapter-pagination" aria-label="Adjacent chapters"><a href="index.html"><small>← Previous</small>A map of the course</a><a href="textbook-01.html"><small>Next →</small>1. Induction</a></nav><footer>Independent study companion to Hakjoo Oh’s COSE212 materials. Original course PDFs remain authoritative. Source snapshot: 20 September 2026.</footer></main><aside class="on-this-page" aria-label="On this page"><p>ON THIS PAGE</p><a href="#read-the-textbook-with-a-guide-beside-you">Read the textbook with a guide beside you</a><a href="#part-i-the-tools-for-thinking">Part I — The tools for thinking</a><a href="#part-ii-build-a-language-one-feature-at-a-time">Part II — Build a language, one feature at a time</a><a href="#part-iii-reason-about-programs-and-their-foundations">Part III — Reason about programs and their foundations</a><a href="#keep-the-three-kinds-of-material-distinct">Keep the three kinds of material distinct</a><a href="#source-and-solution-notes">Source and solution notes</a><a class="back-top" href="#main">Back to top ↑</a></aside></div></div>
+  <dialog id="search-dialog"><div class="search-head"><label for="search-input">Search the notebook</label><button class="search-close" aria-label="Close search">×</button></div><input id="search-input" type="search" placeholder="Try closures, HW1 P15, occurs check…" autocomplete="off"><p class="search-status" role="status">Search definitions, chapters, and homework.</p><div id="search-results"></div></dialog></body></html>

@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: Problem 10 - derive a fold from the result being built
+  accDescr: Counting, conjunction, reversal, transformation, and selection require different accumulator meanings.
+  A["Which result are you constructing?"] --> B["Length: count processed elements"]
+  A --> C["All positive: conjunction with true identity"]
+  A --> D["Reverse: prepend into a left-fold accumulator"]
+  A --> E["Map: transform, then preserve order"]
+  A --> F["Filter: keep selected elements in order"]
+  E --> G["Right fold: cons directly; left fold: reverse once at the end"]
+  F --> G

@@ -1,0 +1,6 @@
+flowchart TD
+  accTitle: Problem 8 - fold universal truth
+  accDescr: The empty list is true; combine each predicate result with the suffix's result using conjunction.
+  A["Empty-list answer: true"] --> B["Right fold computes suffix result"]
+  B --> C["Combine p head AND suffix result"]
+  C --> D["Any false contribution makes the result false"]

@@ -1,26 +1,297 @@
 [
-  {"slug":"index","title":"A map of the course","part":"Start here","tag":"COSE212 · Fall 2026","description":"Understand the course as one connected journey, from inductive definitions to interpreters and type inference."},
-  {"slug":"setup","title":"Your OCaml workbench","part":"Start here","tag":"Tools & study method","description":"Use the official OCaml environment and build a repeatable study loop."},
-  {"slug":"01-induction","title":"Thinking in constructors","part":"I · Foundations","tag":"01 · Inductive definitions","description":"Turn inductive rules into data types, recursive functions, and structural proofs."},
-  {"slug":"02-ocaml","title":"Reading and writing OCaml","part":"I · Foundations","tag":"02 · Functional programming","description":"Expressions, types, pattern matching, currying, and algebraic data types."},
-  {"slug":"03-recursion","title":"The recursive way of thinking","part":"I · Foundations","tag":"03 · Recursion & higher-order functions","description":"Derive recursion from the shape of data and use functions to express reusable patterns."},
-  {"slug":"04-expressions","title":"From rules to an interpreter","part":"II · Language machines","tag":"04 · Expressions & environments","description":"Read semantic judgments and turn them into a small executable language."},
-  {"slug":"05-closures","title":"What a function remembers","part":"II · Language machines","tag":"05 · Procedures & closures","description":"Explain lexical scope by drawing the environment captured at function creation."},
-  {"slug":"06-scope-recursion","title":"Names, scope, and recursive calls","part":"II · Language machines","tag":"06 · Recursion & lexical addresses","description":"Connect recursive closures, mutual recursion, free variables, and nameless representations."},
-  {"slug":"07-state","title":"When evaluation changes memory","part":"II · Language machines","tag":"07 · State & parameter passing","description":"Separate environments from stores and trace call-by-value versus call-by-reference."},
-  {"slug":"08-records","title":"Following the pointers","part":"II · Language machines","tag":"08 · Records & garbage collection","description":"Reason about shared fields, heap reachability, and memory safety."},
-  {"slug":"09-exceptions","title":"The work left to do","part":"II · Language machines","tag":"09 · Continuations & exceptions","description":"Make pending computation explicit and see why raising an exception discards frames."},
-  {"slug":"10-objects","title":"Objects as state plus dispatch","part":"II · Language machines","tag":"10 · Classes & objects","description":"Build the mental model for fields, method lookup, self, super, and inheritance."},
-  {"slug":"11-types","title":"Reason before running","part":"III · Types & foundations","tag":"11 · Static type systems","description":"Use typing judgments to rule out classes of runtime mistakes."},
-  {"slug":"12-inference","title":"Turn types into equations","part":"III · Types & foundations","tag":"12 · Inference & unification","description":"Generate constraints, solve them with substitutions, and understand the occurs check."},
-  {"slug":"13-polymorphism","title":"One definition, many types","part":"III · Types & foundations","tag":"13 · Let-polymorphism","description":"Generalize only independent type variables and instantiate a scheme freshly at each use."},
-  {"slug":"14-subtyping","title":"When one type can stand for another","part":"III · Types & foundations","tag":"14 · Typed objects & subtyping","description":"Understand substitution, function variance, and safe method overriding."},
-  {"slug":"15-lambda","title":"The small language underneath","part":"III · Types & foundations","tag":"15 · Lambda calculus","description":"Connect substitution, evaluation strategies, encodings, and fixed points."},
-  {"slug":"homework-map","title":"Definitions → homework","part":"Practice atlas","tag":"Concept-to-exercise map","description":"Find the exact definitions, chapters, and source pages needed for each assignment."},
-  {"slug":"hw1","title":"HW1 · Learn to think recursively","part":"Practice atlas","tag":"15 problem guides","description":"Problem-by-problem strategies, connections, and boundary tests for functional programming."},
-  {"slug":"hw2","title":"HW2 · Build the ML− interpreter","part":"Practice atlas","tag":"Rules → recursive evaluation","description":"A staged implementation guide for lists, closures, recursive procedures, and undefined semantics."},
-  {"slug":"hw3","title":"HW3 · Build the B interpreter","part":"Practice atlas","tag":"Rules → state transitions","description":"A memory-aware implementation guide for variables, records, loops, and parameter passing."},
-  {"slug":"hw4","title":"HW4 · Build the type checker","part":"Practice atlas","tag":"Rules → constraints → types","description":"A precise design guide for a sound checker, including underspecified cases in the assignment."},
-  {"slug":"glossary","title":"Notation & glossary","part":"Reference","tag":"Keep this page nearby","description":"Translate mathematical notation into the data and functions you implement in OCaml."},
-  {"slug":"sources","title":"Course sources & reading list","part":"Reference","tag":"Verified source inventory","description":"All course PDF links, local download status, source discrepancies, and reading references."}
+  {
+    "slug": "index",
+    "title": "A map of the course",
+    "part": "Start here",
+    "tag": "COSE212 · Fall 2026",
+    "description": "Understand the course as one connected journey, from inductive definitions to interpreters and type inference."
+  },
+  {
+    "slug": "textbook",
+    "title": "Textbook · Complete contents",
+    "part": "Read the textbook",
+    "tag": "The PDF, chapter by chapter",
+    "description": "Follow all nine chapters in the original section order, with linked definitions, Mermaid thinking flows, and worked problems."
+  },
+  {
+    "slug": "textbook-01",
+    "title": "1. Induction",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 1 · PDF pp. 11–32",
+    "description": "Define sets and languages, then prove properties by following their construction rules.",
+    "textbook": {
+      "chapter": 1,
+      "start": 11,
+      "end": 32
+    }
+  },
+  {
+    "slug": "textbook-02",
+    "title": "2. Functional Programming",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 2 · PDF pp. 33–96",
+    "description": "Read OCaml, derive recursion, and solve the twelve exercises in section 2.4.",
+    "textbook": {
+      "chapter": 2,
+      "start": 33,
+      "end": 96
+    }
+  },
+  {
+    "slug": "textbook-02-problems",
+    "title": "2.4 Problems · Worked solutions",
+    "part": "Read the textbook",
+    "tag": "Textbook §2.4 · Problems 1–12",
+    "description": "Derive each solution with a Mermaid thinking flow, worked OCaml code, and boundary checks.",
+    "textbook": {
+      "chapter": 2,
+      "start": 89,
+      "end": 96
+    }
+  },
+  {
+    "slug": "textbook-03",
+    "title": "3. Variables and the Environment",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 3 · PDF pp. 97–117",
+    "description": "Follow the textbook from syntax and environments to an executable interpreter.",
+    "textbook": {
+      "chapter": 3,
+      "start": 97,
+      "end": 117
+    }
+  },
+  {
+    "slug": "textbook-04",
+    "title": "4. Defining and Calling Functions",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 4 · PDF pp. 119–145",
+    "description": "Trace static and dynamic scope, build closures, and implement recursive procedures.",
+    "textbook": {
+      "chapter": 4,
+      "start": 119,
+      "end": 145
+    }
+  },
+  {
+    "slug": "textbook-05",
+    "title": "5. Functional Language Fun",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 5 · PDF pp. 147–160",
+    "description": "Combine lists, mutually recursive closures, output, and sequencing into a complete language.",
+    "textbook": {
+      "chapter": 5,
+      "start": 147,
+      "end": 160
+    }
+  },
+  {
+    "slug": "textbook-06",
+    "title": "6. State Changes",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 6 · PDF pp. 161–192",
+    "description": "Compare explicit and implicit references and solve both stateful interpreter tasks.",
+    "textbook": {
+      "chapter": 6,
+      "start": 161,
+      "end": 192
+    }
+  },
+  {
+    "slug": "textbook-07",
+    "title": "7. Pointers and Memory Management",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 7 · PDF pp. 193–221",
+    "description": "Follow records and pointers, then solve all four evaluator and garbage-collector tasks.",
+    "textbook": {
+      "chapter": 7,
+      "start": 193,
+      "end": 221
+    }
+  },
+  {
+    "slug": "textbook-08",
+    "title": "8. Static Type Systems",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 8 · PDF pp. 223–276",
+    "description": "Read typing rules, generate and solve equations, and implement the Fun extension.",
+    "textbook": {
+      "chapter": 8,
+      "start": 223,
+      "end": 276
+    }
+  },
+  {
+    "slug": "textbook-09",
+    "title": "9. Lambda Calculus",
+    "part": "Read the textbook",
+    "tag": "Textbook chapter 9 · PDF pp. 277–292",
+    "description": "Understand substitution and normal order, then build a reducer and translators.",
+    "textbook": {
+      "chapter": 9,
+      "start": 277,
+      "end": 292
+    }
+  },
+  {
+    "slug": "setup",
+    "title": "Your OCaml workbench",
+    "part": "Start here",
+    "tag": "Tools & study method",
+    "description": "Use the official OCaml environment and build a repeatable study loop."
+  },
+  {
+    "slug": "01-induction",
+    "title": "Thinking in constructors",
+    "part": "I · Foundations",
+    "tag": "01 · Inductive definitions",
+    "description": "Turn inductive rules into data types, recursive functions, and structural proofs."
+  },
+  {
+    "slug": "02-ocaml",
+    "title": "Reading and writing OCaml",
+    "part": "I · Foundations",
+    "tag": "02 · Functional programming",
+    "description": "Expressions, types, pattern matching, currying, and algebraic data types."
+  },
+  {
+    "slug": "03-recursion",
+    "title": "The recursive way of thinking",
+    "part": "I · Foundations",
+    "tag": "03 · Recursion & higher-order functions",
+    "description": "Derive recursion from the shape of data and use functions to express reusable patterns."
+  },
+  {
+    "slug": "04-expressions",
+    "title": "From rules to an interpreter",
+    "part": "II · Language machines",
+    "tag": "04 · Expressions & environments",
+    "description": "Read semantic judgments and turn them into a small executable language."
+  },
+  {
+    "slug": "05-closures",
+    "title": "What a function remembers",
+    "part": "II · Language machines",
+    "tag": "05 · Procedures & closures",
+    "description": "Explain lexical scope by drawing the environment captured at function creation."
+  },
+  {
+    "slug": "06-scope-recursion",
+    "title": "Names, scope, and recursive calls",
+    "part": "II · Language machines",
+    "tag": "06 · Recursion & lexical addresses",
+    "description": "Connect recursive closures, mutual recursion, free variables, and nameless representations."
+  },
+  {
+    "slug": "07-state",
+    "title": "When evaluation changes memory",
+    "part": "II · Language machines",
+    "tag": "07 · State & parameter passing",
+    "description": "Separate environments from stores and trace call-by-value versus call-by-reference."
+  },
+  {
+    "slug": "08-records",
+    "title": "Following the pointers",
+    "part": "II · Language machines",
+    "tag": "08 · Records & garbage collection",
+    "description": "Reason about shared fields, heap reachability, and memory safety."
+  },
+  {
+    "slug": "09-exceptions",
+    "title": "The work left to do",
+    "part": "II · Language machines",
+    "tag": "09 · Continuations & exceptions",
+    "description": "Make pending computation explicit and see why raising an exception discards frames."
+  },
+  {
+    "slug": "10-objects",
+    "title": "Objects as state plus dispatch",
+    "part": "II · Language machines",
+    "tag": "10 · Classes & objects",
+    "description": "Build the mental model for fields, method lookup, self, super, and inheritance."
+  },
+  {
+    "slug": "11-types",
+    "title": "Reason before running",
+    "part": "III · Types & foundations",
+    "tag": "11 · Static type systems",
+    "description": "Use typing judgments to rule out classes of runtime mistakes."
+  },
+  {
+    "slug": "12-inference",
+    "title": "Turn types into equations",
+    "part": "III · Types & foundations",
+    "tag": "12 · Inference & unification",
+    "description": "Generate constraints, solve them with substitutions, and understand the occurs check."
+  },
+  {
+    "slug": "13-polymorphism",
+    "title": "One definition, many types",
+    "part": "III · Types & foundations",
+    "tag": "13 · Let-polymorphism",
+    "description": "Generalize only independent type variables and instantiate a scheme freshly at each use."
+  },
+  {
+    "slug": "14-subtyping",
+    "title": "When one type can stand for another",
+    "part": "III · Types & foundations",
+    "tag": "14 · Typed objects & subtyping",
+    "description": "Understand substitution, function variance, and safe method overriding."
+  },
+  {
+    "slug": "15-lambda",
+    "title": "The small language underneath",
+    "part": "III · Types & foundations",
+    "tag": "15 · Lambda calculus",
+    "description": "Connect substitution, evaluation strategies, encodings, and fixed points."
+  },
+  {
+    "slug": "homework-map",
+    "title": "Definitions → homework",
+    "part": "Practice atlas",
+    "tag": "Concept-to-exercise map",
+    "description": "Find the exact definitions, chapters, and source pages needed for each assignment."
+  },
+  {
+    "slug": "hw1",
+    "title": "HW1 · Learn to think recursively",
+    "part": "Practice atlas",
+    "tag": "15 problem guides",
+    "description": "Problem-by-problem strategies, connections, and boundary tests for functional programming."
+  },
+  {
+    "slug": "hw2",
+    "title": "HW2 · Build the ML− interpreter",
+    "part": "Practice atlas",
+    "tag": "Rules → recursive evaluation",
+    "description": "A staged implementation guide for lists, closures, recursive procedures, and undefined semantics."
+  },
+  {
+    "slug": "hw3",
+    "title": "HW3 · Build the B interpreter",
+    "part": "Practice atlas",
+    "tag": "Rules → state transitions",
+    "description": "A memory-aware implementation guide for variables, records, loops, and parameter passing."
+  },
+  {
+    "slug": "hw4",
+    "title": "HW4 · Build the type checker",
+    "part": "Practice atlas",
+    "tag": "Rules → constraints → types",
+    "description": "A precise design guide for a sound checker, including underspecified cases in the assignment."
+  },
+  {
+    "slug": "glossary",
+    "title": "Notation & glossary",
+    "part": "Reference",
+    "tag": "Keep this page nearby",
+    "description": "Translate mathematical notation into the data and functions you implement in OCaml."
+  },
+  {
+    "slug": "sources",
+    "title": "Course sources & reading list",
+    "part": "Reference",
+    "tag": "Verified source inventory",
+    "description": "All course PDF links, local download status, source discrepancies, and reading references."
+  }
 ]

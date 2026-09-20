@@ -1,0 +1,11 @@
+flowchart TD
+  accTitle: Chapter 7 - mark a heap graph without looping on cycles
+  accDescr: A worklist starts at roots; unseen cells are marked before following pointers, record fields, and closure environments.
+  A["Worklist = root locations; marked = empty"] --> B{"Worklist empty?"}
+  B -->|Yes| C["Keep only marked store entries"]
+  B -->|No| D["Remove location l"]
+  D --> E{"Already marked?"}
+  E -->|Yes| B
+  E -->|No| F["Mark l before following edges"]
+  F --> G["Add pointer, record, and closure locations"]
+  G --> B

@@ -1,0 +1,7 @@
+flowchart TD
+  accTitle: Chapter 6 - explicit reference assignment threads memory
+  accDescr: Evaluate the location expression, then the new value with the updated memory, then update that cell.
+  A["SETREF e1 e2 with memory m0"] --> B["Evaluate e1 to location l and memory m1"]
+  B --> C["Evaluate e2 using m1 to value v and memory m2"]
+  C --> D["Update l to v in m2"]
+  D --> E["Return v and the new memory"]

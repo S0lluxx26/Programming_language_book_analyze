@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 2 - flatten a list of lists
+  accDescr: Flatten the tail, then append the current inner list before that result.
+  A["Outer list"] --> B{"Empty?"}
+  B -->|Yes| C["Return empty list"]
+  B -->|No| D["Take current inner list and remaining lists"]
+  D --> E["Flatten remaining lists"]
+  E --> F["Append current inner list before the result"]

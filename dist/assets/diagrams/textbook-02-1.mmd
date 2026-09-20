@@ -1,0 +1,10 @@
+flowchart TD
+  accTitle: Read an OCaml expression through its type and data shape
+  accDescr: Determine what a value represents before choosing its operation or pattern.
+  A["What value does this expression produce?"] --> B{"Data shape"}
+  B -->|List| C["Match empty or head plus tail"]
+  B -->|Variant| D["Match its constructor and fields"]
+  B -->|Function| E["Read input and output types; apply an argument"]
+  C --> F["Every branch must return a compatible type"]
+  D --> F
+  E --> F

@@ -1,0 +1,7 @@
+flowchart TD
+  accTitle: Chapter 3 - derive the LET evaluator from its rule
+  accDescr: The right-hand side uses the old environment; only the body sees the new binding.
+  A["LET x = e1 IN e2, environment rho"] --> B["Evaluate e1 in rho to get v1"]
+  B --> C["Create rho2 = rho extended with x maps to v1"]
+  C --> D["Evaluate e2 in rho2"]
+  D --> E["Return the body's value"]

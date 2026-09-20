@@ -1,5 +1,13 @@
 <div class="study-stats"><div><strong>15</strong><span>Concept chapters</span></div><div><strong>4</strong><span>Homework guides</span></div><div><strong>27</strong><span>Downloaded PDFs</span></div></div>
 
+## Read the textbook in its own order
+
+**[Start the textbook reader →](textbook.html)**
+
+Follow the English PDF's **nine chapters and all 48 numbered sections** with highlighted definitions, direct source-page links, Mermaid thinking diagrams, and worked solutions. The [twelve §2.4 exercises](textbook-02-problems.html) and the later chapters' implementation tasks have their own solution guides and runnable OCaml files.
+
+Use the textbook reader as the main path. The shorter concept chapters and homework guides below provide extra explanations and links to the separate course assignments.
+
 ## The question behind the course
 
 **What does a program mean, and how can we know that our implementation respects that meaning?** OCaml is both a language you learn and the tool you use to answer this question. The small languages you implement—Let, Proc, ML−, and B—are separate objects of study. Keeping these two levels apart removes much of the initial confusion.

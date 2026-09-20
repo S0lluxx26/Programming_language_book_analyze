@@ -28,6 +28,11 @@ jobs:
           ocaml-compiler: '4.14.1'
       - name: Run original teaching examples
         run: opam exec -- ocaml examples/notebook_examples.ml
+      - name: Run all textbook worked solutions
+        run: |
+          for solution in examples/textbook_*.ml; do
+            opam exec -- ocaml "$solution"
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

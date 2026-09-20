@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 5 - count down while discarding heads
+  accDescr: Stop when the requested count is exhausted or the list is empty.
+  A["drop list n"] --> B{"n at most zero?"}
+  B -->|Yes| C["Return current list"]
+  B -->|No| D{"List empty?"}
+  D -->|Yes| E["Return empty"]
+  D -->|No| F["Discard head; call drop tail n-1"]

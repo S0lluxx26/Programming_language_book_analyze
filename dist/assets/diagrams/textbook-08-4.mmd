@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Chapter 8 - distinguish a shared unknown from a polymorphic scheme
+  accDescr: A solved let-bound identity can generalize its independent variable, and each use then gets a fresh instance.
+  A["Infer let-bound identity: alpha to alpha"] --> B["Solve constraints and apply them to the environment"]
+  B --> C["Generalize alpha only if absent from environment free variables"]
+  C --> D["Store scheme: forall alpha, alpha to alpha"]
+  D --> E["Integer use gets fresh beta: beta=int"]
+  D --> F["Boolean use gets fresh gamma: gamma=bool"]

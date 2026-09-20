@@ -31,7 +31,22 @@ for(const d of diagrams){const svg=fs.readFileSync(`dist/assets/diagrams/${d.nam
 assert(diagrams.length>=25,'Expected diagrams throughout the book');
 assert(definitionLinks>=100,'Expected linked definitions throughout the book');
 assert.equal((fs.readFileSync('book/hw1.md','utf8').match(/^## P\d+/gm)||[]).length,15);
-assert.equal(catalog.length,24);
-const report={chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15};
+const structure=JSON.parse(fs.readFileSync('book/textbook-structure.json','utf8'));
+assert.equal(catalog.filter(p=>p.textbook && p.slug!=='textbook-02-problems').length,9);
+assert.equal(structure.sections.length,48);
+for(const section of structure.sections){
+  const markdown=fs.readFileSync(`book/${section.slug}.md`,'utf8');
+  assert(markdown.includes(`## ${section.section} `),`Missing textbook section ${section.section}`);
+  assert(markdown.includes(`#page=${section.page})`),`Missing source page for ${section.section}`);
+}
+const exercises=fs.readFileSync('book/textbook-02-problems.md','utf8');
+for(const p of structure.problems){
+  const body=exercises.split(`## Problem ${p.number} —`)[1]?.split('\n## ')[0];
+  assert(body?.includes('```mermaid'),`Problem ${p.number}: missing diagram`);
+  assert(body.includes('worked-solution'),`Problem ${p.number}: missing solution`);
+  assert(body.includes(`#page=${p.page})`),`Problem ${p.number}: missing PDF page`);
+}
+assert.equal(catalog.length,35);
+const report={chapters:catalog.length,mermaidDiagrams:diagrams.length,definitions:JSON.parse(fs.readFileSync('book/definitions.json','utf8')).length,definitionLinks,linksChecked:links,pdfPageLinksChecked:pdfLinks,homework1Problems:15,textbookChapters:9,textbookSections:structure.sections.length,textbookNumberedProblems:structure.problems.length};
 console.log(JSON.stringify(report,null,2));
 fs.mkdirSync('tmp/qa',{recursive:true});fs.writeFileSync('tmp/qa/static-report.json',JSON.stringify(report,null,2));

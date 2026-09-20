@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 4 - use both components of one recursive answer
+  accDescr: Unzip the tail once, then prepend each head component to its matching result list.
+  A["Pair list"] --> B{"Empty?"}
+  B -->|Yes| C["Return two empty lists"]
+  B -->|No| D["Head is x,y; unzip tail once"]
+  D --> E["Tail answer is xs,ys"]
+  E --> F["Return x::xs and y::ys"]

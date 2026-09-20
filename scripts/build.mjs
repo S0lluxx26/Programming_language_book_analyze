@@ -78,7 +78,10 @@ for (let n=0;n<catalog.length;n++) {
     const id=base+(count?`-${count}`:'');tokens[i].attrSet('id',id);
     if(tokens[i].tag==='h2') headings.push({label,id});
   }
-  const html=md.renderer.render(tokens,md.options,{});
+  let html=md.renderer.render(tokens,md.options,{});
+  if(page.textbook){
+    html=`<nav class="reader-tools" aria-label="Textbook reading tools"><a href="textbook.html">← Textbook contents</a><a href="https://prl.korea.ac.kr/courses/cose212/2026/pl-book-eng.pdf#page=${page.textbook.start}" target="_blank" rel="noopener">Original PDF · pp. ${page.textbook.start}–${page.textbook.end} ↗</a><a href="glossary.html">Definition index</a></nav><p class="reader-hint">Click a highlighted definition to read it here without losing your place. Follow section numbers alongside the original PDF.</p>`+html;
+  }
   const words=source.replace(/<[^>]*>/g,' ').split(/\s+/).length;
   let part='';
   const nav=catalog.map(p=>{let h='';if(part!==p.part){part=p.part;h=`<p class="nav-group">${esc(part)}</p>`;}return h+`<a href="${p.slug}.html" ${p.slug===page.slug?'aria-current="page"':''}>${esc(p.title)}</a>`;}).join('');
@@ -91,7 +94,7 @@ for (let n=0;n<catalog.length;n++) {
   fs.writeFileSync(`dist/${page.slug}.html`,body);
   index.push({title:page.title,url:page.slug+'.html',part:page.part,text:md.utils.unescapeAll(html.replace(/<details class="diagram-source">[\s\S]*?<\/details>/g,'').replace(/<[^>]*>/g,' ')).replace(/\s+/g,' ')});
 }
-fs.writeFileSync('dist/assets/search-index.js','window.BOOK_INDEX='+JSON.stringify(index).replace(/</g,'\\u003c')+';');
+fs.writeFileSync('dist/assets/search-index.js','window.BOOK_INDEX='+JSON.stringify(index).replace(/</g,'\\u003c')+';\nwindow.BOOK_DEFINITIONS='+JSON.stringify(definitions).replace(/</g,'\\u003c')+';');
 fs.copyFileSync('sources/manifest.json','dist/assets/source-manifest.json');
 fs.mkdirSync('dist/assets/diagrams',{recursive:true});
 fs.writeFileSync('dist/assets/diagrams/manifest.json',JSON.stringify(diagrams,null,2));

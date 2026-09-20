@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 1 - shrink an inclusive interval
+  accDescr: Empty intervals return empty; a singleton stops without overflowing the next integer; otherwise emit the lower endpoint.
+  A["range n m"] --> B{"n greater than m?"}
+  B -->|Yes| C["Return empty list"]
+  B -->|No| D{"n equals m?"}
+  D -->|Yes| E["Return singleton m"]
+  D -->|No| F["Emit n; solve range n+1 m"]

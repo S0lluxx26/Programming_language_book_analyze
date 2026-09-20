@@ -1,0 +1,8 @@
+flowchart TD
+  accTitle: Problem 6 - separate the interval from its contribution function
+  accDescr: An empty interval contributes zero; otherwise add the current contribution to the smaller interval's sum.
+  A["sigma f a b"] --> B{"Interval empty?"}
+  B -->|Yes| C["Return 0"]
+  B -->|No| D{"Single endpoint?"}
+  D -->|Yes| E["Return f a"]
+  D -->|No| F["Compute f a plus sigma f a+1 b"]

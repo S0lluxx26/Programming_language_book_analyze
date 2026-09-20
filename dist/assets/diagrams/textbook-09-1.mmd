@@ -1,0 +1,11 @@
+flowchart TD
+  accTitle: Chapter 9 - substitute without changing which binder owns a name
+  accDescr: Stop at a matching binder, rename a conflicting binder, and otherwise recurse structurally.
+  A["Substitute x by argument inside a term"] --> B{"Outer constructor"}
+  B -->|Variable| C["Replace only if its name is x"]
+  B -->|Application| D["Substitute in both children"]
+  B -->|Lambda y| E{"y equals x?"}
+  E -->|Yes| F["Stop: x is shadowed here"]
+  E -->|No| G{"y free in argument, and x free in body?"}
+  G -->|Yes| H["Rename y to a fresh name; recurse"]
+  G -->|No| I["Keep binder; recurse in body"]
