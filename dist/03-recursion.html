@@ -9,7 +9,7 @@
   | word :: rest -&gt; <span class="hljs-type">String</span>.length word + total_lengths rest
 </code></pre>
 <p>For <code>[&quot;ml&quot;; &quot;rules&quot;]</code>, the computation is <code>2 + (5 + 0) = 7</code>. The recursive call answers the smaller question: how many characters occur in the remaining words? It does not need to know how many appeared before them.</p>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/03-recursion-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/03-recursion-1.svg" alt="Can I answer from the current constructor alone?" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/03-recursion-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/03-recursion-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/03-recursion-1.svg" width="579.609375" height="444.6070861816406" alt="Can I answer from the current constructor alone?"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/03-recursion-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Can I answer from the current constructor alone?
   accDescr: Select the branch that matches the current case.
   Q{&quot;Can I answer from the current constructor&lt;br/&gt;alone?&quot;}

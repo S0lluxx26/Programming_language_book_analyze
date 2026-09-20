@@ -46,7 +46,10 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
   if (token.info.trim()==='mermaid') {
     const name=`${currentPage}-${++diagramCount}`;
     diagrams.push({name,source:token.content});
-    return `<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/${name}.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/${name}.svg" alt="${esc(token.content.match(/accTitle:\s*(.*)/)?.[1]||'Concept flowchart')}" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/${name}.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>${esc(token.content)}</code></pre></details></figure>`;
+    const svgPath=`dist/assets/diagrams/${name}.svg`;
+    const bounds=fs.existsSync(svgPath)?fs.readFileSync(svgPath,'utf8').match(/viewBox="([^"]+)"/)?.[1].split(' ').map(Number):null;
+    const dimensions=bounds?` width="${bounds[2]}" height="${bounds[3]}"`:'';
+    return `<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/${name}.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/${name}.svg"${dimensions} alt="${esc(token.content.match(/accTitle:\s*(.*)/)?.[1]||'Concept flowchart')}"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/${name}.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>${esc(token.content)}</code></pre></details></figure>`;
   }
   if (token.info.trim()==='flow') {
     return '<figure class="flow-figure"><ol class="flow">'+token.content.trim().split('\n').map((line,i)=>{const [title,...detail]=line.split('|');return `<li><span class="step-number">${i+1}</span><strong>${esc(title.trim())}</strong><span>${esc(detail.join('|').trim())}</span></li>`;}).join('')+'</ol><figcaption>Read the steps in order; each result becomes input to the next step.</figcaption></figure>';

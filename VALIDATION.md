@@ -25,7 +25,7 @@ Source snapshot: 20 September 2026.
 - Verified Mermaid images load, including the closure flowchart and class diagram. Fixed SVG serialization and intrinsic sizing discovered during the review.
 - Tested search results, mobile contents controls, closure definition navigation, and the textbook page-link targets.
 - Exercised all four interactive traces to their final states; closure reset returns to step one. Verified results: closure 13, store 6, exception 11, inference `(int → γ) → int → γ`.
-- Fixed sidebar scrolling so it no longer overrides chapter-fragment navigation. Search excerpts exclude Mermaid source syntax and decode HTML entities.
+- Fixed sidebar scrolling so it no longer overrides chapter-fragment navigation. Reserved diagram dimensions prevent image loading from shifting deep links; visually verified the concept-map link lands at HW1 P15. Search excerpts exclude Mermaid source syntax and decode HTML entities.
 - Browser console inspection found no warnings or errors on the reviewed pages.
 - Print stylesheet is included; native print-dialog output has not been visually reviewed.
-- GitHub Actions successfully ran the OCaml teaching examples with compiler 4.14.1 and deployed the initial book. Final layout fixes and expanded graphs are included in the subsequent publication update.
+- GitHub Actions successfully ran 25 companion checks plus one exception-control-flow check with compiler 4.14.1 and deployed the book. Publication is gated on a successful build, static validation, and these OCaml checks.

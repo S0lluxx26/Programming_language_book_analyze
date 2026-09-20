@@ -13,7 +13,7 @@
 </code></pre>
 <p>The later <code>x</code> is a different binding. The result of <code>f 3</code> is <code>13</code> because the body’s free <code>x</code> refers to the earlier declaration.</p>
 <h2 id="draw-creation-and-application-separately">Draw creation and application separately</h2>
-<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/05-closures-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/05-closures-1.svg" alt="Closure creation and lexical application" loading="lazy"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/05-closures-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
+<figure class="mermaid-figure"><a class="diagram-link" href="assets/diagrams/05-closures-1.svg" target="_blank" rel="noopener" aria-label="Open diagram at full size"><img src="assets/diagrams/05-closures-1.svg" width="512.683349609375" height="611.7999877929688" alt="Closure creation and lexical application"></a><figcaption>Mermaid diagram · <a href="assets/diagrams/05-closures-1.svg" target="_blank" rel="noopener">Open full size</a></figcaption><details class="diagram-source"><summary>View Mermaid source</summary><pre><code>flowchart TD
   accTitle: Closure creation and lexical application
   accDescr: The caller supplies the argument while the closure supplies the environment for the body.
   A[&quot;Caller environment&lt;br/&gt;x = 90&quot;] --&gt;|&quot;evaluate argument 3&quot;| D[&quot;Argument value: 3&quot;]

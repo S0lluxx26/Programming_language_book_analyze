@@ -9,6 +9,7 @@ for(const page of catalog){
   const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(ids.length,new Set(ids).size,`${file}: duplicate ids`);
   assert(html.includes('name="description"')&&html.includes('property="og:description"'),`${file}: metadata`);
+  for(const image of html.matchAll(/<img\b[^>]*>/g))assert(/width="[\d.]+" height="[\d.]+"/.test(image[0]),`${file}: diagram must reserve its layout size`);
   definitionLinks+=(html.match(/class="definition-link"/g)||[]).length;
   for(const match of html.matchAll(/(?:href|src)="([^"]+)"/g)){
     const url=match[1].replaceAll('&amp;','&');links++;
